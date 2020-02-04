@@ -5,4 +5,4 @@ const login = (username, password) => {
   );
 };
 
-export { login };
+module.exports =  { login };

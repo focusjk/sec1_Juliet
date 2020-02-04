@@ -4,7 +4,7 @@ var query = require('./sql.js');
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'admin',
   database: 'cucarpool',
   multipleStatements: true,
 });
