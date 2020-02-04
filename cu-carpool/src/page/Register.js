@@ -1,8 +1,16 @@
 import React from 'react';
+import RegisterForm from '../component/RegisterForm';
+import MyButton from '../component/MyButton';
 
 class Register extends React.Component {
   render() {
-    return <div>Home</div>;
+    return (
+      <>
+        <div>Hello,</div>
+        <div>Sign up</div>
+        <MyButton variant="contained">Sign Up</MyButton>
+      </>
+    );
   }
 }
 
