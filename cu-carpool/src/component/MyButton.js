@@ -18,13 +18,6 @@ const MyButton = withStyles({
     textTransform: 'capitalize',
     marginTop: -3
   },
-  // marginAutoItem: {
-  //   margin: 'auto'
-  // },
-  // alignItemsAndJustifyContent: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
 })(Button);
 
 export default MyButton;

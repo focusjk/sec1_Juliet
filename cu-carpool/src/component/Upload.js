@@ -23,7 +23,7 @@ const defaultProps = {
   style: { width: 220, height: 80 },
 };
 
-const Photo = () => {
+const Upload = () => {
   const classes = useStyles();
   return (
     <>
@@ -43,4 +43,4 @@ const Photo = () => {
   );
 };
 
-export default Photo;
+export default Upload;

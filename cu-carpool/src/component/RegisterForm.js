@@ -3,7 +3,6 @@ import { Input, Box, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from "@material-ui/core";
-import { typography } from '@material-ui/system';
 import Grid from '@material-ui/core/Grid';
 
 const theme = createMuiTheme({
@@ -12,12 +11,8 @@ const theme = createMuiTheme({
       main: '#C78899', //pink base
     },
     secondary: {
-      //light: '#0066ff',
       main: '#CE7B91', // pink text
-      //contrastText: '#ffcc00',
     },
-    //contrastThreshold: 3,
-    //tonalOffset: 0.2,
   },
 });
 
