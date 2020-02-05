@@ -12,7 +12,7 @@ class Register extends React.Component {
     const preventDefault = event => event.preventDefault();
     return (
       <>
-        <h2 style={{ marginLeft: 40, marginBottom: 10,}}
+        <h2 style={{ marginLeft: 40, marginBottom: 10, marginTop: 40}}
         > Hello,</h2>
         <Box color="palette.secondary.main" 
             style={{ marginLeft: 40, color: '#CE7B91', marginBottom: 40 }} 
