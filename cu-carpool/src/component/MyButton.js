@@ -10,7 +10,7 @@ const MyButton = withStyles({
     color: 'white',
     height: 30,
     width: 200,
-    boxShadow: '2 3px 5px 2px rgba(40,40,40)',
+    boxShadow: '3 3px 5px 2px rgba(40,40,40)',
     //padding: '0 30px',
   },
   label: {
