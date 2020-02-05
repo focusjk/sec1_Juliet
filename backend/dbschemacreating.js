@@ -1,10 +1,12 @@
 var mysql = require('mysql');
 var query = require('./sql.js');
+var dotenv = require('dotenv');
+dotenv.config();
 
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: process.env.DATABASE_PASSWORD,
   database: 'cucarpool',
   multipleStatements: true,
 });
