@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
   port: '3306',
   user: 'root',
   password: process.env.DATABASE_PASSWORD,
-  database: 'cu-carpool',
+  database: 'cucarpool',
   insecureAuth: true,
 });
 
