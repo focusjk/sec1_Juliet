@@ -27,8 +27,8 @@ class Register extends React.Component {
           <Upload></Upload>
           <MyButton variant="contained" style={{ marginTop: 40 }} >Sign Up</MyButton>
 
-          <Link href="#" onClick={preventDefault} fontStyle="underline"
-                style={{ color: '#bdbdbd', fontSize: 13, marginTop: 17, marginBottom: 50, borderBottom: '1px solid #bdbdbd' }} >
+          <Link href="#" onClick={preventDefault}
+                style={{ color: '#bdbdbd', fontSize: 13, marginTop: 30, marginBottom: 70, borderBottom: '1px solid #bdbdbd' }} >
             Already a member ?
           </Link>
         </Grid>
