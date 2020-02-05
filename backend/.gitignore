@@ -1,7 +1,4 @@
 /node_modules
-.dbconnection.js
-.dbcreating.js
-.dbdropping.js
-.dbschemacreating.js
 .DS_store
 .yarn-error.log
+.env
