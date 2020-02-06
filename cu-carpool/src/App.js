@@ -35,7 +35,10 @@ const useStyles = makeStyles({
   },
 });
 const App = () => {
-  const [user, setUser] = React.useState(null);
+  //for member
+  const [user, setUser] = React.useState({ user: 1 });
+  // for admin
+  // const [user, setUser] = React.useState({ username: 'focus' });
 
   const classes = useStyles();
   return (
