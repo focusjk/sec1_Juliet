@@ -7,15 +7,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  // res.render('index', { title: 'Express' });
-  // const {departure_latitude,departure_longtitude,departure_detail,
-  //       destination_latitude,destination_longtitude,destination_detail,
-  //       start_datetime,owner,car_brand,plate_license,capacity} = req.body;
-  // const {err,result} = tripService.createTrip(departure_latitude,departure_longtitude,departure_detail,
-  //   destination_latitude,destination_longtitude,destination_detail,
-  //   start_datetime,owner,car_brand,plate_license,capacity);
-  
-  tripService.createTrip(req.body,(err,result)=>{
+  // dateTime format "YYYY-MM-DD hh:mm:ss"
+  var now = new Date();
+  var date = now.toISOString().split("T")[0];
+  var time = now.toLocaleTimeString();
+  now = date+" "+time;
+  console.log("created_time :",now);
+  tripService.createTrip(now,req.body,(err,result)=>{
     if(err){
       res.json(err);
     }
@@ -24,8 +22,6 @@ router.post('/create', function(req, res, next) {
       res.json({ success: true, id: result.insertId });
     }
   })
-  
-  // res.send({ success: true, id: result.insertId });
  
 });
 
