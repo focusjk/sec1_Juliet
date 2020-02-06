@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Register from './page/Register';
 import Home from './page/Home';
 import Login from './page/Login';
@@ -9,10 +9,12 @@ import CreateTrip from './page/CreateTrip';
 import AdminLogin from './page/AdminLogin';
 import DriverRequest from './page/DriverRequest';
 import Navigation from './component/Navigation';
-
+import NavigationDesktop from './component/NavigationDesktop';
 class App extends React.Component {
   state = {
-    user: null,
+    //TODO : remove mock data
+    user: { id: 1, driver_status: null },
+    // user: { username: 'focus' },
   };
 
   handleEditUser = user => {
@@ -23,33 +25,48 @@ class App extends React.Component {
     const { user } = this.state;
     return (
       <Router>
-        <Navigation user={user} />
-
         <Switch>
-          <Route path="/register">
-            <Register user={user} />
-          </Route>
-          <Route path="/login">
-            <Login user={user} />
-          </Route>
-          <Route path="/profile">
-            <Profile user={user} />
-          </Route>
-          <Route path="/create-trip">
-            <CreateTrip user={user} />
-          </Route>
-          <Route path="/driver">
-            <DriverProfile user={user} />
-          </Route>
-          <Route path="/admin">
-            <AdminLogin user={user} />
-          </Route>
-          <Route path="/admin/driver-request">
-            <DriverRequest user={user} />
-          </Route>
-          <Route path="/">
-            <Home user={user} />
-          </Route>
+          {user && user.id && (
+            <div>
+              <Navigation user={user} handleLogout={() => this.setState({ user: null })} />
+              <Route path="/profile">
+                <Profile user={user} />
+              </Route>
+              <Route path="/create-trip">
+                <CreateTrip user={user} />
+              </Route>
+              <Route path="/driver">
+                <DriverProfile user={user} />
+              </Route>
+              <Route exact path="/">
+                <Home user={user} />
+              </Route>
+              <Redirect to="/" />
+            </div>
+          )}
+          {user && !user.id && (
+            <div>
+              <NavigationDesktop user={user} handleLogout={() => this.setState({ user: null })} />
+              <Route path="/admin/driver-request">
+                <DriverRequest user={user} />
+              </Route>
+              <Redirect to="/admin/driver-request" />
+            </div>
+          )}
+          {!user && (
+            <div>
+              <Route path="/register">
+                <Register user={user} />
+              </Route>
+              <Route path="/admin">
+                <AdminLogin user={user} />
+              </Route>
+              <Route path="/login">
+                <Login user={user} />
+              </Route>
+              <Redirect to="/login" />
+            </div>
+          )}
         </Switch>
       </Router>
     );

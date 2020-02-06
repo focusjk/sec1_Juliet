@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -14,9 +13,9 @@ const MyButton = withStyles({
     //padding: '0 30px',
   },
   label: {
-    fontFamily: 'Roboto' ,
+    fontFamily: 'Roboto',
     textTransform: 'capitalize',
-    marginTop: -3
+    marginTop: -3,
   },
 })(Button);
 
