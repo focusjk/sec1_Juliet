@@ -1,6 +1,6 @@
 import React from 'react';
 import RegisterForm from '../component/RegisterForm';
-import MyButton from '../component/MyButton';
+import { MyButton } from '../component/MyButton';
 import Upload from '../component/Upload';
 import { Box } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';

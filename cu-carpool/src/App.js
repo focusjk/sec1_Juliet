@@ -10,6 +10,7 @@ import AdminLogin from './page/AdminLogin';
 import DriverRequest from './page/DriverRequest';
 import Navigation from './component/Navigation';
 import NavigationDesktop from './component/NavigationDesktop';
+import ButtonComponent from './page/ButtonComponent';
 class App extends React.Component {
   state = {
     //TODO : remove mock data
@@ -26,6 +27,10 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
+          {/* REMOVE */}
+          <Route path="/ButtonComponent">
+            <ButtonComponent />
+          </Route>
           {user && user.id && (
             <div>
               <Navigation user={user} handleLogout={() => this.setState({ user: null })} />

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../logo.png';
 import { AppBar, Toolbar, Button, Typography } from '@material-ui/core/';
-import MyButton from './MyButton';
+import { MyButton } from './MyButton';
 
 const listPath = [
   { name: 'Member info', path: '/admin/member' },

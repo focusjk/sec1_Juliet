@@ -20,6 +20,8 @@ const listPath = {
     { name: 'Home', path: '/', icon: 'home' },
     { name: 'Profile', path: '/profile', icon: 'person' },
     { name: 'Driver', path: '/driver', icon: 'assignment_ind' },
+    //REMOVE
+    { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
   ],
   driver: [
     { name: 'Home', path: '/', icon: 'home' },
