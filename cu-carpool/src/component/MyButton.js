@@ -11,7 +11,6 @@ const MyButton = withStyles({
     paddingLeft: '24px',
   },
   label: {
-    fontFamily: 'Roboto',
     textTransform: 'capitalize',
   },
 })(Button);
@@ -26,7 +25,6 @@ const MyWhiteButton = withStyles({
     paddingLeft: '24px',
   },
   label: {
-    fontFamily: 'Roboto',
     textTransform: 'capitalize',
   },
 })(Button);
@@ -41,7 +39,6 @@ const MyFullWidthButton = withStyles({
     boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.15)',
   },
   label: {
-    fontFamily: 'Roboto',
     textTransform: 'capitalize',
   },
 })(Button);
@@ -56,7 +53,6 @@ const MyDisabledFullWidthButton = withStyles({
     boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.15)',
   },
   label: {
-    fontFamily: 'Roboto',
     textTransform: 'capitalize',
   },
 })(Button);
