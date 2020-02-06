@@ -1,56 +1,118 @@
 import React from 'react';
-import { BrowserRouter as Link } from 'react-router-dom';
-
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import logo from '../logo.png';
+import {
+  AppBar,
+  Toolbar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Icon,
+  IconButton,
+  Divider,
+} from '@material-ui/core/';
 
-class Navigation extends React.Component {
-  state = { open: false };
+const listPath = {
+  user: [
+    { name: 'Home', path: '/', icon: 'home' },
+    { name: 'Profile', path: '/profile', icon: 'person' },
+    { name: 'Driver', path: '/driver', icon: 'assignment_ind' },
+    //REMOVE
+    { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
+  ],
+  driver: [
+    { name: 'Home', path: '/', icon: 'home' },
+    { name: 'Profile', path: '/profile', icon: 'person' },
+    { name: 'Driver', path: '/driver', icon: 'assignment_ind' },
+    { name: 'Create trip', path: '/create-trip', icon: 'emoji_transportation' },
+  ],
+};
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  barSection: { flexGrow: 1 },
+  barItem: { cursor: 'pointer' },
+});
 
-  // const classes = useStyles();
-  render() {
-    const { open } = this.state;
-    return (
-      <AppBar position="static" style={{ backgroundColor: '#C78899' }}>
-        <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => this.setState({ open: !open })}
+const Navigation = ({ history, user, handleLogout }) => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const listSelecter = user && user.driver_status == 'approved' ? 'driver' : 'user';
+  const sideList = (
+    <div className={classes.list} role="presentation">
+      <List>
+        {listPath[listSelecter].map(({ name, path, icon }) => (
+          <ListItem
+            button
+            key={name}
+            onClick={() => {
+              history.push(path);
+              setOpen(false);
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+            <ListItemIcon>
+              <Icon>{icon}</Icon>
+            </ListItemIcon>
+            <ListItemText primary={name} />
+          </ListItem>
+        ))}
+        <Divider />
+        <ListItem
+          button
+          key="logout"
+          onClick={() => {
+            history.push('/login');
+            handleLogout();
+            setOpen(false);
+          }}
+        >
+          <ListItemIcon>
+            <Icon>exit_to_app</Icon>
+          </ListItemIcon>
+          <ListItemText primary="Sign out" />
+        </ListItem>
+      </List>
+    </div>
+  );
+  return (
+    <AppBar position="static" style={{ backgroundColor: '#C78899' }}>
+      <Toolbar>
+        <div className={classes.barSection}>
+          <img
+            className={classes.barItem}
+            src={logo}
+            height={40}
+            onClick={() => {
+              history.push('/');
+            }}
+          />
+        </div>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          <Icon>menu</Icon>
+        </IconButton>
+      </Toolbar>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        {sideList}
+      </Drawer>
+    </AppBar>
+  );
+};
 
-export default Navigation;
-
-// const Navigation = () => {
-//   return (
-//     <nav>
-//       <ul>
-//         <li>
-//           <Link to="/">Home</Link>
-//         </li>
-//         <li>
-//           <Link to="/about">About</Link>
-//         </li>
-//         <li>
-//           <Link to="/users">Users</Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// };
+export default withRouter(Navigation);
