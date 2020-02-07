@@ -1,26 +1,25 @@
 Arguments: 
-  /Users/admin/.nvm/versions/node/v8.17.0/bin/node /usr/local/Cellar/yarn/1.7.0/libexec/bin/yarn.js install
+  /usr/local/Cellar/node/13.7.0/bin/node /usr/local/Cellar/yarn/1.21.1/libexec/bin/yarn.js
 
 PATH: 
-  /Users/admin/.nvm/versions/node/v8.17.0/bin:/Users/admin/workspace/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/opt/X11/bin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Applications/VMware Fusion.app/Contents/Public
 
 Yarn version: 
-  1.7.0
+  1.21.1
 
 Node version: 
-  8.17.0
+  13.7.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/admin/workspace/sec1_Juliet/backend/package.json: Unexpected string in JSON at position 177
+  SyntaxError: /Users/romnalink./sec1_Juliet/backend/package.json: Unexpected token / in JSON at position 114
       at JSON.parse (<anonymous>)
-      at /usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:1130:59
+      at /usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:1625:59
       at Generator.next (<anonymous>)
-      at step (/usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:98:30)
-      at /usr/local/Cellar/yarn/1.7.0/libexec/lib/cli.js:109:13
-      at <anonymous>
+      at step (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -29,7 +28,8 @@ npm manifest:
     "private": true,
     "scripts": {
       "start": "node ./bin/www",
-      "install": "node ./dbcreating && node ./dbschemacreating "
+      "install": "node ./dbcreating && node ./dbschemacreating",
+      "uninstall": "node ./dbdropping",
       "dev": "nodemon ./bin/www"
     },
     "dependencies": {
