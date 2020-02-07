@@ -9,20 +9,18 @@ router.get('/', function(req, res, next) {
 router.post('/create', function(req, res, next) {
   // dateTime format "YYYY-MM-DD hh:mm:ss"
   var now = new Date();
-  var date = now.toISOString().split("T")[0];
+  var date = now.toISOString().split('T')[0];
   var time = now.toLocaleTimeString();
-  now = date+" "+time;
-  console.log("created_time :",now);
-  tripService.createTrip(now,req.body,(err,result)=>{
-    if(err){
+  now = date + ' ' + time;
+  console.log('created_time :', now);
+  tripService.createTrip(now, req.body, (err, result) => {
+    if (err) {
       res.json(err);
-    }
-    else{
+    } else {
       console.log(result);
       res.json({ success: true, id: result.insertId });
     }
-  })
- 
+  });
 });
 
 module.exports = router;
