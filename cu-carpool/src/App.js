@@ -36,9 +36,10 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  const [user, setUser] = React.useState({ id: 1 });
+  // const [user, setUser] = React.useState({ id: 1 });
   // for admin
   // const [user, setUser] = React.useState({ username: 'focus' });
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -90,7 +91,6 @@ const App = () => {
                 <Route path="/login">
                   <Login user={user} />
                 </Route>
-                <Redirect to="/login" />
               </div>
             )}
           </Switch>
