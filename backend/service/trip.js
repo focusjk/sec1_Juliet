@@ -17,7 +17,7 @@ const createTrip = (
   },
   callback
 ) => {
-  console.log('----------------create Trip----------------');
+ 
 
   return db.query(
     `INSERT INTO trip ` +
