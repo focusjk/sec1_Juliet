@@ -4,5 +4,5 @@ const login = (username, password) => {
     `SELECT * FROM Admin WHERE username = ` + keyword + ` AND password = ` + keyword + ``
   );
 };
-
 module.exports = { login };
+
