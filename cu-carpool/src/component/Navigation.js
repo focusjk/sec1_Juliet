@@ -98,6 +98,7 @@ const Navigation = ({ history, user, handleLogout }) => {
           onClick={() => {
             setOpen(true);
           }}
+          style={{ color: 'white' }}
         >
           <Icon>menu</Icon>
         </IconButton>
