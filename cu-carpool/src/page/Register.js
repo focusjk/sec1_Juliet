@@ -1,22 +1,36 @@
 import React from 'react';
 import RegisterForm from '../component/RegisterForm';
-import MyButton from '../component/MyButton';
-import { Box } from "@material-ui/core";
+import { MyFullWidthButton } from '../component/MyButton';
+import Upload from '../component/Upload';
+import { Box } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 
 class Register extends React.Component {
   render() {
     return (
-      <>
-        <h2 style={{ marginLeft: 40, marginBottom: 5 }}
-            fontFamily='Roboto' 
-        > Hello,</h2>
-        <Box color="palette.secondary.main" 
-             style={{ marginLeft: 40, color: '#CE7B91' }} 
-             fontFamily='Roboto'
-        > Sign Up</Box>
-        <RegisterForm></RegisterForm>
-        <MyButton variant="contained">Sign Up</MyButton>
-      </>
+      <Grid container direction="column" alignItems="stretch" justifyContent="center">
+        <h1 style={{ marginBottom: 10 }}> Hello,</h1>
+        <Box color="palette.secondary.main" style={{ color: '#CE7B91', marginBottom: '40px' }}>
+          Sign Up
+        </Box>
+
+        <RegisterForm />
+        <Upload />
+        <MyFullWidthButton style={{ marginTop: 40 }}>Sign Up</MyFullWidthButton>
+
+        <Link
+          href="#"
+          style={{
+            color: '#bdbdbd',
+            marginTop: 30,
+            textDecoration: 'underline',
+            alignSelf: 'center',
+          }}
+        >
+          Already a member ?
+        </Link>
+      </Grid>
     );
   }
 }
