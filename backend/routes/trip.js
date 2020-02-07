@@ -12,7 +12,6 @@ router.post('/create', function(req, res, next) {
   var date = created_at.toISOString().split('T')[0];
   var time = created_at.getHours()+":"+created_at.getMinutes()+":"+created_at.getSeconds();
   // var time = now.toLocaleTimeString();
-  console.log(time);
   created_at = date + " " + time;
   console.log("created_at :",created_at);
   tripService.createTrip(created_at,req.body,(err,result)=>{
