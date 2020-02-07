@@ -15,9 +15,21 @@ class App extends React.Component {
     user: null,
   };
 
-  handleEditUser = user => {
-    this.setState({ user: user });
-  };
+const useStyles = makeStyles({
+  app: {
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+  },
+  body: {
+    margin: '30px',
+  },
+});
+const App = () => {
+  // for member
+  // const [user, setUser] = React.useState({ id: 1 });
+  // for admin
+  // const [user, setUser] = React.useState({ username: 'focus' });
+  const [user, setUser] = React.useState(null);
 
   render() {
     const { user } = this.state;
