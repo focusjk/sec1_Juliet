@@ -17,7 +17,9 @@ class Login extends React.Component {
         </Box>
 
         <LoginForm />
-        <MyFullWidthButton style={{ marginTop: 40 }}>Sign In</MyFullWidthButton>
+        <MyFullWidthButton style={{ marginTop: 40 }}
+        >
+          Sign In </MyFullWidthButton>
 
         <Box color="palette.secondary.main" style={{ color: '#bdbdbd', alignSelf: 'center', marginTop: 40 }}>
           Don’t have an account ?
