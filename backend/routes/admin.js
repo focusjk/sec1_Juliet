@@ -17,7 +17,6 @@ router.get('/driver', function(req, res, next) {
     }
     else {
         console.log(result)
-        //res.send('respond with a resource');
         res.json({ success: true, driver:[ ...result ]});
     }
   })
