@@ -18,13 +18,16 @@ class Profile extends React.Component {
     <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
     <h1> My Profile </h1>
     </div>
-     <img
+     <Grid container direction="row" justify="center" >
+	<img
             src={profile}
             height={80}
 	    width={80}
 	    style={{ alignSelf: 'center',borderRadius: 400/ 2,marginBottom: 50  }}
           />
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'30vh',width:'60vh'}}>
+	<h1  style={{ marginLeft:10 }} > Name Name </h1>
+	</Grid>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
          <h2 style={{ marginLeft: 10}} > Personal Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<img src={person} style={{ marginLeft: 10 ,width:'2vh'}}/>
@@ -43,7 +46,7 @@ class Profile extends React.Component {
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Telephone No." />	
 	</div>
         </Box>
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'30vh',width:'60vh'}}>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
          <h2 style={{ marginLeft: 10}} > Credit Card Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<img src={person} style={{ marginLeft: 10 ,width:'2vh'}}/>
