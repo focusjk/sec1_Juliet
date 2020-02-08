@@ -8,6 +8,8 @@ import note from '../icon/note.png';
 import plate from '../icon/plate.png';
 import car from '../icon/car.png';
 import group from '../icon/group.png';
+import {IconButton} from '@material-ui/core/';
+
 
 class DriverRequest extends React.Component {
   render() {
@@ -25,23 +27,11 @@ class DriverRequest extends React.Component {
           />
 	<h1  style={{ marginLeft:10 }} > Name Name </h1>
 	</Grid>
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'55vh'}}>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'15vh',width:'55vh'}}>
          <h2 style={{ marginLeft:10 }}>Driver's Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<img src={note} style={{ marginLeft: 10 ,width:'2vh'}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Driving License No." />	
-	</div>
-	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={plate} style={{ marginLeft: 10 ,width:'2vh'}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="License Plate" />	
-	</div>
-	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={car} style={{ marginLeft: 10, width:'2vh'}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Car Brand" />	
-	</div>
-	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={group} style={{ marginLeft: 10 ,width:'2vh'}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Capacity" />	
 	</div>
         </Box>
 	<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }}>Request</MyFullWidthButton>
