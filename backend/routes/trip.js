@@ -8,15 +8,19 @@ router.get('/', function(req, res, next) {
 
 router.post('/create', function(req, res, next) {
   // dateTime format "YYYY-MM-DD hh:mm:ss"
-  var now = new Date();
-  var date = now.toISOString().split('T')[0];
-  var time = now.toLocaleTimeString();
-  now = date + ' ' + time;
-  console.log('created_time :', now);
-  tripService.createTrip(now, req.body, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
+  var created_at = new Date();
+  var date = created_at.toISOString().split('T')[0];
+  var time = created_at.getHours()+":"+created_at.getMinutes()+":"+created_at.getSeconds();
+  // var time = now.toLocaleTimeString();
+  created_at = date + " " + time;
+  console.log("created_at :",created_at);
+  tripService.createTrip(created_at,req.body,(err,result)=>{
+    if(err){
+      console.log(err);
+      res.json({success: false, error: err.sqlMessage, message: "CANNOT CREATE TRIP!!!"});
+    }
+    else{
+      console.log('----------------create Trip----------------');
       console.log(result);
       res.json({ success: true, id: result.insertId });
     }
