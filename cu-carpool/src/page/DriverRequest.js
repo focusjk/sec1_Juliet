@@ -8,8 +8,7 @@ import note from '../icon/note.png';
 import plate from '../icon/plate.png';
 import car from '../icon/car.png';
 import group from '../icon/group.png';
-import {IconButton} from '@material-ui/core/';
-
+import {IconButton,Icon} from '@material-ui/core/';
 
 class DriverRequest extends React.Component {
   render() {
@@ -21,14 +20,14 @@ class DriverRequest extends React.Component {
      <Grid container direction="row" justify="center" >
 	<img
             src={profile}
-            height={80}
-	    width={80}
+            height={100}
+	    width={100}
 	    style={{ alignSelf: 'center',borderRadius: 400/ 2,marginBottom: 50  }}
           />
 	<h1  style={{ marginLeft:10 }} > Name Name </h1>
 	</Grid>
 	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'15vh',width:'55vh'}}>
-         <h2 style={{ marginLeft:10 }}>Driver's Info</h2>
+	<h2 style={{ marginLeft:10 }}>Driver's Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<img src={note} style={{ marginLeft: 10 ,width:'2vh'}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Driving License No." />	

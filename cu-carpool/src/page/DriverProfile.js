@@ -26,7 +26,6 @@ class DriverProfile extends React.Component {
           />
 	<h1  style={{ marginLeft:10 }} > Name Name </h1>
 	</Grid>
-  	
 	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'15vh',width:'55vh'}}>
          <h2 style={{ marginLeft: 10}} >Driver's Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>

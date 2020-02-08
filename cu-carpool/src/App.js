@@ -28,7 +28,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   app: {
     fontFamily: 'Roboto',
-    fontSize: '16px',
+    fontSize: '14px',
   },
   body: {
     margin: '30px',
@@ -36,10 +36,10 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  const [user, setUser] = React.useState({ id: 1 });
+   const [user, setUser] = React.useState({ id: 1 });
   // for admin
   //const [user, setUser] = React.useState({ username: 'focus' });
-  //const [user, setUser] = React.useState({ username: 'JEDI' });
+  // const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
   //const [user, setUser] = React.useState(null);
 
