@@ -7,6 +7,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { withRouter } from 'react-router-dom';
 
+
 const useStyles = makeStyles({
   root: {
     color: '#777777',
@@ -19,7 +20,6 @@ const LoginForm = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
-
   return (
     <Grid container direction="column" justify="flex-start">
       <div style={{ marginBottom: 5 }}> USERNAME </div>
