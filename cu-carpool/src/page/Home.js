@@ -4,6 +4,10 @@ import { Paper, InputBase, IconButton, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import GroupIcon from '@material-ui/icons/Group';
+import FlagIcon from '@material-ui/icons/Flag';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -26,10 +30,11 @@ const Home = () => {
   const [tripList, setTripList] = React.useState([
     {
       id: 1,
-      departure_detail: 'Bangkok',
-      destination_detail: 'Sukhothai',
+      departure_detail: 'siam',
+      departure_province: 'Bangkok',
+      destination_detail: 'hospital',
+      destination_province: 'Sukhothai',
       start_datetime: null,
-      owner: { id: 2, photo: null, username: 'asdasdad' },
       capacity: 4,
       request: 3,
       status: 'opening',
@@ -68,7 +73,9 @@ const Home = () => {
         ({
           id,
           departure_detail,
+          departure_province,
           destination_detail,
+          destination_province,
           start_datetime,
           owner,
           capacity,

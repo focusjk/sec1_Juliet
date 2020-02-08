@@ -1,4 +1,10 @@
 module.exports = `
+CREATE TABLE admin
+(
+username varchar(20) not null,
+password varchar(20) not null,
+primary key(username)
+);
 CREATE TABLE members
 (
 id INT NOT NULL AUTO_INCREMENT,
@@ -9,36 +15,20 @@ lastName varchar(50) not null,
 phone_number varchar(10) not null,
 email varchar(200) not null,
 photo varchar(15000),
-driver_status enum('approved','pending','rejected'),
 card_holder_name varchar(100),
 card_number varchar(16),
 card_code varchar(3),
 card_expiry_date date,
 created_at datetime not null,
 amount float not null,
-primary key(id)
-);
-CREATE TABLE admin
-(
-username varchar(20) not null,
-password varchar(20) not null,
-primary key(username)
-);
-CREATE TABLE driver
-(
-id INT NOT NULL AUTO_INCREMENT,
-driving_license varchar(25) not null,
+driving_license varchar(25),
 approved_at datetime,
 approved_by varchar(20),
 rejected_at datetime,
 rejected_by varchar(20),
 edited_at datetime not null,
 driver_status enum('approved','pending','rejected'),
-car_brand varchar(50),
-plate_license varchar(50),
-capacity int,
 primary key(id),
-foreign key(id) references members(id),
 foreign key(approved_by) references admin(username),
 foreign key(rejected_by) references admin(username)
 );

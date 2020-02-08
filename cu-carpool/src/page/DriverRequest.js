@@ -4,6 +4,10 @@ import profile from '../profile.jpg';
 import { Box } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { MyFullWidthButton } from '../component/MyButton';
+import note from '../icon/note.png';
+import plate from '../icon/plate.png';
+import car from '../icon/car.png';
+import group from '../icon/group.png';
 
 class DriverRequest extends React.Component {
   render() {
@@ -12,18 +16,33 @@ class DriverRequest extends React.Component {
     <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
     <h1> Driver's form </h1>
     </div>
-     <img
+     <Grid container direction="row" justify="center" >
+	<img
             src={profile}
             height={80}
 	    width={80}
 	    style={{ alignSelf: 'center',borderRadius: 400/ 2,marginBottom: 50  }}
           />
-	<Box style={{ backgroundColor:'#C4C4C4',marginBottom: '40px' ,alignSelf: 'center',height:'30vh',width:'60vh'}}>
-         <h2>Driver's Info</h2>
-	<Input fullWidth placeholder="Driving License No." />	
-	<Input fullWidth placeholder="License Plate" />
-	<Input fullWidth placeholder="Car Brand" />
-	<Input fullWidth placeholder="Capacity" />
+	<h1  style={{ marginLeft:10 }} > Name Name </h1>
+	</Grid>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'55vh'}}>
+         <h2 style={{ marginLeft:10 }}>Driver's Info</h2>
+	<div style={{border:'1px',solid:'#DDD'}}>
+    	<img src={note} style={{ marginLeft: 10 ,width:'2vh'}}/>
+	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Driving License No." />	
+	</div>
+	<div style={{border:'1px',solid:'#DDD'}}>
+    	<img src={plate} style={{ marginLeft: 10 ,width:'2vh'}}/>
+	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="License Plate" />	
+	</div>
+	<div style={{border:'1px',solid:'#DDD'}}>
+    	<img src={car} style={{ marginLeft: 10, width:'2vh'}}/>
+	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Car Brand" />	
+	</div>
+	<div style={{border:'1px',solid:'#DDD'}}>
+    	<img src={group} style={{ marginLeft: 10 ,width:'2vh'}}/>
+	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Capacity" />	
+	</div>
         </Box>
 	<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }}>Request</MyFullWidthButton>
      </Grid>
