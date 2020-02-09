@@ -1,12 +1,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import profile from '../profile.jpg';
-import person from '../icon/person.png';
-import mail from '../icon/mail.png';
-import phone from '../icon/phone.png';
-import card from '../icon/creditcard.png';
-import lock from '../icon/lock.png';
-import calendar from '../icon/calendar.png';
+import PersonIcon from '@material-ui/icons/Person';
+import MailIcon from '@material-ui/icons/Mail';
+import PhoneIcon from '@material-ui/icons/Phone';
+import CreditCardIcon from '@material-ui/icons/CreditCard';
+import LockIcon from '@material-ui/icons/Lock';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { Box } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { MyFullWidthButton,MyDisabledFullWidthButton } from '../component/MyButton';
@@ -37,25 +37,25 @@ class Profile extends React.Component {
 	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
          <h2 style={{ marginLeft: 10}} > Personal Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={person} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<PersonIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="First Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={person} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<PersonIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Last Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={mail} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<MailIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Email" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={phone} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<PhoneIcon style={{ marginLeft: 10}} />
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Telephone No." onChange={() => {
               this.setState({change:true});
             }}/>		
@@ -64,25 +64,25 @@ class Profile extends React.Component {
 	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
          <h2 style={{ marginLeft: 10}} > Credit Card Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={person} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<PersonIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Cardholder Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={card} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<CreditCardIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Card Number" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>	
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={calendar} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<CalendarTodayIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Expiry date" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>	
 	<div style={{border:'1px',solid:'#DDD'}}>
-    	<img src={lock} style={{ marginLeft: 10 ,width:'2vh'}}/>
+    	<LockIcon style={{ marginLeft: 10}}/>
 	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Security Code" onChange={() => {
               this.setState({change:true});
             }}/>		
