@@ -21,11 +21,28 @@ const provinceMenuItem = () =>
       {name}
     </MenuItem>
   ));
-const CreateTrip = () => {
-  const [form, setForm] = useState({});
+const CreateTrip = user => {
+  const [form, setForm] = useState({
+    departure_latitude: null,
+    departure_longtitude: null,
+    departure_detail: null,
+    departure_province: null,
+    destination_latitude: null,
+    destination_longtitude: null,
+    destination_detail: null,
+    destination_province: null,
+    start_datetime: null,
+    car_brand: null,
+    plate_license: null,
+    capacity: null,
+  });
   const handleCreate = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/trip', form);
+      const { id } = user;
+      const response = await axios.post('http://localhost:4000/trip/create', {
+        ...form,
+        owner: id,
+      });
       console.log(response);
     } catch (e) {
       console.log(e.response);

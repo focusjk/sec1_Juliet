@@ -8,7 +8,7 @@ primary key(username)
 CREATE TABLE members
 (
 id INT NOT NULL AUTO_INCREMENT,
-username varchar(20) not null,
+username varchar(20) not null UNIQUE,
 password varchar(20) not null,
 firstName varchar(50) not null,
 lastName varchar(50) not null,
