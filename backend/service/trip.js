@@ -26,7 +26,7 @@ const createTrip = (
                                         destination_latitude,destination_longtitude,destination_detail,
                                         start_datetime,owner,car_brand,plate_license,capacity,created_at,
                                         departure_province,destination_province,price)` +
-      `VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     [
       departure_latitude,
       departure_longtitude,
