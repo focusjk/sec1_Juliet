@@ -8,7 +8,7 @@ primary key(username)
 CREATE TABLE members
 (
 id INT NOT NULL AUTO_INCREMENT,
-username varchar(20) not null,
+username varchar(20) not null UNIQUE,
 password varchar(20) not null,
 firstName varchar(50) not null,
 lastName varchar(50) not null,
@@ -37,11 +37,11 @@ CREATE TABLE trip
 id int not null AUTO_INCREMENT,
 departure_latitude decimal(9,6) not null,
 departure_longtitude decimal(9,6) not null,
-departure_detail varchar(30),
+departure_detail varchar(30) not null,
 departure_province varchar(30) not null,
 destination_latitude decimal(9,6) not null,
 destination_longtitude decimal(9,6) not null,
-destination_detail varchar(30),
+destination_detail varchar(30) not null,
 destination_province varchar(30) not null,
 start_datetime datetime not null,
 created_at datetime not null,
