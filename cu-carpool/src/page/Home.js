@@ -1,31 +1,35 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, InputBase, IconButton, Avatar } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import {
+  MenuItem,
+  TextField,
+  Typography,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TripCard from '../component/TripCard';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import GroupIcon from '@material-ui/icons/Group';
 import FlagIcon from '@material-ui/icons/Flag';
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    // border: '1px solid #BDBDBD',
-    borderRadius: '48px',
-    boxShadow: 'none',
-    padding: '0 16px',
-    flex: 1,
-  },
-  input: {
-    flex: 1,
-  },
-  iconButton: {
-    padding: 0,
-    marginLeft: '8px',
-  },
-});
 
+const useStyles = makeStyles({
+  box: { display: 'flex', width: '100%', flexWrap: 'wrap', flexDirection: 'column' },
+  panel: { backgroundColor: '#EFEFEF', boxShadow: 'none' },
+});
+const province = [
+  { name: 'none', value: '' },
+  { name: 'Bangkok', value: 'Bangkok' },
+  { name: 'Sukhothai', value: 'Sukhothai' },
+];
+
+const provinceMenuItem = () =>
+  province.map(({ name, value }) => (
+    <MenuItem key={name} value={value}>
+      {name}
+    </MenuItem>
+  ));
 const Home = () => {
   const [tripList, setTripList] = React.useState([
     {
@@ -34,80 +38,69 @@ const Home = () => {
       departure_province: 'Bangkok',
       destination_detail: 'hospital',
       destination_province: 'Sukhothai',
-      start_datetime: null,
+      start_datetime: '1999-12-06 13:14:25',
       capacity: 4,
       request: 3,
       status: 'opening',
     },
   ]);
-  const [keyword, setKeyword] = React.useState('');
-  const [openFilter, setOpenFilter] = React.useState(false);
+  const [departure, setDeparture] = React.useState('');
+  const [destination, setDestination] = React.useState('');
+  const [selectedDate, setSelectedDate] = React.useState(null);
 
   const classes = useStyles();
   return (
     <div>
-      <div style={{ display: 'flex', marginBottom: '16px' }}>
-        <Paper variant="outlined" component="form" className={classes.root}>
-          <InputBase
-            className={classes.input}
-            placeholder="Search..."
-            value={keyword}
-            onChange={e => setKeyword(e.target.value)}
-          />
-          <IconButton type="submit" className={classes.iconButton}>
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <IconButton
-          type="submit"
-          className={classes.iconButton}
-          onClick={() => setOpenFilter(!openFilter)}
-        >
-          {!openFilter && <ArrowDropDownIcon />}
-          {openFilter && <ArrowDropUpIcon />}
-        </IconButton>
-      </div>
-      {openFilter && <div>Filter jaaa</div>}
+      <ExpansionPanel className={classes.panel}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography variant="h6">Search</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <div className={classes.box}>
+            <TextField
+              id="departure"
+              select
+              value={departure}
+              onChange={e => setDeparture(e.target.value)}
+              InputProps={{
+                startAdornment: <LocationOnIcon style={{ marginRight: 16 }} />,
+              }}
+              style={{ marginBottom: 16 }}
+            >
+              {provinceMenuItem()}
+            </TextField>
 
-      {tripList.map(
-        ({
-          id,
-          departure_detail,
-          departure_province,
-          destination_detail,
-          destination_province,
-          start_datetime,
-          owner,
-          capacity,
-          request,
-          status,
-        }) => (
-          <Paper
-            square
-            variant="outlined"
-            key={id}
-            style={{
-              marginTop: '16px',
-              padding: 8,
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} /> */}
+            <TextField
+              select
+              value={destination}
+              onChange={e => setDestination(e.target.value)}
+              InputProps={{
+                startAdornment: <FlagIcon style={{ marginRight: 16 }} />,
+              }}
+              style={{ marginBottom: 16 }}
+            >
+              {provinceMenuItem()}
+            </TextField>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>From Bangkok</div>
-              <div>To Sukhothai</div>
-              <div>2/2/2020 12.00</div>
-              <div>Capacity: 3/5</div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>200 baht</div>
-              <div>More detail...</div>
-            </div>
-          </Paper>
-        )
-      )}
+            <TextField
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                startAdornment: <CalendarTodayIcon style={{ marginRight: 16 }} />,
+              }}
+              value={selectedDate}
+              onChange={e => setSelectedDate(e.target.value)}
+              style={{ marginBottom: 16 }}
+            />
+          </div>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      {tripList.map(trip => (
+        <TripCard data={trip} />
+      ))}
     </div>
   );
 };

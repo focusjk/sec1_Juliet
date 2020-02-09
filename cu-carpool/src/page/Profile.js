@@ -10,6 +10,7 @@ import calendar from '../icon/calendar.png';
 import { Box } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { MyFullWidthButton } from '../component/MyButton';
+import UploadIcon from '../component/UploadIcon';
 
 class Profile extends React.Component {
   render() {
@@ -21,10 +22,11 @@ class Profile extends React.Component {
      <Grid container direction="row" justify="center" >
 	<img
             src={profile}
-            height={80}
-	    width={80}
-	    style={{ alignSelf: 'center',borderRadius: 400/ 2,marginBottom: 50  }}
+            height={100}
+	    width={100}
+	    style={{ alignSelf: 'center',borderRadius: 400/ 2,marginBottom:50 }}
           />
+	<UploadIcon />	
 	<h1  style={{ marginLeft:10 }} > Name Name </h1>
 	</Grid>
 	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
