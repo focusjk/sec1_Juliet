@@ -20,8 +20,6 @@ const createTrip = (
   },
   callback
 ) => {
- 
-
   return db.query(
     `INSERT INTO trip ` +
       `(departure_latitude,departure_longtitude,departure_detail,

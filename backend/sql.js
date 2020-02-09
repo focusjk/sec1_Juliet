@@ -1,44 +1,34 @@
 module.exports = `
-CREATE TABLE members
-(
-id INT NOT NULL AUTO_INCREMENT,
-username varchar(20) not null,
-password varchar(20) not null,
-firstName varchar(50) not null,
-lastName varchar(50) not null,
-phone_number varchar(10) not null,
-email varchar(200) not null,
-photo varchar(15000),
-driver_status enum('approved','pending','rejected'),
-card_holder_name varchar(100),
-card_number varchar(16),
-card_code varchar(3),
-card_expiry_date date,
-created_at datetime not null,
-amount float not null,
-primary key(id)
-);
 CREATE TABLE admin
 (
 username varchar(20) not null,
 password varchar(20) not null,
 primary key(username)
 );
-CREATE TABLE driver
+CREATE TABLE members
 (
 id INT NOT NULL AUTO_INCREMENT,
-driving_license varchar(25) not null,
+username varchar(20) not null UNIQUE,
+password varchar(20) not null,
+firstName varchar(50) not null,
+lastName varchar(50) not null,
+phone_number varchar(10) not null,
+email varchar(200) not null,
+photo varchar(15000),
+card_holder_name varchar(100),
+card_number varchar(16),
+card_code varchar(3),
+card_expiry_date date,
+created_at datetime not null,
+amount float not null,
+driving_license varchar(25),
 approved_at datetime,
 approved_by varchar(20),
 rejected_at datetime,
 rejected_by varchar(20),
 edited_at datetime not null,
 driver_status enum('approved','pending','rejected'),
-car_brand varchar(50),
-plate_license varchar(50),
-capacity int,
 primary key(id),
-foreign key(id) references members(id),
 foreign key(approved_by) references admin(username),
 foreign key(rejected_by) references admin(username)
 );
@@ -47,10 +37,12 @@ CREATE TABLE trip
 id int not null AUTO_INCREMENT,
 departure_latitude decimal(9,6) not null,
 departure_longtitude decimal(9,6) not null,
-departure_detail varchar(100),
+departure_detail varchar(30) not null,
+departure_province varchar(30) not null,
 destination_latitude decimal(9,6) not null,
 destination_longtitude decimal(9,6) not null,
-destination_detail varchar(100),
+destination_detail varchar(30) not null,
+destination_province varchar(30) not null,
 start_datetime datetime not null,
 created_at datetime not null,
 owner int not null,
@@ -58,6 +50,7 @@ car_brand varchar(50),
 plate_license varchar(50),
 capacity int not null,
 status enum('opening', 'canceled', 'done') not null,
+price float not null,
 primary key(id),
 foreign key(owner) references members(id)
 );
