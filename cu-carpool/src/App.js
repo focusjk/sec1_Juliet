@@ -29,7 +29,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   app: {
     fontFamily: 'Roboto',
-    fontSize: '14px',
+    fontSize: '16px',
   },
   body: {
     margin: '30px',
