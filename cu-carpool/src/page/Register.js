@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 
 class Register extends React.Component {
   render() {
+    // const [error, setError] = React.useState(false);
     return (
       <Grid container direction="column" alignItems="stretch" justifyContent="center">
         <h1 style={{ marginBottom: 10 }}> Hello,</h1>
@@ -20,7 +21,8 @@ class Register extends React.Component {
         <Upload />
         <MyFullWidthButton style={{ marginTop: 50 }}
           // onClick={() => {
-          //   this.props.history.push('/login');
+          //   {this.props.user === "" ? (error) => {setError('yes')} : (error) => {setError('no')} }
+          //   // this.props.history.push('/');
           // }}
         >
           Sign Up

@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -52,4 +52,4 @@ const LoginForm = () => {
   );
 };
 
-export default withRouter(LoginForm);
+export default LoginForm;
