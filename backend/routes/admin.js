@@ -13,7 +13,7 @@ router.post('/login', function(req, res, next) {
 router.get('/driver', function(req, res, next) {
   adminService.getAllMember((err, result) => {
     if (err) {
-        res.json(err);
+      res.json({success: false, error: err, message: "Cannot access drivers information"});
     }
     else {
         console.log(result)
