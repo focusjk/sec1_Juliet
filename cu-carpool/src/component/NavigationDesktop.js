@@ -50,7 +50,8 @@ const NavigationDesktop = ({ history, user, handleLogout }) => {
         </Typography>
         <MyButton
           onClick={() => {
-            handleLogout();
+            history.push('/admin/login');
+            // handleLogout();
           }}
         >
           Sign out
