@@ -18,8 +18,10 @@ const RegisterForm = () => {
   const classes = useStyles();
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
+  // const [text, setError] = React.useState('');
   return (
     <Grid container direction="column" justify="flex-start" alignItems="stretch">
+
       <div style={{ marginBottom: 5 }}>FIRST NAME</div>
       <Input fullWidth placeholder="First Name" className={classes.root} />
 

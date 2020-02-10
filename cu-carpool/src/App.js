@@ -39,9 +39,9 @@ const App = () => {
   //for member
    // const [user, setUser] = React.useState({ id: 1 });
   // for admin
-  const [user, setUser] = React.useState({ username: 'JEDI' });
+  // const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
-  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
