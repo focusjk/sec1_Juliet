@@ -15,5 +15,19 @@ const getAllMember = (callback) => {
                   FROM members WHERE driver_status = 'approved'` , callback);
 }
 
+const driverApprove = (admin_name,approved_at,driver_id,callback) => {
+  console.log('Approved by : ',admin_name);
+  console.log('Member ID: ',driver_id);
+  return db.query(`UPDATE members SET approved_by = ?,approved_at = ? WHERE id = ?`,[admin_name,approved_at,driver_id],callback);
+}
 
-module.exports = { login, getAllMember};
+function getCurrentDateTimeString() {
+  const date = new Date();
+  return date.getFullYear() + '-' +
+      (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+      date.getDate().toString().padStart(2, '0') + ':' +
+      date.getHours().toString().padStart(2, '0') + ':' +
+      date.getMinutes().toString().padStart(2, '0') + ':' +
+      date.getSeconds().toString().padStart(2, '0');
+}
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString};

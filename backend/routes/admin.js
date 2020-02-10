@@ -23,7 +23,17 @@ router.get('/driver', function(req, res, next) {
 });
 
 router.post('/driver-approve', function(req, res, next) {
-  res.send('respond with a resource');
+  const { admin_name , id } = req.body;
+  console.log(req.body);
+  console.log(admin_name);
+  const approved_at = adminService.getCurrentDateTimeString();
+  adminService.driverApprove(admin_name,approved_at,id,(err,result) => {
+    if(err) {
+      res.json({success: false, error: err.sqlMessage , message: "Cannot approve user"});
+    }else{
+      res.json({success: true});
+    }
+  });
 });
 
 router.post('/driver-reject', function(req, res, next) {
