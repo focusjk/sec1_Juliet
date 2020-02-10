@@ -5,6 +5,16 @@ var tripService = require('../service/trip');
 router.post('/', function(req, res, next) {
   const { departure, destination, selectedDate } = req.body;
   console.log(departure, destination, selectedDate);
+  tripService.searchTrip(req.body,(err,result)=>{
+    if(err){
+      console.log(err);
+      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT SEARCH TRIP!!!' });
+    }
+    else{
+      console.log(result)
+      res.json({success: true, trip:result,count:result.lenght});
+    }
+  })
   const trip = [
     {
       id: 1,
@@ -18,7 +28,7 @@ router.post('/', function(req, res, next) {
       status: 'opening',
     },
   ];
-  res.json({ success: true, trip });
+  // res.json({ success: true, trip });
 });
 
 router.post('/create', function(req, res, next) {

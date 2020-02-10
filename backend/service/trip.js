@@ -48,4 +48,22 @@ const createTrip = (
   );
 };
 
-module.exports = { createTrip };
+const searchTrip = ({ departure, destination, selectedDate },callback)=>{
+  return db.query(`SELECT 
+                          trip.id,
+                          trip.departure_detail,
+                          trip.departure_province,
+                          trip.destination_detail,
+                          trip.destination_province,
+                          trip.start_datetime,
+                          capacity,
+                          Count(Distinct request.id) AS request,
+                          status 
+                          FROM trip left join request on trip.id = request.trip_id 
+                          WHERE trip.start_datetime LIKE '%` + selectedDate + `%' AND
+                          (trip.departure_detail LIKE '%` + departure + `%' OR trip.departure_province LIKE '%` + departure + `%') OR
+                          (trip.destination_detail LIKE '%` + destination + `%' OR trip.destination_province LIKE '%` + destination + `%' )
+                          GROUP BY trip.id
+                          ORDER BY trip.start_datetime`,callback);
+};
+module.exports = { createTrip , searchTrip};
