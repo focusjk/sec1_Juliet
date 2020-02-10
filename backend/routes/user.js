@@ -7,19 +7,14 @@ router.post('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/register', function(req, res, next) {
-  var created_at = new Date();
-  var date = created_at.toISOString().split('T')[0];
-  var time_hour = created_at.getHours()
-  var time_min = created_at.getMinutes()
-  var time_sec = created_at.getSeconds()
+router.post('/register', function(req, res, next) { 
   var amount = 0;
-  created_at = date + ' ' + time_hour+':' + time_min+':'+time_sec;
+  var created_at = userService.getCurrentDateTimeString()
   console.log('created_time :', created_at);
   const { username, ...data } = req.body
   userService.register(username,data,created_at,amount,(err,result)=> {
     if (err) {
-      //console.log(err);
+      console.log(err);
       res.json({success: false, error: err.sqlMessage, message: "Registration error"});
     }
     else {
@@ -28,8 +23,7 @@ router.post('/register', function(req, res, next) {
         if (err){
           console.log(err);
           res.json({success: false, error: err.sqlMessage, message: "Get information error"});
-        }
-        else{
+        }else{
           console.log(result);
           res.json({success: true, information: result});
         }
@@ -39,7 +33,16 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  res.send('respond with a resource');
+  const {username,password} = req.body;
+  userService.login(username,password,(err,result)=>{
+    if (err) {
+      console.log(err);
+      res.json({success: false, error: err.sqlMessage, message: "Invalid username/password"});
+    } else {
+      console.log(result);
+      res.json({success:true, information: result})
+    }
+  });
 });
 
 module.exports = router;
