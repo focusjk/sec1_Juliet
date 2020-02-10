@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import RegisterForm from '../component/RegisterForm';
 import { MyFullWidthButton } from '../component/MyButton';
 import Upload from '../component/Upload';
@@ -17,15 +18,23 @@ class Register extends React.Component {
 
         <RegisterForm />
         <Upload />
-        <MyFullWidthButton style={{ marginTop: 40 }}>Sign Up</MyFullWidthButton>
+        <MyFullWidthButton style={{ marginTop: 50 }}
+          // onClick={() => {
+          //   this.props.history.push('/login');
+          // }}
+        >
+          Sign Up
+        </MyFullWidthButton>
 
         <Link
-          href="#"
           style={{
             color: '#bdbdbd',
-            marginTop: 30,
+            marginTop: 25,
             textDecoration: 'underline',
             alignSelf: 'center',
+          }}
+          onClick={() => {
+            this.props.history.push('/login');
           }}
         >
           Already a member ?
@@ -35,4 +44,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);
