@@ -10,8 +10,24 @@ const register = (username,data,created_at,amount,callback) => {
 
   const getMemberInfo = (username,callback) => {
     console.log('get member info')
-    return db.query(`SELECT username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
+    return db.query(`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
       card_code,card_expiry_date,amount FROM members WHERE username = ?`, [username],callback);
   }
+
+  function getCurrentDateTimeString() {
+    const date = new Date();
+    return date.getFullYear() + '-' +
+        (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+        date.getDate().toString().padStart(2, '0') + ':' +
+        date.getHours().toString().padStart(2, '0') + ':' +
+        date.getMinutes().toString().padStart(2, '0') + ':' +
+        date.getSeconds().toString().padStart(2, '0');
+  }
   
-  module.exports =  { register,getMemberInfo};
+  function login(username,password,callback){
+    console.log('login user:',username);
+    return db.query(`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
+    card_code,card_expiry_date,amount FROM members WHERE username = ? AND password = ?`, [username,password],callback);
+
+  }
+  module.exports =  { register,getMemberInfo,getCurrentDateTimeString,login};
