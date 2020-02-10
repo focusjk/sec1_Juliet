@@ -15,7 +15,7 @@ class DriverRequest extends React.Component {
   }
   render() {
     return (
-     <Grid container direction="column" justify="flex-start">
+     <Grid container direction="column" justify="flex-start" style={{width:"100%"}}>
     <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
     <h1> Driver's form </h1>
     </div>
@@ -28,22 +28,22 @@ class DriverRequest extends React.Component {
           />
 	<h2  style={{ marginLeft:10 }} > Name Name </h2>
 	</Grid>
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'15vh',width:'55vh'}}>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'20vh',width:'90%'}}>
 	<h2 style={{ marginLeft:10 }}>Driver's Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	< NoteIcon style={{ marginLeft: 10}}/>
 
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Driving License No." onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Driving License No." onChange={() => {
               this.setState({change:true});
             }}/>	
 	</div>
         </Box>
 	 <Switch>
 	 {!this.state.change && (
-		<MyDisabledFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }} disabled={true}>Request</MyDisabledFullWidthButton>
+		<MyDisabledFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'80%',alignSelf: 'center' }} disabled={true}>Request</MyDisabledFullWidthButton>
             )}
 	 {this.state.change && (
-		<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }} onClick={() => {
+		<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'80%',alignSelf: 'center' }} onClick={() => {
               this.setState({change:false});
             }}>Request</MyFullWidthButton>
             )}
