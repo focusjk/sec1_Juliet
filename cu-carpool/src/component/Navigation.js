@@ -32,7 +32,7 @@ const listPath = {
 };
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: "100%",
   },
   barSection: { flexGrow: 1 },
   barItem: { cursor: 'pointer' },

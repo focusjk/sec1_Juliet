@@ -11,23 +11,24 @@ const listPath = [
 ];
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: "100%",
   },
   bar: { backgroundColor: '#C78899' },
   barSection: { flexGrow: 1, display: 'flex' },
-  barItem: { marginRight: '36px', cursor: 'pointer' },
+  barItem: { marginRight: '1%', cursor: 'pointer' },
 });
 
 const NavigationDesktop = ({ history, user, handleLogout }) => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.bar} position="static">
+    <AppBar className={classes.bar} position="static" style={{width:"100%"}}>
       <Toolbar>
         <div className={classes.barSection}>
           <img
             className={classes.barItem}
             src={logo}
-            height={50}
+	    height={60}
+	    width={'30%'}
             onClick={() => {
               history.push('/');
             }}

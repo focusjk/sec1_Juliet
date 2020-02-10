@@ -20,7 +20,7 @@ class Profile extends React.Component {
   }
   render() {
      return(
-    <Grid container direction="column" justify="flex-start">
+    <Grid container direction="column" justify="flex-start" style={{width:"100%"}}>
     <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
     <h1> My Profile </h1>
     </div>
@@ -34,66 +34,66 @@ class Profile extends React.Component {
 	<UploadIcon />	
 	<h2  style={{ marginLeft:10 }} > Name Name </h2>
 	</Grid>
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'90%'}}>
          <h2 style={{ marginLeft: 10}} > Personal Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<PersonIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="First Name" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="First Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<PersonIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Last Name" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Last Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<MailIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Email" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Email" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<PhoneIcon style={{ marginLeft: 10}} />
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Telephone No." onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Telephone No." onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
         </Box>
-	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'60vh'}}>
+	<Box style={{ backgroundColor:'#F8F8F8',marginBottom: '40px' ,alignSelf: 'center',height:'35vh',width:'90%'}}>
          <h2 style={{ marginLeft: 10}} > Credit Card Info</h2>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<PersonIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Cardholder Name" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Cardholder Name" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<CreditCardIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Card Number" onChange={() => {
+	<Input style={{ marginLeft:'3%', width:'80%'}}  fullWidth placeholder="Card Number" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>	
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<CalendarTodayIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Expiry date" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Expiry date" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>	
 	<div style={{border:'1px',solid:'#DDD'}}>
     	<LockIcon style={{ marginLeft: 10}}/>
-	<Input style={{ marginLeft: 20, width:'45vh'}}  fullWidth placeholder="Security Code" onChange={() => {
+	<Input style={{ marginLeft: '3%', width:'80%'}}  fullWidth placeholder="Security Code" onChange={() => {
               this.setState({change:true});
             }}/>		
 	</div>	
         </Box>
 	 <Switch>
 	 {!this.state.change && (
-		<MyDisabledFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }} disabled={true}>Save</MyDisabledFullWidthButton>
+		<MyDisabledFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'80%',alignSelf: 'center' }} disabled={true}>Save</MyDisabledFullWidthButton>
             )}
 	 {this.state.change && (
-		<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'60vh',alignSelf: 'center' }} onClick={() => {
+		<MyFullWidthButton style={{ marginTop: 10,marginButtom: 10,width:'80%',alignSelf: 'center' }} onClick={() => {
               this.setState({change:false});
             }}>Save</MyFullWidthButton>
             )}
