@@ -190,7 +190,7 @@ const Register = ({ history, user }) => {
             alignSelf: 'center',
           }}
           onClick={() => {
-            this.props.history.push('/login');
+            history.push('/login');
           }}
         >
           Already a member ?
