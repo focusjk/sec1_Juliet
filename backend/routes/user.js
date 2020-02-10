@@ -40,7 +40,11 @@ router.post('/login', function(req, res, next) {
       res.json({success: false, error: err.sqlMessage, message: "Invalid username/password"});
     } else {
       console.log(result);
-      res.json({success:true, information: result})
+      if (result == ""){
+        res.json({success:false, message: "Invalid username/password"})
+      }else{
+        res.json({success:true, information: result});
+      }
     }
   });
 });
