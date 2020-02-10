@@ -11,7 +11,6 @@ import Link from '@material-ui/core/Link';
 
 import { Input } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -24,18 +23,18 @@ const useStyles = makeStyles({
   },
 });
 
-const Register = ({ history, user }) => {
+const Register = ({ history }) => {
   const [form, setForm] = useState({
-    first_name: null,
-    last_name: null,
+    firstname: null,
+    lastname: null,
     username: null,
     password: null,
     email: null,
     phone_number: null,
   });
   const [error, setError] = useState({
-    first_name: false,
-    last_name: false,
+    firstname: false,
+    lastname: false,
     username: false,
     password: false,
     email: false,
@@ -44,16 +43,16 @@ const Register = ({ history, user }) => {
 
   const validate = () => {
     setError({
-      first_name: !form.first_name,
-      last_name: !form.last_name,
+      firstname: !form.firstname,
+      lastname: !form.lastname,
       username: !form.username,
       password: !form.password,
       email: !form.email,
       phone_number: !form.phone_number,
     });
     return !(
-      error.first_name ||
-      error.last_name ||
+      error.firstname ||
+      error.lastname ||
       error.username ||
       error.password ||
       error.email ||
@@ -65,13 +64,8 @@ const Register = ({ history, user }) => {
   const handleRegister = async () => {
     if (validate()) {
       try {
-        const { id } = user;
-        const { time, date, ...data } = form;
-        const response = await axios.post('http://localhost:4000/register', {
-          ...data,
-          owner: id,
-          // start_datetime: date + ' ' + time + ':00',
-        });
+        console.log(form)
+        const response = await axios.post('http://localhost:4000/user/register', form);
         console.log(response);
         const { success } = response.data;
         if (success) {
@@ -85,18 +79,12 @@ const Register = ({ history, user }) => {
           console.log('ERROR');
         }
       } catch (e) {
-        console.log(e.response);
+        console.log(e);
       }
     }
   };
 
-
-// class Register extends React.Component {
-//   render() {
-    // const [error, setError] = React.useState(false);
-
     const classes = useStyles();
-    const [password, setPassword] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
@@ -112,16 +100,16 @@ const Register = ({ history, user }) => {
           <div style={{ marginBottom: 5 }}>FIRST NAME</div>
           <Input fullWidth placeholder="First Name" className={classes.root} 
           // helperText="First Name *"
-          value={form.first_name}
-          error={error.first_name}
-          onChange={e => setForm({ ...form, first_name: e.target.value })}
+          value={form.firstname}
+          error={error.firstname}
+          onChange={e => setForm({ ...form, firstname: e.target.value })}
           />
 
           <div style={{ marginBottom: 5 }}>LAST NAME</div>
           <Input fullWidth placeholder="Last Name" className={classes.root} 
-          value={form.last_name}
-          error={error.last_name}
-          onChange={e => setForm({ ...form, last_name: e.target.value })}
+          value={form.lastname}
+          error={error.lastname}
+          onChange={e => setForm({ ...form, lastname: e.target.value })}
           />
 
           <div style={{ marginBottom: 5 }}>USERNAME</div>
@@ -139,7 +127,6 @@ const Register = ({ history, user }) => {
             value={form.password}
             error={error.password}
             onChange={e => setForm({ ...form, password: e.target.value })}
-            onChange={e => setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -174,10 +161,6 @@ const Register = ({ history, user }) => {
         <Upload />
         <MyFullWidthButton style={{ marginTop: 50 }}
           onClick={handleRegister}
-          // onClick={() => {
-          //   {this.props.user === "" ? (error) => {setError('yes')} : (error) => {setError('no')} }
-          //   // this.props.history.push('/');
-          // }}
         >
           Sign Up
         </MyFullWidthButton>
