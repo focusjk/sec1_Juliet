@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 // import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import LoginForm from '../component/LoginForm';
 import { MyFullWidthButton } from '../component/MyButton';
-// import Navigation from '../component/Navigation';
 import { Box } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';

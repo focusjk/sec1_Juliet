@@ -78,9 +78,6 @@ const App = () => {
             {user && !user.id && (
               <div>
                 <NavigationDesktop user={user} handleLogout={() => setUser(null)} />
-                <Route path="/admin/login">
-                  <AdminLogin user={user} />
-                </Route>
                 <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
@@ -90,7 +87,10 @@ const App = () => {
             {!user && (
               <div className={classes.body}>
                 <Route path="/register">
-                  <Register user={user} />
+                  <Register handleLogin={(user) => setUser(user)} />
+                </Route>
+                <Route path="/admin/login">
+                  <AdminLogin user={user} />
                 </Route>
                 <Route path="/login">
                   <Login user={user} />

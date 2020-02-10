@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import RegisterForm from '../component/RegisterForm';
 import { MyFullWidthButton } from '../component/MyButton';
 import Upload from '../component/Upload';
 import { Box } from '@material-ui/core';
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Register = ({ history }) => {
+const Register = ({ history, handleLogin, handleUpload }) => {
   const [form, setForm] = useState({
     firstname: null,
     lastname: null,
@@ -31,6 +30,7 @@ const Register = ({ history }) => {
     password: null,
     email: null,
     phone_number: null,
+    photo: null
   });
   const [error, setError] = useState({
     firstname: false,
@@ -67,15 +67,11 @@ const Register = ({ history }) => {
         console.log(form)
         const response = await axios.post('http://localhost:4000/user/register', form);
         console.log(response);
-        const { success } = response.data;
+        const { success, information } = response.data;
         if (success) {
+          handleLogin(information);
           history.push('/');
         } else {
-          //   {
-          //     "success": false,
-          //     "error": "Column 'price' cannot be null",
-          //     "message": "CANNOT CREATE TRIP!!!"
-          // }
           console.log('ERROR');
         }
       } catch (e) {
@@ -85,6 +81,7 @@ const Register = ({ history }) => {
   };
 
     const classes = useStyles();
+
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
@@ -158,7 +155,12 @@ const Register = ({ history }) => {
           <div style={{ marginBottom: 10 }}>PROFILE PICTURE</div>
         </Grid>
         
-        <Upload />
+        <Upload 
+        value={form.photo}
+        // onChange={e => setForm({ ...form, photo: e.target.value })} 
+        // handleLogin={(user) => setUser(user)}
+        onChange={e => handleUpload}
+        />
         <MyFullWidthButton style={{ marginTop: 50 }}
           onClick={handleRegister}
         >
@@ -173,7 +175,7 @@ const Register = ({ history }) => {
             alignSelf: 'center',
           }}
           onClick={() => {
-            this.props.history.push('/login');
+            history.push('/login');
           }}
         >
           Already a member ?
