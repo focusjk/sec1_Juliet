@@ -58,12 +58,7 @@ const CreateTrip = ({ history, user }) => {
     setError({
       car_brand: !form.car_brand,
       plate_license: !form.plate_license,
-      capacity: !(
-        form.capacity &&
-        form.capacity > 0 &&
-        form.capacity < 50 &&
-        form.capacity % 10 == 0
-      ),
+      capacity: !(form.capacity && form.capacity > 0 && form.capacity < 50),
       price: !(form.capacity && form.capacity > 0),
       departure_detail: !form.departure_detail,
       departure_province: !form.departure_province,
@@ -102,10 +97,15 @@ const CreateTrip = ({ history, user }) => {
           start_datetime: date + ' ' + time + ':00',
         });
         console.log(response);
-        const { success } = response;
+        const { success } = response.data;
         if (success) {
           history.push('/my-trip');
         } else {
+          //   {
+          //     "success": false,
+          //     "error": "Column 'price' cannot be null",
+          //     "message": "CANNOT CREATE TRIP!!!"
+          // }
           console.log('ERROR');
         }
       } catch (e) {
