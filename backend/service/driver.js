@@ -33,8 +33,7 @@ const getMemberInfo = (ID,callback) => {
 
   const driverReq = (ID, data, callback) => {
     console.log('update driver_status to pending: id = ', ID);
-    console.log('data', data)
-    return db.query(`UPDATE members SET driver_status = 'pending' WHERE id = ?`, [ID], callback);
+    return db.query(`UPDATE members SET driver_status = 'pending', ? WHERE id = ?`, [data,ID], callback);
 }
 
 module.exports = { getByID, updateProfileByID , updateTime, getMemberInfo, driverReq};
