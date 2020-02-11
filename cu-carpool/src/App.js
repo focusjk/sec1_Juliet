@@ -37,11 +37,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-   const [user, setUser] = React.useState({ id: 1 });
+  // const [user, setUser] = React.useState({ id: 1 });
   // for admin
-  // const [user, setUser] = React.useState({ username: 'JEDI' });
+  const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
-  //const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -78,10 +78,13 @@ const App = () => {
             {user && !user.id && (
               <div>
                 <NavigationDesktop user={user} handleLogout={() => setUser(null)} />
+                <Route path="/admin/login">
+                  <AdminLogin user={user} />
+                </Route>
                 <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
-                <Redirect to="/admin/driver-request" />
+                {/* <Redirect to="/admin/driver-request" /> */}
               </div>
             )}
             {!user && (
@@ -92,7 +95,7 @@ const App = () => {
                 <Route path="/login">
                   <Login user={user} />
                 </Route>
-                <Redirect to="/register" />
+                <Redirect to="/login" />
               </div>
             )}
           </Switch>

@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   label: {
     border: '1px dashed #BDBDBD',
     color: '#BDBDBD',
-    padding: '16px',
+    padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
   bar: { backgroundColor: '#C78899' },
   barSection: { flexGrow: 1, display: 'flex' },
-  barItem: { marginRight: '36px', cursor: 'pointer' },
+  barItem: { marginRight: '36px', cursor: 'pointer', color: 'white' },
 });
 
 const NavigationDesktop = ({ history, user, handleLogout }) => {
@@ -36,7 +36,6 @@ const NavigationDesktop = ({ history, user, handleLogout }) => {
             <Button
               key={name}
               className={classes.barItem}
-              color="inherit"
               onClick={() => {
                 history.push(path);
               }}
@@ -50,6 +49,7 @@ const NavigationDesktop = ({ history, user, handleLogout }) => {
         </Typography>
         <MyButton
           onClick={() => {
+            history.push('/admin/login');
             handleLogout();
           }}
         >
