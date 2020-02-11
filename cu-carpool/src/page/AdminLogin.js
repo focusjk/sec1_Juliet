@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Input, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import LoginForm from "../component/LoginForm";
 import axios from "axios";
-
-const useStyles = makeStyles({
-  root: {
-    color: "#777777",
-    marginBottom: 20,
-    marginRight: "30px",
-    marginLeft: "30px"
-  }
-});
 
 const AdminLogin = ({ history, handleLogin }) => {
   const [form, setForm] = useState({
@@ -22,12 +11,10 @@ const AdminLogin = ({ history, handleLogin }) => {
   const [errorMassage, setErrorMessage] = useState("");
 
   const login = async () => {
-    console.log(form);
     const response = await axios.post(
       "http://localhost:4000/admin/login",
       form
     );
-    console.log(response);
     const { success, username, message } = response.data;
     if (success) {
       handleLogin({ username });
@@ -36,7 +23,7 @@ const AdminLogin = ({ history, handleLogin }) => {
       setErrorMessage(message);
     }
   };
-  const classes = useStyles();
+
   return (
     <div
       style={{

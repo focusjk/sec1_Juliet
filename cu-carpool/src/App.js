@@ -89,7 +89,6 @@ const App = () => {
                 <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
-                {/* <Redirect to="/admin/driver-request" /> */}
               </div>
             )}
             {!user && (
@@ -101,9 +100,8 @@ const App = () => {
                   <AdminLogin handleLogin={user => setUser(user)} />
                 </Route>
                 <Route path="/login">
-                  <Login user={user} />
+                  <Login handleLogin={user => setUser(user)} />
                 </Route>
-                {/* <Redirect to="/login" /> */}
               </div>
             )}
           </Switch>

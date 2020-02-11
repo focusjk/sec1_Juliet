@@ -58,7 +58,7 @@ const LoginForm = ({
         }
       />
       <MyFullWidthButton
-        style={{ marginTop: 40 }}
+        style={{ marginTop: 40, marginBottom: 10 }}
         onClick={() => {
           handleLogin();
         }}
