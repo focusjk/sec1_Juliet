@@ -15,7 +15,7 @@ import TripCard from "../component/TripCard";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
-import province from "../province";
+import { ProvinceMenuItem } from "../component/ProvinceMenuItem"
 
 const useStyles = makeStyles({
   box: {
@@ -27,12 +27,6 @@ const useStyles = makeStyles({
   panel: { backgroundColor: "#EFEFEF", boxShadow: "none" }
 });
 
-const provinceMenuItem = () =>
-  province.map(({ name, value }) => (
-    <MenuItem key={name} value={value}>
-      {name}
-    </MenuItem>
-  ));
 const Home = () => {
   const [tripList, setTripList] = useState([]);
   const [departure, setDeparture] = useState('');
@@ -74,7 +68,7 @@ const Home = () => {
               }}
               style={{ marginBottom: 16 }}
             >
-              {provinceMenuItem()}
+              {ProvinceMenuItem()}
             </TextField>
 
             <TextField
@@ -86,7 +80,7 @@ const Home = () => {
               }}
               style={{ marginBottom: 16 }}
             >
-              {provinceMenuItem()}
+              {ProvinceMenuItem()}
             </TextField>
 
             <TextField
