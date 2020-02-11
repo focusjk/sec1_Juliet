@@ -1,47 +1,52 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Register from './page/Register';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core';
-import Home from './page/Home';
-import Login from './page/Login';
-import Profile from './page/Profile';
-import DriverProfile from './page/DriverProfile';
-import CreateTrip from './page/CreateTrip';
-import MyTrip from './page/MyTrip';
-import AdminLogin from './page/AdminLogin';
-import DriverRequest from './page/DriverRequest';
-import Navigation from './component/Navigation';
-import NavigationDesktop from './component/NavigationDesktop';
-import ButtonComponent from './page/ButtonComponent';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import Register from "./page/Register";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core";
+import Home from "./page/Home";
+import Login from "./page/Login";
+import Profile from "./page/Profile";
+import DriverProfile from "./page/DriverProfile";
+import CreateTrip from "./page/CreateTrip";
+import MyTrip from "./page/MyTrip";
+import AdminLogin from "./page/AdminLogin";
+import DriverRequest from "./page/DriverRequest";
+import Navigation from "./component/Navigation";
+import NavigationDesktop from "./component/NavigationDesktop";
+import ButtonComponent from "./page/ButtonComponent";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#C78899', //pink base
+      main: "#C78899" //pink base
     },
     secondary: {
-      main: '#CE7B91', // pink text
-    },
-  },
+      main: "#CE7B91" // pink text
+    }
+  }
 });
 
 const useStyles = makeStyles({
   app: {
-    fontFamily: 'Roboto',
-    fontSize: '16px',
+    fontFamily: "Roboto",
+    fontSize: "16px"
   },
   body: {
-    margin: '30px',
-  },
+    margin: "30px"
+  }
 });
 const App = () => {
   //for member
   // const [user, setUser] = React.useState({ id: 1 });
   // for admin
-  const [user, setUser] = React.useState({ username: 'JEDI' });
+  // const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
-  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -77,25 +82,26 @@ const App = () => {
             )}
             {user && !user.id && (
               <div>
-                <NavigationDesktop user={user} handleLogout={() => setUser(null)} />
-                <Route path="/admin/login">
-                  <AdminLogin user={user} />
-                </Route>
+                <NavigationDesktop
+                  user={user}
+                  handleLogout={() => setUser(null)}
+                />
                 <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
-                {/* <Redirect to="/admin/driver-request" /> */}
               </div>
             )}
             {!user && (
               <div className={classes.body}>
                 <Route path="/register">
-                  <Register user={user} />
+                  <Register handleLogin={user => setUser(user)} />
+                </Route>
+                <Route path="/admin/login">
+                  <AdminLogin handleLogin={user => setUser(user)} />
                 </Route>
                 <Route path="/login">
-                  <Login user={user} />
+                  <Login handleLogin={user => setUser(user)} />
                 </Route>
-                <Redirect to="/login" />
               </div>
             )}
           </Switch>
