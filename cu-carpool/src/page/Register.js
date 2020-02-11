@@ -1,28 +1,40 @@
-// import React from 'react';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyFullWidthButton } from "../component/MyButton";
-import Upload from "../component/Upload";
 import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-
+import AddAPhotoRoundedIcon from '@material-ui/icons/AddAPhotoRounded';
 import { Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import photoUpload from '../component/Upload'
 
 const useStyles = makeStyles({
   root: {
     color: "#777777",
     marginBottom: 20
+  },
+  input: {
+    display: 'none',
+  },
+  label: {
+    border: '1px dashed #BDBDBD',
+    color: '#BDBDBD',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: "100px",
+    width: "100px"
   }
 });
 
-const Register = ({ history, handleLogin, handleUpload }) => {
+const Register = ({ history, handleLogin }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     firstname: null,
@@ -101,8 +113,6 @@ const Register = ({ history, handleLogin, handleUpload }) => {
       >
         Sign Up
       </Box>
-
-      {/* <RegisterForm /> */}
       <Grid
         container
         direction="column"
@@ -114,7 +124,6 @@ const Register = ({ history, handleLogin, handleUpload }) => {
           fullWidth
           placeholder="First Name"
           className={classes.root}
-          // helperText="First Name *"
           value={form.firstname}
           error={error.firstname}
           onChange={e => setForm({ ...form, firstname: e.target.value })}
@@ -187,12 +196,14 @@ const Register = ({ history, handleLogin, handleUpload }) => {
         <div style={{ marginBottom: 10 }}>PROFILE PICTURE</div>
       </Grid>
 
-      <Upload
-        value={form.photo}
-        // onChange={e => setForm({ ...form, photo: e.target.value })}
-        // handleLogin={(user) => setUser(user)}
-        onChange={e => handleUpload}
-      />
+      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={(e) => photoUpload(e, e => setForm({ ...form, photo: e }))} />
+      <label htmlFor="icon-button-file" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className={classes.label} style={{ background: `url(${form.photo})`, backgroundSize: "cover" }}>
+          <AddAPhotoRoundedIcon />
+          <div>Upload image</div>
+        </div>
+      </label>
+
       <MyFullWidthButton style={{ marginTop: 50 }} onClick={handleRegister}>
         Sign Up
       </MyFullWidthButton>
