@@ -1,23 +1,28 @@
-import React from 'react';
+import React from "react";
 import {
   MyButton,
   MyWhiteButton,
   MyFullWidthButton,
-  MyDisabledFullWidthButton,
-} from '../component/MyButton';
+  MyDisabledFullWidthButton
+} from "../component/MyButton";
+import { MyHeader, MyTitle } from "../component/MyTitle";
 
 class ButtonComponent extends React.Component {
   render() {
     return (
       <div>
+        <MyHeader> Hi </MyHeader>
+        <MyTitle> Hi </MyTitle>
         <MyButton>MyButton</MyButton>
-        <div style={{ margin: '10px' }} />
+        <div style={{ margin: "10px" }} />
         <MyWhiteButton>MyButton</MyWhiteButton>
-        <div style={{ margin: '10px' }} />
+        <div style={{ margin: "10px" }} />
         <MyFullWidthButton>MyFullWidthButton</MyFullWidthButton>
-        <div style={{ margin: '10px' }} />
-        <MyDisabledFullWidthButton disabled>MyDisabledFullWidthButton</MyDisabledFullWidthButton>
-        <div style={{ margin: '10px' }} />
+        <div style={{ margin: "10px" }} />
+        <MyDisabledFullWidthButton disabled>
+          MyDisabledFullWidthButton
+        </MyDisabledFullWidthButton>
+        <div style={{ margin: "10px" }} />
       </div>
     );
   }

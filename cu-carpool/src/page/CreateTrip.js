@@ -6,10 +6,7 @@ import { MenuItem, TextField, Typography } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
 // import { Map, GoogleApiWrapper } from 'google-maps-react';
 import province from "../province";
-
-const useStyles = makeStyles({
-  subtopic: { marginTop: 24 }
-});
+import { MyHeader, MyTitle } from "../component/MyTitle";
 
 const provinceMenuItem = () =>
   province.map(({ name, value }) => (
@@ -109,20 +106,14 @@ const CreateTrip = ({ history, user }) => {
     }
   };
 
-  const classes = useStyles();
   return (
     <div>
-      <Typography align="center" variant="h4">
-        Create trip
-      </Typography>
-      <form className={classes.root} noValidate autoComplete="off">
-        <Typography variant="h6" className={classes.subtopic}>
-          Trip detail
-        </Typography>
+      <MyHeader>Create trip</MyHeader>
+      <form noValidate autoComplete="off">
+        <MyTitle>Trip detail</MyTitle>
         <TextField
           fullWidth
           required
-          margin="dense"
           label="License plate"
           value={form.plate_license}
           error={error.plate_license}
@@ -131,7 +122,6 @@ const CreateTrip = ({ history, user }) => {
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Car brand"
           value={form.car_brand}
           error={error.car_brand}
@@ -143,7 +133,6 @@ const CreateTrip = ({ history, user }) => {
             min={0}
             max={50}
             type="number"
-            margin="dense"
             label="Capacity"
             helperText="Excluding a driver"
             value={form.capacity}
@@ -154,7 +143,6 @@ const CreateTrip = ({ history, user }) => {
             required
             min={1}
             type="number"
-            margin="dense"
             label="Price"
             helperText="baht per person"
             style={{ marginLeft: 8 }}
@@ -163,14 +151,11 @@ const CreateTrip = ({ history, user }) => {
             onChange={e => setForm({ ...form, price: e.target.value })}
           />
         </div>
-        <Typography variant="h6" className={classes.subtopic}>
-          Pick up
-        </Typography>
+        <MyTitle style={{ marginTop: "30px" }}>Pick Up</MyTitle>
         <TextField
           select
           fullWidth
           required
-          margin="dense"
           label="Province"
           value={form.departure_province}
           error={error.departure_province}
@@ -183,7 +168,6 @@ const CreateTrip = ({ history, user }) => {
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Detail"
           value={form.departure_detail}
           error={error.departure_detail}
@@ -194,7 +178,6 @@ const CreateTrip = ({ history, user }) => {
             required
             type="date"
             label="Date"
-            margin="dense"
             variant="standard"
             InputLabelProps={{ shrink: true }}
             value={form.date}
@@ -205,7 +188,6 @@ const CreateTrip = ({ history, user }) => {
             required
             label="Time"
             type="time"
-            margin="dense"
             InputLabelProps={{ shrink: true }}
             inputProps={{ step: 300 }}
             style={{ marginLeft: 8, flexGrow: 1 }}
@@ -214,14 +196,11 @@ const CreateTrip = ({ history, user }) => {
             onChange={e => setForm({ ...form, time: e.target.value })}
           />
         </div>
-        <Typography variant="h6" className={classes.subtopic}>
-          Destination
-        </Typography>
+        <MyTitle style={{ marginTop: "30px" }}>Destination</MyTitle>
         <TextField
           select
           required
           fullWidth
-          margin="dense"
           label="Province"
           value={form.destination_province}
           error={error.destination_province}
@@ -234,7 +213,6 @@ const CreateTrip = ({ history, user }) => {
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Detail"
           value={form.destination_detail}
           error={error.destination_detail}
@@ -242,7 +220,7 @@ const CreateTrip = ({ history, user }) => {
             setForm({ ...form, destination_detail: e.target.value })
           }
         />
-        <MyFullWidthButton style={{ margin: "36px 0" }} onClick={handleCreate}>
+        <MyFullWidthButton style={{ margin: "42px 0" }} onClick={handleCreate}>
           Create
         </MyFullWidthButton>
       </form>

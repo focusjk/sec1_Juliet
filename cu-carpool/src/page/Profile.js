@@ -1,15 +1,24 @@
-import React from 'react';
-import profile from '../profile.jpg';
-import PersonIcon from '@material-ui/icons/Person';
-import MailIcon from '@material-ui/icons/Mail';
-import PhoneIcon from '@material-ui/icons/Phone';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import LockIcon from '@material-ui/icons/Lock';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { Box, Input, Grid } from '@material-ui/core';
-import { MyFullWidthButton, MyDisabledFullWidthButton } from '../component/MyButton';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import UploadIcon from '../component/UploadIcon';
+import React from "react";
+import profile from "../profile.jpg";
+import PersonIcon from "@material-ui/icons/Person";
+import MailIcon from "@material-ui/icons/Mail";
+import PhoneIcon from "@material-ui/icons/Phone";
+import CreditCardIcon from "@material-ui/icons/CreditCard";
+import LockIcon from "@material-ui/icons/Lock";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import { Box, Input, Grid } from "@material-ui/core";
+import {
+  MyFullWidthButton,
+  MyDisabledFullWidthButton
+} from "../component/MyButton";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import UploadIcon from "../component/UploadIcon";
+import { MyHeader, MyTitle } from "../component/MyTitle";
 
 class Profile extends React.Component {
   state = { change: false };
@@ -17,40 +26,39 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h1> My Profile </h1>
-        </div>
+        <MyHeader>Profile</MyHeader>
         <Grid
           container
           direction="row"
-          justify="center"
           alignItems="center"
-          style={{ marginBottom: '40px' }}
+          style={{ marginBottom: "40px" }}
         >
-          <div style={{ display: 'flex' }}>
+          <div
+            style={{ display: "flex", marginLeft: "18px", marginRight: "24px" }}
+          >
             <img
               src={profile}
               height={100}
               width={100}
-              style={{ alignSelf: 'center', borderRadius: '100%' }}
+              style={{ borderRadius: "100%" }}
             />
             <UploadIcon />
           </div>
-          <h2 style={{ margin: 0 }}> Name Name </h2>
+          <MyTitle>Name Name</MyTitle>
         </Grid>
         <Box
           style={{
-            backgroundColor: '#F8F8F8',
-            marginBottom: '40px',
-            alignSelf: 'center',
-            padding: '8px 24px 24px 24px',
+            backgroundColor: "#F8F8F8",
+            marginBottom: "40px",
+            alignSelf: "center",
+            padding: "8px 24px 24px 24px"
           }}
         >
-          <h2> Personal Info</h2>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <MyTitle>Personal Info</MyTitle>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="First Name"
               onChange={() => {
@@ -58,10 +66,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Last Name"
               onChange={() => {
@@ -69,10 +77,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <MailIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Email"
               onChange={() => {
@@ -80,10 +88,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PhoneIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Telephone No."
               onChange={() => {
@@ -94,17 +102,17 @@ class Profile extends React.Component {
         </Box>
         <Box
           style={{
-            backgroundColor: '#F8F8F8',
-            marginBottom: '40px',
-            alignSelf: 'center',
-            padding: '8px 24px 24px 24px',
+            backgroundColor: "#F8F8F8",
+            marginBottom: "40px",
+            alignSelf: "center",
+            padding: "8px 24px 24px 24px"
           }}
         >
-          <h2> Credit Card Info</h2>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <MyTitle>Credit Card Info</MyTitle>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Cardholder Name"
               onChange={() => {
@@ -112,10 +120,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <CreditCardIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Card Number"
               onChange={() => {
@@ -123,10 +131,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <CalendarTodayIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Expiry date"
               onChange={() => {
@@ -134,10 +142,10 @@ class Profile extends React.Component {
               }}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             <LockIcon />
             <Input
-              style={{ marginLeft: '8px' }}
+              style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Security Code"
               onChange={() => {
@@ -148,13 +156,16 @@ class Profile extends React.Component {
         </Box>
         <Switch>
           {!this.state.change && (
-            <MyDisabledFullWidthButton style={{ margin: '10px 0' }} disabled={true}>
+            <MyDisabledFullWidthButton
+              style={{ margin: "10px 0" }}
+              disabled={true}
+            >
               Save
             </MyDisabledFullWidthButton>
           )}
           {this.state.change && (
             <MyFullWidthButton
-              style={{ margin: '10px 0' }}
+              style={{ margin: "10px 0" }}
               onClick={() => {
                 this.setState({ change: false });
               }}
