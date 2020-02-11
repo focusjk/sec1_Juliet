@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   MenuItem,
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
   panel: { backgroundColor: '#EFEFEF', boxShadow: 'none' },
 });
 const province = [
-  { name: 'none', value: '' },
+  { name: 'none', value: null },
   { name: 'Bangkok', value: 'Bangkok' },
   { name: 'Sukhothai', value: 'Sukhothai' },
 ];
@@ -31,22 +32,26 @@ const provinceMenuItem = () =>
     </MenuItem>
   ));
 const Home = () => {
-  const [tripList, setTripList] = React.useState([
-    {
-      id: 1,
-      departure_detail: 'siam',
-      departure_province: 'Bangkok',
-      destination_detail: 'hospital',
-      destination_province: 'Sukhothai',
-      start_datetime: '1999-12-06 13:14:25',
-      capacity: 4,
-      request: 3,
-      status: 'opening',
-    },
-  ]);
-  const [departure, setDeparture] = React.useState('');
-  const [destination, setDestination] = React.useState('');
-  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [tripList, setTripList] = useState([]);
+  const [departure, setDeparture] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const fetchData = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/trip', {
+        departure,
+        destination,
+        selectedDate,
+      });
+      const { trip } = response.data;
+      setTripList(trip);
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [departure, destination, selectedDate]);
 
   const classes = useStyles();
   return (
@@ -62,9 +67,7 @@ const Home = () => {
               select
               value={departure}
               onChange={e => setDeparture(e.target.value)}
-              InputProps={{
-                startAdornment: <LocationOnIcon style={{ marginRight: 16 }} />,
-              }}
+              InputProps={{ startAdornment: <LocationOnIcon style={{ marginRight: 16 }} /> }}
               style={{ marginBottom: 16 }}
             >
               {provinceMenuItem()}
@@ -74,9 +77,7 @@ const Home = () => {
               select
               value={destination}
               onChange={e => setDestination(e.target.value)}
-              InputProps={{
-                startAdornment: <FlagIcon style={{ marginRight: 16 }} />,
-              }}
+              InputProps={{ startAdornment: <FlagIcon style={{ marginRight: 16 }} /> }}
               style={{ marginBottom: 16 }}
             >
               {provinceMenuItem()}
@@ -85,12 +86,8 @@ const Home = () => {
             <TextField
               type="date"
               variant="standard"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                startAdornment: <CalendarTodayIcon style={{ marginRight: 16 }} />,
-              }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ startAdornment: <CalendarTodayIcon style={{ marginRight: 16 }} /> }}
               value={selectedDate}
               onChange={e => setSelectedDate(e.target.value)}
               style={{ marginBottom: 16 }}
@@ -98,8 +95,8 @@ const Home = () => {
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      {tripList.map(trip => (
-        <TripCard data={trip} />
+      {tripList.map((trip, index) => (
+        <TripCard key={index} data={trip} />
       ))}
     </div>
   );

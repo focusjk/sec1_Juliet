@@ -8,6 +8,7 @@ import Login from './page/Login';
 import Profile from './page/Profile';
 import DriverProfile from './page/DriverProfile';
 import CreateTrip from './page/CreateTrip';
+import MyTrip from './page/MyTrip';
 import AdminLogin from './page/AdminLogin';
 import DriverRequest from './page/DriverRequest';
 import Navigation from './component/Navigation';
@@ -28,7 +29,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   app: {
     fontFamily: 'Roboto',
-    fontSize: '14px',
+    fontSize: '16px',
   },
   body: {
     margin: '30px',
@@ -36,12 +37,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-   const [user, setUser] = React.useState({ id: 1 });
+  // const [user, setUser] = React.useState({ id: 1 });
   // for admin
-  //const [user, setUser] = React.useState({ username: 'focus' });
-  // const [user, setUser] = React.useState({ username: 'JEDI' });
+  const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
-  //const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -63,23 +63,28 @@ const App = () => {
                   <Route path="/create-trip">
                     <CreateTrip user={user} />
                   </Route>
+                  <Route path="/my-trip">
+                    <MyTrip user={user} />
+                  </Route>
                   <Route path="/driver">
                     <DriverProfile user={user} />
                   </Route>
                   <Route exact path="/">
                     <Home user={user} />
                   </Route>
-                  <Redirect to="/" />
                 </div>
               </div>
             )}
             {user && !user.id && (
               <div>
                 <NavigationDesktop user={user} handleLogout={() => setUser(null)} />
-		<Route path="/admin/driver-request">
+                <Route path="/admin/login">
+                  <AdminLogin user={user} />
+                </Route>
+                <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
-		<Redirect to="/admin/driver-request" />
+                {/* <Redirect to="/admin/driver-request" /> */}
               </div>
             )}
             {!user && (
@@ -90,7 +95,7 @@ const App = () => {
                 <Route path="/login">
                   <Login user={user} />
                 </Route>
-		<Redirect to="/register" />
+                <Redirect to="/login" />
               </div>
             )}
           </Switch>

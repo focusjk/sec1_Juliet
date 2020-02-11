@@ -3,7 +3,32 @@ var router = express.Router();
 var tripService = require('../service/trip');
 
 router.post('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  const { departure, destination, selectedDate } = req.body;
+  console.log(departure, destination, selectedDate);
+  tripService.searchTrip(req.body,(err,result)=>{
+    if(err){
+      console.log(err);
+      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT SEARCH TRIP!!!' });
+    }
+    else{
+      console.log(result)
+      res.json({success: true, trip:result});
+    }
+  })
+  const trip = [
+    {
+      id: 1,
+      departure_detail: 'siam',
+      departure_province: 'Bangkok',
+      destination_detail: 'hospital',
+      destination_province: 'Sukhothai',
+      start_datetime: '1999-12-06 13:14:25',
+      capacity: 4,
+      request: 3,
+      status: 'opening',
+    },
+  ];
+  // res.json({ success: true, trip });
 });
 
 router.post('/create', function(req, res, next) {

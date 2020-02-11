@@ -2,6 +2,10 @@ import React from 'react';
 import { Input } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles({
   root: {
@@ -12,8 +16,12 @@ const useStyles = makeStyles({
 
 const RegisterForm = () => {
   const classes = useStyles();
+  const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  // const [text, setError] = React.useState('');
   return (
     <Grid container direction="column" justify="flex-start" alignItems="stretch">
+
       <div style={{ marginBottom: 5 }}>FIRST NAME</div>
       <Input fullWidth placeholder="First Name" className={classes.root} />
 
@@ -24,7 +32,25 @@ const RegisterForm = () => {
       <Input fullWidth placeholder="Username" className={classes.root} />
 
       <div style={{ marginBottom: 5 }}>PASSWORD</div>
-      <Input fullWidth placeholder="Password" className={classes.root} />
+      {/* <Input fullWidth placeholder="Password" className={classes.root} /> */}
+      <Input placeholder="Password" className={classes.root}
+        id="standard-adornment-password"
+        type={showPassword ? 'text' : 'password'}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={() => {
+                setShowPassword( !showPassword );
+              }}
+            >
+              {showPassword ? <Visibility /> : <VisibilityOff />}
+            </IconButton>
+          </InputAdornment>
+        }
+      />
 
       <div style={{ marginBottom: 5 }}>EMAIL</div>
       <Input fullWidth placeholder="Email" className={classes.root} />
