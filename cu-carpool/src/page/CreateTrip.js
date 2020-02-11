@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MenuItem, TextField, Typography } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
-// import { Map, GoogleApiWrapper } from 'google-maps-react';
 import province from "../province";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 

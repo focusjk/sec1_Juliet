@@ -1,5 +1,4 @@
-
-
+/* eslint-disable */
 
 const photoUpload = (e, handleUpload) => {
   const reader = new FileReader();
@@ -26,7 +25,6 @@ const photoUpload = (e, handleUpload) => {
           handleUpload(reader2.result)
         }
       }, 'image/jpeg', 1);
-
     },
       reader.onerror = error => console.log(error);
   };
