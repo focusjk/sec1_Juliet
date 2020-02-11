@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { MenuItem, TextField, Typography } from '@material-ui/core';
-import { MyFullWidthButton } from '../component/MyButton';
-// import { Map, GoogleApiWrapper } from 'google-maps-react';
-
-const useStyles = makeStyles({
-  subtopic: { marginTop: 24 },
-});
-
-const province = [
-  { name: 'none', value: null },
-  { name: 'Bangkok', value: 'Bangkok' },
-  { name: 'Sukhothai', value: 'Sukhothai' },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { MenuItem, TextField, Typography } from "@material-ui/core";
+import { MyFullWidthButton } from "../component/MyButton";
+import province from "../province";
+import { MyHeader, MyTitle } from "../component/MyTitle";
 
 const provinceMenuItem = () =>
   province.map(({ name, value }) => (
@@ -36,7 +27,7 @@ const CreateTrip = ({ history, user }) => {
     time: null,
     car_brand: null,
     plate_license: null,
-    capacity: null,
+    capacity: null
   });
   const [error, setError] = useState({
     departure_latitude: false,
@@ -51,7 +42,7 @@ const CreateTrip = ({ history, user }) => {
     time: false,
     car_brand: false,
     plate_license: false,
-    capacity: false,
+    capacity: false
   });
 
   const validate = () => {
@@ -67,7 +58,7 @@ const CreateTrip = ({ history, user }) => {
       destination_detail: !form.destination_detail,
       destination_province: !form.destination_province,
       date: !form.date,
-      time: !form.time,
+      time: !form.time
     });
     return !(
       error.car_brand ||
@@ -91,22 +82,22 @@ const CreateTrip = ({ history, user }) => {
       try {
         const { id } = user;
         const { time, date, ...data } = form;
-        const response = await axios.post('http://localhost:4000/trip/create', {
+        const response = await axios.post("http://localhost:4000/trip/create", {
           ...data,
           owner: id,
-          start_datetime: date + ' ' + time + ':00',
+          start_datetime: date + " " + time + ":00"
         });
         console.log(response);
         const { success } = response.data;
         if (success) {
-          history.push('/my-trip');
+          history.push("/my-trip");
         } else {
           //   {
           //     "success": false,
           //     "error": "Column 'price' cannot be null",
           //     "message": "CANNOT CREATE TRIP!!!"
           // }
-          console.log('ERROR');
+          console.log("ERROR");
         }
       } catch (e) {
         console.log(e.response);
@@ -114,20 +105,14 @@ const CreateTrip = ({ history, user }) => {
     }
   };
 
-  const classes = useStyles();
   return (
     <div>
-      <Typography align="center" variant="h4">
-        Create trip
-      </Typography>
-      <form className={classes.root} noValidate autoComplete="off">
-        <Typography variant="h6" className={classes.subtopic}>
-          Trip detail
-        </Typography>
+      <MyHeader>Create trip</MyHeader>
+      <form noValidate autoComplete="off">
+        <MyTitle>Trip detail</MyTitle>
         <TextField
           fullWidth
           required
-          margin="dense"
           label="License plate"
           value={form.plate_license}
           error={error.plate_license}
@@ -136,19 +121,17 @@ const CreateTrip = ({ history, user }) => {
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Car brand"
           value={form.car_brand}
           error={error.car_brand}
           onChange={e => setForm({ ...form, car_brand: e.target.value })}
         />
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <TextField
             required
             min={0}
             max={50}
             type="number"
-            margin="dense"
             label="Capacity"
             helperText="Excluding a driver"
             value={form.capacity}
@@ -159,7 +142,6 @@ const CreateTrip = ({ history, user }) => {
             required
             min={1}
             type="number"
-            margin="dense"
             label="Price"
             helperText="baht per person"
             style={{ marginLeft: 8 }}
@@ -168,36 +150,33 @@ const CreateTrip = ({ history, user }) => {
             onChange={e => setForm({ ...form, price: e.target.value })}
           />
         </div>
-        <Typography variant="h6" className={classes.subtopic}>
-          Pick up
-        </Typography>
+        <MyTitle style={{ marginTop: "30px" }}>Pick Up</MyTitle>
         <TextField
           select
           fullWidth
           required
-          margin="dense"
           label="Province"
           value={form.departure_province}
           error={error.departure_province}
-          onChange={e => setForm({ ...form, departure_province: e.target.value })}
+          onChange={e =>
+            setForm({ ...form, departure_province: e.target.value })
+          }
         >
           {provinceMenuItem()}
         </TextField>
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Detail"
           value={form.departure_detail}
           error={error.departure_detail}
           onChange={e => setForm({ ...form, departure_detail: e.target.value })}
         />
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <TextField
             required
             type="date"
             label="Date"
-            margin="dense"
             variant="standard"
             InputLabelProps={{ shrink: true }}
             value={form.date}
@@ -208,7 +187,6 @@ const CreateTrip = ({ history, user }) => {
             required
             label="Time"
             type="time"
-            margin="dense"
             InputLabelProps={{ shrink: true }}
             inputProps={{ step: 300 }}
             style={{ marginLeft: 8, flexGrow: 1 }}
@@ -217,31 +195,31 @@ const CreateTrip = ({ history, user }) => {
             onChange={e => setForm({ ...form, time: e.target.value })}
           />
         </div>
-        <Typography variant="h6" className={classes.subtopic}>
-          Destination
-        </Typography>
+        <MyTitle style={{ marginTop: "30px" }}>Destination</MyTitle>
         <TextField
           select
           required
           fullWidth
-          margin="dense"
           label="Province"
           value={form.destination_province}
           error={error.destination_province}
-          onChange={e => setForm({ ...form, destination_province: e.target.value })}
+          onChange={e =>
+            setForm({ ...form, destination_province: e.target.value })
+          }
         >
           {provinceMenuItem()}
         </TextField>
         <TextField
           fullWidth
           required
-          margin="dense"
           label="Detail"
           value={form.destination_detail}
           error={error.destination_detail}
-          onChange={e => setForm({ ...form, destination_detail: e.target.value })}
+          onChange={e =>
+            setForm({ ...form, destination_detail: e.target.value })
+          }
         />
-        <MyFullWidthButton style={{ margin: '36px 0' }} onClick={handleCreate}>
+        <MyFullWidthButton style={{ margin: "42px 0" }} onClick={handleCreate}>
           Create
         </MyFullWidthButton>
       </form>
