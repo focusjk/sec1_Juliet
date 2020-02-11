@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
     }
     else{
       console.log(result)
-      res.json({success: true, trip:result,count:result.lenght});
+      res.json({success: true, trip:result});
     }
   })
   const trip = [
