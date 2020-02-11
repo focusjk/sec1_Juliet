@@ -6,16 +6,8 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import GroupIcon from '@material-ui/icons/Group';
 import FlagIcon from '@material-ui/icons/Flag';
+import moment from 'moment'
 import {
-  AppBar,
-  Toolbar,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Icon,
-  IconButton,
   Link,
   Divider,
   Paper,
@@ -43,6 +35,8 @@ const TripCard = ({ history, data }) => {
     request,
     status,
   } = data;
+  const date = moment(start_datetime).format('MMMM Do YYYY');
+  const time = moment(start_datetime).format('h:mm a');
   return (
     <Paper
       square
@@ -74,13 +68,15 @@ const TripCard = ({ history, data }) => {
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <ScheduleIcon fontSize="small" style={{ marginRight: '8px' }} />
-          {start_datetime}
+          <div>
+            <div>{date}</div><div>{time}</div>
+          </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <GroupIcon fontSize="small" style={{ marginRight: '8px' }} />
-          3/5
+          {request}/{capacity}
         </div>
         <Link
           href="#"

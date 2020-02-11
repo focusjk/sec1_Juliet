@@ -7,7 +7,8 @@ import {
   Typography,
   ExpansionPanel,
   ExpansionPanelDetails,
-  ExpansionPanelSummary
+  ExpansionPanelSummary,
+  Link
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TripCard from "../component/TripCard";
@@ -34,9 +35,9 @@ const provinceMenuItem = () =>
   ));
 const Home = () => {
   const [tripList, setTripList] = useState([]);
-  const [departure, setDeparture] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [departure, setDeparture] = useState('');
+  const [destination, setDestination] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip", {
@@ -90,6 +91,7 @@ const Home = () => {
 
             <TextField
               type="date"
+              required
               variant="standard"
               InputLabelProps={{ shrink: true }}
               InputProps={{
@@ -101,6 +103,9 @@ const Home = () => {
               onChange={e => setSelectedDate(e.target.value)}
               style={{ marginBottom: 16 }}
             />
+            <Link onClick={() => { setSelectedDate(''); setDeparture(''); setDestination(''); }}>
+              reset
+            </Link>
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

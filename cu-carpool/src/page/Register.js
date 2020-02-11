@@ -5,14 +5,12 @@ import { MyFullWidthButton } from "../component/MyButton";
 import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import AddAPhotoRoundedIcon from '@material-ui/icons/AddAPhotoRounded';
 import { Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import photoUpload from '../component/Upload'
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +41,6 @@ const Register = ({ history, handleLogin }) => {
     password: null,
     email: null,
     phone_number: null,
-    photo: null
   });
   const [error, setError] = useState({
     firstname: false,
@@ -192,19 +189,9 @@ const Register = ({ history, handleLogin }) => {
           error={error.phone_number}
           onChange={e => setForm({ ...form, phone_number: e.target.value })}
         />
-
-        <div style={{ marginBottom: 10 }}>PROFILE PICTURE</div>
       </Grid>
 
-      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={(e) => photoUpload(e, e => setForm({ ...form, photo: e }))} />
-      <label htmlFor="icon-button-file" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className={classes.label} style={{ background: `url(${form.photo})`, backgroundSize: "cover" }}>
-          <AddAPhotoRoundedIcon />
-          <div>Upload image</div>
-        </div>
-      </label>
-
-      <MyFullWidthButton style={{ marginTop: 50 }} onClick={handleRegister}>
+      <MyFullWidthButton style={{ marginTop: 32 }} onClick={handleRegister}>
         Sign Up
       </MyFullWidthButton>
       {errorMessage !== "" && (
