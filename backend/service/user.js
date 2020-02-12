@@ -33,14 +33,16 @@ const register = (username,data,created_at,amount,callback) => {
 
   const editMemberInfo = (id,body,callback) => {
     const {password,firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date} = body;
-    if (password != ""){
+    if (password == ""){
+      console.log("PASSWORD UNCHANGED")
       return db.query(`UPDATE members SET firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
-      card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?;` 
-      , [firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date,id],callback);
+      card_holder_name = ?,card_number = ?,card_code = ? WHERE id = ?;` 
+      , [firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,id],callback); //card_expiry_date is still missing
     } else {
+      console.log("PASSWORD CHANGED");
       return db.query(`UPDATE members SET password = ? ,firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
-      card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?` 
-      , [password,firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date,id],callback);
+      card_holder_name = ?,card_number = ?,card_code = ?WHERE id = ?` 
+      , [password,firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,id],callback); //card_expiry_date is still missing
     }
   }
   module.exports =  { register,getMemberInfo,getCurrentDateTimeString,login,editMemberInfo};
