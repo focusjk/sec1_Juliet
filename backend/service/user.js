@@ -30,4 +30,17 @@ const register = (username,data,created_at,amount,callback) => {
     card_code,card_expiry_date,amount FROM members WHERE username = ? AND password = ?`, [username,password],callback);
 
   }
-  module.exports =  { register,getMemberInfo,getCurrentDateTimeString,login};
+
+  const editMemberInfo = (id,body,callback) => {
+    const {password,firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date} = body;
+    if (password != ""){
+      return db.query(`UPDATE members SET firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
+      card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?;` 
+      , [firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date,id],callback);
+    } else {
+      return db.query(`UPDATE members SET password = ? ,firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
+      card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?` 
+      , [password,firstname,lastname,phone_number,email,photo,card_holder_name,card_number,card_code,card_expiry_date,id],callback);
+    }
+  }
+  module.exports =  { register,getMemberInfo,getCurrentDateTimeString,login,editMemberInfo};

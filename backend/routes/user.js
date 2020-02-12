@@ -2,9 +2,17 @@ var express = require('express');
 var userService = require('../service/user');
 var router = express.Router();
 
-/* GET users listing. */
 router.post('/', function(req, res, next) {
-  res.send('respond with a resource');
+  const {id, ...data} = req.body;
+  userService.editMemberInfo(id,data,(err,result)=> {
+    if (err) {
+      console.log(err);
+      res.json({success: false, error: err.sqlMessage, message: "editing error"});
+    } else {
+      console.log(result);
+      res.json({success: true});
+    }
+  });
 });
 
 router.post('/register', function(req, res, next) { 
