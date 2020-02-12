@@ -11,7 +11,7 @@ const register = (username,data,created_at,amount,callback) => {
   const getMemberInfo = (username,callback) => {
     console.log('get member info')
     return db.query(`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
-      card_code,card_expiry_date,amount FROM members WHERE username = ?`, [username],callback);
+      card_code,card_expiry_date,amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at FROM members WHERE username = ?`, [username],callback);
   }
 
   function getCurrentDateTimeString() {
