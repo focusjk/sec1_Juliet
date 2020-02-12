@@ -1,40 +1,50 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { Input, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { MyFullWidthButton } from '../component/MyButton';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import LoginForm from "../component/LoginForm";
+import axios from "axios";
 
-const useStyles = makeStyles({
-  root: {
-    color: '#777777',
-    marginBottom: 20,
-    marginRight: '30px', marginLeft:'30px'
-  },
-});
+const AdminLogin = ({ history, handleLogin }) => {
+  const [form, setForm] = useState({
+    username: null,
+    password: null
+  });
+  const [errorMassage, setErrorMessage] = useState("");
 
-const AdminLogin = () => {
-  const classes = useStyles();
-  const [username, setUsername] = React.useState('');
+  const login = async () => {
+    const response = await axios.post(
+      "http://localhost:4000/admin/login",
+      form
+    );
+    const { success, username, message } = response.data;
+    if (success) {
+      handleLogin({ username });
+      history.push("/admin/driver-request");
+    } else {
+      setErrorMessage(message);
+    }
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection:'column', alignContent: 'center',
-      marginRight: '50px', marginLeft:'50px' }}>
-
-      <h1 style={{ marginBottom: 10, marginTop: 50 }}> Welcome,</h1>
-
-      <div style={{ display: 'flex', marginTop: 30, marginBottom: 5, marginLeft:'30px' }}> USERNAME </div>
-      <Input placeholder="Username" className={classes.root} 
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-
-      <div style={{ display: 'flex', marginRight: '500px', marginLeft:'500px' }}>
-      <MyFullWidthButton style={{ marginTop: 60 }} 
-        onClick={() => {
-          this.props.history.push('/');
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "150px 500px 0 500px"
+      }}
+    >
+      <h1 style={{ marginBottom: 50, marginTop: 50 }}> Welcome,</h1>
+      <LoginForm
+        username={form.username}
+        password={form.password}
+        setUsername={newUsername => {
+          setForm({ ...form, username: newUsername });
         }}
-      > Sign In </MyFullWidthButton>
-      </div>
-
+        setPassword={newPassword => {
+          setForm({ ...form, password: newPassword });
+        }}
+        handleLogin={login}
+        error={errorMassage}
+      />
     </div>
   );
 };

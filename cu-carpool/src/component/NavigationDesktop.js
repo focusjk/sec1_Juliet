@@ -11,24 +11,23 @@ const listPath = [
 ];
 const useStyles = makeStyles({
   list: {
-    width: "100%",
+    width: 250,
   },
   bar: { backgroundColor: '#C78899' },
   barSection: { flexGrow: 1, display: 'flex' },
-  barItem: { marginRight: '1%', cursor: 'pointer' },
+  barItem: { marginRight: '36px', cursor: 'pointer', color: 'white' },
 });
 
 const NavigationDesktop = ({ history, user, handleLogout }) => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.bar} position="static" style={{width:"100%"}}>
+    <AppBar className={classes.bar} position="static">
       <Toolbar>
         <div className={classes.barSection}>
           <img
             className={classes.barItem}
             src={logo}
-	    height={60}
-	    width={'30%'}
+            height={50}
             onClick={() => {
               history.push('/');
             }}
@@ -37,7 +36,6 @@ const NavigationDesktop = ({ history, user, handleLogout }) => {
             <Button
               key={name}
               className={classes.barItem}
-              color="inherit"
               onClick={() => {
                 history.push(path);
               }}
@@ -52,7 +50,7 @@ const NavigationDesktop = ({ history, user, handleLogout }) => {
         <MyButton
           onClick={() => {
             history.push('/admin/login');
-            // handleLogout();
+            handleLogout();
           }}
         >
           Sign out

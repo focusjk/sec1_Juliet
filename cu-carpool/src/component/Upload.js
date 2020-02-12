@@ -1,39 +1,33 @@
-import React from 'react';
-import AddAPhotoRoundedIcon from '@material-ui/icons/AddAPhotoRounded';
-import { makeStyles } from '@material-ui/core/styles';
+/* eslint-disable */
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
+const photoUpload = (e, handleUpload) => {
+  const reader = new FileReader();
+  const file = e.target.files[0];
+  reader.readAsDataURL(file);
+  reader.onload = event => {
+    const img = new Image();
+    img.src = event.target.result;
+    img.onload = () => {
+      const elem = document.createElement('canvas');
+      elem.width = 100;
+      elem.height = 100;
+      const width = img.height < img.width ? img.height : img.width;
+      const ctx = elem.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, width, 0, 0, 100, 100);
+      ctx.canvas.toBlob((blob) => {
+        const file = new File([blob], 'photo', {
+          type: 'image/jpeg',
+          lastModified: Date.now()
+        });
+        const reader2 = new FileReader();
+        reader2.readAsDataURL(file);
+        reader2.onloadend = () => {
+          handleUpload(reader2.result)
+        }
+      }, 'image/jpeg', 1);
     },
-  },
-  input: {
-    display: 'none',
-  },
-  label: {
-    border: '1px dashed #BDBDBD',
-    color: '#BDBDBD',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-}));
+      reader.onerror = error => console.log(error);
+  };
+}
 
-const Upload = () => {
-  const classes = useStyles();
-  return (
-    <div>
-      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
-      <label htmlFor="icon-button-file">
-        <div className={classes.label}>
-          <AddAPhotoRoundedIcon />
-          <div>Upload image</div>
-        </div>
-      </label>
-    </div>
-  );
-};
-
-export default Upload;
+export default photoUpload;
