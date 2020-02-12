@@ -61,7 +61,7 @@ const DriverProfile = ({ history, user }) => {
               borderRadius: "100%"
             }}
           />
-          <MyTitle>{user.id}</MyTitle>
+          <MyTitle>{user.username}</MyTitle>
         </Grid>
         <Box
           style={{
@@ -78,7 +78,7 @@ const DriverProfile = ({ history, user }) => {
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Driving License No."
-	      value={form.driving_license}
+	      value={user.driving_license}
 	      onChange={e => {
 		 setForm({ ...form,driving_license: e.target.value });
             	 setChange(true);
@@ -88,8 +88,8 @@ const DriverProfile = ({ history, user }) => {
           </div>
         </Box>
 	<Switch>
-	{time!='' && (    
-	    <div style={{ color: "grey" }}>Modified at: {time}</div>
+	{user.edited_at!=null && (    
+	    <div style={{ color: "grey" }}>Modified at:{user.edited_at}</div>
           )}
 	</Switch>
 	<Switch>

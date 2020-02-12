@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import profile from "../profile.jpg";
 import PersonIcon from "@material-ui/icons/Person";
 import MailIcon from "@material-ui/icons/Mail";
@@ -7,10 +7,13 @@ import CreditCardIcon from "@material-ui/icons/CreditCard";
 import LockIcon from "@material-ui/icons/Lock";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { Box, Input, Grid } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
 import {
   MyFullWidthButton,
   MyDisabledFullWidthButton
 } from "../component/MyButton";
+import { TextField } from "@material-ui/core";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,10 +23,38 @@ import {
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 
-class Profile extends React.Component {
-  state = { change: false };
-
-  render() {
+const Profile = ({ history, user }) => { 
+   const [change, setChange] = useState(false);
+   const [status, setStatus] = useState('');
+   const [form, setForm] = useState({
+    	firstname: user.firstname,
+	lastname: user.lastname,
+	phone_number: user.phone_number,
+	email: user.email,
+	card_holder_name: user.card_holder_name,
+	card_number: user.card_number,
+	card_code: user.card_code,
+	card_expiry_date: user.card_expiry_date
+  	});
+    
+    const update = async () => {
+     try {
+    setChange(false);
+    const { id} = user;
+    const {...data} = form;
+    const response = await axios.post("http://localhost:4000/user/",{id,...data}
+	);
+    console.log(response.data);
+    const {success,error,message} = response.data;
+	 if (success) {
+	  setStatus("Saved");
+        } else {
+          setStatus(error);
+        }
+    }catch (e) {
+       console.log(e.response);
+    }
+  };
     return (
       <div>
         <MyHeader>Profile</MyHeader>
@@ -44,7 +75,8 @@ class Profile extends React.Component {
             />
             <UploadIcon />
           </div>
-          <MyTitle>Name Name</MyTitle>
+          <MyTitle>{user.username}</MyTitle>
+	  <MyTitle>{status}</MyTitle>
         </Grid>
         <Box
           style={{
@@ -57,46 +89,54 @@ class Profile extends React.Component {
           <MyTitle>Personal Info</MyTitle>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="First Name"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+	       value={user.firstname}
+              onChange={e => {
+		 setForm({ ...form,firstname: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Last Name"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+             value={user.lastname}
+		onChange={e => {
+		 setForm({ ...form,lastname: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <MailIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Email"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+              value={user.email}
+		onChange={e => {
+		 setForm({ ...form,email: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PhoneIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Telephone No."
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+		value={user.phone_number}
+              onChange={e => {
+		 setForm({ ...form,phone_number: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
         </Box>
@@ -111,51 +151,58 @@ class Profile extends React.Component {
           <MyTitle>Credit Card Info</MyTitle>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <PersonIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Cardholder Name"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+		value={user.card_holder_name}
+              onChange={e => {
+		 setForm({ ...form,card_holder_name: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <CreditCardIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Card Number"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+		value={user.card_number}
+               onChange={e => {
+		 setForm({ ...form,card_number: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <CalendarTodayIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Expiry date"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+		value={user.card_expiry_date}
+              onChange={e => {
+		 setForm({ ...form,card_expiry_date: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <LockIcon />
-            <Input
+            <TextField
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Security Code"
-              onChange={() => {
-                this.setState({ change: true });
-              }}
+	      onChange={e => {
+		 setForm({ ...form,card_code: e.target.value });
+            	 setChange(true);
+          	}}
             />
           </div>
         </Box>
         <Switch>
-          {!this.state.change && (
+          {!change && (
             <MyDisabledFullWidthButton
               style={{ margin: "10px 0" }}
               disabled={true}
@@ -163,20 +210,16 @@ class Profile extends React.Component {
               Save
             </MyDisabledFullWidthButton>
           )}
-          {this.state.change && (
+          {change && (
             <MyFullWidthButton
               style={{ margin: "10px 0" }}
-              onClick={() => {
-                this.setState({ change: false });
-              }}
+              onClick={update}
             >
               Save
             </MyFullWidthButton>
           )}
         </Switch>
       </div>
-    );
-  }
-}
-
-export default Profile;
+        );
+};
+export default withRouter(Profile);
