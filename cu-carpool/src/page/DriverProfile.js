@@ -15,7 +15,7 @@ import { TextField } from "@material-ui/core";
 
 const DriverProfile = ({ history, user }) => { 
   const [form, setForm] = useState({
-    license: ''
+    driving_license: ''
   });
   const [status, setStatus] = useState('');
   const [time, setTime] = useState('');
@@ -24,15 +24,15 @@ const DriverProfile = ({ history, user }) => {
    const request = async () => {
      try {
     setChange(false);
-    const { id,driver_status } = user;
-    const { license} = form;
-    const response = await axios.post("http://localhost:4000/driver/",{id}
+    const { id,driver_status,edited_at} = user;
+    const {driving_license} = form;
+    const response = await axios.post("http://localhost:4000/driver/",{id,driving_license}
 	);
     console.log(response.data);
-    const { success, error, message } = response.data;
+    const { success, error, message} = response.data;
     if (success) { 
-      setStatus(error);
-      setTime(message);
+      setStatus(driver_status);
+      setTime(edited_at);
     } else { 
      setStatus(message);
     }
@@ -78,9 +78,9 @@ const DriverProfile = ({ history, user }) => {
               style={{ marginLeft: "8px" }}
               fullWidth
               placeholder="Driving License No."
-	      value={form.license}
+	      value={form.driving_license}
 	      onChange={e => {
-		 setForm({ ...form,license: e.target.value });
+		 setForm({ ...form,driving_license: e.target.value });
             	 setChange(true);
             	
           }}
@@ -99,7 +99,11 @@ const DriverProfile = ({ history, user }) => {
 	{(user.driver_status=='pending') && (       
 	    <div style={{ color: "grey" }}>Status : Pending</div>
           )}
+	{(user.driver_status=='rejected') && (       
+	    <div style={{ color: "red" }}>Status : Rejected</div>
+          )}
 	</Switch>
+	<div style={{ color: "red" }}>{user.edited_at}</div>
 	<Switch>
           {change==false && (
             <MyDisabledFullWidthButton
