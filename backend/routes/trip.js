@@ -4,11 +4,10 @@ var tripService = require('../service/trip');
 
 router.post('/', function (req, res, next) {
   const { departure, destination, selectedDate } = req.body;
-  console.log(departure, destination, selectedDate);
   tripService.searchTrip(req.body, (err, result) => {
     if (err) {
       console.log(err);
-      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT SEARCH TRIP!!!' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     }
     else {
       console.log(result)
@@ -18,20 +17,14 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/create', function (req, res, next) {
-  // dateTime format "YYYY-MM-DD hh:mm:ss"
   var created_at = new Date();
   var date = created_at.toISOString().split('T')[0];
   var time = created_at.getHours() + ':' + created_at.getMinutes() + ':' + created_at.getSeconds();
-  // var time = now.toLocaleTimeString();
   created_at = date + ' ' + time;
-  console.log('created_at :', created_at);
   tripService.createTrip(created_at, req.body, (err, result) => {
     if (err) {
-      console.log(err);
-      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT CREATE TRIP!!!' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
-      console.log('----------------create Trip----------------');
-      console.log(result);
       res.json({ success: true, id: result.insertId });
     }
   });
