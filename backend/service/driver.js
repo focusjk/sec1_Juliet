@@ -31,7 +31,7 @@ const getMemberInfo = (ID,callback) => {
     return db.query(`SELECT driver_status, edited_at FROM members WHERE id = ?`, [ID],callback);
   }
 
-  const driverReq = (ID, data, callback) => {
+const driverReq = (edited_at,{ID, data}, callback) => {
     console.log('update driver_status to pending: id = ', ID);
     return db.query(`UPDATE members SET driver_status = 'pending', ? WHERE id = ?`, [data,ID], callback);
 }
