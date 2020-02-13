@@ -11,6 +11,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import userImage from '../component/UserImage';
 
 const useStyles = makeStyles({
   root: {
@@ -76,8 +77,9 @@ const Register = ({ history, handleLogin }) => {
       try {
         const response = await axios.post(
           "http://localhost:4000/user/register",
-          form
+          { ...form, photo: userImage }
         );
+        console.log(response)
         const { success, information, message } = response.data;
         if (success) {
           const user = information[0];

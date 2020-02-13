@@ -1,5 +1,4 @@
 import React from 'react';
-import profile from '../profile.jpg';
 import { Box, Input, Grid } from '@material-ui/core';
 import { MyFullWidthButton, MyDisabledFullWidthButton } from '../component/MyButton';
 import NoteIcon from '@material-ui/icons/Note';

@@ -42,11 +42,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  const [user, setUser] = React.useState({ id: 1, driver_status: 'approved' });
+  // const [user, setUser] = React.useState({ id: 1, driver_status: 'approved' });
   // for admin
   // const [user, setUser] = React.useState({ username: 'JEDI' });
   // for other
-  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -58,7 +58,6 @@ const App = () => {
               <div>
                 <Navigation user={user} handleLogout={() => setUser(null)} />
                 <div className={classes.body}>
-                  {/* REMOVE */}
                   <Route path="/ButtonComponent">
                     <ButtonComponent />
                   </Route>
@@ -72,11 +71,14 @@ const App = () => {
                     <MyTrip user={user} />
                   </Route>
                   <Route path="/driver">
-                    <DriverProfile user={user} />
+                    <DriverProfile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
                   </Route>
                   <Route exact path="/">
                     <Home user={user} />
                   </Route>
+                  {/* <Route path="*">
+                    404 Not found
+                  </Route> */}
                 </div>
               </div>
             )}
@@ -89,6 +91,9 @@ const App = () => {
                 <Route path="/admin/driver-request">
                   <DriverRequest user={user} />
                 </Route>
+                {/* <Route path="*">
+                  404 Not found
+                </Route> */}
               </div>
             )}
             {!user && (
@@ -102,6 +107,9 @@ const App = () => {
                 <Route path="/login">
                   <Login handleLogin={user => setUser(user)} />
                 </Route>
+                {/* <Route path="*">
+                  404 Not found
+                </Route> */}
               </div>
             )}
           </Switch>
