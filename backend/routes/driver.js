@@ -6,7 +6,7 @@ router.post('/', function (req, res, next) {
     const { id, ...data } = req.body
     driverService.driverReq(id, data, (err, result) => {
         if (err) {
-            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+            res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
         }
         else {
             driverService.updateTime(id, (err, result) => {

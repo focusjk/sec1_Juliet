@@ -20,7 +20,6 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
-    width: 400,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -28,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleModal() {
+const MyModal = () => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -48,8 +47,8 @@ export default function SimpleModal() {
         Open Modal
       </button>
       <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        // aria-labelledby="simple-modal-title"
+        // aria-describedby="simple-modal-description"
         open={open}
         onClose={handleClose}
       >
@@ -58,9 +57,9 @@ export default function SimpleModal() {
           <p id="simple-modal-description">
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </p>
-          <SimpleModal />
         </div>
       </Modal>
     </div>
   );
 }
+export default MyModal

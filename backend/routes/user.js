@@ -6,7 +6,7 @@ router.post('/', function (req, res, next) {
   const { id, ...data } = req.body;
   userService.editMemberInfo(id, data, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+      res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
     } else {
       res.json({ success: true });
     }
@@ -19,7 +19,7 @@ router.post('/register', function (req, res, next) {
   const { username, ...data } = req.body
   userService.register(username, data, created_at, amount, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+      res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
     }
     else {
       userService.getMemberInfo(username, (err, result) => {

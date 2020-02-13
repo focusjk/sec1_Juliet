@@ -7,6 +7,7 @@ import {
 } from "../component/MyButton";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 import Button from "@material-ui/core/Button";
+import MyModal from '../component/MyModal';
 
 class ButtonComponent extends React.Component {
   render() {
@@ -24,7 +25,7 @@ class ButtonComponent extends React.Component {
           MyDisabledFullWidthButton
         </MyDisabledFullWidthButton>
         <div style={{ margin: "10px" }} />
-
+        <MyModal />
         <Button color="secondary">OK</Button>
         <Button style={{ color: "#BDBDBD" }}>Cancel</Button>
       </div>
