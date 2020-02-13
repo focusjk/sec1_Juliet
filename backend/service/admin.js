@@ -13,7 +13,7 @@ const getAllMember = callback => {
   return db.query(
     `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,driving_license,
                   approved_at, approved_by,rejected_at,rejected_by,edited_at, driver_status
-                  FROM members WHERE driver_status = 'approved'`,
+                  FROM members WHERE driver_status = 'pending'`,
     callback
   );
 };
