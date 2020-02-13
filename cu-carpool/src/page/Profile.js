@@ -22,8 +22,9 @@ import {
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 
-const Profile = ({ history, user }) => {
+const Profile = ({ user,updateUser }) => {
   const [change, setChange] = useState(false);
+  const [error, setError] = useState('');
   const [status, setStatus] = useState('');
   const [form, setForm] = useState({
     firstname: user.firstname,
@@ -40,14 +41,14 @@ const Profile = ({ history, user }) => {
   const update = async () => {
     try {
       setChange(false);
-      const { id } = user;
-      const { ...data } = form;
-      const response = await axios.post("http://localhost:4000/user/", { id, ...data }
+      const { id,password } = user;
+      const { firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date } = form;
+      const response = await axios.post("http://localhost:4000/user/", { id,password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date }
       );
       console.log(response.data);
       const { success, error, message } = response.data;
       if (success) {
-        setStatus("Saved");
+         updateUser({firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date});
       } else {
         setStatus(error);
       }
@@ -76,7 +77,6 @@ const Profile = ({ history, user }) => {
           <UploadIcon setPhoto={(e) => setForm({ ...form, photo: e })} />
         </div>
         <MyTitle>{user.username}</MyTitle>
-        <MyTitle>{status}</MyTitle>
       </Grid>
       <Box
         style={{
@@ -93,10 +93,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="First Name"
-            value={user.firstname}
+            value={form.firstname}
             onChange={e => {
               setForm({ ...form, firstname: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.firstname);
             }}
           />
         </div>
@@ -106,10 +106,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Last Name"
-            value={user.lastname}
+            value={form.lastname}
             onChange={e => {
               setForm({ ...form, lastname: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.lastname);
             }}
           />
         </div>
@@ -119,10 +119,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Email"
-            value={user.email}
+            value={form.email}
             onChange={e => {
               setForm({ ...form, email: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.email);
             }}
           />
         </div>
@@ -132,10 +132,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Telephone No."
-            value={user.phone_number}
+            value={form.phone_number}
             onChange={e => {
               setForm({ ...form, phone_number: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.phone_number);
             }}
           />
         </div>
@@ -155,10 +155,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Cardholder Name"
-            value={user.card_holder_name}
+            value={form.card_holder_name}
             onChange={e => {
               setForm({ ...form, card_holder_name: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.card_holder_name);
             }}
           />
         </div>
@@ -168,10 +168,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Card Number"
-            value={user.card_number}
+            value={form.card_number}
             onChange={e => {
               setForm({ ...form, card_number: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.card_number);
             }}
           />
         </div>
@@ -181,10 +181,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Expiry date(ex. 12/2020)"
-            value={user.card_expiry_date}
+            value={form.card_expiry_date}
             onChange={e => {
               setForm({ ...form, card_expiry_date: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.card_expiry_date);
             }}
           />
         </div>
@@ -194,9 +194,10 @@ const Profile = ({ history, user }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Security Code"
+	    value={form.card_code}
             onChange={e => {
               setForm({ ...form, card_code: e.target.value });
-              setChange(true);
+              setChange(e.target.value && e.target.value !== user.card_code);
             }}
           />
         </div>
