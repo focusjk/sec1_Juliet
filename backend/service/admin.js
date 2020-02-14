@@ -19,6 +19,8 @@ const getAllMember = callback => {
 };
 
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
+  console.log('Approved by : ', admin_name);
+  console.log('Member ID: ', driver_id);
   return db.query(
     `UPDATE members SET approved_by = ?,approved_at = ? WHERE id = ?`,
     [admin_name, approved_at, driver_id],

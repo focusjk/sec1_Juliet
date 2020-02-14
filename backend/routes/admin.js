@@ -32,6 +32,7 @@ router.post('/driver-approve', function (req, res, next) {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
+      console.log(result);
       res.json({ success: true });
     }
   });
