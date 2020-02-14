@@ -47,7 +47,7 @@ router.post('/driver-reject', function(req, res, next) {
   const rejected_at = adminService.getCurrentDateTimeString();
   adminService.driverReject(admin_name, rejected_at, id, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Cannot approve user' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot reject user' });
     } else {
       console.log(result);
       res.json({ success: true });
