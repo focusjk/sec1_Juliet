@@ -34,6 +34,7 @@ const TripCard = ({ history, data }) => {
     capacity,
     request,
     status,
+    price
   } = data;
   const date = moment(start_datetime).format('MMMM Do YYYY');
   const time = moment(start_datetime).format('h:mm a');
@@ -97,7 +98,7 @@ const TripCard = ({ history, data }) => {
           justifyContent: 'space-between',
         }}
       >
-        <div style={{ fontSize: '20px' }}>200 ฿</div>
+        <div style={{ fontSize: '20px' }}>{price} ฿</div>
         <MyButton>Join</MyButton>
       </Typography>
     </Paper>

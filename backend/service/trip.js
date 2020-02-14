@@ -58,7 +58,8 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
                           trip.start_datetime,
                           capacity,
                           Count(Distinct request.id) AS request,
-                          status 
+                          status,
+                          trip.price
                           FROM trip left join request on trip.id = request.trip_id AND request_status = "approved"
                           WHERE trip.start_datetime LIKE '%` + selectedDate + `%' AND (
                           trip.departure_province ="`+ departure + `"OR

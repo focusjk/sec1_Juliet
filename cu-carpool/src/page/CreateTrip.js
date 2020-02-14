@@ -46,12 +46,11 @@ const CreateTrip = ({ history, user }) => {
           owner: id,
           start_datetime: date + " " + time + ":00"
         });
-        console.log(response);
-        const { success, error } = response.data;
+        const { success, message } = response.data;
         if (success) {
           history.push("/my-trip");
         } else {
-          setErrorMessage(error)
+          setErrorMessage(message)
         }
       } catch (e) {
         console.log(e.response);

@@ -10,18 +10,15 @@ const login = (username, password, callback) => {
 
 // YIN
 const getAllMember = callback => {
-  console.log('get all member');
   return db.query(
     `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,driving_license,
                   approved_at, approved_by,rejected_at,rejected_by,edited_at, driver_status
-                  FROM members WHERE driver_status = 'approved'`,
+                  FROM members WHERE driver_status = 'pending'`,
     callback
   );
 };
 
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
-  console.log('Approved by : ', admin_name);
-  console.log('Member ID: ', driver_id);
   return db.query(
     `UPDATE members SET approved_by = ?,approved_at = ? WHERE id = ?`,
     [admin_name, approved_at, driver_id],

@@ -1,37 +1,30 @@
 var express = require('express');
 var router = express.Router();
 var tripService = require('../service/trip');
+var validate = require('express-validation');
+var validateTrip = require('../validate/trip');
+var util = require('../util')
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
   const { departure, destination, selectedDate } = req.body;
-  console.log(departure, destination, selectedDate);
-  tripService.searchTrip(req.body, (err, result) => {
+  tripService.searchTrip({ departure, destination, selectedDate }, (err, result) => {
     if (err) {
-      console.log(err);
-      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT SEARCH TRIP!!!' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     }
     else {
-      console.log(result)
       res.json({ success: true, trip: result });
     }
   })
 });
 
-router.post('/create', function (req, res, next) {
-  // dateTime format "YYYY-MM-DD hh:mm:ss"
-  var created_at = new Date();
-  var date = created_at.toISOString().split('T')[0];
-  var time = created_at.getHours() + ':' + created_at.getMinutes() + ':' + created_at.getSeconds();
-  // var time = now.toLocaleTimeString();
-  created_at = date + ' ' + time;
-  console.log('created_at :', created_at);
-  tripService.createTrip(created_at, req.body, (err, result) => {
+router.post('/create', validate(validateTrip), (req, res, next) => {
+  const { start_datetime, ...data } = req.body;
+  var created_at = util.timeformatter(new Date());
+  var new_start_datetime = util.timeformatter(new Date(start_datetime));
+  tripService.createTrip(created_at, { ...data, start_datetime: new_start_datetime }, (err, result) => {
     if (err) {
-      console.log(err);
-      res.json({ success: false, error: err.sqlMessage, message: 'CANNOT CREATE TRIP!!!' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Invalid input' });
     } else {
-      console.log('----------------create Trip----------------');
-      console.log(result);
       res.json({ success: true, id: result.insertId });
     }
   });
