@@ -21,7 +21,7 @@ const getAllMember = callback => {
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
   console.log('Approved by : ', admin_name);
   console.log('Member ID: ', driver_id);
-  const driver_status = 'approved';
+  const driver_status = 1;
   return db.query(
     `UPDATE members SET approved_by = ?,approved_at = ? ,driver_status = ? WHERE id = ?`,
     [admin_name, approved_at, driver_status, driver_id],
@@ -32,10 +32,10 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
   console.log('Rejected by : ', admin_name);
   console.log('Member ID: ', driver_id);
-  const driver_status = 'rejected';
+  const driver_status = 3;
   return db.query(
-    `UPDATE members SET rejected_by = ?,rejected_at = ?, ,driver_status = ? WHERE id = ?`,
-    [admin_name, rejected_at,driver_status, driver_id],
+    `UPDATE members SET rejected_by = ?, rejected_at = ? ,driver_status = ? WHERE id = ?`,
+    [admin_name, rejected_at, driver_status, driver_id],
     callback
   );
 };

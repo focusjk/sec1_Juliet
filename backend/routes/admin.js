@@ -30,6 +30,7 @@ router.post('/driver-approve', function (req, res, next) {
   const approved_at = adminService.getCurrentDateTimeString();
   adminService.driverApprove(admin_name, approved_at, id, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
       console.log(result);
@@ -45,6 +46,7 @@ router.post('/driver-reject', function(req, res, next) {
   const rejected_at = adminService.getCurrentDateTimeString();
   adminService.driverReject(admin_name, rejected_at, id, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot reject user' });
     } else {
       console.log(result);
