@@ -29,6 +29,16 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
   );
 };
 
+const driverReject = (admin_name, rejected_at, driver_id, callback) => {
+  console.log('Rejected by : ', admin_name);
+  console.log('Member ID: ', driver_id);
+  return db.query(
+    `UPDATE members SET rejected_by = ?,rejected_at = ? WHERE id = ?`,
+    [admin_name, rejected_at, driver_id],
+    callback
+  );
+};
+
 function getCurrentDateTimeString() {
   const date = new Date();
   return (
@@ -57,4 +67,4 @@ function getCurrentDateTimeString() {
       .padStart(2, '0')
   );
 }
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString };
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString,driverReject};
