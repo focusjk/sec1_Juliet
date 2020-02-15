@@ -65,7 +65,7 @@ const App = () => {
                     <ButtonComponent />
                   </Route>
                   <Route path="/profile">
-                    <Profile user={user} />
+                    <Profile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
                   </Route>
                   <Route path="/create-trip">
                     <CreateTrip user={user} />

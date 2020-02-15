@@ -31,8 +31,8 @@ const Profile = ({ user, updateUser }) => {
     phone_number: user.phone_number,
     email: user.email,
     card_holder_name: user.card_holder_name,
-    card_number: user.card_number ? 'xxxxxxxxxxxx' + user.card_numb.substr(12, 4) : null,
-    card_code: user.card_code ? 'xxx' : null,
+    card_number: user.card_number ? '************' + user.card_number.substr(12, 4) : null,
+    card_code: user.card_code ? '***' : null,
     card_expiry_date: user.card_expiry_date,
     photo: user.photo
   });
