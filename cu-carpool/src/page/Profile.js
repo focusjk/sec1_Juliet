@@ -25,15 +25,14 @@ import { MyHeader, MyTitle } from "../component/MyTitle";
 const Profile = ({ user, updateUser }) => {
   const [change, setChange] = useState(false);
   const [error, setError] = useState('');
-  const [status, setStatus] = useState('');
   const [form, setForm] = useState({
     firstname: user.firstname,
     lastname: user.lastname,
     phone_number: user.phone_number,
     email: user.email,
     card_holder_name: user.card_holder_name,
-    card_number: user.card_number,
-    card_code: user.card_code,
+    card_number: user.card_number ? 'xxxxxxxxxxxx' + user.card_numb.substr(12, 4) : null,
+    card_code: user.card_code ? 'xxx' : null,
     card_expiry_date: user.card_expiry_date,
     photo: user.photo
   });
@@ -50,7 +49,7 @@ const Profile = ({ user, updateUser }) => {
       if (success) {
         updateUser({ firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date });
       } else {
-        setStatus(error);
+        setError(message)
       }
     } catch (e) {
       console.log(e.response);
@@ -74,7 +73,10 @@ const Profile = ({ user, updateUser }) => {
             width={100}
             style={{ borderRadius: "100%" }}
           />
-          <UploadIcon setPhoto={(e) => setForm({ ...form, photo: e })} />
+          <UploadIcon setPhoto={(e) => {
+            setForm({ ...form, photo: e });
+            setChange(true);
+          }} />
         </div>
         <MyTitle>{user.username}</MyTitle>
       </Grid>
@@ -220,6 +222,9 @@ const Profile = ({ user, updateUser }) => {
             </MyFullWidthButton>
         )}
       </Switch>
+      {error !== "" && (
+        <div style={{ color: "red" }}>{error}</div>
+      )}
     </div>
   );
 };
