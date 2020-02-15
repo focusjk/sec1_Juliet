@@ -182,7 +182,7 @@ const Profile = ({ user, updateUser }) => {
           <TextField
             style={{ marginLeft: "8px" }}
             fullWidth
-            placeholder="Expiry date(ex. 12/2020)"
+            placeholder="Expiry date(ex. 02/2020)"
             value={form.card_expiry_date}
             onChange={e => {
               setForm({ ...form, card_expiry_date: e.target.value });
