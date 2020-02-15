@@ -19,15 +19,9 @@ function login(username, password, callback) {
 }
 
 const editMemberInfo = (id, body, callback) => {
-  const { password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date } = body;
-  if (password == "") {
+  const { firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date } = body; 
     return db.query(`UPDATE members SET firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
       card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?;`
-      , [firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date, id], callback); //card_expiry_date is still missing
-  } else {
-    return db.query(`UPDATE members SET password = ? ,firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
-      card_holder_name = ?,card_number = ?,card_code = ?,card_expiry_date = ? WHERE id = ?`
-      , [password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date, id], callback); //card_expiry_date is still missing
-  }
+      , [firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date, id], callback); 
 }
 module.exports = { register, getMemberInfo, login, editMemberInfo };
