@@ -8,7 +8,8 @@ router.post('/login', function (req, res, next) {
     if (err) {
       res.send({ success: false, message: "Cannot access database" });
     } else {
-      if (result == 1) res.send({ success: true, username });
+      const { count } = result[0]
+      if (count == 1) res.send({ success: true, username });
       else res.send({ success: false, message: 'Username or Password is incorrect' });
     }
   });
@@ -39,7 +40,7 @@ router.post('/driver-approve', function (req, res, next) {
   });
 });
 
-router.post('/driver-reject', function(req, res, next) {
+router.post('/driver-reject', function (req, res, next) {
   const { admin_name, id } = req.body;
   console.log(req.body);
   console.log(admin_name);
