@@ -22,7 +22,7 @@ import {
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 
-const Profile = ({ user,updateUser }) => {
+const Profile = ({ user, updateUser }) => {
   const [change, setChange] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
@@ -41,14 +41,14 @@ const Profile = ({ user,updateUser }) => {
   const update = async () => {
     try {
       setChange(false);
-      const { id,password } = user;
+      const { id, password } = user;
       const { firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date } = form;
-      const response = await axios.post("http://localhost:4000/user/", { id,password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date }
+      const response = await axios.post("http://localhost:4000/user/", { id, password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date }
       );
       console.log(response.data);
       const { success, error, message } = response.data;
       if (success) {
-         updateUser({firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date});
+        updateUser({ firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date });
       } else {
         setStatus(error);
       }
@@ -194,7 +194,7 @@ const Profile = ({ user,updateUser }) => {
             style={{ marginLeft: "8px" }}
             fullWidth
             placeholder="Security Code"
-	    value={form.card_code}
+            value={form.card_code}
             onChange={e => {
               setForm({ ...form, card_code: e.target.value });
               setChange(e.target.value && e.target.value !== user.card_code);

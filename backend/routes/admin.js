@@ -8,7 +8,8 @@ router.post('/login', function (req, res, next) {
     if (err) {
       res.send({ success: false, message: "Cannot access database" });
     } else {
-      if (result == 1) res.send({ success: true, username });
+      const { count } = result[0]
+      if (count == 1) res.send({ success: true, username });
       else res.send({ success: false, message: 'Username or Password is incorrect' });
     }
   });
@@ -30,15 +31,30 @@ router.post('/driver-approve', function (req, res, next) {
   const approved_at = adminService.getCurrentDateTimeString();
   adminService.driverApprove(admin_name, approved_at, id, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
+      console.log(result);
       res.json({ success: true });
     }
   });
 });
 
 router.post('/driver-reject', function (req, res, next) {
-  res.send('respond with a resource');
+  const { admin_name, id } = req.body;
+  console.log(req.body);
+  console.log(admin_name);
+  const rejected_at = adminService.getCurrentDateTimeString();
+  adminService.driverReject(admin_name, rejected_at, id, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot reject user' });
+    } else {
+      console.log(result);
+      res.json({ success: true });
+    }
+  });
+
 });
 
 module.exports = router;

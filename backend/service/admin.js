@@ -2,7 +2,7 @@ var db = require('../dbconnection'); //reference of dbconnection.js
 
 const login = (username, password, callback) => {
   return db.query(
-    `SELECT count(*) FROM admin WHERE username = ? AND password = ?`,
+    `SELECT count(*) as count FROM admin WHERE username = ? AND password = ?`,
     [username, password],
     callback
   );
@@ -19,9 +19,23 @@ const getAllMember = callback => {
 };
 
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
+  console.log('Approved by : ', admin_name);
+  console.log('Member ID: ', driver_id);
+  const driver_status = 1;
   return db.query(
-    `UPDATE members SET approved_by = ?,approved_at = ? WHERE id = ?`,
-    [admin_name, approved_at, driver_id],
+    `UPDATE members SET approved_by = ?,approved_at = ? ,driver_status = ? WHERE id = ?`,
+    [admin_name, approved_at, driver_status, driver_id],
+    callback
+  );
+};
+
+const driverReject = (admin_name, rejected_at, driver_id, callback) => {
+  console.log('Rejected by : ', admin_name);
+  console.log('Member ID: ', driver_id);
+  const driver_status = 3;
+  return db.query(
+    `UPDATE members SET rejected_by = ?, rejected_at = ? ,driver_status = ? WHERE id = ?`,
+    [admin_name, rejected_at, driver_status, driver_id],
     callback
   );
 };
@@ -54,4 +68,4 @@ function getCurrentDateTimeString() {
       .padStart(2, '0')
   );
 }
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString };
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject };
