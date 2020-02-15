@@ -2,7 +2,7 @@ var db = require('../dbconnection'); //reference of dbconnection.js
 
 const login = (username, password, callback) => {
   return db.query(
-    `SELECT count(*) FROM admin WHERE username = ? AND password = ?`,
+    `SELECT count(*) as count FROM admin WHERE username = ? AND password = ?`,
     [username, password],
     callback
   );
@@ -68,4 +68,4 @@ function getCurrentDateTimeString() {
       .padStart(2, '0')
   );
 }
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString,driverReject};
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject };

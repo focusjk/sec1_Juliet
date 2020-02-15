@@ -2,12 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { Box } from '@material-ui/core';
-import { Input } from '@material-ui/core';
 import { MyButton, MyWhiteButton } from '../component/MyButton';
-import NoteIcon from '@material-ui/icons/Note';
-import { IconButton, Icon } from '@material-ui/core/';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { MyHeader } from '../component/MyTitle'
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
@@ -28,16 +23,20 @@ class DriverRequest2 extends React.Component {
     const { username } = this.props.user;
     console.log({ id, admin_name: username })
     const response = await axios.post("http://localhost:4000/admin/driver-approve", { id, admin_name: username });
-    console.log(response)
-    const { success } = response
+    const { success } = response.data
     if (success) {
       this.fetchData()
     }
   }
 
-  handleReject = id => {
+  handleReject = async id => {
     const { username } = this.props.user;
     console.log({ id, admin_name: username })
+    const response = await axios.post("http://localhost:4000/admin/driver-reject", { id, admin_name: username });
+    const { success } = response.data
+    if (success) {
+      this.fetchData()
+    }
   }
   render() {
     return (
