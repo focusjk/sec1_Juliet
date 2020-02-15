@@ -1,6 +1,7 @@
 var express = require('express');
 var userService = require('../service/user');
 var router = express.Router();
+var util = require('../util');
 
 router.post('/', function (req, res, next) {
   const { id, ...data } = req.body;
@@ -15,7 +16,8 @@ router.post('/', function (req, res, next) {
 
 router.post('/register', function (req, res, next) {
   var amount = 0;
-  var created_at = userService.getCurrentDateTimeString()
+  var created_at = util.timeformatter(new Date());
+  console.log(created_at);
   const { username, ...data } = req.body
   userService.register(username, data, created_at, amount, (err, result) => {
     if (err) {

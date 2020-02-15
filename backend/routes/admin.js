@@ -1,6 +1,7 @@
 var express = require('express');
 var adminService = require('../service/admin');
 var router = express.Router();
+var util = require('../util');
 
 router.post('/login', function (req, res, next) {
   const { username, password } = req.body;
@@ -27,7 +28,7 @@ router.get('/driver', function (req, res, next) {
 
 router.post('/driver-approve', function (req, res, next) {
   const { admin_name, id } = req.body;
-  const approved_at = adminService.getCurrentDateTimeString();
+  const approved_at = util.timeformatter(new Date());
   adminService.driverApprove(admin_name, approved_at, id, (err, result) => {
     if (err) {
       console.log(err);
@@ -43,7 +44,7 @@ router.post('/driver-reject', function(req, res, next) {
   const { admin_name, id } = req.body;
   console.log(req.body);
   console.log(admin_name);
-  const rejected_at = adminService.getCurrentDateTimeString();
+  const rejected_at = util.timeformatter(new Date());
   adminService.driverReject(admin_name, rejected_at, id, (err, result) => {
     if (err) {
       console.log(err);
