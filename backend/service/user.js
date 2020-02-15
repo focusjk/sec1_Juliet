@@ -24,7 +24,7 @@ function getCurrentDateTimeString() {
 
 function login(username, password, callback) {
   return db.query(`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
-    card_code,card_expiry_date,amount FROM members WHERE username = ? AND password = ?`, [username, password], callback);
+    card_code,card_expiry_date,amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at FROM members WHERE username = ? AND password = ?`, [username, password], callback);
 
 }
 
