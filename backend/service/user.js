@@ -12,16 +12,6 @@ const getMemberInfo = (username, callback) => {
       card_code,card_expiry_date,amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at FROM members WHERE username = ?`, [username], callback);
 }
 
-function getCurrentDateTimeString() {
-  const date = new Date();
-  return date.getFullYear() + '-' +
-    (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
-    date.getDate().toString().padStart(2, '0') + ':' +
-    date.getHours().toString().padStart(2, '0') + ':' +
-    date.getMinutes().toString().padStart(2, '0') + ':' +
-    date.getSeconds().toString().padStart(2, '0');
-}
-
 function login(username, password, callback) {
   return db.query(`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,card_holder_name,card_number,
     card_code,card_expiry_date,amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at FROM members WHERE username = ? AND password = ?`, [username, password], callback);
@@ -40,4 +30,4 @@ const editMemberInfo = (id, body, callback) => {
       , [password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date, id], callback); //card_expiry_date is still missing
   }
 }
-module.exports = { register, getMemberInfo, getCurrentDateTimeString, login, editMemberInfo };
+module.exports = { register, getMemberInfo, login, editMemberInfo };
