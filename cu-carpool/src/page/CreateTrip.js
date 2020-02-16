@@ -5,16 +5,17 @@ import { TextField } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 import { ProvinceMenuItem } from "../component/ProvinceMenuItem"
+import Map from "../component/Map"
 
 const CreateTrip = ({ history, user }) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [form, setForm] = useState({
-    departure_latitude: 111,
-    departure_longtitude: 111,
+    departure_latitude: 13.769059,
+    departure_longtitude: 100.493117,
     departure_detail: null,
     departure_province: null,
-    destination_latitude: 111,
-    destination_longtitude: 111,
+    destination_latitude: 13.769059,
+    destination_longtitude: 100.493117,
     destination_detail: null,
     destination_province: null,
     date: null,
@@ -165,6 +166,7 @@ const CreateTrip = ({ history, user }) => {
             }}
           />
         </div>
+        <Map setLocation={(departure_longtitude, departure_latitude) => setForm({ ...form, departure_longtitude, departure_latitude })} />
         <MyTitle style={{ marginTop: "30px" }}>Destination</MyTitle>
         <TextField
           select
@@ -189,6 +191,7 @@ const CreateTrip = ({ history, user }) => {
             setErrorMessage('')
           }}
         />
+        <Map setLocation={(destination_longtitude, destination_latitude) => setForm({ ...form, destination_longtitude, destination_latitude })} />
         <MyFullWidthButton style={{ margin: "40px 0 10px 0" }} onClick={handleCreate}>
           Create
         </MyFullWidthButton>

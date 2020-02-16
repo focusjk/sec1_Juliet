@@ -15,9 +15,7 @@ import {
 import { TextField } from "@material-ui/core";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
+  Switch
 } from "react-router-dom";
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";

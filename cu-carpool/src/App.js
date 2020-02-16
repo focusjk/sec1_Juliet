@@ -47,9 +47,9 @@ const App = () => {
   //for member
   // const [user, setUser] = React.useState({ id: 1, driver_status: 'approved' });
   // for admin
-  // const [user, setUser] = React.useState({ username: 'admin' });
+  const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -61,27 +61,27 @@ const App = () => {
               <div>
                 <Navigation user={user} handleLogout={() => setUser(null)} />
                 <div className={classes.body}>
-                  <Route path="/ButtonComponent">
-                    <ButtonComponent />
-                  </Route>
-                  <Route path="/profile">
-                    <Profile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
-                  </Route>
-                  <Route path="/create-trip">
-                    <CreateTrip user={user} />
-                  </Route>
-                  <Route path="/my-trip">
-                    <MyTrip user={user} />
-                  </Route>
-                  <Route path="/driver">
-                    <DriverProfile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
-                  </Route>
-                  <Route exact path="/">
-                    <Home user={user} />
-                  </Route>
-                  {/* <Route path="*">
-                    404 Not found
-                  </Route> */}
+                  <Switch>
+                    <Route path="/ButtonComponent" exact>
+                      <ButtonComponent />
+                    </Route>
+                    <Route path="/profile" exact>
+                      <Profile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
+                    </Route>
+                    <Route path="/create-trip" exact>
+                      <CreateTrip user={user} />
+                    </Route>
+                    <Route path="/my-trip" exact>
+                      <MyTrip user={user} />
+                    </Route>
+                    <Route path="/driver" exact>
+                      <DriverProfile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
+                    </Route>
+                    <Route exact path="/">
+                      <Home user={user} />
+                    </Route>
+                    <Redirect to="/" />
+                  </Switch>
                 </div>
               </div>
             )}
@@ -92,35 +92,39 @@ const App = () => {
                   handleLogout={() => setUser(null)}
                 />
                 <div className={classes.admin}>
-                  <Route path="/admin/driver">
-                    <DriverRequest user={user} />
-                  </Route>
-                  {/* <Route path="*">
-                  404 Not found
-                </Route> */}
+                  <Switch>
+                    <Route path="/admin/driver" exact>
+                      <DriverRequest user={user} />
+                    </Route>
+                    <Redirect to="/admin/driver" />
+                  </Switch>
                 </div>
               </div>
             )}
             {!user && (
               <div className={classes.body}>
-                <Route path="/register">
-                  <Register handleLogin={user => setUser(user)} />
-                </Route>
-                <Route path="/admin/login">
-                  <AdminLogin handleLogin={user => setUser(user)} />
-                </Route>
-                <Route path="/login">
-                  <Login handleLogin={user => setUser(user)} />
-                </Route>
-                {/* <Route path="*">
-                  404 Not found
-                </Route> */}
+                <Switch>
+
+                  <Route path="/register" exact>
+                    <Register handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Route path="/admin/login" exact>
+                    <AdminLogin handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Route path="/login" exact>
+                    <Login handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Redirect to="/register" />
+                </Switch>
+                {/* <Route > */}
+                {/* <Redirect to="/register" /> */}
+                {/* </Route>  */}
               </div>
             )}
           </Switch>
         </Router>
       </div>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 

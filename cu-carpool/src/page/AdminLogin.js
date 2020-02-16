@@ -18,7 +18,7 @@ const AdminLogin = ({ history, handleLogin }) => {
     const { success, username, message } = response.data;
     if (success) {
       handleLogin({ username });
-      history.push("/admin/driver-request");
+      history.push("/admin/driver");
     } else {
       setErrorMessage(message);
     }
