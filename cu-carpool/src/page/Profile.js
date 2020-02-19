@@ -13,41 +13,67 @@ import {
   MyDisabledFullWidthButton
 } from "../component/MyButton";
 import { TextField } from "@material-ui/core";
-import {
-  BrowserRouter as Router,
-  Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 
 const Profile = ({ user, updateUser }) => {
   const [change, setChange] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     firstname: user.firstname,
     lastname: user.lastname,
     phone_number: user.phone_number,
     email: user.email,
-    card_holder_name: user.card_holder_name,
-    card_number: user.card_number ? '************' + user.card_number.substr(12, 4) : null,
-    card_code: user.card_code ? '***' : null,
-    card_expiry_date: user.card_expiry_date,
+    // card_holder_name: user.card_holder_name,
+    // card_number: user.card_number ? '************' + user.card_number.substr(12, 4) : null,
+    // card_code: user.card_code ? '***' : null,
+    // card_expiry_date: user.card_expiry_date,
     photo: user.photo
   });
 
   const update = async () => {
     try {
       setChange(false);
-      const { id, password } = user;
-      const { firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date } = form;
-      const response = await axios.post("http://localhost:4000/user/", { id, password, firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date }
-      );
-      console.log(response.data);
+      const { id } = user;
+      const {
+        firstname,
+        lastname,
+        phone_number,
+        email,
+        photo
+        // card_holder_name,
+        // card_number,
+        // card_code,
+        // card_expiry_date
+      } = form;
+      const response = await axios.post("http://localhost:4000/user/", {
+        id,
+        firstname,
+        lastname,
+        phone_number,
+        email,
+        photo
+        // card_holder_name,
+        // card_number,
+        // card_code,
+        // card_expiry_date
+      });
       const { success, error, message } = response.data;
       if (success) {
-        updateUser({ firstname, lastname, phone_number, email, photo, card_holder_name, card_number, card_code, card_expiry_date });
+        updateUser({
+          firstname,
+          lastname,
+          phone_number,
+          email,
+          photo
+          // card_holder_name,
+          // card_number,
+          // card_code,
+          // card_expiry_date
+        });
       } else {
-        setError(message)
+        setError(message);
       }
     } catch (e) {
       console.log(e.response);
@@ -71,10 +97,12 @@ const Profile = ({ user, updateUser }) => {
             width={100}
             style={{ borderRadius: "100%" }}
           />
-          <UploadIcon setPhoto={(e) => {
-            setForm({ ...form, photo: e });
-            setChange(true);
-          }} />
+          <UploadIcon
+            setPhoto={e => {
+              setForm({ ...form, photo: e });
+              setChange(true);
+            }}
+          />
         </div>
         <MyTitle>{user.username}</MyTitle>
       </Grid>
@@ -140,7 +168,7 @@ const Profile = ({ user, updateUser }) => {
           />
         </div>
       </Box>
-      <Box
+      {/* <Box
         style={{
           backgroundColor: "#F8F8F8",
           marginBottom: "40px",
@@ -158,7 +186,9 @@ const Profile = ({ user, updateUser }) => {
             value={form.card_holder_name}
             onChange={e => {
               setForm({ ...form, card_holder_name: e.target.value });
-              setChange(e.target.value && e.target.value !== user.card_holder_name);
+              setChange(
+                e.target.value && e.target.value !== user.card_holder_name
+              );
             }}
           />
         </div>
@@ -184,7 +214,9 @@ const Profile = ({ user, updateUser }) => {
             value={form.card_expiry_date}
             onChange={e => {
               setForm({ ...form, card_expiry_date: e.target.value });
-              setChange(e.target.value && e.target.value !== user.card_expiry_date);
+              setChange(
+                e.target.value && e.target.value !== user.card_expiry_date
+              );
             }}
           />
         </div>
@@ -201,7 +233,7 @@ const Profile = ({ user, updateUser }) => {
             }}
           />
         </div>
-      </Box>
+      </Box> */}
       <Switch>
         {!change && (
           <MyDisabledFullWidthButton
@@ -209,20 +241,15 @@ const Profile = ({ user, updateUser }) => {
             disabled={true}
           >
             Save
-            </MyDisabledFullWidthButton>
+          </MyDisabledFullWidthButton>
         )}
         {change && (
-          <MyFullWidthButton
-            style={{ margin: "10px 0" }}
-            onClick={update}
-          >
+          <MyFullWidthButton style={{ margin: "10px 0" }} onClick={update}>
             Save
-            </MyFullWidthButton>
+          </MyFullWidthButton>
         )}
       </Switch>
-      {error !== "" && (
-        <div style={{ color: "red" }}>{error}</div>
-      )}
+      {error !== "" && <div style={{ color: "red" }}>{error}</div>}
     </div>
   );
 };

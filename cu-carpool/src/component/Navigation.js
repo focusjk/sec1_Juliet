@@ -1,7 +1,7 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import logo from '../logo.png';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import logo from "../logo.png";
 import {
   AppBar,
   Toolbar,
@@ -12,36 +12,37 @@ import {
   ListItemIcon,
   Icon,
   IconButton,
-  Divider,
-} from '@material-ui/core/';
+  Divider
+} from "@material-ui/core/";
 
 const listPath = {
   user: [
-    { name: 'Home', path: '/', icon: 'home' },
-    { name: 'Profile', path: '/profile', icon: 'person' },
-    { name: 'Driver', path: '/driver', icon: 'assignment_ind' },
-    { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
+    { name: "Home", path: "/", icon: "home" },
+    { name: "Profile", path: "/profile", icon: "person" },
+    { name: "Driver", path: "/driver", icon: "assignment_ind" }
+    // { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
   ],
   driver: [
-    { name: 'Home', path: '/', icon: 'home' },
-    { name: 'Profile', path: '/profile', icon: 'person' },
-    { name: 'Driver', path: '/driver', icon: 'assignment_ind' },
-    { name: 'Create trip', path: '/create-trip', icon: 'emoji_transportation' },
-    { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
-  ],
+    { name: "Home", path: "/", icon: "home" },
+    { name: "Profile", path: "/profile", icon: "person" },
+    { name: "Driver", path: "/driver", icon: "assignment_ind" },
+    { name: "Create trip", path: "/create-trip", icon: "emoji_transportation" }
+    // { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
+  ]
 };
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 250
   },
   barSection: { flexGrow: 1 },
-  barItem: { cursor: 'pointer' },
+  barItem: { cursor: "pointer" }
 });
 
 const Navigation = ({ history, user, handleLogout }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const listSelecter = user && user.driver_status == 'approved' ? 'driver' : 'user';
+  const listSelecter =
+    user && user.driver_status == "approved" ? "driver" : "user";
   const sideList = (
     <div className={classes.list} role="presentation">
       <List>
@@ -65,7 +66,7 @@ const Navigation = ({ history, user, handleLogout }) => {
           button
           key="logout"
           onClick={() => {
-            history.push('/login');
+            history.push("/login");
             handleLogout();
             setOpen(false);
           }}
@@ -79,7 +80,7 @@ const Navigation = ({ history, user, handleLogout }) => {
     </div>
   );
   return (
-    <AppBar position="static" style={{ backgroundColor: '#C78899' }}>
+    <AppBar position="static" style={{ backgroundColor: "#C78899" }}>
       <Toolbar>
         <div className={classes.barSection}>
           <img
@@ -87,7 +88,7 @@ const Navigation = ({ history, user, handleLogout }) => {
             src={logo}
             height={40}
             onClick={() => {
-              history.push('/');
+              history.push("/");
             }}
           />
         </div>
@@ -98,7 +99,7 @@ const Navigation = ({ history, user, handleLogout }) => {
           onClick={() => {
             setOpen(true);
           }}
-          style={{ color: 'white' }}
+          style={{ color: "white" }}
         >
           <Icon>menu</Icon>
         </IconButton>
