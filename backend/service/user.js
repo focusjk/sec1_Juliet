@@ -1,4 +1,5 @@
 var db = require('../dbconnection');
+
 const register = (username, data, created_at, amount, callback) => {
   const { password, firstname, lastname, phone_number, email, photo } = data;
   return db.query(
@@ -20,7 +21,9 @@ function login(username, password, callback) {
 
 const editMemberInfo = (id, body, callback) => {
   const { firstname, lastname, phone_number, email, photo} = body; //credit-card-related fields are removed from this line
-    return db.query(`UPDATE members SET firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?,
+    return db.query(`UPDATE members SET firstname = ?,lastname = ? ,phone_number = ?,email = ?,photo = ?
       WHERE id = ?;` //credit-card-related fields are removed from this line
-      , [firstname, lastname, phone_number, email, photo id], callback); //credit-card-related fields are removed from this line
+      , [firstname, lastname, phone_number, email, photo, id], callback); //credit-card-related fields are removed from this line
+}
+
 module.exports = { register, getMemberInfo, login, editMemberInfo };

@@ -14,3 +14,4 @@ module.exports = {
         //card_expiry_date: Joi.string().length(8).regex(/[0-1][0-9][/][0-9]{4}/).allow(null).optional(),
         driving_license: Joi.string().length(25).allow(null).optional(),
     }
+}
