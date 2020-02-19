@@ -38,12 +38,14 @@ const DriverProfile = ({ user, updateUser }) => {
       if (success) {
         setStatus(driver_status);
         setTime(formatter(edited_at));
+        setError('');
         updateUser({ driving_license, edited_at, driver_status: "pending" });
       } else {
         setError(message);
       }
     } catch (e) {
       console.log(e.response);
+      setError('Invalid data, please check your input again');
     }
   };
 
@@ -89,7 +91,7 @@ const DriverProfile = ({ user, updateUser }) => {
             onChange={e => {
               setForm({ ...form, driving_license: e.target.value });
               setChange(
-                e.target.value && e.target.value !== user.driving_license
+                e.target.value && e.target.value.length == 25
               );
             }}
           />

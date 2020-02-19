@@ -34,7 +34,6 @@ const Profile = ({ user, updateUser }) => {
 
   const update = async () => {
     try {
-      setChange(false);
       const { id } = user;
       const {
         firstname,
@@ -61,6 +60,8 @@ const Profile = ({ user, updateUser }) => {
       });
       const { success, error, message } = response.data;
       if (success) {
+        setChange(false);
+        setError("");
         updateUser({
           firstname,
           lastname,
@@ -77,6 +78,7 @@ const Profile = ({ user, updateUser }) => {
       }
     } catch (e) {
       console.log(e.response);
+      setError('Invalid data, please check your input again');
     }
   };
   return (
@@ -124,7 +126,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.firstname}
             onChange={e => {
               setForm({ ...form, firstname: e.target.value });
-              setChange(e.target.value && e.target.value !== user.firstname);
+              setChange(!!e.target.value)
             }}
           />
         </div>
@@ -137,7 +139,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.lastname}
             onChange={e => {
               setForm({ ...form, lastname: e.target.value });
-              setChange(e.target.value && e.target.value !== user.lastname);
+              setChange(!!e.target.value)
             }}
           />
         </div>
@@ -150,7 +152,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.email}
             onChange={e => {
               setForm({ ...form, email: e.target.value });
-              setChange(e.target.value && e.target.value !== user.email);
+              setChange(!!e.target.value)
             }}
           />
         </div>
@@ -163,7 +165,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.phone_number}
             onChange={e => {
               setForm({ ...form, phone_number: e.target.value });
-              setChange(e.target.value && e.target.value !== user.phone_number);
+              setChange(!!e.target.value)
             }}
           />
         </div>
