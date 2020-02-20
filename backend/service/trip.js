@@ -106,9 +106,15 @@ const getOwnerDetail = ({owner_id},callback) => {
 }
 
 const getAllPassenger = ({tripId}, callback) => {
-  return db.query(`SELECT members.id , members.username, members.photo FROM members 
-                  WHERE members.id IN (SELECT request.member_id
-                  FROM trip LEFT JOIN request ON trip.id = request.trip_id LEFT JOIN members ON request.member_id = members.id
-                  WHERE request.request_status = 'approved' AND trip.id =`+ tripId+` group by member_id)`, callback);
+  return db.query(`SELECT 
+                          members.id, 
+                          members.username, 
+                          members.photo 
+                          FROM members 
+                          WHERE members.id IN (SELECT request.member_id
+                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                              LEFT JOIN members ON request.member_id = members.id
+                                              WHERE request.request_status = 'approved' AND trip.id =`+ tripId+` 
+                                              GROUP BY member_id)`, callback);
 }
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger};
