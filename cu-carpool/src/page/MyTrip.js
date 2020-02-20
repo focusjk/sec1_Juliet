@@ -1,30 +1,65 @@
 import React from "react";
-import { MyButton } from "../component/MyButton";
 import { MyHeader, MyTitle } from "../component/MyTitle";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
+import { Link, Divider, Paper, Typography } from "@material-ui/core/";
+import TripBox from "../component/TripBox";
 
 class MyTrip extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader> My Trip </MyHeader>
+        <MyHeader style={{ marginBottom: "30px" }}>My trip</MyHeader>
         <div>
-          <Typography
+          <Paper
+            square
+            variant="outlined"
             style={{
-              backgroundColor: "#C78899",
-              height: "4.5vh"
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+              borderInlineColor: "#BDBDBD"
             }}
           >
-            <MyTitle
-              style={{ fontSize: "20px", color: "#FFFFFF", marginLeft: "6px" }}
+            <Paper
+              square
+              // key={id}
+              elevation={0}
+              style={{
+                padding: 3,
+                display: "flex",
+                justifyContent: "space-between",
+                backgroundColor: "#C78899"
+              }}
             >
-              Hi
-            </MyTitle>
-          </Typography>
+              <MyTitle
+                style={{
+                  fontSize: "20px",
+                  color: "#FFFFFF",
+                  marginLeft: "8px"
+                }}
+              >
+                Hi header
+              </MyTitle>
+            </Paper>
+            <Paper
+              square
+              elevation={0}
+              style={{
+                padding: 12,
+                display: "flex",
+                justifyContent: "space-between"
+              }}
+            >
+              <MyTitle
+                style={{
+                  color: "#C78899"
+                }}
+              >
+                Status:
+              </MyTitle>
+            </Paper>
+          </Paper>
         </div>
-        {/* <MyButton disabled={request === capacity}>MyButton</MyButton> */}
+        {/* <TripBox /> */}
       </div>
     );
   }

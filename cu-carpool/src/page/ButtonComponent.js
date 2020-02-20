@@ -5,9 +5,10 @@ import {
   MyFullWidthButton,
   MyDisabledFullWidthButton
 } from "../component/MyButton";
-import { MyHeader, MyTitle } from "../component/MyTitle";
+import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import Button from "@material-ui/core/Button";
-import MyModal from '../component/MyModal';
+import MyModal from "../component/MyModal";
+import Rating from "@material-ui/lab/Rating";
 
 class ButtonComponent extends React.Component {
   render() {
@@ -15,6 +16,7 @@ class ButtonComponent extends React.Component {
       <div>
         <MyHeader> Hi </MyHeader>
         <MyTitle> Hi </MyTitle>
+        <MyHeaderWithArrow goto="">My trip</MyHeaderWithArrow>
         <MyButton>MyButton</MyButton>
         <div style={{ margin: "10px" }} />
         <MyButton disabled>MyButton</MyButton>
@@ -34,6 +36,7 @@ class ButtonComponent extends React.Component {
         <MyModal />
         <Button color="secondary">OK</Button>
         <Button style={{ color: "#BDBDBD" }}>Cancel</Button>
+        <Rating name="half-rating" defaultValue={2.34} precision={0.01} />
       </div>
     );
   }
