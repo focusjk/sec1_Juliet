@@ -124,7 +124,7 @@ const App = () => {
                   <Route path="/login" exact>
                     <Login handleLogin={user => setUser(user)} />
                   </Route>
-                  <Redirect to="/register" />
+                  <Redirect to="/login" />
                 </Switch>
               </div>
             )}

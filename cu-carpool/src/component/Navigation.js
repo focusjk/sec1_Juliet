@@ -19,15 +19,16 @@ const listPath = {
   user: [
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
-    { name: "Driver", path: "/driver", icon: "assignment_ind" }
-    // { name: 'Test', path: '/ButtonComponent', icon: 'assignment_ind' },
+    { name: "Driver", path: "/driver", icon: "assignment_ind" },
+    { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ],
   driver: [
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
-    { name: "Create trip", path: "/create-trip", icon: "emoji_transportation" }
-    // { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
+    { name: "My Trip", path: "/my-trip", icon: "assignment_ind" },
+    { name: "Create trip", path: "/create-trip", icon: "emoji_transportation" },
+    { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ]
 };
 const useStyles = makeStyles({
