@@ -49,4 +49,15 @@ router.post('/login', function(req, res, next) {
   });
 });
 
+router.post('/payment', function (req, res, next) {
+  const { id } = req.body;
+  userService.payment(id, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
+    } else {
+      res.json({ success: true, information: result[1] });
+    }
+  });
+});
+
 module.exports = router;

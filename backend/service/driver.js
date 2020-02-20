@@ -21,19 +21,20 @@ const updateProfileByID = (ID, data, callback) => {
     return db.query(`UPDATE members SET ? WHERE id = ?`, [data,ID], callback);
 }
 
-const updateTime = (ID,callback) =>{
-    console.log('update time');
-    return db.query(`UPDATE members SET edited_at = ? WHERE id = ?`, [getCurrentDateTimeString().trimLeft().trimRight(),ID], callback);
-}
+const tripRequest = (ID, callback) => {
+    return db.query(`SELECT 
+                            request.id AS id,
+                            request.departure_latitude,
+                            request.departure_longtitude,
+                            request.destination_latitude,
+                            request.destination_longtitude,                          
+                            members.id AS member_id,
+                            members.username,
+                            members.phone_number,
+                            members.photo
+                            FROM request left join members on request.member_id = members.id 
+                            WHERE request.trip_id = ? AND request.request_status = "pending"`,[ID],callback);
+  };
 
-const getMemberInfo = (ID,callback) => {
-    console.log('get driver info')
-    return db.query(`SELECT driver_status, edited_at FROM members WHERE id = ?`, [ID],callback);
-  }
+module.exports = { getByID, driverReq, tripRequest };
 
-const driverReq = (edited_at,{ID, data}, callback) => {
-    console.log('update driver_status to pending: id = ', ID);
-    return db.query(`UPDATE members SET driver_status = 'pending', ? WHERE id = ?`, [data,ID], callback);
-}
-
-module.exports = { getByID, updateProfileByID , updateTime, getMemberInfo, driverReq};
