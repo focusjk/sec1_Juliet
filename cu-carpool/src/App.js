@@ -37,7 +37,10 @@ const useStyles = makeStyles({
     fontSize: "16px"
   },
   body: {
-    margin: "30px"
+    padding: "30px",
+    maxWidth: "414px",
+    margin: "auto",
+    right: 0
   },
   admin: {
     margin: "32px 64px"
@@ -45,7 +48,7 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  // const [user, setUser] = React.useState({ id: 1, driver_status: 'approved' });
+  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
@@ -66,16 +69,24 @@ const App = () => {
                       <ButtonComponent />
                     </Route>
                     <Route path="/profile" exact>
-                      <Profile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
+                      <Profile
+                        user={user}
+                        updateUser={data => setUser({ ...user, ...data })}
+                      />
                     </Route>
-                    <Route path="/create-trip" exact>
-                      <CreateTrip user={user} />
-                    </Route>
+                    {user.driver_status === "approved" && (
+                      <Route path="/create-trip" exact>
+                        <CreateTrip user={user} />
+                      </Route>
+                    )}
                     <Route path="/my-trip" exact>
                       <MyTrip user={user} />
                     </Route>
                     <Route path="/driver" exact>
-                      <DriverProfile user={user} updateUser={(data) => setUser({ ...user, ...data })} />
+                      <DriverProfile
+                        user={user}
+                        updateUser={data => setUser({ ...user, ...data })}
+                      />
                     </Route>
                     <Route exact path="/">
                       <Home user={user} />
@@ -104,7 +115,6 @@ const App = () => {
             {!user && (
               <div className={classes.body}>
                 <Switch>
-
                   <Route path="/register" exact>
                     <Register handleLogin={user => setUser(user)} />
                   </Route>
@@ -116,15 +126,12 @@ const App = () => {
                   </Route>
                   <Redirect to="/register" />
                 </Switch>
-                {/* <Route > */}
-                {/* <Redirect to="/register" /> */}
-                {/* </Route>  */}
               </div>
             )}
           </Switch>
         </Router>
       </div>
-    </ThemeProvider >
+    </ThemeProvider>
   );
 };
 

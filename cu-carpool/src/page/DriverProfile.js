@@ -8,19 +8,21 @@ import {
 } from "../component/MyButton";
 import NoteIcon from "@material-ui/icons/Note";
 import { MyHeader, MyTitle } from "../component/MyTitle";
-import moment from 'moment'
+import moment from "moment";
 
 const formatter = t => {
-  return t ? moment(t).format('MMMM Do YYYY h:mm a') : null;
-}
+  return t ? moment(t).format("MMMM Do YYYY h:mm a") : null;
+};
 
 const DriverProfile = ({ user, updateUser }) => {
   const [form, setForm] = useState({
     driving_license: user.driving_license
   });
-  const [status, setStatus] = useState(user.driver_status ? user.driver_status : '-');
+  const [status, setStatus] = useState(
+    user.driver_status ? user.driver_status : "-"
+  );
   const [time, setTime] = useState(formatter(user.edited_at));
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [change, setChange] = useState(false);
 
   const request = async () => {
@@ -28,17 +30,22 @@ const DriverProfile = ({ user, updateUser }) => {
       setChange(false);
       const { id } = user;
       const { driving_license } = form;
-      const response = await axios.post("http://localhost:4000/driver/", { id, driving_license });
+      const response = await axios.post("http://localhost:4000/driver/", {
+        id,
+        driving_license
+      });
       const { success, driver_status, edited_at, message } = response.data;
       if (success) {
         setStatus(driver_status);
         setTime(formatter(edited_at));
-        updateUser({ driving_license, edited_at, driver_status: 'pending' });
+        setError('');
+        updateUser({ driving_license, edited_at, driver_status: "pending" });
       } else {
         setError(message);
       }
     } catch (e) {
       console.log(e.response);
+      setError('Invalid data, please check your input again');
     }
   };
 
@@ -73,34 +80,35 @@ const DriverProfile = ({ user, updateUser }) => {
         }}
       >
         <MyTitle>Driver's Info</MyTitle>
-        <div style={{ display: "flex", alignItems: "flex-end" }}>
-          <NoteIcon />
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <NoteIcon style={{ marginTop: "4px" }} />
           <TextField
             style={{ marginLeft: "8px" }}
             fullWidth
-            placeholder="Driving License No."
+            placeholder="Driving License"
             value={form.driving_license}
+            helperText="Please input value from QR code at back of driving license card"
             onChange={e => {
               setForm({ ...form, driving_license: e.target.value });
-              setChange(e.target.value && e.target.value !== user.driving_license);
+              setChange(
+                e.target.value && e.target.value.length == 25
+              );
             }}
           />
         </div>
       </Box>
-      {time && (<div style={{ color: "grey" }}>Modified at: {time}</div>)}
+      {time && <div style={{ color: "grey" }}>Modified at: {time}</div>}
 
-      {status == 'approved' && (
+      {status == "approved" && (
         <div style={{ color: "pink" }}>Status : Approved</div>
       )}
-      {status == 'pending' && (
+      {status == "pending" && (
         <div style={{ color: "grey" }}>Status : Pending</div>
       )}
-      {status == 'rejected' && (
+      {status == "rejected" && (
         <div style={{ color: "red" }}>Status : Rejected</div>
       )}
-      {status == '-' && (
-        <div style={{ color: "grey" }}>Status : -</div>
-      )}
+      {status == "-" && <div style={{ color: "grey" }}>Status : -</div>}
 
       {!change && (
         <MyDisabledFullWidthButton style={{ margin: "10px 0" }} disabled={true}>
@@ -108,7 +116,7 @@ const DriverProfile = ({ user, updateUser }) => {
         </MyDisabledFullWidthButton>
       )}
       {change && (
-        <MyFullWidthButton style={{ margin: "10px 0" }} onClick={request} >
+        <MyFullWidthButton style={{ margin: "10px 0" }} onClick={request}>
           Request
         </MyFullWidthButton>
       )}

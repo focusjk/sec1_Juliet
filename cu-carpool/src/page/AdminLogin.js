@@ -29,7 +29,7 @@ const AdminLogin = ({ history, handleLogin }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        padding: "150px 500px 0 500px"
+        paddingTop: "150px"
       }}
     >
       <h1 style={{ marginBottom: 50, marginTop: 50 }}> Welcome,</h1>

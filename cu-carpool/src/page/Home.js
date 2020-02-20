@@ -14,7 +14,7 @@ import TripCard from "../component/TripCard";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
-import { ProvinceMenuItem } from "../component/ProvinceMenuItem"
+import { ProvinceMenuItem } from "../component/ProvinceMenuItem";
 
 const useStyles = makeStyles({
   box: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles({
 
 const Home = () => {
   const [tripList, setTripList] = useState([]);
-  const [departure, setDeparture] = useState('');
-  const [destination, setDestination] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [departure, setDeparture] = useState("");
+  const [destination, setDestination] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip", {
@@ -96,7 +96,13 @@ const Home = () => {
               onChange={e => setSelectedDate(e.target.value)}
               style={{ marginBottom: 16 }}
             />
-            <Link onClick={() => { setSelectedDate(''); setDeparture(''); setDestination(''); }}>
+            <Link
+              onClick={() => {
+                setSelectedDate("");
+                setDeparture("");
+                setDestination("");
+              }}
+            >
               reset
             </Link>
           </div>

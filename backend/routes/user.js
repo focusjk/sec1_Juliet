@@ -1,9 +1,11 @@
 var express = require('express');
 var userService = require('../service/user');
+var validate = require('express-validation');
+var validateUser = require('../validate/user');
 var router = express.Router();
 var util = require('../util');
 
-router.post('/', function (req, res, next) {
+router.post('/', validate(validateUser),(req, res, next) => {
   const { id, ...data } = req.body;
   userService.editMemberInfo(id, data, (err, result) => {
     if (err) {
@@ -14,13 +16,14 @@ router.post('/', function (req, res, next) {
   });
 });
 
-router.post('/register', function (req, res, next) {
+router.post('/register',validate(validateUser), (req, res, next) => {
   var amount = 0;
   var created_at = util.timeformatter(new Date());
   console.log(created_at);
   const { username, ...data } = req.body
   userService.register(username, data, created_at, amount, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
     }
     else {
@@ -39,6 +42,7 @@ router.post('/login', function (req, res, next) {
   const { username, password } = req.body;
   userService.login(username, password, (err, result) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
     } else {
       if (result == "") {
