@@ -117,4 +117,5 @@ const getAllPassenger = ({tripId}, callback) => {
                                               WHERE request.request_status = 'approved' AND trip.id =`+ tripId+` 
                                               GROUP BY member_id)`, callback);
 }
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger};
+
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger };

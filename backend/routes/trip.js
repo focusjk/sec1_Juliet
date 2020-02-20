@@ -32,13 +32,11 @@ router.post('/create', validate(validateTrip), (req, res, next) => {
 
 router.get('/detail',(req, res, next) => {
   const {tripId} = req.query;
-  console.log(tripId)
   tripService.getTripDetail({tripId},(err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Error' });
     } else{
-      const trip = result;
-      const owner_id = result[0].owner_id;
+      const {owner_id,...trip} = result[0];
       tripService.getOwnerDetail({owner_id},(err,result) => {
         if (err) {
           res.json({ success: false, error: err.sqlMessage, message: 'Error' });
@@ -49,7 +47,7 @@ router.get('/detail',(req, res, next) => {
               res.json({ success: false, error: err.sqlMessage, message: 'Error' });
             }else {
               const passenger = result;
-              res.json({ success: true, trip: trip , owner: owner , passenger: passenger});
+              res.json({ success: true, trip: trip , owner: owner[0] , passenger: passenger});
             }
           })
         }
@@ -57,6 +55,5 @@ router.get('/detail',(req, res, next) => {
     }
   })
 });
-  
 
 module.exports = router;
