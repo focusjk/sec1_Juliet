@@ -79,7 +79,6 @@ const Register = ({ history, handleLogin }) => {
           "http://localhost:4000/user/register",
           { ...form, photo: userImage }
         );
-        console.log(response)
         const { success, information, message } = response.data;
         if (success) {
           const user = information[0];
@@ -90,6 +89,7 @@ const Register = ({ history, handleLogin }) => {
         }
       } catch (e) {
         console.log(e);
+        setErrorMessage("Invalid data, please check your input again")
       }
     }
   };
