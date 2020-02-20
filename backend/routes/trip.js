@@ -30,23 +30,26 @@ router.post('/create', validate(validateTrip), (req, res, next) => {
   });
 });
 
-router.post('/detail',(req, res, next) => {
-  const {id} = req.body;
-  tripService.getTripDetail(id,(err, result) => {
+router.get('/detail',(req, res, next) => {
+  const {tripId} = req.query;
+  console.log(tripId)
+  tripService.getTripDetail({tripId},(err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Error' });
     } else{
       const trip = result;
-      const owner_id = result.id;
-    }
-  })
-  tripService.getOwnerDetail(owner_id,(err,result) => {
-    if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Error' });
-    } else{
-      const owner = result;
+      const owner_id = result[0].owner_id;
+      tripService.getOwnerDetail({owner_id},(err,result) => {
+        if (err) {
+          res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+        } else{
+          const owner = result;
+          res.json({ success: true, trip: trip , owner: owner});
+        }
+      });
     }
   })
 });
+  
 
 module.exports = router;

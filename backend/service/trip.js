@@ -71,7 +71,7 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
                           ORDER BY trip.start_datetime`, callback);
 };
 
-const getTripDetail = ({trip_id},callback) =>{
+const getTripDetail = ({tripId},callback) => {
   return db.query(`SELECT 
                           id,
                           departure_latitude,
@@ -86,10 +86,27 @@ const getTripDetail = ({trip_id},callback) =>{
                           car_brand,
                           plate_license,
                           capacity,
-                          status FROM trip WHERE id =`+trip_id , callback);
+                          status,
+                          owner as owner_id FROM trip WHERE id = `+tripId , callback);
 }
 
 const getOwnerDetail = ({owner_id},callback) => {
+  console.log("hellll");
+  return db.query(`SELECT  
+                          members.id as id,
+                          members.username as username,
+                          members.firstname as firstname,
+                          members.lastName as lastname,
+                          members.phone_number as phone_number,
+                          members.email as email,
+                          members.photo as photo,
+                          AVG(review.rating ) as avg_rating
+                          FROM members  left join review on review.reviewee=members.id 
+                          WHERE members.id = `+ owner_id +
+                          ` GROUP BY members.id`, callback);
+}
+
+const getAllPassenger = () => {
 
 }
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail};
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger};
