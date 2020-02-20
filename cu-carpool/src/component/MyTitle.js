@@ -1,6 +1,8 @@
+import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-
+import { withRouter } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const MyHeader = withStyles({
   // Header in center
   root: {
@@ -23,4 +25,18 @@ const MyTitle = withStyles({
   }
 })(Typography);
 
-export { MyHeader, MyTitle };
+const MyHeaderWithArrow1 = ({ goto, children, history }) => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: "10px" }}>
+      <ArrowBackIcon onClick={() => {
+        history.push(goto);
+      }} />
+      <MyHeader style={{ marginBottom: 0 }}>
+        {children}
+      </MyHeader>
+      <div />
+    </div>)
+}
+const MyHeaderWithArrow = withRouter(MyHeaderWithArrow1)
+
+export { MyHeader, MyTitle, MyHeaderWithArrow };
