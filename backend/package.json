@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "db-install": "node ./dbcreating && node ./dbschemacreating",
+    "db-install": "node ./dbcreating && node ./dbschemacreating && node ./dbmockdata",
     "db-uninstall": "node ./dbdropping",
     "dev": "nodemon ./bin/www"
   },

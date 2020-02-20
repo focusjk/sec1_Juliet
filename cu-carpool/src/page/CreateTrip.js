@@ -22,12 +22,38 @@ const CreateTrip = ({ history, user }) => {
     time: null,
     car_brand: null,
     plate_license: null,
-    capacity: null
+    capacity: null,
+    price: null
   });
+  const [error, setError] = useState({
+    car_brand: false,
+    plate_license: false,
+    capacity: false,
+    price: false,
+    departure_detail: false,
+    departure_province: false,
+    destination_detail: false,
+    destination_province: false,
+    date: false,
+    time: false
+  })
   const validate = () => {
-    return form.car_brand && form.plate_license &&
-      (form.capacity && form.capacity > 0 && form.capacity < 50) &&
-      (form.capacity && form.capacity > 0) &&
+    setError({
+      car_brand: !form.car_brand,
+      plate_license: !form.plate_license,
+      capacity: !form.capacity,
+      price: !form.price,
+      departure_detail: !form.departure_detail,
+      departure_province: !form.departure_province,
+      destination_detail: !form.destination_detail,
+      destination_province: !form.destination_province,
+      date: !form.date,
+      time: !form.time
+    })
+    return form.car_brand &&
+      form.plate_license &&
+      form.capacity &&
+      form.price &&
       form.departure_detail &&
       form.departure_province &&
       form.destination_latitude &&
@@ -55,6 +81,7 @@ const CreateTrip = ({ history, user }) => {
         }
       } catch (e) {
         console.log(e.response);
+        setErrorMessage("Invalid data, please check your input again")
       }
     } else {
       setErrorMessage("Please fill all inputs with valid data")
@@ -71,6 +98,7 @@ const CreateTrip = ({ history, user }) => {
           required
           label="License plate"
           value={form.plate_license}
+          error={error.plate_license}
           onChange={e => {
             setForm({ ...form, plate_license: e.target.value });
             setErrorMessage('')
@@ -81,6 +109,7 @@ const CreateTrip = ({ history, user }) => {
           required
           label="Car brand"
           value={form.car_brand}
+          error={error.car_brand}
           onChange={e => {
             setForm({ ...form, car_brand: e.target.value });
             setErrorMessage('')
@@ -95,6 +124,7 @@ const CreateTrip = ({ history, user }) => {
             label="Capacity"
             helperText="Excluding a driver"
             value={form.capacity}
+            error={error.capacity}
             onChange={e => {
               setForm({ ...form, capacity: e.target.value });
               setErrorMessage('')
@@ -108,6 +138,7 @@ const CreateTrip = ({ history, user }) => {
             helperText="baht per person"
             style={{ marginLeft: 8 }}
             value={form.price}
+            error={error.price}
             onChange={e => {
               setForm({ ...form, price: e.target.value });
               setErrorMessage('')
@@ -122,6 +153,7 @@ const CreateTrip = ({ history, user }) => {
           required
           label="Province"
           value={form.departure_province}
+          error={error.departure_province}
           onChange={e => {
             setForm({ ...form, departure_province: e.target.value });
             setErrorMessage('')
@@ -134,6 +166,7 @@ const CreateTrip = ({ history, user }) => {
           required
           label="Detail"
           value={form.departure_detail}
+          error={error.departure_detail}
           onChange={e => {
             setForm({ ...form, departure_detail: e.target.value });
             setErrorMessage('')
@@ -147,6 +180,7 @@ const CreateTrip = ({ history, user }) => {
             variant="standard"
             InputLabelProps={{ shrink: true }}
             value={form.date}
+            error={error.date}
             onChange={e => {
               setForm({ ...form, date: e.target.value });
               setErrorMessage('')
@@ -160,6 +194,7 @@ const CreateTrip = ({ history, user }) => {
             inputProps={{ step: 300 }}
             style={{ marginLeft: 8, flexGrow: 1 }}
             value={form.time}
+            error={error.time}
             onChange={e => {
               setForm({ ...form, time: e.target.value });
               setErrorMessage('')
@@ -174,6 +209,7 @@ const CreateTrip = ({ history, user }) => {
           fullWidth
           label="Province"
           value={form.destination_province}
+          error={error.destination_province}
           onChange={e => {
             setForm({ ...form, destination_province: e.target.value })
             setErrorMessage('')
@@ -186,6 +222,7 @@ const CreateTrip = ({ history, user }) => {
           required
           label="Detail"
           value={form.destination_detail}
+          error={error.destination_detail}
           onChange={e => {
             setForm({ ...form, destination_detail: e.target.value });
             setErrorMessage('')
