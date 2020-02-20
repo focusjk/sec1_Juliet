@@ -30,4 +30,23 @@ router.post('/create', validate(validateTrip), (req, res, next) => {
   });
 });
 
+router.post('/detail',(req, res, next) => {
+  const {id} = req.body;
+  tripService.getTripDetail(id,(err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+    } else{
+      const trip = result;
+      const owner_id = result.id;
+    }
+  })
+  tripService.getOwnerDetail(owner_id,(err,result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+    } else{
+      const owner = result;
+    }
+  })
+});
+
 module.exports = router;

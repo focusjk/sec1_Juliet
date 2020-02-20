@@ -70,4 +70,26 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
                           GROUP BY trip.id
                           ORDER BY trip.start_datetime`, callback);
 };
-module.exports = { createTrip, searchTrip };
+
+const getTripDetail = ({trip_id},callback) =>{
+  return db.query(`SELECT 
+                          id,
+                          departure_latitude,
+                          departure_longtitude,
+                          departure_province,
+                          departure_detail,
+                          destination_latitude,
+                          destination_longtitude,
+                          destination_province,
+                          destination_detail,
+                          start_datetime,
+                          car_brand,
+                          plate_license,
+                          capacity,
+                          status FROM trip WHERE id =`+trip_id , callback);
+}
+
+const getOwnerDetail = ({owner_id},callback) => {
+
+}
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail};
