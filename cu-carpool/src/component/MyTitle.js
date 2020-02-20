@@ -34,7 +34,7 @@ const MyHeaderWithArrow1 = ({ goto, children, history }) => {
       <MyHeader style={{ marginBottom: 0 }}>
         {children}
       </MyHeader>
-      <div />
+      <ArrowBackIcon style={{ visibility: "hidden" }} />
     </div>)
 }
 const MyHeaderWithArrow = withRouter(MyHeaderWithArrow1)

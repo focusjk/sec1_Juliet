@@ -15,6 +15,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
 import { ProvinceMenuItem } from "../component/ProvinceMenuItem";
+import EmptyBox from '../component/EmptyBox'
 
 const useStyles = makeStyles({
   box: {
@@ -108,6 +109,7 @@ const Home = () => {
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
+      <EmptyBox data={tripList} />
       {tripList.map((trip, index) => (
         <TripCard key={index} data={trip} />
       ))}
