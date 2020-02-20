@@ -71,7 +71,7 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
                           ORDER BY trip.start_datetime`, callback);
 };
 
-const getTripDetail = ({tripId},callback) => {
+const getTripDetail = (trip_id,callback) => {
   return db.query(`SELECT 
                           id,
                           departure_latitude,
@@ -87,10 +87,10 @@ const getTripDetail = ({tripId},callback) => {
                           plate_license,
                           capacity,
                           status,
-                          owner as owner_id FROM trip WHERE id = `+tripId , callback);
+                          owner as owner_id FROM trip WHERE id = `+trip_id , callback);
 }
 
-const getOwnerDetail = ({owner_id},callback) => {
+const getOwnerDetail = (owner_id,callback) => {
   return db.query(`SELECT  
                           members.id as id,
                           members.username as username,
@@ -105,7 +105,7 @@ const getOwnerDetail = ({owner_id},callback) => {
                           ` GROUP BY members.id`, callback);
 }
 
-const getAllPassenger = ({tripId}, callback) => {
+const getAllPassenger = (trip_id, callback) => {
   return db.query(`SELECT 
                           members.id, 
                           members.username, 
@@ -114,7 +114,7 @@ const getAllPassenger = ({tripId}, callback) => {
                           WHERE members.id IN (SELECT request.member_id
                                               FROM trip LEFT JOIN request ON trip.id = request.trip_id 
                                               LEFT JOIN members ON request.member_id = members.id
-                                              WHERE request.request_status = 'approved' AND trip.id =`+ tripId+` 
+                                              WHERE request.request_status = 'approved' AND trip.id =`+ trip_id+` 
                                               GROUP BY member_id)`, callback);
 }
 

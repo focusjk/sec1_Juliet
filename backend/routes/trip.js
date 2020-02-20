@@ -31,23 +31,23 @@ router.post('/create', validate(validateTrip), (req, res, next) => {
 });
 
 router.get('/detail',(req, res, next) => {
-  const {tripId} = req.query;
-  tripService.getTripDetail({tripId},(err, result) => {
+  const {tripId: trip_id} = req.query;
+  tripService.getTripDetail(trip_id,(err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else{
       const {owner_id,...trip} = result[0];
-      tripService.getOwnerDetail({owner_id},(err,result) => {
+      tripService.getOwnerDetail(owner_id,(err,result) => {
         if (err) {
-          res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+          res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
         } else{
           const owner = result;
-          tripService.getAllPassenger({tripId},(err,result) => {
+          tripService.getAllPassenger(trip_id,(err,result) => {
             if (err) {
-              res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+              res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
             }else {
               const passenger = result;
-              res.json({ success: true, trip: trip , owner: owner[0] , passenger: passenger});
+              res.json({ success: true, trip , owner: owner[0] , passenger});
             }
           })
         }
