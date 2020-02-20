@@ -1,11 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "../component/MyButton";
+import { MyButton } from "./MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import { MyTitle } from "../component/MyTitle";
+import { MyTitle } from "./MyTitle";
 
-const TripBox = ({ history, data }) => {
+const TripBoxHis = ({ history, data }) => {
   //   const {
   //     id,
   //     departure_detail,
@@ -85,9 +85,8 @@ const TripBox = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
+            <div>Driver:</div>
             <div>License plate:</div>
-            <div>Car brand:</div>
-            <div>Capacity:</div>
             <div>Pick up:</div>
             <div>Destination:</div>
           </div>
@@ -98,6 +97,15 @@ const TripBox = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
+            <div
+              style={{
+                fontSize: 20,
+                display: "flex",
+                justifyContent: "flex-end"
+              }}
+            >
+              price ฿
+            </div>
             <Link
               style={{
                 color: "#C78899",
@@ -132,11 +140,12 @@ const TripBox = ({ history, data }) => {
         <Typography
           style={{
             display: "flex",
-            justifyContent: "space-evenly",
+            justifyContent: "space-around",
             marginTop: "12px"
           }}
         >
           <MyButton>Cancel</MyButton>
+          <MyButton>Payment</MyButton>
           <MyButton>Review</MyButton>
         </Typography>
       </Paper>
@@ -144,4 +153,4 @@ const TripBox = ({ history, data }) => {
   );
 };
 
-export default withRouter(TripBox);
+export default withRouter(TripBoxHis);

@@ -28,7 +28,7 @@ const listPath = {
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
     { name: "My Trip", path: "/my-trip", icon: "library_books" },
     { name: "Create trip", path: "/create-trip", icon: "emoji_transportation" },
-    // { name: "Trip History", path: "/my-trip", icon: "history" },
+    { name: "Trip History", path: "/trip-history", icon: "history" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ]
 };

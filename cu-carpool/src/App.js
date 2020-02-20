@@ -19,7 +19,7 @@ import DriverRequest from "./page/DriverRequest";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
-// import TripHistory from "./page/TripHistory";
+import TripHistory from "./page/TripHistory";
 import TripRequest from "./page/TripRequest";
 
 const theme = createMuiTheme({
@@ -84,9 +84,9 @@ const App = () => {
                     <Route path="/my-trip" exact>
                       <MyTrip user={user} />
                     </Route>
-                    {/* <Route path="/trip-history" exact>
+                    <Route path="/trip-history" exact>
                       <TripHistory user={user} />
-                    </Route> */}
+                    </Route>
                     <Route path="/trip-request" exact>
                       <TripRequest user={user} />
                     </Route>
