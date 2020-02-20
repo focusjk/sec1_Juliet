@@ -115,6 +115,9 @@ const App = () => {
             {!user && (
               <div className={classes.body}>
                 <Switch>
+                  <Route path="/ButtonComponent" exact>
+                    <ButtonComponent />
+                  </Route>
                   <Route path="/register" exact>
                     <Register handleLogin={user => setUser(user)} />
                   </Route>
