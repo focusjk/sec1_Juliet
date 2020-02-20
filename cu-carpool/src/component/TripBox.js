@@ -2,11 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import ScheduleIcon from "@material-ui/icons/Schedule";
-import GroupIcon from "@material-ui/icons/Group";
-import FlagIcon from "@material-ui/icons/Flag";
-import moment from "moment";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle } from "../component/MyTitle";
 
