@@ -44,7 +44,14 @@ router.get('/detail',(req, res, next) => {
           res.json({ success: false, error: err.sqlMessage, message: 'Error' });
         } else{
           const owner = result;
-          res.json({ success: true, trip: trip , owner: owner});
+          tripService.getAllPassenger({tripId},(err,result) => {
+            if (err) {
+              res.json({ success: false, error: err.sqlMessage, message: 'Error' });
+            }else {
+              const passenger = result;
+              res.json({ success: true, trip: trip , owner: owner , passenger: passenger});
+            }
+          })
         }
       });
     }
