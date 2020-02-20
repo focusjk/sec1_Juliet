@@ -8,85 +8,143 @@ import GroupIcon from "@material-ui/icons/Group";
 import FlagIcon from "@material-ui/icons/Flag";
 import moment from "moment";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-
-const useStyles = makeStyles({
-  list: {
-    width: 250
-  },
-  barSection: { flexGrow: 1 },
-  barItem: { cursor: "pointer" }
-});
+import { MyTitle } from "../component/MyTitle";
 
 const TripBox = ({ history, data }) => {
-  const classes = useStyles();
-  const {
-    id,
-    departure_detail,
-    departure_province,
-    destination_detail,
-    destination_province,
-    start_datetime,
-    capacity,
-    request,
-    status,
-    price
-  } = data;
-  const date = moment(start_datetime).format("MMMM Do YYYY");
-  const time = moment(start_datetime).format("h:mm a");
+  //   const {
+  //     id,
+  //     departure_detail,
+  //     departure_province,
+  //     destination_detail,
+  //     destination_province,
+  //     start_datetime,
+  //     capacity,
+  //     request,
+  //     status,
+  //     price
+  //   } = data;
+  //   const date = moment(start_datetime).format("MMMM Do YYYY");
+  //   const time = moment(start_datetime).format("h:mm a");
   return (
     <Paper
       square
       variant="outlined"
-      key={id}
       style={{
-        marginTop: "16px",
-        padding: 8,
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        flexDirection: "column",
+        borderColor: "#BDBDBD"
       }}
     >
-      <Typography style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <LocationOnIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <Typography style={{ display: "flex", alignItems: "flex-end" }}>
-            {departure_detail}
-            <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: "8px" }}>
-              ({departure_province})
-            </div>
-          </Typography>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
-            {destination_detail}
-            <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: "8px" }}>
-              ({destination_province})
-            </div>
-          </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "flex-start" }}>
-          <ScheduleIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <div>
-            <div>{date}</div>
-            <div>{time}</div>
-          </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <GroupIcon fontSize="small" style={{ marginRight: "8px" }} />
-          {request}/{capacity}
-        </div>
-      </Typography>
-      <Typography
+      <Paper
+        square
+        // key={id}
+        elevation={0}
         style={{
+          padding: 3,
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          backgroundColor: "#C78899"
         }}
       >
-        <div style={{ fontSize: "20px" }}>{price} ฿</div>
-        <MyButton disabled={request === capacity}>Join</MyButton>
-      </Typography>
+        <MyTitle
+          style={{
+            fontSize: "20px",
+            color: "#FFFFFF",
+            marginLeft: "6px"
+          }}
+        >
+          Hi header
+        </MyTitle>
+      </Paper>
+
+      <Paper
+        square
+        elevation={0}
+        style={{
+          padding: 12,
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column"
+        }}
+      >
+        <MyTitle
+          style={{
+            color: "#C78899",
+            marginBottom: "8px"
+          }}
+        >
+          Status:
+        </MyTitle>
+
+        <Typography
+          style={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "column"
+            }}
+          >
+            <div>License plate:</div>
+            <div>Car brand:</div>
+            <div>Capacity:</div>
+            <div>Pick up:</div>
+            <div>Destination:</div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "column"
+            }}
+          >
+            <Link
+              style={{
+                color: "#C78899",
+                textDecoration: "underline",
+                fontSize: 14,
+                display: "flex",
+                justifyContent: "flex-end"
+              }}
+              onClick={() => {
+                history.push("/trip-request");
+              }}
+            >
+              see request
+            </Link>
+            <Link
+              style={{
+                color: "#C78899",
+                textDecoration: "underline",
+                fontSize: 14,
+                display: "flex",
+                justifyContent: "flex-end"
+              }}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              see trip member
+            </Link>
+          </div>
+        </Typography>
+
+        <Typography
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginTop: "12px"
+          }}
+        >
+          <MyButton>Cancel</MyButton>
+          <MyButton>Review</MyButton>
+        </Typography>
+      </Paper>
     </Paper>
   );
 };

@@ -9,6 +9,7 @@ import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import Button from "@material-ui/core/Button";
 import MyModal from "../component/MyModal";
 import Rating from "@material-ui/lab/Rating";
+import EmptyBox from "../component/EmptyBox";
 
 class ButtonComponent extends React.Component {
   render() {
@@ -16,6 +17,8 @@ class ButtonComponent extends React.Component {
       <div>
         <MyHeader> Hi </MyHeader>
         <MyTitle> Hi </MyTitle>
+        {/* data is not empty list => null ไม่แสดงอะไร */}
+        <EmptyBox data={[]} />
         <MyHeaderWithArrow goto="">My trip</MyHeaderWithArrow>
         <MyButton>MyButton</MyButton>
         <div style={{ margin: "10px" }} />
