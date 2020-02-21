@@ -66,7 +66,7 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
                           ( trip.departure_province LIKE '%` + departure + `%' AND
                           trip.destination_province LIKE '%` + destination + `%' ) OR
                           trip.destination_province ="` + destination + `")AND
-                          trip.status = "opening"
+                          trip.status = "scheduled"
                           GROUP BY trip.id
                           ORDER BY trip.start_datetime`, callback);
 };
