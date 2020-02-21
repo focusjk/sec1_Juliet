@@ -72,4 +72,52 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
         ORDER BY trip.start_datetime`, callback
   );
 };
-module.exports = { createTrip, searchTrip };
+
+const getTripDetail = (trip_id,callback) => {
+  return db.query(`SELECT 
+                          id,
+                          departure_latitude,
+                          departure_longtitude,
+                          departure_province,
+                          departure_detail,
+                          destination_latitude,
+                          destination_longtitude,
+                          destination_province,
+                          destination_detail,
+                          start_datetime,
+                          car_brand,
+                          plate_license,
+                          capacity,
+                          status,
+                          owner as owner_id FROM trip WHERE id = `+trip_id , callback);
+}
+
+const getOwnerDetail = (owner_id,callback) => {
+  return db.query(`SELECT  
+                          members.id as id,
+                          members.username as username,
+                          members.firstname as firstname,
+                          members.lastName as lastname,
+                          members.phone_number as phone_number,
+                          members.email as email,
+                          members.photo as photo,
+                          AVG(review.rating ) as avg_rating
+                          FROM members  left join review on review.reviewee=members.id 
+                          WHERE members.id = `+ owner_id +
+                          ` GROUP BY members.id`, callback);
+}
+
+const getAllPassenger = (trip_id, callback) => {
+  return db.query(`SELECT 
+                          members.id, 
+                          members.username, 
+                          members.photo 
+                          FROM members 
+                          WHERE members.id IN (SELECT request.member_id
+                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                              LEFT JOIN members ON request.member_id = members.id
+                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id+` 
+                                              GROUP BY member_id)`, callback);
+}
+
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger };
