@@ -107,7 +107,7 @@ const TripBox = ({ history, data }) => {
                 justifyContent: "flex-end"
               }}
               onClick={() => {
-                history.push("/trip-request");
+                history.push("/");
               }}
             >
               see request

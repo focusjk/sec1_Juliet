@@ -7,7 +7,7 @@ class MyTrip extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader style={{ marginBottom: "30px" }}>Trip History</MyHeader>
+        <MyHeader style={{ marginBottom: "30px" }}>My Trip</MyHeader>
         <TripBox />
         <EmptyBox data={[]} />
       </div>
