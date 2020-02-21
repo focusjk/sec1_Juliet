@@ -72,7 +72,7 @@ const TripBox = ({ history, data }) => {
           Status:
         </MyTitle>
 
-        <Typography
+        <div
           style={{
             display: "flex",
             justifyContent: "space-between"
@@ -127,9 +127,9 @@ const TripBox = ({ history, data }) => {
               see trip member
             </Link>
           </div>
-        </Typography>
+        </div>
 
-        <Typography
+        <div
           style={{
             display: "flex",
             justifyContent: "space-evenly",
@@ -138,7 +138,7 @@ const TripBox = ({ history, data }) => {
         >
           <MyButton>Cancel</MyButton>
           <MyButton>Review</MyButton>
-        </Typography>
+        </div>
       </Paper>
     </Paper>
   );
