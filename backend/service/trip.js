@@ -1,4 +1,4 @@
-var db = require('../dbconnection');
+var db = require("../dbconnection");
 
 const createTrip = (
   created_at,
@@ -49,26 +49,28 @@ const createTrip = (
 };
 
 const searchTrip = ({ departure, destination, selectedDate }, callback) => {
-  return db.query(`SELECT 
-                          trip.id,
-                          trip.departure_detail,
-                          trip.departure_province,
-                          trip.destination_detail,
-                          trip.destination_province,
-                          trip.start_datetime,
-                          capacity,
-                          Count(Distinct request.id) AS request,
-                          status,
-                          trip.price
-                          FROM trip left join request on trip.id = request.trip_id AND request_status = "approved"
-                          WHERE trip.start_datetime LIKE '%` + selectedDate + `%' AND (
-                          trip.departure_province ="`+ departure + `"OR
-                          ( trip.departure_province LIKE '%` + departure + `%' AND
-                          trip.destination_province LIKE '%` + destination + `%' ) OR
-                          trip.destination_province ="` + destination + `")AND
-                          trip.status = "opening"
-                          GROUP BY trip.id
-                          ORDER BY trip.start_datetime`, callback);
+  return db.query(
+    `SELECT
+        trip.id,
+        trip.departure_detail,
+        trip.departure_province,
+        trip.destination_detail,
+        trip.destination_province,
+        trip.start_datetime,
+        capacity,
+        Count(Distinct request.id) AS request,
+        status,
+        trip.price
+        FROM trip left join request on trip.id = request.trip_id AND request_status = "approved"
+        WHERE trip.start_datetime LIKE '%` + selectedDate + `%' AND (
+        trip.departure_province ="` + departure + `"OR
+        ( trip.departure_province LIKE '%` + departure + `%' AND
+        trip.destination_province LIKE '%` + destination + `%' ) OR
+        trip.destination_province ="` + destination + `")AND
+        trip.status = "scheduled"
+        GROUP BY trip.id
+        ORDER BY trip.start_datetime`, callback
+  );
 };
 
 const getTripDetail = (trip_id,callback) => {
