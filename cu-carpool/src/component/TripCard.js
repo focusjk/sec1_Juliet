@@ -8,6 +8,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import FlagIcon from "@material-ui/icons/Flag";
 import moment from "moment";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
+import { MyLink } from "./MyTitle";
 
 const useStyles = makeStyles({
   list: {
@@ -75,16 +76,7 @@ const TripCard = ({ history, data }) => {
           <GroupIcon fontSize="small" style={{ marginRight: "8px" }} />
           {request}/{capacity}
         </div>
-        <Link
-          href="#"
-          style={{
-            color: "#bdbdbd",
-            textDecoration: "underline",
-            fontSize: 12
-          }}
-        >
-          More detail...
-        </Link>
+        <MyLink goto="#">More detail...</MyLink>
       </Typography>
       <Typography
         style={{

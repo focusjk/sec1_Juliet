@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import { MyTitle } from "../component/MyTitle";
+import { MyTitle, MyLink } from "../component/MyTitle";
 
 const TripBox = ({ history, data }) => {
   //   const {
@@ -94,38 +94,12 @@ const TripBox = ({ history, data }) => {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
+              alignItems: "flex-end",
               flexDirection: "column"
             }}
           >
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-              onClick={() => {
-                history.push("/trip-request");
-              }}
-            >
-              see request
-            </Link>
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
-              see trip member
-            </Link>
+            <MyLink goto="/trip-request">see request</MyLink>
+            <MyLink goto="/">see trip member</MyLink>
           </div>
         </div>
 
