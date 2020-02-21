@@ -10,7 +10,9 @@ router.post('/',(req, res, next) => {
         if (err){
             res.json({success: false, error: err.sqlMessage, message: "Trip request error"});
         } else {
+            console.log(result);
             const req_id = result[0];
+            console.log(req_id);
             requestService.getRequestInfo(req_id,(err,result)=>{
                 if(err){
                     res.json({success: false, error: err.sqlMessage, message: "Get request information error"});
