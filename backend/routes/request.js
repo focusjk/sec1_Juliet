@@ -8,17 +8,9 @@ router.post('/',(req, res, next) => {
     var created_at = util.timeformatter(new Date());
     requestService.createRequest(trip_id,member_id,data,created_at,(err,result) => {
         if (err){
-            res.json({success: false, error: err.sqlMessage, message: "Trip request error"});
+            res.json({success: false, error: err.sqlMessage, message: "Cannot access database"});
         } else {
-            console.log(result);
-            const req_id = result.insertId;
-            requestService.getRequestInfo(req_id,(err,result)=>{
-                if(err){
-                    res.json({success: false, error: err.sqlMessage, message: "Get request information error"});
-                } else {
-                    res.json({success: true, request: result});
-                }
-            });
+            res.json({success: true});
         }
     });
 });
