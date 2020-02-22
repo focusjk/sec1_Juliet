@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import { MyTitle } from "../component/MyTitle";
+import { MyTitle, MyLink } from "../component/MyTitle";
+import MapData from './MapData'
 
 const TripBox = ({ history, data }) => {
   //   const {
@@ -63,71 +64,26 @@ const TripBox = ({ history, data }) => {
           flexDirection: "column"
         }}
       >
-        <MyTitle
-          style={{
-            color: "#C78899",
-            marginBottom: "8px"
-          }}
-        >
+        <MyTitle style={{ color: "#C78899", marginBottom: "8px" }}>
           Status:
         </MyTitle>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between"
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flexDirection: "column"
-            }}
-          >
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", justifyContent: "flex-start", flexDirection: "column" }}>
             <div>License plate:</div>
             <div>Car brand:</div>
             <div>Capacity:</div>
-            <div>Pick up:</div>
-            <div>Destination:</div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flexDirection: "column"
-            }}
-          >
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-              onClick={() => {
-                history.push("/trip-request");
-              }}
-            >
-              see request
-            </Link>
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
-              see trip member
-            </Link>
+          <div style={{ display: "flex", alignItems: "flex-end", flexDirection: "column" }}>
+            <div style={{ fontSize: "20px" }}>200 ฿</div>
+            <MyLink goto="/trip-request">see request</MyLink>
+            <MyLink goto="/">see trip member</MyLink>
           </div>
         </div>
+        <div>Pick up:</div>
+        <MapData fixed longitude={100.493117} latitude={13.769059} />
+        <div>Destination:</div>
+        <MapData fixed longitude={100.493117} latitude={13.769059} />
 
         <div
           style={{

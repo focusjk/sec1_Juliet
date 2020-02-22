@@ -5,7 +5,7 @@ import {
   MyFullWidthButton,
   MyDisabledFullWidthButton
 } from "../component/MyButton";
-import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
+import { MyHeader, MyTitle, MyHeaderWithArrow, MyLink } from "../component/MyTitle";
 import Button from "@material-ui/core/Button";
 import MyModal from "../component/MyModal";
 import Rating from "@material-ui/lab/Rating";
@@ -20,6 +20,7 @@ class ButtonComponent extends React.Component {
         {/* data is not empty list => null ไม่แสดงอะไร */}
         <EmptyBox data={[]} />
         <MyHeaderWithArrow goto="">My trip</MyHeaderWithArrow>
+        <MyLink goto="/my-trip">My trip</MyLink>
         <MyButton>MyButton</MyButton>
         <div style={{ margin: "10px" }} />
         <MyButton disabled>MyButton</MyButton>
