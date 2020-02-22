@@ -1,47 +1,58 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Register from './page/Register';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core';
-import Home from './page/Home';
-import Login from './page/Login';
-import Profile from './page/Profile';
-import DriverProfile from './page/DriverProfile';
-import CreateTrip from './page/CreateTrip';
-import MyTrip from './page/MyTrip';
-import AdminLogin from './page/AdminLogin';
-import DriverRequest from './page/DriverRequest';
-import Navigation from './component/Navigation';
-import NavigationDesktop from './component/NavigationDesktop';
-import ButtonComponent from './page/ButtonComponent';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import Register from "./page/Register";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core";
+import Home from "./page/Home";
+import Login from "./page/Login";
+import Profile from "./page/Profile";
+import DriverProfile from "./page/DriverProfile";
+import CreateTrip from "./page/CreateTrip";
+import MyTrip from "./page/MyTrip";
+import AdminLogin from "./page/AdminLogin";
+import DriverRequest from "./page/DriverRequest";
+import Navigation from "./component/Navigation";
+import NavigationDesktop from "./component/NavigationDesktop";
+import ButtonComponent from "./page/ButtonComponent";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#C78899', //pink base
+      main: "#C78899" //pink base
     },
     secondary: {
-      main: '#CE7B91', // pink text
-    },
-  },
+      main: "#CE7B91" // pink text
+    }
+  }
 });
 
 const useStyles = makeStyles({
   app: {
-    fontFamily: 'Roboto',
-    fontSize: '16px',
+    fontFamily: "Roboto",
+    fontSize: "16px"
   },
   body: {
-    margin: '30px',
+    padding: "30px",
+    maxWidth: "414px",
+    margin: "auto",
+    right: 0
   },
+  admin: {
+    margin: "32px 64px"
+  }
 });
 const App = () => {
   //for member
-  // const [user, setUser] = React.useState({ id: 1 });
+  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-  const [user, setUser] = React.useState({ username: 'JEDI' });
+  // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -53,49 +64,71 @@ const App = () => {
               <div>
                 <Navigation user={user} handleLogout={() => setUser(null)} />
                 <div className={classes.body}>
-                  {/* REMOVE */}
-                  <Route path="/ButtonComponent">
-                    <ButtonComponent />
-                  </Route>
-                  <Route path="/profile">
-                    <Profile user={user} />
-                  </Route>
-                  <Route path="/create-trip">
-                    <CreateTrip user={user} />
-                  </Route>
-                  <Route path="/my-trip">
-                    <MyTrip user={user} />
-                  </Route>
-                  <Route path="/driver">
-                    <DriverProfile user={user} />
-                  </Route>
-                  <Route exact path="/">
-                    <Home user={user} />
-                  </Route>
+                  <Switch>
+                    <Route path="/ButtonComponent" exact>
+                      <ButtonComponent />
+                    </Route>
+                    <Route path="/profile" exact>
+                      <Profile
+                        user={user}
+                        updateUser={data => setUser({ ...user, ...data })}
+                      />
+                    </Route>
+                    {user.driver_status === "approved" && (
+                      <Route path="/create-trip" exact>
+                        <CreateTrip user={user} />
+                      </Route>
+                    )}
+                    <Route path="/my-trip" exact>
+                      <MyTrip user={user} />
+                    </Route>
+                    <Route path="/driver" exact>
+                      <DriverProfile
+                        user={user}
+                        updateUser={data => setUser({ ...user, ...data })}
+                      />
+                    </Route>
+                    <Route exact path="/">
+                      <Home user={user} />
+                    </Route>
+                    <Redirect to="/" />
+                  </Switch>
                 </div>
               </div>
             )}
             {user && !user.id && (
               <div>
-                <NavigationDesktop user={user} handleLogout={() => setUser(null)} />
-                <Route path="/admin/login">
-                  <AdminLogin user={user} />
-                </Route>
-                <Route path="/admin/driver-request">
-                  <DriverRequest user={user} />
-                </Route>
-                {/* <Redirect to="/admin/driver-request" /> */}
+                <NavigationDesktop
+                  user={user}
+                  handleLogout={() => setUser(null)}
+                />
+                <div className={classes.admin}>
+                  <Switch>
+                    <Route path="/admin/driver" exact>
+                      <DriverRequest user={user} />
+                    </Route>
+                    <Redirect to="/admin/driver" />
+                  </Switch>
+                </div>
               </div>
             )}
             {!user && (
               <div className={classes.body}>
-                <Route path="/register">
-                  <Register user={user} />
-                </Route>
-                <Route path="/login">
-                  <Login user={user} />
-                </Route>
-                <Redirect to="/login" />
+                <Switch>
+                  <Route path="/ButtonComponent" exact>
+                    <ButtonComponent />
+                  </Route>
+                  <Route path="/register" exact>
+                    <Register handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Route path="/admin/login" exact>
+                    <AdminLogin handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Route path="/login" exact>
+                    <Login handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Redirect to="/register" />
+                </Switch>
               </div>
             )}
           </Switch>
