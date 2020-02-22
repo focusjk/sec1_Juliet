@@ -17,6 +17,7 @@ import MyTrip from "./page/MyTrip";
 import AdminLogin from "./page/AdminLogin";
 import DriverRequest from "./page/DriverRequest";
 import TripMemberforMember from "./page/TripMemberforMember";
+import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
@@ -86,6 +87,9 @@ const App = () => {
                     </Route>
 		    <Route path="/TripMemberforMember" exact>
                       <TripMemberforMember user={user} />
+		     </Route>
+		    <Route path="/TripMemberforDriver" exact>
+                      <TripMemberforDriver user={user} />
                     </Route>
                     {/* <Route path="/trip-history" exact>
                       <TripHistory user={user} />

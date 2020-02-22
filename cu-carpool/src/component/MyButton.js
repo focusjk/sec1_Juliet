@@ -17,6 +17,23 @@ const MyButton = withStyles({
   }
 })(Button);
 
+const MyGreyButton = withStyles({
+  root: {
+    background: "linear-gradient( #BDBDBD 30%, #BDBDBD 90%)",
+    borderRadius: 40,
+    border: "1px solid white",
+    color: "white",
+    paddingRight: "24px",
+    paddingLeft: "24px"
+  },
+  label: {
+    textTransform: "capitalize",
+    fontFamily: "Roboto",
+    fontSize: "16px"
+  }
+})(Button);
+
+
 const MyWhiteButton = withStyles({
   root: {
     background: "linear-gradient( white 30%, white 90%)",
@@ -67,6 +84,7 @@ const MyDisabledFullWidthButton = withStyles({
 
 export {
   MyButton,
+  MyGreyButton,
   MyWhiteButton,
   MyFullWidthButton,
   MyDisabledFullWidthButton
