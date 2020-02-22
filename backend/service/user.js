@@ -28,14 +28,7 @@ const editMemberInfo = (id, body, callback) => {
 
 const payment = (ID,body, callback) => {
   const {card_number,card_holder_name,card_expiry_date,card_code,paid_at} = body;
-  return db.query(`UPDATE request SET request_status = 'paid', paid_at = ? WHERE id = ? ; 
-                   SELECT request.id,
-                          request.request_status,
-                          request.paid_at,
-                          request.trip_id,
-                          trip.price,
-                   FROM request LEFT JOIN trip ON request.trip_id = trip.id
-                   WHERE request.id = ? ` , [paid_at,ID,ID], callback);
+  return db.query(`UPDATE request SET request_status = 'paid', paid_at = ? WHERE id = ? ` , [paid_at,ID], callback);
 }
 
 module.exports = { register, getMemberInfo, login, editMemberInfo, payment };

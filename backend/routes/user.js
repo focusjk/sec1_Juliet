@@ -61,7 +61,7 @@ router.post('/payment', function (req, res, next) {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
     } else {
-      res.json({ success: true, information: result[1] });
+      res.json({ success: true, request_id: id, request_status: 'paid', paid_at:paymenttime });
     }
   });
 });

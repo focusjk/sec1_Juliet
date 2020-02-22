@@ -8,8 +8,7 @@ var connection = mysql.createConnection({
   user: 'root',
   password: process.env.DATABASE_PASSWORD,
   database: 'cucarpool',
-  insecureAuth: true,
-  multipleStatements: true
+  insecureAuth: true
 });
 
 module.exports = connection;
