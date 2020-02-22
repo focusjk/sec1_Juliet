@@ -65,7 +65,7 @@ router.get('/report', function (req, res, next) {
     } else {
       res.json({ success: true , report : result});
     }
-  })
-})
+  });
+});
 
 module.exports = router;

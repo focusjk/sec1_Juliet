@@ -80,7 +80,7 @@ const getAllReport = (callback) => {
                   members.lastname as lastname, 
                   members.photo as photo , 
                   members.username as username
-                  FROM report INNER JOIN members ON report.member_id = members.id ;`,callback)
+                  FROM report INNER JOIN members ON report.member_id = members.id`,callback);
 }
 
 module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport };
