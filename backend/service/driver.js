@@ -10,4 +10,20 @@ const driverReq = (ID, data, callback) => {
                     rejected_by = null , ? WHERE id = ?`, [data, ID], callback);
 }
 
-module.exports = { getByID, driverReq };
+const tripRequest = (ID, callback) => {
+    return db.query(`SELECT 
+                            request.id AS id,
+                            request.departure_latitude,
+                            request.departure_longtitude,
+                            request.destination_latitude,
+                            request.destination_longtitude,                          
+                            members.id AS member_id,
+                            members.username,
+                            members.phone_number,
+                            members.photo
+                            FROM request left join members on request.member_id = members.id 
+                            WHERE request.trip_id = ? AND request.request_status = "pending"`,[ID],callback);
+  };
+
+module.exports = { getByID, driverReq, tripRequest };
+
