@@ -16,6 +16,7 @@ import CreateTrip from "./page/CreateTrip";
 import MyTrip from "./page/MyTrip";
 import AdminLogin from "./page/AdminLogin";
 import DriverRequest from "./page/DriverRequest";
+import TripMemberforMember from "./page/TripMemberforMember";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
@@ -82,6 +83,9 @@ const App = () => {
                     )}
                     <Route path="/my-trip" exact>
                       <MyTrip user={user} />
+                    </Route>
+		    <Route path="/TripMemberforMember" exact>
+                      <TripMemberforMember user={user} />
                     </Route>
                     {/* <Route path="/trip-history" exact>
                       <TripHistory user={user} />
