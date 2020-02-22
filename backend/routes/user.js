@@ -2,6 +2,7 @@ var express = require('express');
 var userService = require('../service/user');
 var validate = require('express-validation');
 var validateUser = require('../validate/user');
+var validatePayment = require('../validate/payment');
 var router = express.Router();
 var util = require('../util');
 
@@ -54,12 +55,12 @@ router.post('/login', function (req, res, next) {
   });
 });
 
-router.post('/payment', function (req, res, next) {
+router.post('/payment', validate(validatePayment), (req, res, next) => {
   const { id, ...data } = req.body;
   var paymenttime = util.timeformatter(new Date());
   userService.payment(id, {... data, paid_at: paymenttime}, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: "Invalid input" });
+      res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
     } else {
       res.json({ success: true, request_id: id, request_status: 'paid', paid_at:paymenttime });
     }
