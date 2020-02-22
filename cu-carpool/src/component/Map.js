@@ -1,10 +1,9 @@
-/* global document */
-import React, { useState } from 'react';
-// import MapGL, { Marker } from 'react-map-gl';
+import React from 'react';
 import ReactMapGL from 'react-map-gl';
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiZm9jdXMtamsiLCJhIjoiY2s2aHg3OGhwMGRwOTNrdGkwNzhhMGNqYiJ9.Bh94-cyf4LgURAD9WLxLXA'; // Set your mapbox token here
+const MAPBOX_TOKEN = 'pk.eyJ1IjoiZm9jdXMtamsiLCJhIjoiY2s2aHg3OGhwMGRwOTNrdGkwNzhhMGNqYiJ9.Bh94-cyf4LgURAD9WLxLXA';
+// Set your mapbox token here
 
 class Map extends React.Component {
     state = {
@@ -27,7 +26,6 @@ class Map extends React.Component {
                 height="300px"
                 onViewportChange={viewport => this.handleChange(viewport)}
                 mapboxApiAccessToken={MAPBOX_TOKEN}
-
             >
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                     <LocationOnIcon fontSize="large" style={{ color: 'red' }} />

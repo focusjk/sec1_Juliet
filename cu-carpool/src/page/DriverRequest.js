@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { MyButton, MyWhiteButton } from '../component/MyButton';
 import { MyHeader } from '../component/MyTitle'
+import EmptyBox from '../component/EmptyBox';
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 class DriverRequest2 extends React.Component {
@@ -40,13 +41,14 @@ class DriverRequest2 extends React.Component {
   }
   render() {
     return (
-      <Grid container direction="column" justify="flex-start" style={{ width: "100%" }}>
+      <Grid container direction="column" justify="center" style={{ width: "100%" }}>
         <MyHeader style={{ justifyContent: 'left' }}>
           > Driver's request
         </MyHeader>
-        <div style={{ margin: "32px 300px" }}>
+        <div style={{ margin: "32px 0", alignSelf: 'center' }}>
+          <EmptyBox data={this.state.list} />
           {this.state.list.map(({ id, username, firstname, lastname, phone_number, email, photo, driving_license, edited_at }) =>
-            <div style={{ display: 'flex', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px' }}>
+            <div style={{ maxWidth: 740, display: 'flex', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '150px', marginRight: '16px' }}>
                 <img
                   src={photo}
@@ -64,7 +66,7 @@ class DriverRequest2 extends React.Component {
                 <div> Driving license: {driving_license}</div>
                 <div> Modified at : {formatter(edited_at)}</div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '16px' }}>
                 <MyButton style={{ marginBottom: '16px' }} onClick={() => this.handleApprove(id)}>Approve</MyButton>
                 <MyWhiteButton onClick={() => this.handleReject(id)}>Reject</MyWhiteButton>
               </div>

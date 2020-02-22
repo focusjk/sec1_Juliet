@@ -12,6 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from '../component/UserImage';
+import { MyLink } from "../component/MyTitle";
 
 const useStyles = makeStyles({
   root: {
@@ -199,20 +200,7 @@ const Register = ({ history, handleLogin }) => {
       {errorMessage !== "" && (
         <div style={{ color: "red" }}>{errorMessage}</div>
       )}
-
-      <Link
-        style={{
-          color: "#bdbdbd",
-          marginTop: 25,
-          textDecoration: "underline",
-          alignSelf: "center"
-        }}
-        onClick={() => {
-          history.push("/login");
-        }}
-      >
-        Already a member ?
-      </Link>
+      <MyLink goto="/login" style={{ marginTop: 25, alignSelf: "center", color: "#bdbdbd", fontSize: 16 }}>Already a member ?</MyLink>
     </Grid>
   );
   //   }
