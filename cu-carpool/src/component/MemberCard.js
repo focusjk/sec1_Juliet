@@ -23,7 +23,7 @@ const MemberCard = () => {
         justifyContent: "space-between"
       }}
     >
-        <div style={{ display: "flex", alignItems: "left" }}>
+        <div style={{ display: "flex" }}>
            <img
             src={logo}
             height={50}
@@ -32,7 +32,7 @@ const MemberCard = () => {
           />
 	<MyTitle style={{marginLeft: "8px", alignItems: "center"}}>Username</MyTitle>
         </div>
-        <div style={{ display: "flex", alignItems: "left", marginTop: "16px"}}>
+        <div style={{ display: "flex", alignItems: "center", marginTop: "16px"}}>
           <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
           <div>
             Firstname Lastname
