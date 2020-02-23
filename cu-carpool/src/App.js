@@ -16,6 +16,8 @@ import CreateTrip from "./page/CreateTrip";
 import MyTrip from "./page/MyTrip";
 import AdminLogin from "./page/AdminLogin";
 import DriverRequest from "./page/DriverRequest";
+import TripMemberforMember from "./page/TripMemberforMember";
+import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
@@ -49,11 +51,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+   const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -82,6 +84,12 @@ const App = () => {
                     )}
                     <Route path="/my-trip" exact>
                       <MyTrip user={user} />
+                    </Route>
+		    <Route path="/TripMemberforMember" exact>
+                      <TripMemberforMember user={user} />
+		     </Route>
+		    <Route path="/TripMemberforDriver" exact>
+                      <TripMemberforDriver user={user} />
                     </Route>
                     {/* <Route path="/trip-history" exact>
                       <TripHistory user={user} />

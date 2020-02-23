@@ -1,6 +1,7 @@
 import React from "react";
 import {
   MyButton,
+  MyGreyButton,
   MyWhiteButton,
   MyFullWidthButton,
   MyDisabledFullWidthButton
@@ -26,6 +27,8 @@ class ButtonComponent extends React.Component {
         <MyButton disabled>MyButton</MyButton>
         <div style={{ margin: "10px" }} />
         <MyWhiteButton>MyButton</MyWhiteButton>
+        <div style={{ margin: "10px" }} />
+	<MyGreyButton>MyButton</MyGreyButton>
         <div style={{ margin: "10px" }} />
         <MyWhiteButton disabled>MyButton</MyWhiteButton>
         <div style={{ margin: "10px" }} />
