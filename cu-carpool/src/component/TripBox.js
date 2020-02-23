@@ -3,8 +3,13 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
+<<<<<<< HEAD
 import { MyTitle } from "../component/MyTitle";
 import moment from "moment";
+=======
+import { MyTitle, MyLink } from "../component/MyTitle";
+import MapData from './MapData'
+>>>>>>> master
 
 const TripBox = ({ history, data }) => {
   const {
@@ -135,6 +140,10 @@ const TripBox = ({ history, data }) => {
             </Link>
           </div>
         </div>
+        <div>Pick up:</div>
+        <MapData fixed longitude={100.493117} latitude={13.769059} />
+        <div>Destination:</div>
+        <MapData fixed longitude={100.493117} latitude={13.769059} />
 
         <div
           style={{

@@ -5,6 +5,7 @@ import { Box } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
+import { MyLink } from "../component/MyTitle";
 
 class Login extends React.Component {
   state = { username: null, password: null, error: "" };
@@ -51,18 +52,7 @@ class Login extends React.Component {
           style={{ color: "#bdbdbd", alignSelf: "center", marginTop: 40 }}
         >
           Don’t have an account ?
-          <Link
-            style={{
-              color: "#CE7B91",
-              marginLeft: 10,
-              textDecoration: "underline"
-            }}
-            onClick={() => {
-              this.props.history.push("/register");
-            }}
-          >
-            Sign Up
-          </Link>
+          <MyLink goto="/register" style={{ marginLeft: 10, fontSize: 16 }}>Sign Up</MyLink>
         </Box>
       </Grid>
     );
