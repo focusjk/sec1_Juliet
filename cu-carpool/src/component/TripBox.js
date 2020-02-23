@@ -3,13 +3,9 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-<<<<<<< HEAD
-import { MyTitle } from "../component/MyTitle";
-import moment from "moment";
-=======
 import { MyTitle, MyLink } from "../component/MyTitle";
-import MapData from './MapData'
->>>>>>> master
+import MapData from "./MapData";
+import moment from "moment";
 
 const TripBox = ({ history, data }) => {
   const {
@@ -98,63 +94,27 @@ const TripBox = ({ history, data }) => {
             </div>
             <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
             <div style={{ marginBottom: 6 }}>Capacity: {capacity}</div>
-            <div style={{ marginBottom: 6 }}>Pick up:</div>
-            <div style={{ marginBottom: 6 }}>Destination:</div>
           </div>
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
+              alignItems: "flex-end",
               flexDirection: "column"
             }}
           >
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: 6
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
+            <div style={{ fontSize: "20px" }}>{price} ฿</div>
+            <MyLink style={{ marginBottom: 6 }} goto="/trip-request">
               see request
-            </Link>
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: 6
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
+            </MyLink>
+            <MyLink style={{ marginBottom: 6 }} goto="/">
               see trip member
-            </Link>
+            </MyLink>
           </div>
         </div>
-        <div>Pick up:</div>
+        <div style={{ marginBottom: 6 }}>Pick up:</div>
         <MapData fixed longitude={100.493117} latitude={13.769059} />
-        <div>Destination:</div>
+        <div style={{ marginBottom: 6 }}>Destination:</div>
         <MapData fixed longitude={100.493117} latitude={13.769059} />
-
-        <div
-          style={{
-            fontSize: 20,
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: 6
-          }}
-        >
-          {price} ฿
-        </div>
 
         <div
           style={{
