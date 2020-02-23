@@ -10,18 +10,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton } from "../component/MyButton";
 import MemberCard from '../component/MemberCard'
 
-const useStyles = makeStyles({
-  box: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-    flexDirection: "column"
-  },
-  panel: { backgroundColor: "#EFEFEF", boxShadow: "none" }
-});
 
 const TripMemberforDriver = () => {
-  const classes = useStyles();
   return (
     <div>
       <MyHeaderWithArrow goto="">Trip Member</MyHeaderWithArrow>

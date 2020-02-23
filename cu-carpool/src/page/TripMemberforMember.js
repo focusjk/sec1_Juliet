@@ -39,14 +39,14 @@ const TripMemberforMember = () => {
       }}
     >
       <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px",marginButtom: "16px"}}>
-        <div style={{ display: "flex", alignItems: "left" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
            <img
             src={logo}
             height={50}
             width={50}
             style={{ borderRadius: "100%" }}
           />
-	<MyTitle style={{marginLeft: "8px", alignItems: "center"}}>Driver Username</MyTitle>
+	<MyTitle style={{marginLeft: "8px"}}>Driver Username</MyTitle>
         </div>
         <div style={{ display: "flex", alignItems: "left", marginTop: "16px"}}>
           <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />

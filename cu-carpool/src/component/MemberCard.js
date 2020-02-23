@@ -24,14 +24,12 @@ const MemberCard = () => {
       variant="outlined"
       style={{
         marginTop: "16px",
-	marginButtom: "16px",
         padding: 10,
         display: "flex",
 	flexDirection: "column",
         justifyContent: "space-between"
       }}
     >
-      <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px",marginButtom: "16px"}}>
         <div style={{ display: "flex", alignItems: "left" }}>
            <img
             src={logo}
@@ -47,13 +45,12 @@ const MemberCard = () => {
             Firstname Lastname
           </div>
         </div>
-	<div style={{ display: "flex", alignItems: "left",marginTop: "16px"}}>
+	<div style={{ display: "flex", alignItems: "center",marginTop: "16px"}}>
           <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div>
             08x-xxx-xxx
           </div>
         </div>
-      </Typography> 
 	<div
           style={{
             display: "flex",
