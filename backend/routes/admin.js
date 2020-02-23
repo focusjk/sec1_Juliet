@@ -68,4 +68,15 @@ router.get('/report', function (req, res, next) {
   });
 });
 
+router.post('/report/read',function(req, res, next) {
+  const { id , is_read } = req.body;
+  adminService.isRead({ id, is_read }, (err,result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true });
+    } 
+  })
+})
+
 module.exports = router;
