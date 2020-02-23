@@ -78,7 +78,7 @@ const TripBox = ({ history, data }) => {
             <div style={{ fontSize: "20px" }}>200 ฿</div>
             <MyLink goto="/trip-request">see request</MyLink>
             <MyLink goto="/TripMemberforDriver">see trip member</MyLink>
-	  <MyLink goto="/TripMemberforMember">see trip member</MyLink>
+
 
           </div>
         </div>
