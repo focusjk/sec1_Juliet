@@ -4,24 +4,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle } from "../component/MyTitle";
+import moment from "moment";
 
 const TripBox = ({ history, data }) => {
-  //   const {
-  //     id,
-  //     departure_detail,
-  //     departure_province,
-  //     destination_detail,
-  //     destination_province,
-  //     start_datetime,
-  //     capacity,
-  //     request,
-  //     status,
-  //     price
-  //   } = data;
-  //   const date = moment(start_datetime).format("MMMM Do YYYY");
-  //   const time = moment(start_datetime).format("h:mm a");
+  const {
+    id,
+    start_datetime,
+    status,
+    plate_license,
+    car_brand,
+    capacity,
+    price
+    // departure_latitude,
+    // departure_longtitude,
+    // destination_latiude,
+    // destination_longitude
+  } = data;
+  const date = moment(start_datetime).format("MMMM Do YYYY");
+  const time = moment(start_datetime).format("h:mm a");
+
   return (
     <Paper
+      key={id}
       square
       variant="outlined"
       style={{
@@ -33,7 +37,6 @@ const TripBox = ({ history, data }) => {
     >
       <Paper
         square
-        // key={id}
         elevation={0}
         style={{
           padding: 3,
@@ -49,7 +52,7 @@ const TripBox = ({ history, data }) => {
             marginLeft: "6px"
           }}
         >
-          Hi header
+          {date} {time}
         </MyTitle>
       </Paper>
 
@@ -69,7 +72,7 @@ const TripBox = ({ history, data }) => {
             marginBottom: "8px"
           }}
         >
-          Status:
+          Status: {status}
         </MyTitle>
 
         <div
@@ -85,11 +88,13 @@ const TripBox = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div>License plate:</div>
-            <div>Car brand:</div>
-            <div>Capacity:</div>
-            <div>Pick up:</div>
-            <div>Destination:</div>
+            <div style={{ marginBottom: 6 }}>
+              License plate: {plate_license}
+            </div>
+            <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
+            <div style={{ marginBottom: 6 }}>Capacity: {capacity}</div>
+            <div style={{ marginBottom: 6 }}>Pick up:</div>
+            <div style={{ marginBottom: 6 }}>Destination:</div>
           </div>
           <div
             style={{
@@ -104,7 +109,8 @@ const TripBox = ({ history, data }) => {
                 textDecoration: "underline",
                 fontSize: 14,
                 display: "flex",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
+                marginBottom: 6
               }}
               onClick={() => {
                 history.push("/");
@@ -118,7 +124,8 @@ const TripBox = ({ history, data }) => {
                 textDecoration: "underline",
                 fontSize: 14,
                 display: "flex",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
+                marginBottom: 6
               }}
               onClick={() => {
                 history.push("/");
@@ -127,6 +134,17 @@ const TripBox = ({ history, data }) => {
               see trip member
             </Link>
           </div>
+        </div>
+
+        <div
+          style={{
+            fontSize: 20,
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: 6
+          }}
+        >
+          {price} ฿
         </div>
 
         <div

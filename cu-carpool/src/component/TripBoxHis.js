@@ -85,10 +85,10 @@ const TripBoxHis = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div>Driver:</div>
-            <div>License plate:</div>
-            <div>Pick up:</div>
-            <div>Destination:</div>
+            <div style={{ marginBottom: 6 }}>Driver:</div>
+            <div style={{ marginBottom: 6 }}>License plate:</div>
+            <div style={{ marginBottom: 6 }}>Pick up:</div>
+            <div style={{ marginBottom: 6 }}>Destination:</div>
           </div>
           <div
             style={{
@@ -97,22 +97,14 @@ const TripBoxHis = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div
-              style={{
-                fontSize: 20,
-                display: "flex",
-                justifyContent: "flex-end"
-              }}
-            >
-              price ฿
-            </div>
             <Link
               style={{
                 color: "#C78899",
                 textDecoration: "underline",
                 fontSize: 14,
                 display: "flex",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
+                marginBottom: 6
               }}
               onClick={() => {
                 history.push("/");
@@ -126,7 +118,8 @@ const TripBoxHis = ({ history, data }) => {
                 textDecoration: "underline",
                 fontSize: 14,
                 display: "flex",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
+                marginBottom: 6
               }}
               onClick={() => {
                 history.push("/");
@@ -135,6 +128,17 @@ const TripBoxHis = ({ history, data }) => {
               see trip member
             </Link>
           </div>
+        </div>
+
+        <div
+          style={{
+            fontSize: 20,
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: 6
+          }}
+        >
+          price ฿
         </div>
 
         <div

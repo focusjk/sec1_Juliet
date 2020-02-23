@@ -20,7 +20,7 @@ const listPath = {
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
-    { name: "My Trip", path: "/my-trip", icon: "library_books" },
+    { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ],
@@ -28,8 +28,8 @@ const listPath = {
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
-    { name: "My Trip", path: "/my-trip", icon: "library_books" },
-    { name: "Create trip", path: "/create-trip", icon: "emoji_transportation" },
+    { name: "Create trip", path: "/create-trip", icon: "edit" },
+    { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ]
