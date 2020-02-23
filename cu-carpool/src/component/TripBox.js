@@ -9,7 +9,7 @@ import moment from "moment";
 
 const TripBox = ({ history, data }) => {
   const {
-    id,
+    trip_id,
     start_datetime,
     status,
     plate_license,
@@ -26,7 +26,7 @@ const TripBox = ({ history, data }) => {
 
   return (
     <Paper
-      key={id}
+      key={trip_id}
       square
       variant="outlined"
       style={{
