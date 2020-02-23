@@ -30,7 +30,7 @@ const MemberCard = () => {
             width={50}
             style={{ borderRadius: "100%" }}
           />
-	<MyTitle style={{marginLeft: "8px", alignItems: "center"}}>Username</MyTitle>
+	<MyTitle style={{marginLeft: "8px"}}>Username</MyTitle>
         </div>
         <div style={{ display: "flex", alignItems: "center", marginTop: "16px"}}>
           <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
