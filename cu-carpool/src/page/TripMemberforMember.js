@@ -10,18 +10,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const useStyles = makeStyles({
-  box: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-    flexDirection: "column"
-  },
-  panel: { backgroundColor: "#EFEFEF", boxShadow: "none" }
-});
 
 const TripMemberforMember = () => {
-  const classes = useStyles();
   return (
     <div>
       <MyHeaderWithArrow goto="">Trip Member</MyHeaderWithArrow>
@@ -31,14 +21,13 @@ const TripMemberforMember = () => {
       variant="outlined"
       style={{
         marginTop: "16px",
-	marginButtom: "16px",
         padding: 10,
         display: "flex",
 	flexDirection: "column",
         justifyContent: "space-between"
       }}
     >
-      <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px",marginButtom: "16px"}}>
+      <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px"}}>
         <div style={{ display: "flex", alignItems: "center" }}>
            <img
             src={logo}
@@ -65,7 +54,6 @@ const TripMemberforMember = () => {
     </Paper>
      <div  style={{
         marginTop: "16px",
-	marginButtom: "16px",
         padding: 10,
         display: "flex",
 	flexDirection: "column",

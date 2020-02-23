@@ -10,14 +10,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton} from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  }
-});
-
 const MemberCard = () => {
-  const classes = useStyles();
   return (
     <Paper
       square
@@ -41,7 +34,7 @@ const MemberCard = () => {
         </div>
         <div style={{ display: "flex", alignItems: "left", marginTop: "16px"}}>
           <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div>
             Firstname Lastname
           </div>
         </div>
