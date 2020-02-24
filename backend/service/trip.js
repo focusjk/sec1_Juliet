@@ -89,6 +89,7 @@ const getTripDetail = (trip_id,callback) => {
                           plate_license,
                           capacity,
                           status,
+                          price,
                           owner as owner_id FROM trip WHERE id = `+trip_id , callback);
 }
 
