@@ -105,7 +105,10 @@ const TripBox = ({ history, data }) => {
             <MyLink style={{ marginBottom: 6 }} goto="/trip-request">
               see request
             </MyLink>
-            <MyLink style={{ marginBottom: 6 }} goto="/">
+            <MyLink
+              style={{ marginBottom: 6 }}
+              goto={"/my-trip/" + toString(trip_id) + "/member"}
+            >
               see trip member
             </MyLink>
           </div>

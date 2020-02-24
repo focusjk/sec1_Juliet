@@ -23,27 +23,9 @@ class MyTrip extends React.Component {
       <div>
         <MyHeader style={{ marginBottom: "30px" }}>My Trip</MyHeader>
         <EmptyBox data={this.state.list} />
-        {this.state.list.map(
-          ({
-            trip_id,
-            start_datetime,
-            car_brand,
-            plate_license,
-            capacity,
-            status
-          }) => (
-            <TripBox
-              key={trip_id}
-              data={{
-                start_datetime,
-                car_brand,
-                plate_license,
-                capacity,
-                status
-              }}
-            />
-          )
-        )}
+        {this.state.list.map((trip, index) => (
+          <TripBox key={index} data={trip} />
+        ))}
       </div>
     );
   }

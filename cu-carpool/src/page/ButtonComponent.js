@@ -1,6 +1,7 @@
 import React from "react";
 import {
   MyButton,
+  MyGreyButton,
   MyWhiteButton,
   MyFullWidthButton,
   MyDisabledFullWidthButton
@@ -15,31 +16,35 @@ class ButtonComponent extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader> Hi </MyHeader>
-        <MyTitle> Hi </MyTitle>
+        <MyHeader>MyHeader</MyHeader>
+        <MyTitle>MyTitle</MyTitle>
         {/* data is not empty list => null ไม่แสดงอะไร */}
         <EmptyBox data={[]} />
-        <MyHeaderWithArrow goto="">My trip</MyHeaderWithArrow>
-        <MyLink goto="/my-trip">My trip</MyLink>
+        <MyHeaderWithArrow goto="">MyHeaderWithArrow</MyHeaderWithArrow>
+        <MyLink goto="/my-trip">MyLink</MyLink>
         <MyButton>MyButton</MyButton>
         <div style={{ margin: "10px" }} />
-        <MyButton disabled>MyButton</MyButton>
+        <MyButton disabled>MyButton_disable</MyButton>
         <div style={{ margin: "10px" }} />
-        <MyWhiteButton>MyButton</MyWhiteButton>
+        <MyWhiteButton>MyWhiteButton</MyWhiteButton>
         <div style={{ margin: "10px" }} />
-        <MyWhiteButton disabled>MyButton</MyWhiteButton>
+        <MyWhiteButton disabled>MyWhiteButton_disable</MyWhiteButton>
+        <div style={{ margin: "10px" }} />
+        <MyGreyButton>MyGreyButton</MyGreyButton>
+        <div style={{ margin: "10px" }} />
+        <MyGreyButton disabled>MyGreyButton_disable</MyGreyButton>
         <div style={{ margin: "10px" }} />
         <MyFullWidthButton>MyFullWidthButton</MyFullWidthButton>
         <div style={{ margin: "10px" }} />
         <MyFullWidthButton disabled>MyFullWidthButton</MyFullWidthButton>
         <div style={{ margin: "10px" }} />
         <MyDisabledFullWidthButton disabled>
-          MyDisabledFullWidthButton
+          MyDisabledFullWidthButton_disable
         </MyDisabledFullWidthButton>
         <div style={{ margin: "10px" }} />
         <MyModal />
-        <Button color="secondary">OK</Button>
-        <Button style={{ color: "#BDBDBD" }}>Cancel</Button>
+        <Button color="secondary">Button_secondary</Button>
+        <Button style={{ color: "#BDBDBD" }}>Button</Button>
         <Rating name="half-rating" defaultValue={2.34} precision={0.01} />
       </div>
     );
