@@ -56,7 +56,7 @@ router.get('/detail',(req, res, next) => {
   })
 });
 
-router.post('/getMember',(req, res, next) => {
+router.post('/member',(req, res, next) => {
   const {trip_id} = req.body;
   tripService.getDriver(trip_id,(err,result) => {
     if(err) {
