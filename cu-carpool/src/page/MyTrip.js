@@ -4,28 +4,49 @@ import TripBox from "../component/TripBox";
 import EmptyBox from "../component/EmptyBox";
 import axios from "axios";
 
-const MyTrip = () => {
-  const [tripList, setTripList] = useState([]);
-  const myTrip = async () => {
-    try {
-      const response = await axios.post("http://localhost:4000/trip/detail");
-      const { trip, owner, passenger } = response.data;
-      setTripList(trip);
-    } catch (e) {
-      console.log(e.response);
+class MyTrip extends React.Component {
+  state = { list: [] };
+  componentDidMount() {
+    this.fetchData();
+  }
+  fetchData = async () => {
+    const response = await axios.get("http://localhost:4000//user/mytrip");
+    const { success, trip } = response.data;
+    console.log(response.data);
+    if (success) {
+      this.setState({ list: trip });
     }
   };
 
-  return (
-    <div>
-      <MyHeader style={{ marginBottom: "30px" }}>My Trip</MyHeader>
-      <EmptyBox data={tripList} />
-      {tripList.map((trip, index) => (
-        <TripBox key={index} data={trip} />
-      ))}
-      {/* <TripBox /> */}
-    </div>
-  );
-};
+  render() {
+    return (
+      <div>
+        <MyHeader style={{ marginBottom: "30px" }}>My Trip</MyHeader>
+        <EmptyBox data={this.state.list} />
+        {this.state.list.map(
+          ({
+            trip_id,
+            start_datetime,
+            car_brand,
+            plate_license,
+            capacity,
+            status
+          }) => (
+            <TripBox
+              key={trip_id}
+              data={{
+                start_datetime,
+                car_brand,
+                plate_license,
+                capacity,
+                status
+              }}
+            />
+          )
+        )}
+      </div>
+    );
+  }
+}
 
 export default MyTrip;

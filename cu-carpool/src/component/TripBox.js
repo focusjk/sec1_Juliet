@@ -21,8 +21,7 @@ const TripBox = ({ history, data }) => {
     // destination_latiude,
     // destination_longitude
   } = data;
-  const date = moment(start_datetime).format("MMMM Do YYYY");
-  const time = moment(start_datetime).format("h:mm a");
+  const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
   return (
     <Paper
@@ -53,7 +52,7 @@ const TripBox = ({ history, data }) => {
             marginLeft: "6px"
           }}
         >
-          {date} {time}
+          {datetime}
         </MyTitle>
       </Paper>
 
