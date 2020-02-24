@@ -128,7 +128,7 @@ const getDriver = (trip_id,callback) => {
                     members.lastName as lastname,
                     members.phone_number as phone_number,
                     members.photo as photo
-                    FROM members full outer join trip on member.id = trip.owner
+                    FROM members LEFT JOIN trip ON members.id = trip.owner
                     WHERE trip.id = `+ trip_id +
                   ` GROUP BY members.id`, callback);
 }
