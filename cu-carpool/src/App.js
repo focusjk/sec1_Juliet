@@ -20,6 +20,8 @@ import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
 // import TripHistory from "./page/TripHistory";
+import TripRequest from "./page/TripRequest";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -49,11 +51,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+   const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+  //const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -86,6 +88,10 @@ const App = () => {
                     {/* <Route path="/trip-history" exact>
                       <TripHistory user={user} />
                     </Route> */}
+                    {/* YIN HERE */}
+                    <Route path="/TripRequest" exact>
+                      <TripRequest user={user} />
+                    </Route>
                     <Route path="/driver" exact>
                       <DriverProfile
                         user={user}
