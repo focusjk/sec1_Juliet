@@ -1,15 +1,15 @@
 import React from "react";
-import { MyHeader } from "../component/MyTitle";
+import { MyHeaderWithArrow } from "../component/MyTitle";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import TripBox from "../component/TripBox";
+import RequestBox from "../component/RequestBox";
 import EmptyBox from "../component/EmptyBox";
 
 class TripRequest extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader style={{ marginBottom: "30px" }}>Trip Request</MyHeader>
-        <TripBox />
+        <MyHeaderWithArrow goto="">Trip Request</MyHeaderWithArrow>
+        <RequestBox />
         <EmptyBox data={[]} />
       </div>
     );
