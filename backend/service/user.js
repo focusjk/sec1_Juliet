@@ -32,27 +32,31 @@ const payment = (ID,body, callback) => {
 }
 
 const getTripHistory = (member_id , callback) => {
-  return db.query(`SELECT trip.id as id,
-                  trip.departure_latitude,
-                  trip.departure_longtitude,
-                  trip.departure_province,
-                  trip.departure_detail,
-                  trip.destination_latitude,
-                  trip.destination_longtitude,
-                  trip.destination_province,
-                  trip.destination_detail,
+  return db.query(`SELECT request.id as id,
+                  request.departure_latitude,
+                  request.departure_longtitude,
+                  request.departure_detail,
+                  request.destination_latitude,
+                  request.destination_longtitude,
+                  request.destination_detail,
+                  request.departed_at,
+                  request.driver_departed_at,
+                  request.driver_arrived_at,
+                  trip.id as trip_id,
                   trip.start_datetime,
                   trip.car_brand,
                   trip.plate_license,
-                  trip.capacity,
-                  trip.status,
                   trip.price,
+                  request.request_status,
+                  request.created_at,
+                  request.paid_at,
+                  request.review_id, 
                   members.id as owner_id,
                   members.username as owner_username,
                   members.firstName as owner_firstname,
                   members.lastName as owner_lastname
                   FROM trip INNER JOIN members ON trip.owner = members.id INNER JOIN request ON request.trip_id = trip.id
-                  WHERE request.request_status IN ('approved' , 'paid') AND request.member_id = ?`, [member_id], callback);
+                  WHERE request.member_id = ?`, [member_id], callback);
 }
 
 module.exports = { register, getMemberInfo, login, editMemberInfo, payment, getTripHistory};
