@@ -15,17 +15,16 @@ const TripBox = ({ history, data }) => {
     plate_license,
     car_brand,
     capacity,
-    price
-    // departure_latitude,
-    // departure_longtitude,
-    // destination_latiude,
-    // destination_longitude
+    price,
+    departure_latitude,
+    departure_longtitude,
+    destination_latiude,
+    destination_longitude
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
   return (
     <Paper
-      key={trip_id}
       square
       variant="outlined"
       style={{
@@ -114,9 +113,17 @@ const TripBox = ({ history, data }) => {
           </div>
         </div>
         <div style={{ marginBottom: 6 }}>Pick up:</div>
-        <MapData fixed longitude={100.493117} latitude={13.769059} />
-        <div style={{ marginBottom: 6 }}>Destination:</div>
-        <MapData fixed longitude={100.493117} latitude={13.769059} />
+        <MapData
+          fixed
+          longitude={departure_longtitude}
+          latitude={departure_latitude}
+        />
+        <div style={{ marginBottom: 6, marginTop: 6 }}>Destination:</div>
+        <MapData
+          fixed
+          longitude={destination_longitude}
+          latitude={destination_latiude}
+        />
 
         <div
           style={{

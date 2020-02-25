@@ -3,23 +3,26 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "./MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import { MyTitle } from "./MyTitle";
+import { MyTitle, MyLink } from "../component/MyTitle";
+import MapData from "./MapData";
+import moment from "moment";
 
 const TripBoxHis = ({ history, data }) => {
-  //   const {
-  //     id,
-  //     departure_detail,
-  //     departure_province,
-  //     destination_detail,
-  //     destination_province,
-  //     start_datetime,
-  //     capacity,
-  //     request,
-  //     status,
-  //     price
-  //   } = data;
-  //   const date = moment(start_datetime).format("MMMM Do YYYY");
-  //   const time = moment(start_datetime).format("h:mm a");
+  const {
+    trip_id,
+    start_datetime,
+    status,
+    plate_license,
+    car_brand,
+    price,
+    departure_latitude,
+    departure_longtitude,
+    destination_latiude,
+    destination_longitude,
+    owner_firstname
+  } = data;
+  const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
+
   return (
     <Paper
       square
@@ -33,7 +36,6 @@ const TripBoxHis = ({ history, data }) => {
     >
       <Paper
         square
-        // key={id}
         elevation={0}
         style={{
           padding: 3,
@@ -49,7 +51,7 @@ const TripBoxHis = ({ history, data }) => {
             marginLeft: "6px"
           }}
         >
-          Hi header
+          {datetime}
         </MyTitle>
       </Paper>
 
@@ -69,7 +71,7 @@ const TripBoxHis = ({ history, data }) => {
             marginBottom: "8px"
           }}
         >
-          Status:
+          Status: {status}
         </MyTitle>
 
         <div
@@ -85,61 +87,53 @@ const TripBoxHis = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div style={{ marginBottom: 6 }}>Driver:</div>
-            <div style={{ marginBottom: 6 }}>License plate:</div>
-            <div style={{ marginBottom: 6 }}>Pick up:</div>
-            <div style={{ marginBottom: 6 }}>Destination:</div>
+            <div style={{ marginBottom: 6 }}>Driver:{owner_firstname}</div>
+            <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
+            <div style={{ marginBottom: 6 }}>
+              License plate: {plate_license}
+            </div>
           </div>
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
+              alignItems: "flex-end",
               flexDirection: "column"
             }}
           >
-            <Link
+            <div
               style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
+                fontSize: 20,
                 display: "flex",
                 justifyContent: "flex-end",
                 marginBottom: 6
               }}
-              onClick={() => {
-                history.push("/");
-              }}
             >
-              see request
-            </Link>
-            <Link
-              style={{
-                color: "#C78899",
-                textDecoration: "underline",
-                fontSize: 14,
-                display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: 6
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
+              {price} ฿
+            </div>
+            <MyLink style={{ marginBottom: 6 }} goto="/trip-request">
               see trip member
-            </Link>
+            </MyLink>
+            <MyLink
+              style={{ marginBottom: 6 }}
+              goto={"/my-trip/" + toString(trip_id) + "/member"}
+            >
+              see trip detail
+            </MyLink>
           </div>
         </div>
 
-        <div
-          style={{
-            fontSize: 20,
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: 6
-          }}
-        >
-          price ฿
-        </div>
+        <div style={{ marginBottom: 6 }}>Pick up:</div>
+        <MapData
+          fixed
+          longitude={departure_longtitude}
+          latitude={departure_latitude}
+        />
+        <div style={{ marginBottom: 6, marginTop: 6 }}>Destination:</div>
+        <MapData
+          fixed
+          longitude={destination_longitude}
+          latitude={destination_latiude}
+        />
 
         <div
           style={{

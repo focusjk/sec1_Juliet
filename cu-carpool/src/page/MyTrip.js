@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { MyHeader } from "../component/MyTitle";
 import TripBox from "../component/TripBox";
 import EmptyBox from "../component/EmptyBox";
@@ -10,9 +10,9 @@ class MyTrip extends React.Component {
     this.fetchData();
   }
   fetchData = async () => {
-    const response = await axios.get("http://localhost:4000//user/mytrip");
+    const response = await axios.get("http://localhost:4000//driver/mytrip"); //TODO
     const { success, trip } = response.data;
-    console.log(response.data);
+    // console.log(response.data);
     if (success) {
       this.setState({ list: trip });
     }
