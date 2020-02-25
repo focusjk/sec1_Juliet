@@ -89,6 +89,7 @@ const getTripDetail = (trip_id,callback) => {
                           plate_license,
                           capacity,
                           status,
+                          price,
                           owner as owner_id FROM trip WHERE id = `+trip_id , callback);
 }
 
@@ -120,4 +121,16 @@ const getAllPassenger = (trip_id, callback) => {
                                               GROUP BY member_id)`, callback);
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger };
+const getDriver = (trip_id,callback) => {
+  return db.query(`SELECT  
+                    members.id as id,
+                    members.username as username,
+                    members.firstname as firstname,
+                    members.lastName as lastname,
+                    members.phone_number as phone_number,
+                    members.photo as photo
+                    FROM members LEFT JOIN trip ON members.id = trip.owner
+                    WHERE trip.id = `+ trip_id +
+                  ` GROUP BY members.id`, callback);
+}
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver };

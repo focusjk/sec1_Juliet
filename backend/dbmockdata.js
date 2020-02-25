@@ -4,6 +4,9 @@ var tripService = require('./service/trip');
 var userService = require('./service/user');
 var driverService = require('./service/driver');
 var adminService = require('./service/admin');
+var requestService = require('./service/request');
+var reportService = require('./service/report');
+
 var userimage = require('./userimage')
 var members = [
     {
@@ -90,6 +93,19 @@ var trip = [
         start_datetime: "2020-03-10 14:44:00"
     },
 ]
+
+const request = [
+    {
+        trip_id: 1,
+        member_id: 3
+    }, {
+        trip_id: 2,
+        member_id: 3
+    }, {
+        trip_id: 2,
+        member_id: 4
+    }
+]
 var mock = () => {
     //members
     var created_at = util.timeformatter(new Date());
@@ -152,6 +168,36 @@ var mock = () => {
         }
         )
     )
+
+    //request
+    request.map(({ trip_id, member_id }) => {
+        const data = {
+            departure_latitude,
+            departure_longtitude,
+            destination_latitude,
+            destination_longtitude,
+            departure_detail: 'test',
+            destination_detail: 'test'
+        }
+        requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("insert request by member id: ", member_id, " trip id:", trip_id)
+            }
+        })
+    })
+
+    //report
+    request.map(({ member_id }) => {
+        reportService.createReport(created_at, { member_id, topic: "test", comment: "testtttttttttttttt" }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("insert report by member id: ", member_id)
+            }
+        })
+    })
     db.end();
 }
 
