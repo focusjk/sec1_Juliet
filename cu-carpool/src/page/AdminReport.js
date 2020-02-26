@@ -46,7 +46,7 @@ class AdminReport extends React.Component {
   handleRead = async (id,is_read) => {
     const { username } = this.props.user;
     console.log({ id, admin_name: username })
-    const response = await axios.post("http://localhost:4000//admin/report/read", { id, is_read: !is_read });
+    const response = await axios.post("http://localhost:4000/admin/report/read", { id, is_read: !is_read });
     const { success } = response.data
     if (success) {
       this.fetchData()
@@ -56,7 +56,7 @@ class AdminReport extends React.Component {
 
   render() {
     return (
-      
+
       <Grid container direction="column" justify="center" style={{ width: "100%" }}>
       <MyHeader style={{ justifyContent: 'left' }}>
         > Report Log
