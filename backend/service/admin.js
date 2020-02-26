@@ -83,4 +83,10 @@ const getAllReport = (callback) => {
                   FROM report INNER JOIN members ON report.member_id = members.id`,callback);
 }
 
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport };
+const isRead = ({ id, is_read }, callback) => {
+  return db.query(`UPDATE report 
+                  SET is_read = ?
+                  WHERE id = ?`, [ is_read , id ] , callback);
+}
+
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
