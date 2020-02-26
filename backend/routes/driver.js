@@ -16,5 +16,16 @@ router.post('/', function (req, res, next) {
     });
 });
 
+router.get('/tripRequest/', function (req, res, next) {
+    var ID = req.query.id;
+    driverService.tripRequest(ID, (err, result) => {
+        if (err) {
+            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+        }
+        else {
+            res.json({ success: true, request: [...result]});
+        }
+    });
+});
 
 module.exports = router;

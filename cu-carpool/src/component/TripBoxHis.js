@@ -1,25 +1,25 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "../component/MyButton";
+import { MyButton } from "./MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 
-const TripBox = ({ history, data }) => {
+const TripBoxHis = ({ history, data }) => {
   const {
     trip_id,
     start_datetime,
     status,
     plate_license,
     car_brand,
-    capacity,
     price,
     departure_latitude,
     departure_longtitude,
-    destination_latiude,
+    destination_latitude,
     destination_longtitude,
+    owner_firstname,
     departure_detail,
     destination_detail,
     departure_province,
@@ -91,11 +91,11 @@ const TripBox = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
+            <div style={{ marginBottom: 6 }}>Driver: {owner_firstname}</div>
+            <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
             <div style={{ marginBottom: 6 }}>
               License plate: {plate_license}
             </div>
-            <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
-            <div style={{ marginBottom: 6 }}>Capacity: {capacity}</div>
           </div>
           <div
             style={{
@@ -104,21 +104,31 @@ const TripBox = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div style={{ fontSize: "20px" }}>{price} ฿</div>
-            <MyLink
-              style={{ marginBottom: 6 }}
-              goto={"/my-trip/" + toString(trip_id) + "/request"}
+            <div
+              style={{
+                fontSize: 20,
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: 6
+              }}
             >
-              see request
-            </MyLink>
+              {price} ฿
+            </div>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/my-trip/" + toString(trip_id) + "/member"}
+              goto={"/trip-history/" + toString(trip_id) + "/member"}
             >
               see trip member
             </MyLink>
+            <MyLink
+              style={{ marginBottom: 6 }}
+              goto={"/trip/" + toString(trip_id) + "/detail"}
+            >
+              see trip detail
+            </MyLink>
           </div>
         </div>
+
         <div style={{ marginBottom: 6 }}>
           Pick up: {departure_detail}
           <div style={{ fontSize: 14, color: "#BDBDBD" }}>
@@ -139,17 +149,18 @@ const TripBox = ({ history, data }) => {
         <MapData
           fixed
           longitude={destination_longtitude}
-          latitude={destination_latiude}
+          latitude={destination_latitude}
         />
 
         <div
           style={{
             display: "flex",
-            justifyContent: "space-evenly",
+            justifyContent: "space-around",
             marginTop: "12px"
           }}
         >
           <MyButton>Cancel</MyButton>
+          <MyButton>Payment</MyButton>
           <MyButton>Review</MyButton>
         </div>
       </Paper>
@@ -157,4 +168,4 @@ const TripBox = ({ history, data }) => {
   );
 };
 
-export default withRouter(TripBox);
+export default withRouter(TripBoxHis);

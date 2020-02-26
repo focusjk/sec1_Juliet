@@ -55,7 +55,28 @@ router.post('/driver-reject', function (req, res, next) {
       res.json({ success: true });
     }
   });
-
 });
+
+router.get('/report', function (req, res, next) {
+  adminService.getAllReport((err,result) => {
+    if (err) {
+      console.log(err);
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true , report : result});
+    }
+  });
+});
+
+router.post('/report/read',function(req, res, next) {
+  const { id , is_read } = req.body;
+  adminService.isRead({ id, is_read }, (err,result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true });
+    } 
+  })
+})
 
 module.exports = router;
