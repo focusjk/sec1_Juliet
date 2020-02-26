@@ -12,20 +12,15 @@ import { MyButton } from "../component/MyButton";
 import MemberCard from '../component/MemberCard'
 
 
-<<<<<<< HEAD
 const TripMemberforDriver = () => { 
-  const [passengerList, setPassengerList] = useState([]);
-  const [state, setState] = useState("---");
+  const { trip_id } = useParams();
+  const [memberList, setMemberList] = useState([]);
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/trip/detail");
-      const { success,error,message,passenger } = response.data;
+      const response = await axios.post("http://localhost:4000/trip/member",{trip_id});
+      const { success,error,message,member } = response.data;
       if(success){
-      setPassengerList(passenger);
-      setState("Success");
-      }
-      else{
-	setState(error);
+      setMemberList(member);
       }
     } catch (e) {
       console.log(e.response);
@@ -34,18 +29,14 @@ const TripMemberforDriver = () => {
   useEffect(() => {
     fetchData();
    });
-=======
-const TripMemberforDriver = () => {
-  const { trip_id } = useParams();
->>>>>>> master
+  
   return (
     <div>
       <MyHeaderWithArrow goto="/my-trip">Trip Member</MyHeaderWithArrow>
       <MyTitle>Member</MyTitle>
-       <MyTitle>{state}</MyTitle>
-      <EmptyBox data={passengerList} />
-      {passengerList.map((passenger, index) => (
-        <MemberCard key={index} data={passenger} />
+      <EmptyBox data={memberList} />
+      {memberList.map((member, index) => (
+        <MemberCard key={index} data={member} />
       ))}
     </div>
   );
