@@ -21,7 +21,7 @@ import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
-// import TripHistory from "./page/TripHistory";
+import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 
 const theme = createMuiTheme({
@@ -92,9 +92,9 @@ const App = () => {
                     <Route path="/my-trip/:trip_id/member" exact>
                       <TripMemberforDriver user={user} />
                     </Route>
-                    {/* <Route path="/trip-history" exact>
+                    <Route path="/trip-history" exact>
                       <TripHistory user={user} />
-                    </Route> */}
+                    </Route>
                     <Route path="/driver" exact>
                       <DriverProfile
                         user={user}
