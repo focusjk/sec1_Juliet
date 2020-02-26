@@ -7,15 +7,20 @@ import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData"
 import { Grid } from "@material-ui/core";
 import moment from "moment";
+import PhoneIcon from "@material-ui/icons/Phone";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import FlagIcon from "@material-ui/icons/Flag";
+
 
 const TripBox = ({ history, data }) => {
-
   const {
     id,
     departure_latitude,
     departure_longtitude,
     destination_latitude,
-    destination_longtitude,                          
+    destination_longtitude,   
+    departure_detail,
+    destination_detail,                       
     member_id,
     username,
     phone_number,
@@ -54,15 +59,28 @@ const TripBox = ({ history, data }) => {
         <MyTitle>{username}</MyTitle>
       </Grid>      
 
-       <div style={{ display: "flex", justifyContent: "flex-start", flexDirection: "column",marginBottom: "8px" }}>
-            <div>Phone Number: {phone_number}</div>
+       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
+            <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
+            <div style={{ display: "flex", alignItems: "flex-end" }}>
+              {phone_number}
+       </div>
        </div>
 
+       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
+            <LocationOnIcon fontSize="small" style={{ marginRight: "8px" }} />
+            <div style={{ display: "flex", alignItems: "flex-end" }}>
+              {departure_detail}
+            </div>
+       </div>
+       <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
 
-        <div>Pick up:</div>
-        <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
-        <div>Destination:</div>
-        <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
+       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" , marginTop: "8px" }}>
+            <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
+            <div style={{ display: "flex", alignItems: "flex-end" }}>
+              {departure_detail}
+            </div>
+       </div>
+       <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
 
         <div
           style={{
