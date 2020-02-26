@@ -73,4 +73,15 @@ router.post('/member',(req, res, next) => {
     }
   });
 });
+
+router.get('/driver',(req,res,next) => {
+  const {trip_id: tripid} = req.query;
+  tripService.getAllPassengerForDriver(tripid,(err,result) => {
+    if (err){
+      res.json({success: false , error: err.sqlMessage, message: 'Cannot access database'});
+    } else {
+      res.json({success: true, passenger: result});
+    }
+  })
+});
 module.exports = router;
