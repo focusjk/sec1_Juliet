@@ -10,7 +10,7 @@ class TripHistory extends React.Component {
     this.fetchData();
   }
   fetchData = async () => {
-    const response = await axios.get("http://localhost:4000//user/triphistory"); // TODO
+    const response = await axios.get("http://localhost:4000/user/triphistory"); // TODO
     const { success, trip } = response.data;
     // console.log(response.data);
     if (success) {

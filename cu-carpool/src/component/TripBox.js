@@ -21,7 +21,9 @@ const TripBox = ({ history, data }) => {
     destination_latiude,
     destination_longtitude,
     departure_detail,
-    destination_detail
+    destination_detail,
+    departure_province,
+    destination_province
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
@@ -117,7 +119,12 @@ const TripBox = ({ history, data }) => {
             </MyLink>
           </div>
         </div>
-        <div style={{ marginBottom: 6 }}>Pick up: {departure_detail}</div>
+        <div style={{ marginBottom: 6 }}>
+          Pick up: {departure_detail}
+          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
+            ({departure_province})
+          </div>
+        </div>
         <MapData
           fixed
           longitude={departure_longtitude}
@@ -125,6 +132,9 @@ const TripBox = ({ history, data }) => {
         />
         <div style={{ marginBottom: 6, marginTop: 6 }}>
           Destination: {destination_detail}
+          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
+            ({destination_province})
+          </div>
         </div>
         <MapData
           fixed
