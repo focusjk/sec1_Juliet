@@ -21,6 +21,7 @@ import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
+import MemberReport from "./page/MemberReport";
 // import TripHistory from "./page/TripHistory";
 
 const theme = createMuiTheme({
