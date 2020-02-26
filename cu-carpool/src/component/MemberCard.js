@@ -10,8 +10,15 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const MemberCard = () => {
-  return (
+const MemberCard = (data) => {
+ const {
+    username,
+    firstname,
+    lastname,
+    phone_number,
+    photo
+  } = data; 
+ return (
     <Paper
       square
       variant="outlined"
@@ -25,7 +32,7 @@ const MemberCard = () => {
     >
       <div style={{ display: "flex", alignItems: 'center' }}>
         <img
-          src={logo}
+          src={photo}
           height={50}
           width={50}
           style={{ borderRadius: "100%" }}
@@ -35,13 +42,13 @@ const MemberCard = () => {
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
         <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
         <div>
-          Firstname Lastname
+          {firstname} {lastname}
           </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
         <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
         <div>
-          08x-xxx-xxx
+          {phone_number}
           </div>
       </div>
       <div
