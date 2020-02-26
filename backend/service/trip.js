@@ -133,4 +133,31 @@ const getDriver = (trip_id,callback) => {
                     WHERE trip.id = `+ trip_id +
                   ` GROUP BY members.id`, callback);
 }
+<<<<<<< Updated upstream
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver };
+=======
+
+const getAllPassengerForDriver = (trip_id, callback) => {
+  return db.query(`SELECT 
+                          members.id, 
+                          members.username, 
+                          members.firstname,
+                          members.lastname,
+                          members.phone_number,
+                          members.photo 
+                          FROM members 
+                          WHERE members.id IN (SELECT request.member_id
+                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                              LEFT JOIN members ON request.member_id = members.id
+                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id+` 
+                                              GROUP BY member_id)`, callback);
+}
+
+const driverApproveMember = (trip_id, member_id, callback) => {
+  const req_status = 1;
+  return db.query(`UPDATE request
+                   SET request_status = ?
+                   WHERE trip_id = ? AND member_id = ?`,[req_status,trip_id,member_id],callback); 
+}
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, driverApproveMember};
+>>>>>>> Stashed changes
