@@ -56,6 +56,7 @@ class AdminReport extends React.Component {
 
   render() {
     return (
+      
       <Grid container direction="column" justify="center" style={{ width: "100%" }}>
       <MyHeader style={{ justifyContent: 'left' }}>
         > Report Log
