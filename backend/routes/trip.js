@@ -87,7 +87,8 @@ router.get('/driver',(req,res,next) => {
 
 router.post('/pickupMember', (req,res,next) => {
   const {trip_id, member_id} = req.body;
-  tripService.pickUpMember(trip_id,member_id,(err,result) => {
+  const pickup_time = util.timeformatter(new Date());
+  tripService.pickUpMember(trip_id,member_id,pickup_time,(err,result) => {
     if (err){
       res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
     } else {
