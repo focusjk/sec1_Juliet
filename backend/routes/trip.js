@@ -73,8 +73,6 @@ router.post('/member',(req, res, next) => {
     }
   });
 });
-<<<<<<< Updated upstream
-=======
 
 router.get('/driver',(req,res,next) => {
   const {trip_id: tripid} = req.query;
@@ -87,9 +85,9 @@ router.get('/driver',(req,res,next) => {
   })
 });
 
-router.post('/driverConfirmation', (req,res,next) => {
+router.post('/pickupMember', (req,res,next) => {
   const {trip_id, member_id} = req.body;
-  tripService.driverApproveMember(trip_id,member_id,(err,result) => {
+  tripService.pickUpMember(trip_id,member_id,(err,result) => {
     if (err){
       res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
     } else {
@@ -97,5 +95,5 @@ router.post('/driverConfirmation', (req,res,next) => {
     }
   })
 });
->>>>>>> Stashed changes
+
 module.exports = router;

@@ -133,9 +133,6 @@ const getDriver = (trip_id,callback) => {
                     WHERE trip.id = `+ trip_id +
                   ` GROUP BY members.id`, callback);
 }
-<<<<<<< Updated upstream
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver };
-=======
 
 const getAllPassengerForDriver = (trip_id, callback) => {
   return db.query(`SELECT 
@@ -153,11 +150,10 @@ const getAllPassengerForDriver = (trip_id, callback) => {
                                               GROUP BY member_id)`, callback);
 }
 
-const driverApproveMember = (trip_id, member_id, callback) => {
-  const req_status = 1;
+const pickUpMember = (trip_id, member_id, callback) => {
+  const req_status = 5;
   return db.query(`UPDATE request
                    SET request_status = ?
                    WHERE trip_id = ? AND member_id = ?`,[req_status,trip_id,member_id],callback); 
 }
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, driverApproveMember};
->>>>>>> Stashed changes
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember};
