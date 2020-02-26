@@ -11,13 +11,36 @@ import { MyButton } from "../component/MyButton";
 import MemberCard from '../component/MemberCard'
 
 
-const TripMemberforDriver = () => {
+const TripMemberforDriver = () => { 
+  const [passengerList, setPassengerList] = useState([]);
+  const [state, setState] = useState("---");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/trip/detail");
+      const { success,error,message,passenger } = response.data;
+      if(success){
+      setPassengerList(passenger);
+      setState("Success");
+      }
+      else{
+	setState(error);
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+   });
   return (
     <div>
       <MyHeaderWithArrow goto="">Trip Member</MyHeaderWithArrow>
       <MyTitle>Member</MyTitle>
-      <MemberCard />
-      <MemberCard />
+       <MyTitle>{state}</MyTitle>
+      <EmptyBox data={passengerList} />
+      {passengerList.map((passenger, index) => (
+        <MemberCard key={index} data={passenger} />
+      ))}
     </div>
   );
 };
