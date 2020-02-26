@@ -97,4 +97,16 @@ router.post('/pickupMember', (req,res,next) => {
   })
 });
 
+router.post('/getInTheCar', (req,res,next) => {
+  const {trip_id, member_id} = req.body;
+  const depart_time = util.timeformatter(new Date());
+  tripService.getInTheCar(trip_id,member_id,depart_time,(err,result) => {
+    if (err){
+      res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
+    } else {
+      res.json({success: true});
+    }
+  })
+});
+
 module.exports = router;
