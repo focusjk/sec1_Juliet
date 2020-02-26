@@ -4,10 +4,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MyButton,MyWhiteButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
-import MapData from './MapData'
+import MapData from "./MapData"
 import { Grid } from "@material-ui/core";
+import moment from "moment";
 
 const TripBox = ({ history, data }) => {
+
+  const {
+    id,
+    departure_latitude,
+    departure_longtitude,
+    destination_latitude,
+    destination_longtitude,                          
+    member_id,
+    username,
+    phone_number,
+    photo
+} = data;    
 
   return (
       <Paper
@@ -18,7 +31,8 @@ const TripBox = ({ history, data }) => {
           padding: 12,
           display: "flex",
           justifyContent: "space-between",
-          flexDirection: "column"
+          flexDirection: "column",
+          marginBottom: "12px"
         }}
       >
       <Grid
@@ -31,24 +45,24 @@ const TripBox = ({ history, data }) => {
           style={{ display: "flex", marginLeft: "0px", marginRight: "24px" }}
         >
           <img
-            src={window.location.origin + "/Test.jpg"}
+            src={photo}
             height={50}
             width={50}
             style={{ borderRadius: "100%" }}
           />
         </div>
-        <MyTitle>Wang_Yiren</MyTitle>
+        <MyTitle>{username}</MyTitle>
       </Grid>      
 
        <div style={{ display: "flex", justifyContent: "flex-start", flexDirection: "column",marginBottom: "8px" }}>
-            <div>Phone Number:</div>
+            <div>Phone Number: {phone_number}</div>
        </div>
 
 
         <div>Pick up:</div>
-        <MapData fixed longitude={100.493117} latitude={13.769059} />
+        <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
         <div>Destination:</div>
-        <MapData fixed longitude={100.493117} latitude={13.769059} />
+        <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
 
         <div
           style={{
