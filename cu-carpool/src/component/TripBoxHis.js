@@ -17,9 +17,11 @@ const TripBoxHis = ({ history, data }) => {
     price,
     departure_latitude,
     departure_longtitude,
-    destination_latiude,
-    destination_longitude,
-    owner_firstname
+    destination_latitude,
+    destination_longtitude,
+    owner_firstname,
+    departure_detail,
+    destination_detail
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
@@ -87,7 +89,7 @@ const TripBoxHis = ({ history, data }) => {
               flexDirection: "column"
             }}
           >
-            <div style={{ marginBottom: 6 }}>Driver:{owner_firstname}</div>
+            <div style={{ marginBottom: 6 }}>Driver: {owner_firstname}</div>
             <div style={{ marginBottom: 6 }}>Car brand: {car_brand}</div>
             <div style={{ marginBottom: 6 }}>
               License plate: {plate_license}
@@ -110,29 +112,34 @@ const TripBoxHis = ({ history, data }) => {
             >
               {price} ฿
             </div>
-            <MyLink style={{ marginBottom: 6 }} goto="/trip-request">
+            <MyLink
+              style={{ marginBottom: 6 }}
+              goto={"/my-trip/" + toString(trip_id) + "/member"}
+            >
               see trip member
             </MyLink>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/my-trip/" + toString(trip_id) + "/member"}
+              goto={"/my-trip/" + toString(trip_id) + "/detail"}
             >
               see trip detail
             </MyLink>
           </div>
         </div>
 
-        <div style={{ marginBottom: 6 }}>Pick up:</div>
+        <div style={{ marginBottom: 6 }}>Pick up: {departure_detail}</div>
         <MapData
           fixed
           longitude={departure_longtitude}
           latitude={departure_latitude}
         />
-        <div style={{ marginBottom: 6, marginTop: 6 }}>Destination:</div>
+        <div style={{ marginBottom: 6, marginTop: 6 }}>
+          Destination: {destination_detail}
+        </div>
         <MapData
           fixed
-          longitude={destination_longitude}
-          latitude={destination_latiude}
+          longitude={destination_longtitude}
+          latitude={destination_latitude}
         />
 
         <div
