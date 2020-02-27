@@ -5,7 +5,7 @@ import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
 import logo from '../logo.png';
 
 
-const MemberCardSmall = (data) => {
+const MemberCardSmall = ({data}) => {
   const {
     username,
     photo
@@ -13,7 +13,7 @@ const MemberCardSmall = (data) => {
   return (
     <div style={{ display: "flex", alignItems: "center"}}>
            <img
-            src={{photo}}
+            src={photo}
             height={40}
             width={40}
             style={{ borderRadius: "100%", marginTop: "16px", marginBottom: "16px"}}

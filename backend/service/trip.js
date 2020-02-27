@@ -111,7 +111,10 @@ const getOwnerDetail = (owner_id,callback) => {
 const getAllPassenger = (trip_id, callback) => {
   return db.query(`SELECT 
                           members.id, 
-                          members.username, 
+                          members.username,
+			  members.firstname,
+			  members.lastname,
+			  members.phone_number, 
                           members.photo 
                           FROM members 
                           WHERE members.id IN (SELECT request.member_id

@@ -10,7 +10,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const MemberCard = (data) => {
+const MemberCard = ({data}) => {
  const {
     username,
     firstname,
@@ -37,7 +37,7 @@ const MemberCard = (data) => {
           width={50}
           style={{ borderRadius: "100%" }}
         />
-        <MyTitle style={{ marginLeft: "8px" }}>Username</MyTitle>
+        <MyTitle style={{ marginLeft: "8px" }}>{username}</MyTitle>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
         <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
