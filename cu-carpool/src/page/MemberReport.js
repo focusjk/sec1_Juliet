@@ -1,62 +1,34 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import LoginForm from "../component/LoginForm";
-import { Box } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+import React from "react";
+import Button from '@material-ui/core/Button';
+import { MyFullWidthButton, MyGreyButton } from "../component/MyButton";
+import { MyHeader, MyTitle } from "../component/MyTitle";
+import { Input } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import axios from "axios";
-import { MyLink } from "../component/MyTitle";
+import { Box } from "@material-ui/core";
 
-class Login extends React.Component {
-  state = { username: null, password: null, error: "" };
-  login = async () => {
-    const { username, password } = this.state;
-    const response = await axios.post("http://localhost:4000/user/login", {
-      username,
-      password
-    });
-    console.log(response.data);
-    const { success, information, message } = response.data;
-    if (success) {
-      const user = information[0];
-      this.props.handleLogin(user);
-      this.props.history.push("/");
-    } else {
-      this.setState({ error: message });
-    }
-  };
-
+class MemberReport extends React.Component {
   render() {
-    const { username, password, error } = this.state;
     return (
-      <Grid container direction="column" justify="flex-start">
-        <h1 style={{ marginBottom: 10 }}> Welcome,</h1>
-        <Box
-          color="palette.secondary.main"
-          style={{ color: "#CE7B91", marginBottom: 40 }}
-        >
-          Sign In
-        </Box>
-
-        <LoginForm
-          username={username}
-          password={password}
-          setUsername={username => this.setState({ username })}
-          setPassword={password => this.setState({ password })}
-          handleLogin={this.login}
-          error={error}
-        />
-
-        <Box
-          color="palette.secondary.main"
-          style={{ color: "#bdbdbd", alignSelf: "center", marginTop: 40 }}
-        >
-          Don’t have an account ?
-          <MyLink goto="/register" style={{ marginLeft: 10, fontSize: 16 }}>Sign Up</MyLink>
-        </Box>
+      <Grid container direction="column" justify="flex-direction">
+      <div style={{ display: "flex", flexDirection: "column" }}>
+      <MyHeader>Report</MyHeader>
+      <Input
+          fullWidth
+          placeholder="Topic"
+      />
+       <Input
+          fullWidth
+          placeholder="Comment"
+      />
+       <MyFullWidthButton style={{ margin: "350px 0" }} >
+          Send
+        </MyFullWidthButton>
+     
+      
+      
+      </div>
       </Grid>
     );
   }
 }
-
-export default withRouter(Login);
+export default MemberReport;
