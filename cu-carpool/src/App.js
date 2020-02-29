@@ -22,6 +22,9 @@ import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
 import MemberReport from "./page/MemberReport";
+import TripHistory from "./page/TripHistory";
+import AdminReport from "./page/AdminReport";
+
 // import TripHistory from "./page/TripHistory";
 
 const theme = createMuiTheme({
@@ -54,7 +57,7 @@ const App = () => {
   //for member
   const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-  // const [user, setUser] = React.useState({ username: 'admin' });
+  //  const [user, setUser] = React.useState({ username: 'admin' });
   // for other
   //const [user, setUser] = React.useState(null);
 
@@ -95,9 +98,9 @@ const App = () => {
                     <Route path="/my-trip/:trip_id/member" exact>
                       <TripMemberforDriver user={user} />
                     </Route>
-                    {/* <Route path="/trip-history" exact>
+                    <Route path="/trip-history" exact>
                       <TripHistory user={user} />
-                    </Route> */}
+                    </Route>
                     <Route path="/driver" exact>
                       <DriverProfile
                         user={user}
@@ -122,6 +125,9 @@ const App = () => {
                   <Switch>
                     <Route path="/admin/driver" exact>
                       <DriverRequest user={user} />
+                    </Route>
+                    <Route path="/admin/report" exact>
+                      <AdminReport user={user} />
                     </Route>
                     <Redirect to="/admin/driver" />
                   </Switch>
