@@ -174,16 +174,43 @@ const getInTheCar = (request_id,depart_time,callback) => {
                    WHERE id = ?`,[req_status,depart_time,request_id],callback); 
 }
 
-const updateTripStatus = (trip_id,callback) => {
-  const trip_status = 2;
-  const que = db.query(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
-  const recent_status = que.values;
-  if (recent_status == 1) {
-    return db.query(`UPDATE trip SET status = ? WHERE id = ?`,[trip_status,trip_id],callback);
-  } else {
-    return db.query(`UPDATE trip SET status = ? WHERE id = ?`,[recent_status,trip_id],callback);
-  }
-  
+const dropOff = (request_id,depart_time,callback) => {
+  const req_status = 6;
+  return db.query(`UPDATE request
+                   SET request_status = ? , departed_at = ?
+                   WHERE id = ?`,[req_status,depart_time,request_id],callback); 
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar ,updateTripStatus};
+const promisifyQuery = (query, args) => new Promise((resolve, reject) => db.query(query, args,
+  (err, result) => {
+      if (err) {
+          reject(err);
+      } else {
+          resolve(result);
+      }
+  }))
+
+  const updateTripStatus = async (trip_id,status,callback) => {
+
+    // status : 0 - pick up , 1 - drop off , 2 - cancel
+  
+    var trip_status = 2;
+    const que = await promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
+    const recent_status = que[0].status;
+    const req_status = 5; //on-going
+    var que3 = await promisifyQuery(`SELECT request.request_status FROM trip left join request on trip.id = request.trip_id WHERE trip_id = ? and request.request_status = ?`,[trip_id,req_status]);
+
+    if (recent_status == 'scheduled' && status == 0){ //pick up
+      trip_status = 2;
+    }
+    if (recent_status == 'on going' && status == 1 && que3.length == 0){ //drop-off 
+      trip_status = 4;
+    }
+    else {
+      trip_status = recent_status;
+    }
+    return await db.query(`UPDATE trip SET status = ? WHERE id = ?`,[trip_status,trip_id],callback);
+  
+  }
+
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar ,updateTripStatus ,dropOff};
