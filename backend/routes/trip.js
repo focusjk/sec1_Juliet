@@ -96,7 +96,7 @@ router.post('/pickupMember', (req,res,next) => {
         if (err) {
           res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
         } else {
-          console.log('updated');
+          console.log('Status updated');
           res.json({success: true});
         }
       })
