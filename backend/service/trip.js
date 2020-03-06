@@ -176,15 +176,13 @@ const getInTheCar = (request_id,depart_time,callback) => {
 
 const updateTripStatus = (trip_id,callback) => {
   const trip_status = 2;
-  const que = db.query(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id], callback);
-  const recent_status = que[0];
-  console.log(que);
+  const que = db.query(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
+  console.log(que.values);
+  const recent_status = que.values;
   if (recent_status == 1) {
-    console.log('2');
-    return db.query(`UPDATE trip SET status = ? WHERE trip_id = ?`,[trip_status,trip_id],callback);
+    return db.query(`UPDATE trip SET status = ? WHERE id = ?`,[trip_status,trip_id],callback);
   } else {
-    console.log('1');
-    //return db.query(`UPDATE trip SET status = ? WHERE trip_id = ?`,[recent_status,trip_id],callback);
+    return db.query(`UPDATE trip SET status = ? WHERE id = ?`,[recent_status,trip_id],callback);
   }
   
 }
