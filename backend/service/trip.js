@@ -150,16 +150,16 @@ const getAllPassengerForDriver = (trip_id, callback) => {
                                               GROUP BY member_id)`, callback);
 }
 
-const pickUpMember = (trip_id, member_id,pickup_time, callback) => {
+const pickUpMember = (request_id,pickup_time, callback) => {
   return db.query(`UPDATE request
                    SET driver_arrived_at = ?
-                   WHERE trip_id = ? AND member_id = ?`,[pickup_time,trip_id,member_id],callback); 
+                   WHERE id = ? `,[pickup_time,request_id],callback); 
 }
 
-const getInTheCar = (trip_id,member_id,depart_time,callback) => {
+const getInTheCar = (request_id,depart_time,callback) => {
   const req_status = 5;
   return db.query(`UPDATE request
                    SET request_status = ? , departed_at = ?
-                   WHERE trip_id = ? AND member_id = ?`,[req_status,depart_time,trip_id,member_id],callback); 
+                   WHERE id = ?`,[req_status,depart_time,request_id],callback); 
 }
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar};
