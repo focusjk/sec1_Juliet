@@ -16,22 +16,22 @@ import MemberCardSmall from '../component/MemberCardSmall'
 const TripMemberforMember = () => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
-  const [driver,setDriver]=useState('');
+  const [driver, setDriver] = useState('');
   const fetchData = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/member",{trip_id});
-      const { success,error,message,member,driver } = response.data;
-      if(success){
-      setMemberList(member);
-      setDriver(driver);
+      const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
+      const { success, error, message, member, driver } = response.data;
+      if (success) {
+        setMemberList(member);
+        setDriver(driver);
       }
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
     }
   };
   useEffect(() => {
     fetchData();
-   });
+  });
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history">Trip Member</MyHeaderWithArrow>
@@ -41,7 +41,7 @@ const TripMemberforMember = () => {
         variant="outlined"
         style={{
           marginTop: "16px",
-          padding: 10,
+          padding: "16px 30px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between"
@@ -67,10 +67,10 @@ const TripMemberforMember = () => {
             <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               {driver.phone_number}
-          </div>
+            </div>
           </div>
         </Typography>
-        <MyButton style={{ alignSelf: "center" }}>Get in</MyButton>
+        <MyButton style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
       </Paper>
       <div style={{
         marginTop: "16px",
@@ -83,8 +83,8 @@ const TripMemberforMember = () => {
         <MyTitle>Member</MyTitle>
         <EmptyBox data={memberList} />
         {memberList.map((member, index) => (
-        <MemberCardSmall key={index} data={member} />
-      ))}
+          <MemberCardSmall key={index} data={member} />
+        ))}
       </div>
     </div>
   );
