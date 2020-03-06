@@ -75,7 +75,7 @@ router.post('/member',(req, res, next) => {
 });
 
 router.get('/passenger',(req,res,next) => {
-  const {trip_id: trip_id} = req.query;
+  const {trip_id} = req.query;
   tripService.getAllPassengerForDriver(trip_id,(err,result) => {
     if (err){
       res.json({success: false , error: err.sqlMessage, message: 'Cannot access database'});
