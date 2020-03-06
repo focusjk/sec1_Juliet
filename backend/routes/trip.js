@@ -86,19 +86,26 @@ router.get('/driver',(req,res,next) => {
 });
 
 router.post('/pickupMember', (req,res,next) => {
-  const {request_id} = req.body;
+  const {id:request_id,trip_id} = req.body;
   const pickup_time = util.timeformatter(new Date());
   tripService.pickUpMember(request_id,pickup_time,(err,result) => {
     if (err){
       res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
     } else {
-      res.json({success: true});
+      tripService.updateTripStatus(trip_id,(err,result) => {
+        if (err) {
+          res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
+        } else {
+          console.log('updated');
+          res.json({success: true});
+        }
+      })
     }
   })
 });
 
 router.post('/getInTheCar', (req,res,next) => {
-  const {request_id} = req.body;
+  const {id: request_id} = req.body;
   const depart_time = util.timeformatter(new Date());
   tripService.getInTheCar(request_id,depart_time,(err,result) => {
     if (err){
