@@ -22,6 +22,7 @@ import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
 import MemberReport from "./page/MemberReport";
+import TripDetail from "./page/TripDetail";
 import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 
@@ -91,6 +92,9 @@ const App = () => {
                     </Route>
                     <Route path="/memberreport" exact>
                       <MemberReport user={user} />
+                    </Route>
+                    <Route path="/tripdetail" exact>
+                      <TripDetail user={user} />
                     </Route>
                     <Route path="/trip-history/:trip_id/member" exact>
                       <TripMemberforMember user={user} />

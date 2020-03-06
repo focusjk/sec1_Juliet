@@ -6,12 +6,12 @@ import { Input } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Box } from "@material-ui/core";
 
-class MemberReport extends React.Component {
+class TripDetail extends React.Component {
   render() {
     return (
       <Grid container direction="column" justify="flex-direction">
       <div style={{ display: "flex", flexDirection: "column" }}>
-      <MyHeader>Report</MyHeader>
+      <MyHeader>Trip detail</MyHeader>
       <Input
           fullWidth
           placeholder="Topic"
@@ -31,4 +31,4 @@ class MemberReport extends React.Component {
     );
   }
 }
-export default MemberReport;
+export default TripDetail;
