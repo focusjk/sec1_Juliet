@@ -130,8 +130,7 @@ const getDriver = (trip_id,callback) => {
                     members.phone_number,
                     members.photo
                     FROM members LEFT JOIN trip ON members.id = trip.owner
-                    WHERE trip.id = `+ trip_id +
-                  ` GROUP BY members.id`, callback);
+                    WHERE trip.id = ? `, [trip_id] , callback);
 }
 
 const getAllPassengerForDriver = (trip_id,callback) => {
