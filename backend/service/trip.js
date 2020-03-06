@@ -153,7 +153,6 @@ const getAllPassengerForDriver = (trip_id,callback) => {
                           request.driver_arrived_at,
                           request.departed_at,
                           request.driver_departed_at
-                  
                           FROM trip LEFT JOIN request ON trip.id = request.trip_id 
                           LEFT JOIN members ON request.member_id = members.id
                           WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id = ? `, [trip_id], callback);
