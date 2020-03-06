@@ -142,7 +142,7 @@ const getAllPassengerForDriver = (trip_id,callback) => {
                           members.lastname,
                           members.phone_number,
                           members.photo ,
-                          request.id,
+                          request.id as request_id,
                           request.departure_latitude,
                           request.departure_longtitude,
                           request.departure_detail,
