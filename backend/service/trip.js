@@ -163,7 +163,7 @@ const getAllPassengerForDriver = (trip_id,callback) => {
 
 const pickUpMember = (request_id,pickup_time, callback) => {
   return db.query(`UPDATE request
-                   SET driver_arrived_at = ?
+                   SET driver_departed_at = ?
                    WHERE id = ? `,[pickup_time,request_id],callback); 
 }
 
