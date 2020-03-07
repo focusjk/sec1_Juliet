@@ -29,6 +29,14 @@ const TripMemberforMember = () => {
       console.log(e);
     }
   };
+  //const getin = async () => {
+    //try {
+      //const response = await axios.post("http://localhost:4000/trip//getInTheCar", { trip_id });
+      //const { success, error, message} = response.data;
+    //} catch (e) {
+     // console.log(e);
+    //}
+  //};
   useEffect(() => {
     fetchData();
   });

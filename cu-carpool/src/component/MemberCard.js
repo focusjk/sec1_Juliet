@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
 import logo from '../logo.png';
@@ -11,13 +12,26 @@ import MemberCardSmall from '../component/MemberCardSmall'
 
 const MemberCard = ({ data }) => {
   const { open, setOpen } = useState(false)
+  const { pickup, setPickup } = useState(false)
   const {
     username,
     firstname,
     lastname,
     phone_number,
-    photo
+    photo,
+    request_id
   } = data;
+  const PickUp = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id });
+      const { success, error, message} = response.data;
+      if (success) {
+        setPickup(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Paper
       square
@@ -66,8 +80,18 @@ const MemberCard = ({ data }) => {
           marginTop: "24px"
         }}
       >
-        <MyButton style={{ alignSelf: "center" }}>Pick up</MyButton>
+	{!pickup&&(
+	<div>
+        <MyButton onClick={PickUp} style={{ alignSelf: "center" }}>Pick up</MyButton>
         <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
+	</div>
+	)}
+	{pickup&&(
+        <div>
+	<MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Pick up</MyGreyButton>
+        <MyButton style={{ alignSelf: "center" }}>Drop off</MyButton>
+	</div>
+	)}
       </div>
     </Paper>
   );
