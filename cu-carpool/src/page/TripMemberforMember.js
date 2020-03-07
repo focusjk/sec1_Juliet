@@ -8,15 +8,17 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import EmptyBox from '../component/EmptyBox'
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
-import { MyButton } from "../component/MyButton";
+import { MyButton,MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
 
 
-const TripMemberforMember = () => {
+const TripMemberforMember = ({ user, updateUser }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const [driver, setDriver] = useState('');
+  const [request_id, setRequest_id] = useState(0);
+  const [getIn, setGetIn] = useState(false);
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
@@ -29,14 +31,18 @@ const TripMemberforMember = () => {
       console.log(e);
     }
   };
-  //const getin = async () => {
-    //try {
-      //const response = await axios.post("http://localhost:4000/trip//getInTheCar", { trip_id });
-      //const { success, error, message} = response.data;
-    //} catch (e) {
-     // console.log(e);
-    //}
-  //};
+  const getin = async () => {
+    try {
+      setRequest_id(memberList.filter(i => i.id == user.id)[0].request_id);
+      const response = await axios.post("http://localhost:4000/trip/getInTheCar", { request_id });
+      const { success, error, message} = response.data;
+      if(success){
+	setGetIn(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     fetchData();
   });
@@ -78,8 +84,13 @@ const TripMemberforMember = () => {
             </div>
           </div>
         </Typography>
-        <MyButton style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
-      </Paper>
+	{!getIn&&
+        (<MyButton onClick={getin} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
+      	)}
+	{getIn&&
+        (<MyGreyButton disabled={true} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyGreyButton>
+      	)}
+	</Paper>
       <div style={{
         marginTop: "16px",
         padding: 10,
