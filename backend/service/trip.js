@@ -115,13 +115,10 @@ const getAllPassenger = (trip_id, callback) => {
                           members.firstname,
                           members.lastname,
                           members.phone_number,
-                          members.photo
-                          FROM members
-                          WHERE members.id IN (SELECT request.member_id
-                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id
-                                              LEFT JOIN members ON request.member_id = members.id
-                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id + ` 
-                                              GROUP BY member_id)`, callback);
+                          members.photo,
+                          request.id as request_id
+                          FROM members inner join request on request.member_id = members.id
+                          WHERE request.request_status IN ('approved','paid','on going','done') AND request.trip_id =`+ trip_id, callback);
 }
 
 const getDriver = (trip_id, callback) => {
