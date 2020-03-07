@@ -73,8 +73,8 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
   );
 };
 
-const getTripDetail = (trip_id,callback) => {
-  return db.query(`SELECT 
+const getTripDetail = (trip_id, callback) => {
+  return db.query(`SELECT
                           id,
                           departure_latitude,
                           departure_longtitude,
@@ -90,11 +90,11 @@ const getTripDetail = (trip_id,callback) => {
                           capacity,
                           status,
                           price,
-                          owner as owner_id FROM trip WHERE id = `+trip_id , callback);
+                          owner as owner_id FROM trip WHERE id = `+ trip_id, callback);
 }
 
-const getOwnerDetail = (owner_id,callback) => {
-  return db.query(`SELECT  
+const getOwnerDetail = (owner_id, callback) => {
+  return db.query(`SELECT
                           members.id as id,
                           members.username as username,
                           members.firstname as firstname,
@@ -103,28 +103,28 @@ const getOwnerDetail = (owner_id,callback) => {
                           members.email as email,
                           members.photo as photo,
                           AVG(review.rating ) as avg_rating
-                          FROM members  left join review on review.reviewee=members.id 
+                          FROM members  left join review on review.reviewee=members.id
                           WHERE members.id = `+ owner_id +
-                          ` GROUP BY members.id`, callback);
+    ` GROUP BY members.id`, callback);
 }
 
 const getAllPassenger = (trip_id, callback) => {
-  return db.query(`SELECT 
-                          members.id, 
+  return db.query(`SELECT
+                          members.id,
                           members.username,
-			  members.firstname,
-			  members.lastname,
-			  members.phone_number, 
-                          members.photo 
-                          FROM members 
+                          members.firstname,
+                          members.lastname,
+                          members.phone_number,
+                          members.photo
+                          FROM members
                           WHERE members.id IN (SELECT request.member_id
-                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                              FROM trip LEFT JOIN request ON trip.id = request.trip_id
                                               LEFT JOIN members ON request.member_id = members.id
-                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id+` 
+                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id + ` 
                                               GROUP BY member_id)`, callback);
 }
 
-const getDriver = (trip_id,callback) => {
+const getDriver = (trip_id, callback) => {
   return db.query(`SELECT  
                     members.id,
                     members.username,
@@ -133,10 +133,10 @@ const getDriver = (trip_id,callback) => {
                     members.phone_number,
                     members.photo
                     FROM members LEFT JOIN trip ON members.id = trip.owner
-                    WHERE trip.id = ? `, [trip_id] , callback);
+                    WHERE trip.id = ? `, [trip_id], callback);
 }
 
-const getAllPassengerForDriver = (trip_id,callback) => {
+const getAllPassengerForDriver = (trip_id, callback) => {
   return db.query(`SELECT 
                           members.id, 
                           members.username, 
@@ -161,72 +161,72 @@ const getAllPassengerForDriver = (trip_id,callback) => {
 }
 
 
-const pickUpMember = (request_id,pickup_time, callback) => {
+const pickUpMember = (request_id, pickup_time, callback) => {
   return db.query(`UPDATE request
                    SET driver_departed_at = ?
-                   WHERE id = ? `,[pickup_time,request_id],callback); 
+                   WHERE id = ? `, [pickup_time, request_id], callback);
 }
 
-const getInTheCar = (request_id,depart_time,callback) => {
+const getInTheCar = (request_id, depart_time, callback) => {
   const req_status = 5;
   return db.query(`UPDATE request
                    SET request_status = ? , departed_at = ?
-                   WHERE id = ?`,[req_status,depart_time,request_id],callback); 
+                   WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const dropOff = (request_id,depart_time,callback) => {
+const dropOff = (request_id, depart_time, callback) => {
   const req_status = 6;
   return db.query(`UPDATE request
                    SET request_status = ? , driver_arrived_at = ?
-                   WHERE id = ?`,[req_status,depart_time,request_id],callback); 
+                   WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
 const promisifyQuery = (query, args) => new Promise((resolve, reject) => db.query(query, args,
   (err, result) => {
-      if (err) {
-          reject(err);
-      } else {
-          resolve(result);
-      }
+    if (err) {
+      reject(err);
+    } else {
+      resolve(result);
+    }
   }))
 
-  const updateTripStatus = async (trip_id,status,callback) => {
+const updateTripStatus = async (trip_id, status, callback) => {
 
-    // status : 0 - pick up , 1 - drop off , 2 - cancel
-  
-    var trip_status = 2;
-    const que = await promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
-    const recent_status = que[0].status;
-    const req_status = 5; //on-going
-    var que3 = await promisifyQuery(`SELECT request.request_status FROM trip left join request on trip.id = request.trip_id WHERE trip_id = ? and request.request_status = ?`,[trip_id,req_status]);
+  // status : 0 - pick up , 1 - drop off , 2 - cancel
+  const que = await promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
+  const recent_status = que[0].status;
+  const passenger_left = await promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
+  const { amount: amount_passenger_left } = passenger_left[0]
 
-    if (recent_status == 'scheduled' && status == 0){ //pick up
-      trip_status = 2;
-    }
-    if (recent_status == 'on going' && status == 1 && que3.length == 0){ //drop-off 
-      trip_status = 4;
-    }
-    else {
-      trip_status = recent_status;
-    }
-    return await db.query(`UPDATE trip SET status = ? WHERE id = ?`,[trip_status,trip_id],callback);
-  
+  var trip_status;
+  if (recent_status == 'scheduled' && status == 0) { //pick up
+    trip_status = 2;
+  } else if (recent_status == 'on going' && status == 1 && amount_passenger_left == 0) { //drop-off
+    trip_status = 4;
+  } else {
+    trip_status = recent_status;
   }
+  return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
+}
 
-  const cancelTrip = async (request_id,member_id,time,callback) => {
-    //3 cases including :- pending, approved, paid
-    var status = 7;
-    var req_status = await promisifyQuery(`SELECT request.request_status FROM request WHERE request.id = ?`,[request_id]);
-    if (req_status == 'on going') status = 5;
-    if (req_status == 'rejected') status = 3;
-    if (req_status == 'done') status = 6;
-    if (req_status == 'paid'){
-      status = 7;
-      var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`,[trip_id]);
-      const transact_type = 3; 
-      var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`,[amount,member_id,time,transact_type])
-    } 
-    return db.query(`UPDATE request SET request.request_status = ? WHERE request.id = ?`,[status,request_id]);
+const cancelTrip = async (request_id, callback) => {
+  const query_result = await promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
+  const { request_status } = query_result[0]
+
+  if (request_status == 'pending' || request_status == 'approved') {
+    return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
+  } else if (request_status == 'paid') {
+    // transactionService.create( something ) TODO
+    // TODO เขียน service ของ transaction แยก ตามที่บอกไว้ตอนประชุม
+    // เขียน service (1) ที่ใช้ในการสร้าง transaction
+    // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
+    // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
+    // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
+    return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
+  } else {
+    callback(true)
+    return
   }
+}
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar ,updateTripStatus ,dropOff ,cancelTrip};
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip };
