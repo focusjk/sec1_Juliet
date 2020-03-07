@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton,MyWhiteButton } from "../component/MyButton";
+import { MyButton, MyWhiteButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData"
@@ -18,28 +18,28 @@ const TripBox = ({ history, data }) => {
     departure_latitude,
     departure_longtitude,
     destination_latitude,
-    destination_longtitude,   
+    destination_longtitude,
     departure_detail,
-    destination_detail,                       
+    destination_detail,
     member_id,
     username,
     phone_number,
     photo
-} = data;    
+  } = data;
 
   return (
-      <Paper
-        square
-        variant="outlined"
-        elevation={0}
-        style={{
-          padding: 12,
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "column",
-          marginBottom: "12px"
-        }}
-      >
+    <Paper
+      square
+      variant="outlined"
+      elevation={0}
+      style={{
+        padding: 12,
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        marginBottom: "12px"
+      }}
+    >
       <Grid
         container
         direction="row"
@@ -57,42 +57,42 @@ const TripBox = ({ history, data }) => {
           />
         </div>
         <MyTitle>{username}</MyTitle>
-      </Grid>      
+      </Grid>
 
-       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
-            <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              {phone_number}
-       </div>
-       </div>
-
-       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
-            <LocationOnIcon fontSize="small" style={{ marginRight: "8px" }} />
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              {departure_detail}
-            </div>
-       </div>
-       <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
-
-       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" , marginTop: "8px" }}>
-            <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              {destination_detail}
-            </div>
-       </div>
-       <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            marginTop: "12px"
-          }}
-        >
-          <MyButton>Accept</MyButton>
-          <MyWhiteButton>Reject</MyWhiteButton>
+      <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
+        <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
+          {phone_number}
         </div>
-      </Paper>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" }}>
+        <LocationOnIcon fontSize="small" style={{ marginRight: "8px" }} />
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
+          {departure_detail}
+        </div>
+      </div>
+      <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
+
+      <div style={{ display: "flex", alignItems: "left", marginBottom: "8px", marginTop: "8px" }}>
+        <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
+          {destination_detail}
+        </div>
+      </div>
+      <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          marginTop: "12px"
+        }}
+      >
+        <MyButton>Accept</MyButton>
+        <MyWhiteButton>Reject</MyWhiteButton>
+      </div>
+    </Paper>
     // </Paper>
   );
 };

@@ -74,11 +74,7 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
 };
 
 const getTripDetail = (trip_id, callback) => {
-<<<<<<< HEAD
-  return db.query(`SELECT 
-=======
   return db.query(`SELECT
->>>>>>> 5212afc1dc03fa70cb568fc76e0f50c60d9761fc
                           id,
                           departure_latitude,
                           departure_longtitude,
@@ -98,11 +94,7 @@ const getTripDetail = (trip_id, callback) => {
 }
 
 const getOwnerDetail = (owner_id, callback) => {
-<<<<<<< HEAD
-  return db.query(`SELECT  
-=======
   return db.query(`SELECT
->>>>>>> 5212afc1dc03fa70cb568fc76e0f50c60d9761fc
                           members.id as id,
                           members.username as username,
                           members.firstname as firstname,
@@ -169,9 +161,6 @@ const getAllPassengerForDriver = (trip_id, callback) => {
 }
 
 
-<<<<<<< HEAD
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver };
-=======
 const pickUpMember = (request_id, pickup_time, callback) => {
   return db.query(`UPDATE request
                    SET driver_departed_at = ?
@@ -241,4 +230,3 @@ const cancelTrip = async (request_id, callback) => {
 }
 
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip };
->>>>>>> 5212afc1dc03fa70cb568fc76e0f50c60d9761fc
