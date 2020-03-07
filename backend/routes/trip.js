@@ -9,7 +9,7 @@ router.post('/', (req, res, next) => {
   const { departure, destination, selectedDate } = req.body;
   tripService.searchTrip({ departure, destination, selectedDate }, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database ' });
     }
     else {
       res.json({ success: true, trip: result });
@@ -72,5 +72,17 @@ router.post('/member',(req, res, next) => {
       })
     }
   });
+});
+
+router.get('/passenger',(req,res,next) => {
+  const {trip_id} = req.query;
+  tripService.getAllPassengerForDriver(trip_id,(err,result) => {
+    if (err){
+      res.json({success: false , error: err.sqlMessage, message: 'Cannot access database'});
+    } else {
+      res.json({success: true, passenger: result});
+    }
+  })
+
 });
 module.exports = router;

@@ -8,6 +8,7 @@ import { MyButton } from './MyButton';
 const listPath = [
   { name: 'Member info', path: '/admin/member' },
   { name: 'Driver info', path: '/admin/driver' },
+  { name: 'Report', path: '/admin/report' }
 ];
 const useStyles = makeStyles({
   list: {
