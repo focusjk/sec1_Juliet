@@ -137,6 +137,17 @@ router.post('/getInTheCar', (req,res,next) => {
   })
 });
 
+router.post('/cancelTrip', (req,res,nesxt) => {
+  const{id: request_id,member_id} = req.body;
+  const time = util.timeformatter(new Date());
+  tripService.cancelTrip(request_id,member_id,time,(err,result)=>{
+    if (err){
+      res.json({success: false, error: err.sqlMessage, message: 'Cannot access database'});
+    } else {
+      res.json({success: true});
+    }
+  })
+});
 
 
 module.exports = router;

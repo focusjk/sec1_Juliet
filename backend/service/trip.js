@@ -177,7 +177,7 @@ const getInTheCar = (request_id,depart_time,callback) => {
 const dropOff = (request_id,depart_time,callback) => {
   const req_status = 6;
   return db.query(`UPDATE request
-                   SET request_status = ? , departed_at = ?
+                   SET request_status = ? , driver_arrived_at = ?
                    WHERE id = ?`,[req_status,depart_time,request_id],callback); 
 }
 
@@ -213,4 +213,20 @@ const promisifyQuery = (query, args) => new Promise((resolve, reject) => db.quer
   
   }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar ,updateTripStatus ,dropOff};
+  const cancelTrip = async (request_id,member_id,time,callback) => {
+    //3 cases including :- pending, approved, paid
+    var status = 7;
+    var req_status = await promisifyQuery(`SELECT request.request_status FROM request WHERE request.id = ?`,[request_id]);
+    if (req_status == 'on going') status = 5;
+    if (req_status == 'rejected') status = 3;
+    if (req_status == 'done') status = 6;
+    if (req_status == 'paid'){
+      status = 7;
+      var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`,[trip_id]);
+      const transact_type = 3; 
+      var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`,[amount,member_id,time,transact_type])
+    } 
+    return db.query(`UPDATE request SET request.request_status = ? WHERE request.id = ?`,[status,request_id]);
+  }
+
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver, pickUpMember ,getInTheCar ,updateTripStatus ,dropOff ,cancelTrip};
