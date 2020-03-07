@@ -77,7 +77,7 @@ const TripBox = ({ history, data }) => {
        <div style={{ display: "flex", alignItems: "left", marginBottom: "8px" , marginTop: "8px" }}>
             <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
-              {departure_detail}
+              {destination_detail}
             </div>
        </div>
        <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />

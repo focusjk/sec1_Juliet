@@ -8,7 +8,7 @@ import { useParams,withRouter } from "react-router-dom";
 
 class TripRequest extends React.Component {
   state = { list: [] };
-  componentDidMount() {
+  componentDidMount() {  
     this.fetchData();
   }
 
