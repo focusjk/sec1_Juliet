@@ -11,7 +11,7 @@ const TripBoxHis = ({ history, data }) => {
   const {
     trip_id,
     start_datetime,
-    status,
+    request_status,
     plate_license,
     car_brand,
     price,
@@ -21,9 +21,7 @@ const TripBoxHis = ({ history, data }) => {
     destination_longtitude,
     owner_firstname,
     departure_detail,
-    destination_detail,
-    departure_province,
-    destination_province
+    destination_detail
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
@@ -35,7 +33,8 @@ const TripBoxHis = ({ history, data }) => {
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
-        borderColor: "#BDBDBD"
+        borderColor: "#BDBDBD",
+        marginBottom: "16px"
       }}
     >
       <Paper
@@ -75,7 +74,7 @@ const TripBoxHis = ({ history, data }) => {
             marginBottom: "8px"
           }}
         >
-          Status: {status}
+          Status: {request_status}
         </MyTitle>
 
         <div
@@ -116,36 +115,25 @@ const TripBoxHis = ({ history, data }) => {
             </div>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/trip-history/" + toString(trip_id) + "/member"}
+              goto={"/trip-history/" + trip_id + "/member"}
             >
               see trip member
             </MyLink>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/trip/" + toString(trip_id) + "/detail"}
+              goto={"/trip/" + trip_id + "/detail"}
             >
               see trip detail
             </MyLink>
           </div>
         </div>
-
-        <div style={{ marginBottom: 6 }}>
-          Pick up: {departure_detail}
-          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
-            ({departure_province})
-          </div>
-        </div>
+        <div style={{ marginBottom: 6 }}>Pick up: {departure_detail}</div>
         <MapData
           fixed
           longitude={departure_longtitude}
           latitude={departure_latitude}
         />
-        <div style={{ marginBottom: 6, marginTop: 6 }}>
-          Destination: {destination_detail}
-          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
-            ({destination_province})
-          </div>
-        </div>
+        <div style={{ margin: "6px 0" }}>Destination: {destination_detail}</div>
         <MapData
           fixed
           longitude={destination_longtitude}
