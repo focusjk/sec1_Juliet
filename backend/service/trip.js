@@ -73,7 +73,7 @@ const searchTrip = ({ departure, destination, selectedDate }, callback) => {
   );
 };
 
-const getTripDetail = (trip_id,callback) => {
+const getTripDetail = (trip_id, callback) => {
   return db.query(`SELECT 
                           id,
                           departure_latitude,
@@ -90,10 +90,10 @@ const getTripDetail = (trip_id,callback) => {
                           capacity,
                           status,
                           price,
-                          owner as owner_id FROM trip WHERE id = `+trip_id , callback);
+                          owner as owner_id FROM trip WHERE id = `+ trip_id, callback);
 }
 
-const getOwnerDetail = (owner_id,callback) => {
+const getOwnerDetail = (owner_id, callback) => {
   return db.query(`SELECT  
                           members.id as id,
                           members.username as username,
@@ -105,7 +105,7 @@ const getOwnerDetail = (owner_id,callback) => {
                           AVG(review.rating ) as avg_rating
                           FROM members  left join review on review.reviewee=members.id 
                           WHERE members.id = `+ owner_id +
-                          ` GROUP BY members.id`, callback);
+    ` GROUP BY members.id`, callback);
 }
 
 const getAllPassenger = (trip_id, callback) => {
@@ -120,11 +120,11 @@ const getAllPassenger = (trip_id, callback) => {
                           WHERE members.id IN (SELECT request.member_id
                                               FROM trip LEFT JOIN request ON trip.id = request.trip_id 
                                               LEFT JOIN members ON request.member_id = members.id
-                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id+` 
+                                              WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id =`+ trip_id + ` 
                                               GROUP BY member_id)`, callback);
 }
 
-const getDriver = (trip_id,callback) => {
+const getDriver = (trip_id, callback) => {
   return db.query(`SELECT  
                     members.id,
                     members.username,
@@ -133,10 +133,10 @@ const getDriver = (trip_id,callback) => {
                     members.phone_number,
                     members.photo
                     FROM members LEFT JOIN trip ON members.id = trip.owner
-                    WHERE trip.id = ? `, [trip_id] , callback);
+                    WHERE trip.id = ? `, [trip_id], callback);
 }
 
-const getAllPassengerForDriver = (trip_id,callback) => {
+const getAllPassengerForDriver = (trip_id, callback) => {
   return db.query(`SELECT 
                           members.id, 
                           members.username, 
@@ -161,4 +161,4 @@ const getAllPassengerForDriver = (trip_id,callback) => {
 }
 
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail , getAllPassenger ,getDriver ,getAllPassengerForDriver};
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver };

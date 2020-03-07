@@ -13,7 +13,7 @@ class Map extends React.Component {
     };
     componentDidMount() {
         const { longitude, latitude } = this.props
-        this.setState({ marker: { longitude, latitude } })
+        this.setState({ marker: { longitude, latitude }, viewport: { longitude, latitude, zoom: 15 } })
     }
     handleChange = (viewport) => {
         this.setState({ viewport })
