@@ -21,6 +21,7 @@ import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
+import TripRequest from "./page/TripRequest";
 import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 
@@ -52,7 +53,7 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-   const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   //  const [user, setUser] = React.useState({ username: 'admin' });
   // for other
@@ -94,6 +95,9 @@ const App = () => {
                     </Route>
                     <Route path="/trip-history" exact>
                       <TripHistory user={user} />
+                    </Route>
+                    <Route path="/my-trip/:trip_id/request" exact>
+                      <TripRequest user={user} />
                     </Route>
                     <Route path="/driver" exact>
                       <DriverProfile

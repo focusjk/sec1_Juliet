@@ -34,7 +34,7 @@ const MyHeaderWithArrow1 = ({ goto, children, history }) => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: "10px"
+        marginBottom: "30px"
       }}
     >
       <ArrowBackIcon
