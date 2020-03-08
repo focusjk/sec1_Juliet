@@ -10,7 +10,7 @@ class MemberReport extends React.Component {
   render() {
     return (
       <Grid container direction="column" justify="flex-direction">
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "column" ,height:80}}>
       <MyHeader>Report</MyHeader>
       <Input
           fullWidth
@@ -18,9 +18,10 @@ class MemberReport extends React.Component {
       />
        <Input
           fullWidth
+          multiline
           placeholder="Comment"
       />
-       <MyFullWidthButton style={{ margin: "350px 0" }} >
+       <MyFullWidthButton style={{ border:"350px 0" }} >
           Send
         </MyFullWidthButton>
      

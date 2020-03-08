@@ -9,7 +9,7 @@ router.post('/', (req, res, next) => {
   const { departure, destination, selectedDate } = req.body;
   tripService.searchTrip({ departure, destination, selectedDate }, (err, result) => {
     if (err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database ' });
     }
     else {
       res.json({ success: true, trip: result });
@@ -30,24 +30,24 @@ router.post('/create', validate(validateTrip), (req, res, next) => {
   });
 });
 
-router.get('/detail',(req, res, next) => {
-  const {tripId: trip_id} = req.query;
-  tripService.getTripDetail(trip_id,(err, result) => {
+router.get('/detail', (req, res, next) => {
+  const { tripId: trip_id } = req.query;
+  tripService.getTripDetail(trip_id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
-    } else{
-      const {owner_id,...trip} = result[0];
-      tripService.getOwnerDetail(owner_id,(err,result) => {
+    } else {
+      const { owner_id, ...trip } = result[0];
+      tripService.getOwnerDetail(owner_id, (err, result) => {
         if (err) {
           res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
-        } else{
+        } else {
           const owner = result;
-          tripService.getAllPassenger(trip_id,(err,result) => {
+          tripService.getAllPassenger(trip_id, (err, result) => {
             if (err) {
               res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
-            }else {
+            } else {
               const passenger = result;
-              res.json({ success: true, trip , owner: owner[0] , passenger});
+              res.json({ success: true, trip, owner: owner[0], passenger });
             }
           })
         }
@@ -56,21 +56,95 @@ router.get('/detail',(req, res, next) => {
   })
 });
 
-router.post('/member',(req, res, next) => {
-  const {trip_id} = req.body;
-  tripService.getDriver(trip_id,(err,result) => {
-    if(err) {
-      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database'});
+router.post('/member', (req, res, next) => {
+  const { trip_id } = req.body;
+  tripService.getDriver(trip_id, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
       const driver = result;
-      tripService.getAllPassenger(trip_id,(err,result) => {
+      tripService.getAllPassenger(trip_id, (err, result) => {
         if (err) {
-          res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database'});
+          res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
         } else {
-          res.json({ success: true, driver: driver[0] , member: result});
+          res.json({ success: true, driver: driver[0], member: result });
         }
       })
     }
   });
 });
+
+router.get('/passenger', (req, res, next) => {
+  const { trip_id } = req.query;
+  tripService.getAllPassengerForDriver(trip_id, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true, passenger: result });
+    }
+  })
+});
+
+router.post('/pickupMember', (req, res, next) => {
+  const status = 0;
+  const { id: request_id, trip_id } = req.body;
+  const pickup_time = util.timeformatter(new Date());
+  tripService.pickUpMember(request_id, pickup_time, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      tripService.updateTripStatus(trip_id, status, (err, result) => {
+        if (err) {
+          res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+        } else {
+          res.json({ success: true });
+        }
+      })
+    }
+  })
+});
+
+router.post('/dropOffMember', (req, res, next) => {
+  const status = 1;
+  const { id: request_id, trip_id } = req.body;
+  const pickup_time = util.timeformatter(new Date());
+  tripService.dropOff(request_id, pickup_time, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      tripService.updateTripStatus(trip_id, status, (err, result) => {
+        if (err) {
+          res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+        } else {
+          res.json({ success: true });
+        }
+      })
+    }
+  })
+});
+
+router.post('/getInTheCar', (req, res, next) => {
+  const { id: request_id } = req.body;
+  const depart_time = util.timeformatter(new Date());
+  tripService.getInTheCar(request_id, depart_time, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true });
+    }
+  })
+});
+
+router.post('/cancelTrip', (req, res, next) => {
+  const { id: request_id } = req.body;
+  tripService.cancelTrip(request_id, (err, result) => {
+    if (err) {
+      res.json({ success: false, message: 'Cannot cancel your trip' });
+    } else {
+      res.json({ success: true });
+    }
+  })
+});
+
+
 module.exports = router;

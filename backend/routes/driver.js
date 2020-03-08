@@ -23,9 +23,20 @@ router.get('/tripRequest/', function (req, res, next) {
             res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
         }
         else {
-            res.json({ success: true, request: [...result]});
+            res.json({ success: true, request: [...result] });
         }
     });
+});
+
+router.get('/mytrip', (req, res, next) => {
+    const { member_id } = req.query;
+    driverService.getMyTrip(member_id, (err, result) => {
+        if (err) {
+            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+        } else {
+            res.json({ success: true, trip: result })
+        }
+    })
 });
 
 module.exports = router;

@@ -15,6 +15,23 @@ import MemberCardSmall from '../component/MemberCardSmall'
 
 const TripMemberforMember = () => {
   const { trip_id } = useParams();
+  const [memberList, setMemberList] = useState([]);
+  const [driver, setDriver] = useState('');
+  const fetchData = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
+      const { success, error, message, member, driver } = response.data;
+      if (success) {
+        setMemberList(member);
+        setDriver(driver);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  });
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history">Trip Member</MyHeaderWithArrow>
@@ -24,7 +41,7 @@ const TripMemberforMember = () => {
         variant="outlined"
         style={{
           marginTop: "16px",
-          padding: 10,
+          padding: "16px 30px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between"
@@ -33,27 +50,27 @@ const TripMemberforMember = () => {
         <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <img
-              src={logo}
+              src={driver.photo}
               height={50}
               width={50}
               style={{ borderRadius: "100%" }}
             />
-            <MyTitle style={{ marginLeft: "8px" }}>Driver Username</MyTitle>
+            <MyTitle style={{ marginLeft: "8px" }}>{driver.username}</MyTitle>
           </div>
           <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
             <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
-              Firstname Lastname
-          </div>
+              {driver.firstname} {driver.lastname}
+            </div>
           </div>
           <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
             <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
-              08x-xxx-xxx
-          </div>
+              {driver.phone_number}
+            </div>
           </div>
         </Typography>
-        <MyButton style={{ alignSelf: "center" }}>Get in</MyButton>
+        <MyButton style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
       </Paper>
       <div style={{
         marginTop: "16px",
@@ -64,8 +81,10 @@ const TripMemberforMember = () => {
       }}
       >
         <MyTitle>Member</MyTitle>
-        <MemberCardSmall />
-        <MemberCardSmall />
+        <EmptyBox data={memberList} />
+        {memberList.map((member, index) => (
+          <MemberCardSmall key={index} data={member} />
+        ))}
       </div>
     </div>
   );
