@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import MapData from "../component/MapData"
+import Map from "../component/Map"
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
-import { MyHeader, MyTitle } from "../component/MyTitle";
+import { MyHeader } from "../component/MyTitle";
+import { MyButton } from "../component/MyButton";
 
 function getModalStyle() {
-  const top = 50 ;
-  const left = 50 ;
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -20,18 +21,20 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    width:'70%',
-    height:'90%'
+    width: '300px'
+  },
+  margin: {
+    marginBottom: 16
   }
 }));
 
 const RequestJoin = () => {
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -43,37 +46,30 @@ const RequestJoin = () => {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        Request Join
-      </button>
+      <MyButton type="button" onClick={handleOpen}>
+        Join
+      </MyButton>
       <Modal
         open={open}
         onClose={handleClose}
       >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Join trip</h2>
-        <TextField
-          label="Pick up"
-        />   
-	<MapData
-          fixed
-          longitude={100.493117}
-          latitude={13.769059}
-        />	
-	<MyTitle style={{ marginTop: "25px" }}>Destination</MyTitle>
-	<TextField
-          label="Destination"
-        /> 
-	<MapData
-          fixed
-          longitude={100.493117}
-          latitude={13.769059}
-        />	
-	<div style={{ marginTop: "25px" }}>
-	<Button onClick={handleClose} color="secondary">OK</Button>
-        <Button onClick={handleClose} style={{ color: "#BDBDBD"}}>Cancel</Button>
-	</div>
-	</div>
+        <div style={getModalStyle()} className={classes.paper}>
+          <MyHeader>Join trip</MyHeader>
+          <TextField
+            label="Pick up"
+            className={classes.margin}
+          />
+          <Map setLocation={(departure_longtitude, departure_latitude) => { }} />
+          <TextField
+            label="Destination"
+            className={classes.margin}
+          />
+          <Map setLocation={(departure_longtitude, departure_latitude) => { }} />
+          <div style={{ marginTop: "25px", display: 'flex' }}>
+            <Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
+            <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
