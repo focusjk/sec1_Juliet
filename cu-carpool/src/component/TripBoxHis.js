@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton } from "./MyButton";
@@ -15,6 +16,7 @@ const TripBoxHis = ({ history, data }) => {
     plate_license,
     car_brand,
     price,
+    id,
     departure_latitude,
     departure_longtitude,
     destination_latitude,
@@ -24,7 +26,17 @@ const TripBoxHis = ({ history, data }) => {
     destination_detail
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
-
+  const cancel = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/cancelTrip", {id});
+      const { success, error, message} = response.data;
+    if(success){
+	//this.props.fetchData();
+    }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Paper
       square
@@ -147,7 +159,7 @@ const TripBoxHis = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          <MyButton>Cancel</MyButton>
+          <MyButton onClick={cancel}>Cancel</MyButton>
           <MyButton>Payment</MyButton>
           <MyButton>Review</MyButton>
         </div>
