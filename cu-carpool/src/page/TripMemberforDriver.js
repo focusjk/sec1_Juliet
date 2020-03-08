@@ -12,24 +12,25 @@ import { MyButton } from "../component/MyButton";
 import MemberCard from '../component/MemberCard'
 
 
-const TripMemberforDriver = () => { 
+const TripMemberforDriver = () => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const fetchData = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/member",{trip_id});
-      const { success,error,message,member } = response.data;
-      if(success){
-      setMemberList(member);
+      const response = await axios.get("http://localhost:4000/trip/passenger", { params: { trip_id } });
+      const { success, passenger } = response.data;
+      if (success) {
+        setMemberList(passenger);
       }
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
     }
   };
+
   useEffect(() => {
     fetchData();
-   });
-  
+  }, []);
+
   return (
     <div>
       <MyHeaderWithArrow goto="/my-trip">Trip Member</MyHeaderWithArrow>

@@ -110,21 +110,21 @@ const TripBox = ({ history, data }) => {
             <div style={{ fontSize: "20px" }}>{price} ฿</div>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/my-trip/" + toString(trip_id) + "/request"}
+              goto={"/my-trip/" + trip_id + "/request"}
             >
               see request
             </MyLink>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/my-trip/" + toString(trip_id) + "/member"}
+              goto={"/my-trip/" + trip_id + "/member"}
             >
               see trip member
             </MyLink>
           </div>
         </div>
-        <div style={{ marginBottom: 6 }}>
+        <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center' }}>
           Pick up: {departure_detail}
-          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
+          <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({departure_province})
           </div>
         </div>
@@ -133,9 +133,9 @@ const TripBox = ({ history, data }) => {
           longitude={departure_longtitude}
           latitude={departure_latitude}
         />
-        <div style={{ marginBottom: 6, marginTop: 6 }}>
+        <div style={{ margin: "6px 0", display: 'flex', alignItems: 'center' }}>
           Destination: {destination_detail}
-          <div style={{ fontSize: 14, color: "#BDBDBD" }}>
+          <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({destination_province})
           </div>
         </div>
