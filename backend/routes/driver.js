@@ -28,6 +28,32 @@ router.get('/tripRequest/', function (req, res, next) {
     });
 });
 
+router.post('/request-approve', function (req, res, next) {
+    const { id } = req.body;
+    driverService.requestApprove( id, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+      } else {
+        console.log(result);
+        res.json({ success: true });
+      }
+    });
+  });
+
+  router.post('/request-reject', function (req, res, next) {
+    const { id } = req.body;
+    driverService.requestReject( id, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+      } else {
+        console.log(result);
+        res.json({ success: true });
+      }
+    });
+  });
+
 router.get('/mytrip', (req, res, next) => {
     const {userId : member_id} = req.query;
     driverService.getMyTrip(member_id , (err , result) => {

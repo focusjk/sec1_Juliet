@@ -54,7 +54,7 @@ router.post('/login', function (req, res, next) {
     }
   });
 });
-
+ 
 router.post('/payment', validate(validatePayment), (req, res, next) => {
   const { id, ...data } = req.body;
   var paymenttime = util.timeformatter(new Date());
