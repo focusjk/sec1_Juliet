@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
 import logo from '../logo.png';
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -11,6 +10,7 @@ import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
 const MemberCard = ({ data }) => {
+  const { open, setOpen } = useState(false)
   const {
     username,
     firstname,
@@ -35,9 +35,17 @@ const MemberCard = ({ data }) => {
           src={photo}
           height={50}
           width={50}
-          style={{ borderRadius: "100%" }}
+          style={{ borderRadius: "100%", marginRight: "8px" }}
         />
-        <MyTitle style={{ marginLeft: "8px" }}>{username}</MyTitle>
+        <div>
+          <MyTitle>{username}</MyTitle>
+          <div
+            style={{ color: "#C78899", textDecoration: "underline", fontSize: 14 }}
+            onClick={() => { setOpen(true) }}
+          >
+            see location detail
+          </div>
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
         <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />

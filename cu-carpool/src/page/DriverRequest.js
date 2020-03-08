@@ -7,7 +7,7 @@ import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
-class DriverRequest2 extends React.Component {
+class DriverRequest extends React.Component {
   state = { list: [] }
   componentDidMount() {
     this.fetchData()
@@ -78,4 +78,4 @@ class DriverRequest2 extends React.Component {
   }
 }
 
-export default DriverRequest2;
+export default DriverRequest;
