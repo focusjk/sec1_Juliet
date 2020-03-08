@@ -137,7 +137,8 @@ router.post('/getInTheCar', (req, res, next) => {
 
 router.post('/cancelTrip', (req, res, next) => {
   const { id: request_id } = req.body;
-  tripService.cancelTrip(request_id, (err, result) => {
+  const cancel_time = util.timeformatter(new Date());
+  tripService.cancelTrip(request_id,cancel_time, (err, result) => {
     if (err) {
       res.json({ success: false, message: 'Cannot cancel your trip' });
     } else {

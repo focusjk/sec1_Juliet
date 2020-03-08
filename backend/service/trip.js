@@ -1,4 +1,5 @@
 var db = require("../dbconnection");
+var transactionService = require('../service/transaction');
 
 const createTrip = (
   created_at,
@@ -206,7 +207,7 @@ const updateTripStatus = async (trip_id, status, callback) => {
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
-const cancelTrip = async (request_id, callback) => {
+const cancelTrip = async (request_id,cancel_time, callback) => {
   const query_result = await promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
 
@@ -219,6 +220,8 @@ const cancelTrip = async (request_id, callback) => {
     // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
     // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
     // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
+    const trip_id = await promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
+    transactionService.refundTransaction(request_id,trip_id,cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
     callback(true)
