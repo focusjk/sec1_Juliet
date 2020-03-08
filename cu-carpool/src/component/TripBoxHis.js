@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "./MyButton";
+import { MyButton, MyGreyButton } from "./MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
@@ -147,9 +147,28 @@ const TripBoxHis = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          <MyButton>Cancel</MyButton>
-          <MyButton>Payment</MyButton>
-          <MyButton>Review</MyButton>
+          {(request_status == "approved" ||
+            request_status == "paid" ||
+            request_status == "pending") && <MyButton>Cancel</MyButton>}
+          {(request_status == "rejected" ||
+            request_status == "on going" ||
+            request_status == "done" ||
+            request_status == "canceled") && (
+            <MyGreyButton disabled>Cancel</MyGreyButton>
+          )}
+          {(request_status == "approved" ||
+            request_status == "done" ||
+            request_status == "paid" ||
+            request_status == "on going") && <MyButton>Payment</MyButton>}
+          {(request_status == "rejected" ||
+            request_status == "pending" ||
+            request_status == "canceled") && (
+            <MyGreyButton disabled>Payment</MyGreyButton>
+          )}
+          {request_status == "done" && <MyButton>Review</MyButton>}
+          {request_status != "done" && (
+            <MyGreyButton disabled>Review</MyGreyButton>
+          )}
         </div>
       </Paper>
     </Paper>
