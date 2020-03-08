@@ -5,9 +5,6 @@ import EmptyBox from "../component/EmptyBox";
 import axios from "axios";
 
 class MyTrip extends React.Component {
-  // constructor() {
-  //   super(this.props);
-  // }
   state = { list: [] };
   componentDidMount() {
     this.fetchData();

@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "../component/MyButton";
+import { MyButton, MyGreyButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
@@ -25,6 +25,7 @@ const TripBox = ({ history, data }) => {
     departure_province,
     destination_province
   } = data;
+
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
   return (
@@ -151,8 +152,16 @@ const TripBox = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          <MyButton>Cancel</MyButton>
-          <MyButton>Review</MyButton>
+          {status == "scheduled" && <MyButton>Cancel</MyButton>}
+          {status != "scheduled" && (
+            <MyGreyButton disabled>Cancel</MyGreyButton>
+          )}
+          {(status == "on going" || status == "done") && (
+            <MyButton>Review</MyButton>
+          )}
+          {(status == "scheduled" || status == "canceled") && (
+            <MyGreyButton disabled>Review</MyGreyButton>
+          )}
         </div>
       </Paper>
     </Paper>
