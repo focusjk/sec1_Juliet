@@ -10,7 +10,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const MemberCard = ({ data,id}) => {
+const MemberCard = ({ data,trip_id}) => {
   const { open, setOpen } = useState(false)
   const {
     username,
@@ -21,17 +21,12 @@ const MemberCard = ({ data,id}) => {
     request_id,
     request_status
   } = data;
-  const [ approved, setApproved ] = useState(request_status=="approved")
-  const [ pickup, setPickup ] = useState(request_status=="on going")
-  const [ dropoff, setDropoff ] = useState(request_status=="done")
-  const trip_id=id;  
   const PickUp = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id,trip_id });
       const { success, error, message} = response.data;
     if(success){
-	setApproved(false);
-	setPickup(true)
+	this.props.fetchData();
     }
     } catch (e) {
       console.log(e);
@@ -42,8 +37,7 @@ const MemberCard = ({ data,id}) => {
       const response = await axios.post("http://localhost:4000/trip/dropOffMember", { request_id,trip_id });
       const { success, error, message} = response.data;
     if(success){
-	setPickup(false);
-	setDropoff(true)
+	this.props.fetchData();
     }
     } catch (e) {
       console.log(e);
@@ -97,22 +91,24 @@ const MemberCard = ({ data,id}) => {
           marginTop: "24px"
         }}
       >
-	{approved&&(
+	{request_status=='paid'&&(
 	<div>
         <MyButton onClick={PickUp} style={{ alignSelf: "center" }}>Pick up</MyButton>
-        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
 	</div>
 	)}
-	{pickup&&(
-        <div>
-	<MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Pick up</MyGreyButton>
+	{request_status!='paid'&&(
+	<div>
+        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Pick up</MyGreyButton>
+	</div>
+	)}
+	{request_status=='on going'&&(
+	<div>
         <MyButton onClick={DropOff} style={{ alignSelf: "center" }}>Drop off</MyButton>
 	</div>
 	)}
-	{dropoff&&(
-        <div>
-	<MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Pick up</MyGreyButton>
-         <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
+	{request_status!='on going'&&(
+	<div>
+        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
 	</div>
 	)}
       </div>

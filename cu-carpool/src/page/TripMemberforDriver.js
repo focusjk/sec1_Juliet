@@ -37,7 +37,7 @@ const TripMemberforDriver = () => {
       <MyTitle>Member</MyTitle>
       <EmptyBox data={memberList} />
       {memberList.map((member, index) => (
-        <MemberCard key={index} data={member} id={trip_id} />
+        <MemberCard key={index} data={member} trip_id={trip_id} />
       ))}
     </div>
   );

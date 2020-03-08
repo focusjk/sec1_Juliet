@@ -17,7 +17,7 @@ const TripMemberforMember = ({ user, updateUser }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const [driver, setDriver] = useState('');
-  const [request_id, setRequest_id] = useState(0);
+  const request_id = 0;
   const [getIn, setGetIn] = useState(false);
   const fetchData = async () => {
     try {
@@ -33,10 +33,11 @@ const TripMemberforMember = ({ user, updateUser }) => {
   };
   const getin = async () => {
     try {
-      setRequest_id(memberList.filter(i => i.id == user.id)[0].request_id);
+     const request_id=memberList.filter(i => i.id == user.id)[0].request_id;
       const response = await axios.post("http://localhost:4000/trip/getInTheCar", { request_id });
       const { success, error, message} = response.data;
       if(success){
+	fetchData();
 	setGetIn(true);
       }
     } catch (e) {
