@@ -100,6 +100,14 @@ const RequestBox = ({ history, data, fetch }) => {
       </div>
       <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
 
+      <div style={{ display: "flex", alignItems: "left", marginBottom: "8px", marginTop: "8px" }}>
+        <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
+        <div style={{ display: "flex", alignItems: "flex-end" }}>
+          {destination_detail}
+        </div>
+        </div>
+      <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
+
         <div
           style={{
             display: "flex",
