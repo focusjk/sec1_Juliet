@@ -5,14 +5,19 @@ import EmptyBox from "../component/EmptyBox";
 import axios from "axios";
 
 class MyTrip extends React.Component {
+  // constructor() {
+  //   super(this.props);
+  // }
   state = { list: [] };
   componentDidMount() {
     this.fetchData();
   }
   fetchData = async () => {
-    const response = await axios.get("http://localhost:4000/driver/mytrip"); //TODO
+    const response = await axios.get(
+      "http://localhost:4000/driver/mytrip?userId=" + this.props.user.id
+    );
     const { success, trip } = response.data;
-    // console.log(response.data);
+    console.log(response.data);
     if (success) {
       this.setState({ list: trip });
     }

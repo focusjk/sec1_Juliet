@@ -18,7 +18,7 @@ const TripBox = ({ history, data }) => {
     price,
     departure_latitude,
     departure_longtitude,
-    destination_latiude,
+    destination_latitude,
     destination_longtitude,
     departure_detail,
     destination_detail,
@@ -30,12 +30,14 @@ const TripBox = ({ history, data }) => {
   return (
     <Paper
       square
+      key={trip_id}
       variant="outlined"
       style={{
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
-        borderColor: "#BDBDBD"
+        borderColor: "#BDBDBD",
+        marginBottom: "16px"
       }}
     >
       <Paper
@@ -139,7 +141,7 @@ const TripBox = ({ history, data }) => {
         <MapData
           fixed
           longitude={destination_longtitude}
-          latitude={destination_latiude}
+          latitude={destination_latitude}
         />
 
         <div
