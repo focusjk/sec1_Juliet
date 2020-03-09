@@ -146,5 +146,8 @@ router.post('/cancelTrip', (req, res, next) => {
   })
 });
 
-
+router.post('/caneclTripForDriver', (req, res, next) => {
+  const {id: trip_id} = req.body;
+  
+})
 module.exports = router;

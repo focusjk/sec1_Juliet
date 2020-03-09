@@ -228,4 +228,8 @@ const cancelTrip = async (request_id, callback) => {
   }
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip };
+const cancelTripForDriver = (trip_id, callback) => {
+  
+}
+
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip, cancelTripForDriver };
