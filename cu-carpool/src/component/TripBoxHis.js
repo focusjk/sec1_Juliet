@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "./MyButton";
+import { MyButton,MyGreyButton } from "./MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
@@ -159,7 +159,8 @@ const TripBoxHis = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          <MyButton onClick={cancel}>Cancel</MyButton>
+          {request_status!="canceled"&&(<MyButton onClick={cancel}>Cancel</MyButton>)}
+	  {request_status=="canceled"&&(<MyGreyButton disabled={true}>Cancel</MyGreyButton>)}
           <MyButton>Payment</MyButton>
           <MyButton>Review</MyButton>
         </div>

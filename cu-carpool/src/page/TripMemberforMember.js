@@ -17,7 +17,9 @@ const TripMemberforMember = ({ user, updateUser }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const [driver, setDriver] = useState('');
-  const request_id = 0;
+  const [request_id,setRequest_id] = useState(0);
+  const [request_status,setRequest_status] = useState("None");
+  const [departed_at,setDeparted_at] = useState("None");
   const [getIn, setGetIn] = useState(false);
   const fetchData = async () => {
     try {
@@ -26,6 +28,12 @@ const TripMemberforMember = ({ user, updateUser }) => {
       if (success) {
         setMemberList(member);
         setDriver(driver);
+	const temp = memberList.filter(i => i.id == user.id);
+	if(temp[0]!=null){
+	setRequest_status(temp[0].request_status);
+	setRequest_id(temp[0].request_id);
+	setDeparted_at(temp[0].departed_at);
+	}
       }
     } catch (e) {
       console.log(e);
@@ -33,7 +41,6 @@ const TripMemberforMember = ({ user, updateUser }) => {
   };
   const getin = async () => {
     try {
-     const request_id=memberList.filter(i => i.id == user.id)[0].request_id;
       const response = await axios.post("http://localhost:4000/trip/getInTheCar", { request_id });
       const { success, error, message} = response.data;
       if(success){
@@ -85,10 +92,10 @@ const TripMemberforMember = ({ user, updateUser }) => {
             </div>
           </div>
         </Typography>
-	{!getIn&&
+	{(departed_at == null && request_status =='paid') &&
         (<MyButton onClick={getin} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
       	)}
-	{getIn&&
+	{!(departed_at == null && request_status =='paid')&&
         (<MyGreyButton disabled={true} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyGreyButton>
       	)}
 	</Paper>
