@@ -204,6 +204,7 @@ const updateTripStatus = async (trip_id, status, callback) => {
 const cancelTrip = async (request_id,cancel_time, callback) => {
   const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
+  console.log(request_status);
 
   if (request_status == 'pending' || request_status == 'approved') {
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
