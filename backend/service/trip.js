@@ -1,5 +1,6 @@
 var db = require("../dbconnection");
 var transactionService = require('../service/transaction');
+var util = require('../util')
 
 const createTrip = (
   created_at,
@@ -179,21 +180,12 @@ const dropOff = (request_id, depart_time, callback) => {
                    WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const promisifyQuery = (query, args) => new Promise((resolve, reject) => db.query(query, args,
-  (err, result) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(result);
-    }
-  }))
-
 const updateTripStatus = async (trip_id, status, callback) => {
 
   // status : 0 - pick up , 1 - drop off , 2 - cancel
-  const que = await promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
+  const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
   const recent_status = que[0].status;
-  const passenger_left = await promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
+  const passenger_left = await util.promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
   const { amount: amount_passenger_left } = passenger_left[0]
 
   var trip_status;
@@ -208,7 +200,7 @@ const updateTripStatus = async (trip_id, status, callback) => {
 }
 
 const cancelTrip = async (request_id,cancel_time, callback) => {
-  const query_result = await promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
+  const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
 
   if (request_status == 'pending' || request_status == 'approved') {
@@ -220,7 +212,7 @@ const cancelTrip = async (request_id,cancel_time, callback) => {
     // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
     // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
     // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
-    const trip_id = await promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
+    const trip_id = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
     transactionService.refundTransaction(request_id,trip_id,cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
