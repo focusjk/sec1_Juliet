@@ -156,13 +156,8 @@ const TripBoxHis = ({ history, data }) => {
             request_status == "canceled") && (
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
-          {(request_status == "approved" ||
-            request_status == "done" ||
-            request_status == "paid" ||
-            request_status == "on going") && <MyButton>Payment</MyButton>}
-          {(request_status == "rejected" ||
-            request_status == "pending" ||
-            request_status == "canceled") && (
+          {request_status == "approved" && <MyButton>Payment</MyButton>}
+          {request_status != "approved" && (
             <MyGreyButton disabled>Payment</MyGreyButton>
           )}
           {request_status == "done" && <MyButton>Review</MyButton>}

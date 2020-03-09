@@ -13,7 +13,7 @@ class TripHistory extends React.Component {
     const response = await axios.get(
       "http://localhost:4000/user/trip-history",
       { params: { member_id: this.props.user.id } }
-    ); // TODO
+    );
     const { success, request } = response.data;
     if (success) {
       this.setState({ list: request });
