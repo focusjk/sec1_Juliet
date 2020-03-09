@@ -1,11 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import { Link, Divider, Paper, Typography } from "@material-ui/core/";
+import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
+import axios from "axios";
 
 const TripBox = ({ history, data }) => {
   const {
@@ -28,10 +28,22 @@ const TripBox = ({ history, data }) => {
 
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
+  const handleCancel = async () => {
+    console.log("yes");
+    // TODO
+    const response = await axios.post("http://localhost:4000/trip/cancelTrip", {
+      id: trip_id
+    });
+    console.log(response);
+    const { success } = response.data;
+    if (success) {
+      this.fetchData();
+    }
+  };
+
   return (
     <Paper
       square
-      key={trip_id}
       variant="outlined"
       style={{
         display: "flex",
@@ -152,7 +164,9 @@ const TripBox = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          {status == "scheduled" && <MyButton>Cancel</MyButton>}
+          {status == "scheduled" && (
+            <MyButton onClick={handleCancel}>Cancel</MyButton>
+          )}
           {status != "scheduled" && (
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
