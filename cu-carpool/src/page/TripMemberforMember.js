@@ -20,7 +20,6 @@ const TripMemberforMember = ({ user, updateUser }) => {
   const [request_id,setRequest_id] = useState(0);
   const [request_status,setRequest_status] = useState("None");
   const [departed_at,setDeparted_at] = useState("None");
-  const [getIn, setGetIn] = useState(false);
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
@@ -45,7 +44,6 @@ const TripMemberforMember = ({ user, updateUser }) => {
       const { success, error, message} = response.data;
       if(success){
 	fetchData();
-	setGetIn(true);
       }
     } catch (e) {
       console.log(e);
