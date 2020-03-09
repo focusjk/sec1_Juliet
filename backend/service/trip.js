@@ -118,7 +118,9 @@ const getAllPassenger = (trip_id, callback) => {
                           members.lastname,
                           members.phone_number,
                           members.photo,
-                          request.id as request_id
+                          request.id as request_id,
+                          request.request_status,
+                          request.departed_at
                           FROM members inner join request on request.member_id = members.id
                           WHERE request.request_status IN ('approved','paid','on going','done') AND request.trip_id =`+ trip_id, callback);
 }
