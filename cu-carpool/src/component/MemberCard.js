@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
@@ -8,10 +8,10 @@ import EmptyBox from '../component/EmptyBox'
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import MemberCardSmall from '../component/MemberCardSmall'
+import MemberCardSmall from '../component/MemberCardSmall';
+import LocationDetail from '../component/LocationDetail'
 
-const MemberCard = ({ data,trip_id}) => {
-  const { open, setOpen } = useState(false)
+const MemberCard = ({ data, trip_id }) => {
   const {
     username,
     firstname,
@@ -23,22 +23,22 @@ const MemberCard = ({ data,trip_id}) => {
   } = data;
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id,trip_id });
-      const { success, error, message} = response.data;
-    if(success){
-	this.props.fetchData();
-    }
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id, trip_id });
+      const { success } = response.data;
+      if (success) {
+        this.props.fetchData();
+      }
     } catch (e) {
       console.log(e);
     }
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { request_id,trip_id });
-      const { success, error, message} = response.data;
-    if(success){
-	this.props.fetchData();
-    }
+      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { request_id, trip_id });
+      const { success } = response.data;
+      if (success) {
+        this.props.fetchData();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -64,12 +64,7 @@ const MemberCard = ({ data,trip_id}) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <div
-            style={{ color: "#C78899", textDecoration: "underline", fontSize: 14 }}
-            onClick={() => { setOpen(true) }}
-          >
-            see location detail
-          </div>
+          <LocationDetail />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
@@ -91,26 +86,10 @@ const MemberCard = ({ data,trip_id}) => {
           marginTop: "24px"
         }}
       >
-	{request_status=='paid'&&(
-	<div>
-        <MyButton onClick={PickUp} style={{ alignSelf: "center" }}>Pick up</MyButton>
-	</div>
-	)}
-	{request_status!='paid'&&(
-	<div>
-        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Pick up</MyGreyButton>
-	</div>
-	)}
-	{request_status=='on going'&&(
-	<div>
-        <MyButton onClick={DropOff} style={{ alignSelf: "center" }}>Drop off</MyButton>
-	</div>
-	)}
-	{request_status!='on going'&&(
-	<div>
-        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
-	</div>
-	)}
+        {request_status == 'paid' && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {request_status != 'paid' && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {request_status == 'on going' && <MyButton onClick={DropOff} >Drop off</MyButton>}
+        {request_status != 'on going' && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
     </Paper>
   );
