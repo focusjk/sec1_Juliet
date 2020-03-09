@@ -1,5 +1,6 @@
 import React from "react";
 import { MyHeaderWithArrow, MyHeader } from "../component/MyTitle";
+import { MyButton, MyWhiteButton } from "../component/MyButton";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import RequestBox from "../component/RequestBox";
 import EmptyBox from "../component/EmptyBox";
@@ -22,12 +23,13 @@ class TripRequest extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <MyHeaderWithArrow goto="/my-trip" >Trip Request</MyHeaderWithArrow>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((request, index) => (
-          <RequestBox key={index} data={request} />
+          <RequestBox key={index} data={request} fetch={this.fetchData} />
         ))}
       </div>
     );

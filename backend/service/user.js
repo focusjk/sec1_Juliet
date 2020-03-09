@@ -26,12 +26,12 @@ const editMemberInfo = (id, body, callback) => {
     , [firstname, lastname, phone_number, email, photo, id], callback); //credit-card-related fields are removed from this line
 }
 
-const payment = (ID,body, callback) => {
-  const {card_number,card_holder_name,card_expiry_date,card_code,paid_at} = body;
-  return db.query(`UPDATE request SET request_status = 'paid', paid_at = ? WHERE id = ? ` , [paid_at,ID], callback);
+const payment = (ID, body, callback) => {
+  const { card_number, card_holder_name, card_expiry_date, card_code, paid_at } = body;
+  return db.query(`UPDATE request SET request_status = 'paid', paid_at = ? WHERE id = ? `, [paid_at, ID], callback);
 }
 
-const getTripHistory = (member_id , callback) => {
+const getTripHistory = (member_id, callback) => {
   return db.query(`SELECT request.id as id,
                   request.departure_latitude,
                   request.departure_longtitude,
@@ -59,5 +59,5 @@ const getTripHistory = (member_id , callback) => {
                   WHERE request.member_id = ?`, [member_id], callback);
 }
 
-module.exports = { register, getMemberInfo, login, editMemberInfo, payment, getTripHistory};
+module.exports = { register, getMemberInfo, login, editMemberInfo, payment, getTripHistory };
 

@@ -26,6 +26,7 @@ import TripDetail from "./page/TripDetail";
 import TripRequest from "./page/TripRequest";
 import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
+import Payment from "./page/Payment";
 
 
 const theme = createMuiTheme({
@@ -110,6 +111,9 @@ const App = () => {
                     </Route>
                     <Route path="/my-trip/:trip_id/request" exact>
                       <TripRequest user={user} />
+                    </Route>
+                    <Route path="/payment/:request_id/request" exact>
+                      <Payment user={user} />
                     </Route>
                     <Route path="/driver" exact>
                       <DriverProfile
