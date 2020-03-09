@@ -25,29 +25,29 @@ const RequestBox = ({ history, data, fetch }) => {
     username,
     phone_number,
     photo
-} = data;
+  } = data;
 
-  const handleApprove = async (id) => {    
+  const handleApprove = async () => {
     axios.post("http://localhost:4000/driver/request-approve", {
       id
     }).then(response => {
-        const {success} = response.data;
-        if (success){
-          fetch();
-        }
+      const { success } = response.data;
+      if (success) {
+        fetch();
+      }
     }).catch(error => {
-        console.log(error);
+      console.log(error);
     });
   }
 
-  const handleReject = async id => {
+  const handleReject = async () => {
     axios.post("http://localhost:4000/driver/request-reject", {
       id
     }).then(response => {
-      const {success} = response.data;
-        if (success){
-          fetch();
-        }
+      const { success } = response.data;
+      if (success) {
+        fetch();
+      }
     }).catch(error => {
       console.log("error");
     });
@@ -105,21 +105,20 @@ const RequestBox = ({ history, data, fetch }) => {
         <div style={{ display: "flex", alignItems: "flex-end" }}>
           {destination_detail}
         </div>
-        </div>
+      </div>
       <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            marginTop: "12px"
-          }}
-        >
-
-          <MyButton onClick={() => handleApprove(id)}>Accept</MyButton>
-          <MyWhiteButton onClick={() => handleReject(id)}>Reject</MyWhiteButton>
-        </div>
-      </Paper>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          marginTop: "12px"
+        }}
+      >
+        <MyButton onClick={() => handleApprove()}>Accept</MyButton>
+        <MyWhiteButton onClick={() => handleReject()}>Reject</MyWhiteButton>
+      </div>
+    </Paper>
   );
 };
 

@@ -54,15 +54,15 @@ router.post('/login', function (req, res, next) {
     }
   });
 });
- 
+
 router.post('/payment', validate(validatePayment), (req, res, next) => {
   const { id, ...data } = req.body;
-  var paymenttime = util.timeformatter(new Date());
-  userService.payment(id, { ...data, paid_at: paymenttime }, (err, result) => {
+  var paid_at = util.timeformatter(new Date());
+  userService.payment(id, { ...data, paid_at }, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
     } else {
-      res.json({ success: true, request_id: id, request_status: 'paid', paid_at: paymenttime });
+      res.json({ success: true, request_id: id, request_status: 'paid', paid_at });
     }
   });
 });
