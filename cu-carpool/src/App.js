@@ -60,7 +60,6 @@ const App = () => {
   // for admin
   //  const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  //const [user, setUser] = React.useState(null);
   // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
@@ -94,8 +93,11 @@ const App = () => {
                     <Route path="/report" exact>
                       <MemberReport user={user} />
                     </Route>
-                    <Route path="/tripdetail" exact>
-                      <TripDetail user={user} />
+                    <Route path="/trip/:trip_id/detail" exact>
+                      <TripDetail joinable path="/" user={user} />
+                    </Route>
+                    <Route path="/trip-history/:trip_id/detail" exact>
+                      <TripDetail path="/trip-history" user={user} />
                     </Route>
                     <Route path="/trip-history/:trip_id/member" exact>
                       <TripMemberforMember user={user} />

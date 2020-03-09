@@ -22,6 +22,7 @@ const listPath = {
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
+    { name: "Report", path: "/report", icon: "report" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ],
   driver: [
@@ -31,6 +32,7 @@ const listPath = {
     { name: "Create trip", path: "/create-trip", icon: "edit" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
+    { name: "Report", path: "/report", icon: "report" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ]
 };
