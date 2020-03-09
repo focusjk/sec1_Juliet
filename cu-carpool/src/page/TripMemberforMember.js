@@ -90,7 +90,7 @@ const TripMemberforMember = ({ user, updateUser }) => {
         </Typography>
         {
           (departed_at == null && request_status == 'paid') &&
-          <MyButton onClick={getin} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
+          <MyButton onClick={getIn} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
         }
         {
           !(departed_at == null && request_status == 'paid') &&

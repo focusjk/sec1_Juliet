@@ -136,7 +136,7 @@ const TripBoxHis = ({ history, data, fetchData }) => {
             </MyLink>
             <MyLink
               style={{ marginBottom: 6 }}
-              goto={"/trip/" + trip_id + "/detail"}
+              goto={"/trip-history/" + trip_id + "/detail"}
             >
               see trip detail
             </MyLink>

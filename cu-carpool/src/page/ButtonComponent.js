@@ -45,8 +45,8 @@ class ButtonComponent extends React.Component {
         </MyDisabledFullWidthButton>
         <div style={{ margin: "10px" }} />
         <MyModal />
-	<RequestJoin />
-	<LocationDetail />
+        <RequestJoin />
+        <LocationDetail />
         <Button color="secondary">Button_secondary</Button>
         <Button style={{ color: "#BDBDBD" }}>Button</Button>
         <Rating name="half-rating" defaultValue={2.34} precision={0.01} />

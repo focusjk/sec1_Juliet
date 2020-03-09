@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RequestJoin = () => {
+const RequestJoin = ({ trip_id, member_id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {

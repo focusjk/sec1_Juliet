@@ -13,6 +13,7 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import { useParams, withRouter } from "react-router-dom";
 import MemberCardSmall from '../component/MemberCardSmall'
+import RequestJoin from '../component/RequestJoin'
 
 class TripDetail extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class TripDetail extends React.Component {
   }
   render() {
     const { trip, owner, passenger } = this.state
+    const { joinable, user } = this.props
     return (
       <Grid container direction="column" justify="flex-direction">
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -87,12 +89,12 @@ class TripDetail extends React.Component {
             <MyTitle style={{ margin: "8px 0" }}>Trip Member ({passenger.length}/{trip.capacity})</MyTitle>
             <div>
               {passenger.map((member, index) => <MemberCardSmall key={index} data={member} />)}
-
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: "8px 0", fontSize: 20 }}>
-            {trip.price} ฿
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', margin: "8px 0", fontSize: 20 }}>
+            <div style={{ margin: "8px 0" }}>{trip.price} ฿</div>
+            {joinable && <RequestJoin trip_id={trip.id} member_id={user.id} />}
           </div>
         </div>
 
