@@ -1,11 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { MyButton } from "../component/MyButton";
-import { Link, Divider, Paper, Typography } from "@material-ui/core/";
+import { MyButton, MyGreyButton } from "../component/MyButton";
+import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
+import axios from "axios";
 
 const TripBox = ({ history, data }) => {
   const {
@@ -25,7 +25,21 @@ const TripBox = ({ history, data }) => {
     departure_province,
     destination_province
   } = data;
+
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
+
+  const handleCancel = async () => {
+    console.log("yes");
+    // TODO
+    const response = await axios.post("http://localhost:4000/trip/cancelTrip", {
+      id: trip_id
+    });
+    console.log(response);
+    const { success } = response.data;
+    if (success) {
+      this.fetchData();
+    }
+  };
 
   return (
     <Paper
@@ -120,7 +134,7 @@ const TripBox = ({ history, data }) => {
             </MyLink>
           </div>
         </div>
-        <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center' }}>
+        <div style={{ marginBottom: 6, display: "flex", alignItems: "center" }}>
           Pick up: {departure_detail}
           <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({departure_province})
@@ -131,7 +145,7 @@ const TripBox = ({ history, data }) => {
           longitude={departure_longtitude}
           latitude={departure_latitude}
         />
-        <div style={{ margin: "6px 0", display: 'flex', alignItems: 'center' }}>
+        <div style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
           Destination: {destination_detail}
           <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({destination_province})
@@ -150,8 +164,18 @@ const TripBox = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          <MyButton>Cancel</MyButton>
-          <MyButton>Review</MyButton>
+          {status == "scheduled" && (
+            <MyButton onClick={handleCancel}>Cancel</MyButton>
+          )}
+          {status != "scheduled" && (
+            <MyGreyButton disabled>Cancel</MyGreyButton>
+          )}
+          {(status == "on going" || status == "done") && (
+            <MyButton onClick={() => history.push("/")}>Review</MyButton> //review page sprint3
+          )}
+          {(status == "scheduled" || status == "canceled") && (
+            <MyGreyButton disabled>Review</MyGreyButton>
+          )}
         </div>
       </Paper>
     </Paper>

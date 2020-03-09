@@ -21,9 +21,13 @@ import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
 import ButtonComponent from "./page/ButtonComponent";
+import MemberReport from "./page/MemberReport";
+import TripDetail from "./page/TripDetail";
 import TripRequest from "./page/TripRequest";
 import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
+import Payment from "./page/Payment";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -87,6 +91,15 @@ const App = () => {
                     <Route path="/my-trip" exact>
                       <MyTrip user={user} />
                     </Route>
+                    <Route path="/report" exact>
+                      <MemberReport user={user} />
+                    </Route>
+                    <Route path="/trip/:trip_id/detail" exact>
+                      <TripDetail joinable path="/" user={user} />
+                    </Route>
+                    <Route path="/trip-history/:trip_id/detail" exact>
+                      <TripDetail path="/trip-history" user={user} />
+                    </Route>
                     <Route path="/trip-history/:trip_id/member" exact>
                       <TripMemberforMember user={user} />
                     </Route>
@@ -98,6 +111,9 @@ const App = () => {
                     </Route>
                     <Route path="/my-trip/:trip_id/request" exact>
                       <TripRequest user={user} />
+                    </Route>
+                    <Route path="/payment/:request_id/request" exact>
+                      <Payment user={user} />
                     </Route>
                     <Route path="/driver" exact>
                       <DriverProfile

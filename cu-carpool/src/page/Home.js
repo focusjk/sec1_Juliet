@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   panel: { backgroundColor: "#EFEFEF", boxShadow: "none" }
 });
 
-const Home = () => {
+const Home = ({ user }) => {
   const [tripList, setTripList] = useState([]);
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
@@ -111,7 +111,7 @@ const Home = () => {
       </ExpansionPanel>
       <EmptyBox data={tripList} />
       {tripList.map((trip, index) => (
-        <TripCard key={index} data={trip} />
+        <TripCard key={index} data={trip} user={user} />
       ))}
     </div>
   );

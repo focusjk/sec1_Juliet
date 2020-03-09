@@ -9,17 +9,11 @@ import FlagIcon from "@material-ui/icons/Flag";
 import moment from "moment";
 import { Link, Divider, Paper, Typography } from "@material-ui/core/";
 import { MyLink } from "./MyTitle";
+import RequestJoin from "./RequestJoin";
 
-const useStyles = makeStyles({
-  list: {
-    width: 250
-  },
-  barSection: { flexGrow: 1 },
-  barItem: { cursor: "pointer" }
-});
 
-const TripCard = ({ history, data }) => {
-  const classes = useStyles();
+
+const TripCard = ({ history, data, user }) => {
   const {
     id,
     departure_detail,
@@ -76,7 +70,7 @@ const TripCard = ({ history, data }) => {
           <GroupIcon fontSize="small" style={{ marginRight: "8px" }} />
           {request}/{capacity}
         </div>
-        <MyLink goto="#">More detail...</MyLink>
+        <MyLink goto={"/trip/" + id + "/detail"}>More detail...</MyLink>
       </Typography>
       <Typography
         style={{
@@ -87,7 +81,9 @@ const TripCard = ({ history, data }) => {
         }}
       >
         <div style={{ fontSize: "20px" }}>{price} ฿</div>
-        <MyButton disabled={request === capacity}>Join</MyButton>
+        {request < capacity && <RequestJoin trip_id={id} member_id={user.id} />}
+        {request >= capacity && <MyButton disabled >Join</MyButton>}
+
       </Typography>
     </Paper>
   );

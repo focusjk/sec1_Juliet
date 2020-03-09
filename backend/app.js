@@ -11,6 +11,7 @@ var driverRouter = require('./routes/driver');
 var tripRouter = require('./routes/trip');
 var reportRouter = require('./routes/report');
 var requestRouter = require('./routes/request');
+var transactionRouter = require('./routes/transaction');
 
 
 var app = express();
@@ -38,6 +39,7 @@ app.use('/driver', driverRouter);
 app.use('/trip', tripRouter);
 app.use('/report', reportRouter);
 app.use('/request', requestRouter);
+app.use('/transaction', transactionRouter);
 
 
 // catch 404 and forward to error handler
