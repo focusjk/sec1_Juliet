@@ -3,7 +3,7 @@ var router = express.Router();
 var tripService = require('../service/trip');
 var validate = require('express-validation');
 var validateTrip = require('../validate/trip');
-var util = require('../util')
+var util = require('../util');
 
 router.post('/', (req, res, next) => {
   const { departure, destination, selectedDate } = req.body;
