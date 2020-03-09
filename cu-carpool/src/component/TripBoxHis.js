@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyButton, MyGreyButton } from "./MyButton";
@@ -7,7 +8,7 @@ import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 
-const TripBoxHis = ({ history, data }) => {
+const TripBoxHis = ({ history, data, fetchData }) => {
   const {
     trip_id,
     start_datetime,
@@ -15,6 +16,7 @@ const TripBoxHis = ({ history, data }) => {
     plate_license,
     car_brand,
     price,
+    id,
     departure_latitude,
     departure_longtitude,
     destination_latitude,
@@ -24,7 +26,20 @@ const TripBoxHis = ({ history, data }) => {
     destination_detail
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
-
+  const cancelable = () => {
+    return request_status == 'approved' || request_status == 'pending' || request_status == 'paid'
+  }
+  const cancel = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/cancelTrip", { id });
+      const { success } = response.data;
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Paper
       square
@@ -147,23 +162,15 @@ const TripBoxHis = ({ history, data }) => {
             marginTop: "12px"
           }}
         >
-          {(request_status == "approved" ||
-            request_status == "paid" ||
-            request_status == "pending") && <MyButton>Cancel</MyButton>}
-          {(request_status == "rejected" ||
-            request_status == "on going" ||
-            request_status == "done" ||
-            request_status == "canceled") && (
-            <MyGreyButton disabled>Cancel</MyGreyButton>
-          )}
-          {request_status == "approved" && <MyButton>Payment</MyButton>}
-          {request_status != "approved" && (
-            <MyGreyButton disabled>Payment</MyGreyButton>
-          )}
-          {request_status == "done" && <MyButton>Review</MyButton>}
-          {request_status != "done" && (
-            <MyGreyButton disabled>Review</MyGreyButton>
-          )}
+          {cancelable() && (<MyButton onClick={cancel}>Cancel</MyButton>)}
+          {!cancelable() && (<MyGreyButton disabled >Cancel</MyGreyButton>)}
+
+          {request_status == "approved" && (<MyButton onClick={() => { }}>Payment</MyButton>)}
+          {request_status != "approved" && (<MyGreyButton disabled >Payment</MyGreyButton>)}
+
+          {request_status == "done" && (<MyButton onClick={() => { }}>Review</MyButton>)}
+          {request_status != "done" && (<MyGreyButton disabled >Review</MyGreyButton>)}
+
         </div>
       </Paper>
     </Paper>
