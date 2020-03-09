@@ -16,18 +16,6 @@ class TripDetail extends React.Component {
       <div style={{ display: "flex", flexDirection: "column" }}>
       <MyHeader>Trip detail</MyHeader>
       <MyTitle>Driver info</MyTitle>
-      <Paper
-        square
-        variant="outlined"
-        style={{
-          marginTop: "16px",
-          padding: 10,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between"
-        }}
-      >
-        <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <img
               src={logo}
@@ -38,20 +26,23 @@ class TripDetail extends React.Component {
             <MyTitle style={{ marginLeft: "8px" }}>Driver Username</MyTitle>
           </div>
           <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
-            <TiStarOutline fontSize="big" style={{ marginRight: "80px" }} />
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              Firstname Lastname
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          Average rating :
+            
+          </div> 
+          <div>
+            <MyTitle style={{ marginLeft: "8px" }}>Driver Username</MyTitle>
           </div>
+           
+        
+          
+    
           </div>
-          <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
-            <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              08x-xxx-xxx
-          </div>
-          </div>
-        </Typography>
-        <MyButton style={{ alignSelf: "center" }}>Get in</MyButton>
-      </Paper>
+          
+          
+        
+        <MyButton style={{ alignSelf: "center" }}>Join</MyButton>
+     
      
       
       
