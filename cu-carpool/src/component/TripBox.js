@@ -122,7 +122,7 @@ const TripBox = ({ history, data }) => {
             </MyLink>
           </div>
         </div>
-        <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center' }}>
+        <div style={{ marginBottom: 6, display: "flex", alignItems: "center" }}>
           Pick up: {departure_detail}
           <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({departure_province})
@@ -133,7 +133,7 @@ const TripBox = ({ history, data }) => {
           longitude={departure_longtitude}
           latitude={departure_latitude}
         />
-        <div style={{ margin: "6px 0", display: 'flex', alignItems: 'center' }}>
+        <div style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
           Destination: {destination_detail}
           <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: 8 }}>
             ({destination_province})
@@ -157,7 +157,7 @@ const TripBox = ({ history, data }) => {
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
           {(status == "on going" || status == "done") && (
-            <MyButton>Review</MyButton>
+            <MyButton onClick={() => history.push("/")}>Review</MyButton> //review page sprint3
           )}
           {(status == "scheduled" || status == "canceled") && (
             <MyGreyButton disabled>Review</MyGreyButton>
