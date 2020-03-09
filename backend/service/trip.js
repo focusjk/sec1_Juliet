@@ -224,8 +224,19 @@ const cancelTrip = async (request_id,cancel_time, callback) => {
   }
 }
 
-const cancelTripForDriver = (trip_id, callback) => {
-  
+const cancelTripForDriver = async (trip_id, callback) => {
+  const request_id = await util.promisifyQuery(`SELECT request.id 
+                                                FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                                WHERE trip.id = ?`, [trip_id]);
+  var req_id = []
+  for(const id in request_id){
+    req_id.push(request_id[id].id);
+  }
+
+  db.query(`UPDATE trip SET status = 'canceled' WHERE id = ?`, [trip_id]);
+  return db.query(`UPDATE request SET request_status = 'canceled' 
+                  WHERE id IN (?)`, [req_id] , callback);
+
 }
 
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip, cancelTripForDriver };

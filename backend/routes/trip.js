@@ -147,8 +147,15 @@ router.post('/cancelTrip', (req, res, next) => {
   })
 });
 
-router.post('/caneclTripForDriver', (req, res, next) => {
+router.post('/cancelTripForDriver', (req, res, next) => {
   const {id: trip_id} = req.body;
-  
+  tripService.cancelTripForDriver(trip_id, (err, result) => {
+    if (err) {
+      res.json({ success: false, message: 'Cannot cancel your trip' });
+    } else {
+      console.log(result);
+      res.json({ success: true });
+    }
+  })
 })
 module.exports = router;
