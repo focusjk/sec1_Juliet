@@ -8,22 +8,40 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import EmptyBox from '../component/EmptyBox'
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
-import { MyButton } from "../component/MyButton";
+import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-
-
-const TripMemberforMember = () => {
+const TripMemberforMember = ({ user, updateUser }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const [driver, setDriver] = useState('');
+  const [request_id, setRequest_id] = useState(null);
+  const [request_status, setRequest_status] = useState(null);
+  const [departed_at, setDeparted_at] = useState(null);
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
-      const { success, error, message, member, driver } = response.data;
+      const { success, member, driver } = response.data;
       if (success) {
         setMemberList(member);
         setDriver(driver);
+        const temp = member.filter(i => i.id == user.id);
+        if (temp[0] != null) {
+          setRequest_status(temp[0].request_status);
+          setRequest_id(temp[0].request_id);
+          setDeparted_at(temp[0].departed_at);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getIn = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/getInTheCar", { id: request_id });
+      const { success } = response.data;
+      if (success) {
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -31,7 +49,7 @@ const TripMemberforMember = () => {
   };
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history">Trip Member</MyHeaderWithArrow>
@@ -70,7 +88,14 @@ const TripMemberforMember = () => {
             </div>
           </div>
         </Typography>
-        <MyButton style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
+        {
+          (departed_at == null && request_status == 'paid') &&
+          <MyButton onClick={getin} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
+        }
+        {
+          !(departed_at == null && request_status == 'paid') &&
+          <MyGreyButton disabled={true} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyGreyButton>
+        }
       </Paper>
       <div style={{
         marginTop: "16px",
