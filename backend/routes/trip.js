@@ -153,7 +153,6 @@ router.post('/cancelTripForDriver', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: 'Cannot cancel your trip' });
     } else {
-      console.log(result);
       res.json({ success: true });
     }
   })

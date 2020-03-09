@@ -233,7 +233,7 @@ const cancelTripForDriver = async (trip_id, callback) => {
     req_id.push(request_id[id].id);
   }
 
-  const update_trip = await util.promisifyQuery(`UPDATE trip SET status = 'canceled' WHERE id = ?`, [trip_id]);
+  await util.promisifyQuery(`UPDATE trip SET status = 'canceled' WHERE id = ?`, [trip_id]);
   return db.query(`UPDATE request SET request_status = 'canceled' 
                   WHERE id IN (?)`, [req_id] , callback);
 }
