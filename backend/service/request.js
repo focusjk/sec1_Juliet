@@ -16,4 +16,9 @@ function getRequestInfo(request_id,callback) {
     , [request_id], callback); 
 };
 
-module.exports = {createRequest,getRequestInfo};
+function getPrice(request_id,callback) {
+    return db.query(`SELECT trip.price FROM request LEFT JOIN trip ON request.id = trip.id WHERE request.id = ?`
+    , [request_id], callback); 
+};
+
+module.exports = {createRequest,getRequestInfo, getPrice};
