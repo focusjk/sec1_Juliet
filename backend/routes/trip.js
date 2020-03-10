@@ -63,7 +63,9 @@ router.post('/member', (req, res, next) => {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
       const driver = result;
-      tripService.getAllPassengerForDriver(trip_id, (err, result) => {
+      tripService.getAllPassenger(trip_id, (err, result) => {
+        // Jedi TODO
+        // tripService.getAllPassengerForDriver(trip_id, (err, result) => {
         if (err) {
           res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
         } else {
@@ -138,7 +140,7 @@ router.post('/getInTheCar', (req, res, next) => {
 router.post('/cancelTrip', (req, res, next) => {
   const { id: request_id } = req.body;
   const cancel_time = util.timeformatter(new Date());
-  tripService.cancelTrip(request_id,cancel_time, (err, result) => {
+  tripService.cancelTrip(request_id, cancel_time, (err, result) => {
     if (err) {
       res.json({ success: false, message: 'Cannot cancel your trip' });
     } else {

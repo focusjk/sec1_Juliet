@@ -11,7 +11,7 @@ import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall';
 import LocationDetail from '../component/LocationDetail'
 
-const MemberCard = ({ data, trip_id,fetchData }) => {
+const MemberCard = ({ data, trip_id, fetchData }) => {
   const {
     username,
     firstname,
@@ -21,7 +21,11 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
     request_id,
     request_status,
     departure_detail,
-    destination_detail
+    destination_detail,
+    departure_longtitude,
+    departure_latitude,
+    destination_longtitude,
+    destination_latitude
   } = data;
   const PickUp = async () => {
     try {
@@ -66,7 +70,15 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <LocationDetail trip_id={trip_id} departure_detail={departure_detail} destination_detail={destination_detail} />
+          <LocationDetail
+            trip_id={trip_id}
+            departure_detail={departure_detail}
+            destination_detail={destination_detail}
+            departure_longtitude={departure_longtitude}
+            departure_latitude={departure_latitude}
+            destination_longtitude={destination_longtitude}
+            destination_latitude={destination_latitude}
+          />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
