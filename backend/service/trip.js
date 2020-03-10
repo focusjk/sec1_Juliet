@@ -218,4 +218,35 @@ const cancelRequest = async (request_id, cancel_time, callback) => {
   }
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelRequest };
+const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
+  const request = await util.promisifyQuery(`SELECT request.id, request.request_status 
+                                                FROM trip LEFT JOIN request ON trip.id = request.trip_id
+                                                WHERE trip.id = ? AND trip.status = 'scheduled'
+                                                AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+  const request_id = request.map(data => data.id);
+
+  await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
+  request.map(({ id, request_status }) => {
+    if (request_status === 'paid') {
+      transactionService.refundTransaction(id, trip_id, cancel_time);
+    }
+  })
+  return db.query(`UPDATE trip SET status = 'canceled' WHERE id = ? AND status = 'scheduled'`, [trip_id], callback);
+}
+
+module.exports = {
+  createTrip,
+  searchTrip,
+  getTripDetail,
+  getOwnerDetail,
+  getAllPassenger,
+  getDriver,
+  getAllPassengerForDriver,
+  pickUpMember,
+  getInTheCar,
+  updateTripStatus,
+  dropOff,
+  cancelRequest,
+  cancelTrip
+};
+
