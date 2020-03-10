@@ -26,7 +26,7 @@ class TripHistory extends React.Component {
         <MyHeader style={{ marginBottom: "25px" }}>Trip History</MyHeader>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((trip, index) => (
-          <TripBoxHis key={index} data={trip} fetchData={this.fetchData} />
+          <TripBoxHis key={index} data={trip} fetchData={this.fetchData()} />
         ))}
       </div>
     );

@@ -48,6 +48,7 @@ const LocationDetail = ({trip_id}) => {
   };
   const fetchData = async () => {
     try {
+      //TO-DO เดี๋ยวรอ backend แล้วเปี่ยนเป็นของ request
       const response = await axios.get("http://localhost:4000/trip/detail", {params: {
         tripId: trip_id
       } });

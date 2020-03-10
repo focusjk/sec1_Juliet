@@ -53,6 +53,7 @@ const RequestJoin = ({ trip_id, member_id }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  //TO-DO check duplicate request
   /*const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4000/trip/passenger", { params: { trip_id } });

@@ -11,7 +11,7 @@ import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall';
 import LocationDetail from '../component/LocationDetail'
 
-const MemberCard = ({ data, trip_id }) => {
+const MemberCard = ({ data, trip_id,fetchData }) => {
   const {
     username,
     firstname,
@@ -23,10 +23,10 @@ const MemberCard = ({ data, trip_id }) => {
   } = data;
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
       const { success } = response.data;
       if (success) {
-        this.props.fetchData();
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -34,10 +34,10 @@ const MemberCard = ({ data, trip_id }) => {
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id: request_id, trip_id });
       const { success } = response.data;
       if (success) {
-        this.props.fetchData();
+        fetchData();
       }
     } catch (e) {
       console.log(e);
