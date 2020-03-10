@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import MapData from "../component/MapData"
@@ -34,9 +35,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LocationDetail = () => {
+const LocationDetail = ({trip_id}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [trip, setTrip] = React.useState("");
   const handleOpen = () => {
     setOpen(true);
   };
@@ -44,7 +46,22 @@ const LocationDetail = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/trip/detail", {params: {
+        tripId: trip_id
+      } });
+      const { success,trip } = response.data;
+      if (success) {
+        setTrip(trip);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+   useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div>
       <div className={classes.link} onClick={handleOpen}>
@@ -57,13 +74,13 @@ const LocationDetail = () => {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <MyHeader>Location detail</MyHeader>
-          <div className={classes.margin}>Pick up:xxxxxxxx</div>
+          <div className={classes.margin}>Pick up:{trip.departure_detail}</div>
           <MapData
             fixed
             longitude={100.493117}
             latitude={13.769059}
           />
-          <div className={classes.margin}>Destination:xxxxxxxx</div>
+          <div className={classes.margin}>Destination:{trip.destination_detail}</div>
           <MapData
             fixed
             longitude={100.493117}

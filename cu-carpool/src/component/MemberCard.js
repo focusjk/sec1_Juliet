@@ -64,7 +64,7 @@ const MemberCard = ({ data, trip_id }) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <LocationDetail />
+          <LocationDetail trip_id={trip_id} />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
