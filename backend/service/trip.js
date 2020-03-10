@@ -1,6 +1,6 @@
 var db = require("../dbconnection");
 var transactionService = require('../service/transaction');
-var util = require('../util')
+var util = require('../util');
 
 const createTrip = (
   created_at,
@@ -175,7 +175,16 @@ const getInTheCar = (request_id, depart_time, callback) => {
                    WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const dropOff = (request_id, depart_time, callback) => {
+const dropOff = async (request_id, depart_time, callback) => {
+  const trip = await util.promisifyQuery(`SELECT trip.price,trip.owner FROM trip LEFT JOIN request ON trip.id = request.trip_id WHERE request.id = ?`,[request_id]);
+  const {trip_price: price,driver: owner} = trip[0];
+  const type = 2;
+  const time = util.timeformatter(new Date());
+  transactionService.createTransaction(trip_price,driver,time,type);
+  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`,[member_id]);
+  const {amount:member_wallet_amount} = wallet_amount[0];
+  const updated_amount = trip_price+member_wallet_amount;
+  transactionService.updateWallet(updated_amount,owner);
   const req_status = 6;
   return db.query(`UPDATE request
                    SET request_status = ? , driver_arrived_at = ?
