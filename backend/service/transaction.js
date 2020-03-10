@@ -14,5 +14,5 @@ const refundTransaction = async (request_id,trip_id,created_at,callback) => {
     return createTransaction(amount,member_id,created_at,type,callback);
 }
 
-module.exports = {createTransaction,refundTransaction}; //refund transaction
+module.exports = {createTransaction,refundTransaction}; 
   
