@@ -230,7 +230,7 @@ const cancelTripForDriver = async ({trip_id, cancel_time }, callback) => {
                                                       WHERE trip.id = ? AND trip.status = 'scheduled'
                                                       AND request.request_status = 'paid'`, [trip_id]);
   if (cancel_req_id.length != 0){
-    const cancel_request = await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [cancel_req_id]);
+    await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [cancel_req_id]);
   }
   if (refund_request_id.length != 0){
     refund_request_id.map(data => (transactionService.refundTransaction(data.id, trip_id, cancel_time)));
