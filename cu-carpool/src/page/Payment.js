@@ -16,10 +16,10 @@ const Payment = ({ history }) => {
   const [price, setPrice] = useState(0)
   const [paid_at, setPaidAt] = useState('')
   const [form, setForm] = useState({
-    card_number: "4916350758733533",
-    card_holder_name: "Boonyawee Kiatsilp",
-    card_expiry_date: "02/2014",
-    card_code: "456"
+    card_number: "",
+    card_holder_name: "",
+    card_expiry_date: "",
+    card_code: ""
   });
   const [error, setError] = useState({
     card_number: false,
@@ -103,17 +103,11 @@ const Payment = ({ history }) => {
           id: request_id,
           ...form,
           price
-          //--- แก้เป็น price เฉยๆ
         });
         const { success, id, request_status, paid_at } = response.data;
         if (success) {
-          console.log(response.data);
-          try{
             handleOpen();
-            setPaidAt(paid_at);
-          }catch(e){
-            console.log(e);
-          }        
+            setPaidAt(paid_at);    
           setErrorMessage(null);
         } else {
           setErrorMessage("what's wrong")
@@ -139,7 +133,7 @@ const Payment = ({ history }) => {
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history" >Payment</MyHeaderWithArrow>
-      <form autoComplete="on">
+      <form autoComplete="off">
         <Grid container direction="column" justify="flex-start"  >
           <TextField
             fullWidth
