@@ -183,7 +183,7 @@ const dropOff = (request_id, depart_time, callback) => {
 }
 
 const updateTripStatus = async (trip_id, status, callback) => {
-
+  
   // status : 0 - pick up , 1 - drop off , 2 - cancel
   const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
   const recent_status = que[0].status;
