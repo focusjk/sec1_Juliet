@@ -14,7 +14,6 @@ const refundTransaction = async (request_id,trip_id,created_at,callback) => {
     createTransaction(trip_price,member_id,created_at,type,callback);
     const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`,[member_id]);
     const {amount:member_wallet_amount} = wallet_amount[0];
-    console.log('m =',member_wallet_amount);
     const updated_amount = trip_price+member_wallet_amount;
     return db.query(`UPDATE members SET members.amount = ? WHERE members.id = ?`,[updated_amount,member_id],callback);
 }
