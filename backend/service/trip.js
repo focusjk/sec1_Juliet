@@ -201,16 +201,16 @@ const updateTripStatus = async (trip_id, status, callback) => {
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
-const cancelRequest = async (request_id,cancel_time, callback) => {
+const cancelRequest = async (request_id, cancel_time, callback) => {
   const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
 
   if (request_status == 'pending' || request_status == 'approved') {
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else if (request_status == 'paid') {
-    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
-    const {trip_id} = trip[0];
-    transactionService.refundTransaction(request_id,trip_id,cancel_time);
+    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`, [request_id]);
+    const { trip_id } = trip[0];
+    transactionService.refundTransaction(request_id, trip_id, cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
     callback(false);
