@@ -173,14 +173,18 @@ const TripBoxHis = ({ history, data, fetchData }) => {
           {!cancelable() && <MyGreyButton disabled>Cancel</MyGreyButton>}
 
           {request_status == "approved" && (
-            <MyButton onClick={() => {}}>Payment</MyButton>
+            <MyButton
+              onClick={() => history.push("/payment/" + id + "/request")}
+            >
+              Payment
+            </MyButton>
           )}
           {request_status != "approved" && (
             <MyGreyButton disabled>Payment</MyGreyButton>
           )}
 
           {request_status == "done" && (
-            <MyButton onClick={() => {}}>Review</MyButton>
+            <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
           )}
           {request_status != "done" && (
             <MyGreyButton disabled>Review</MyGreyButton>
