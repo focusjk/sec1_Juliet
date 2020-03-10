@@ -213,7 +213,7 @@ const cancelTrip = async (request_id,cancel_time, callback) => {
     transactionService.refundTransaction(request_id,trip_id,cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
-    callback(true)
+    callback(false);
     return
   }
 }
