@@ -194,9 +194,9 @@ const updateTripStatus = async (trip_id, status, callback) => {
     trip_status = 2;
   } else if (recent_status == 'on going' && status == 1 && amount_passenger_left == 0) { //drop-off
     trip_status = 4;
-    const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending','paid')`,[trip_id]);
+    const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending')`, [trip_id]);
     const id_left_request = left_requests.map(i => i.id)
-    const left_request_update= await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)` ,[id_left_request]);
+    const left_request_update = await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)`, [id_left_request]);
   } else {
     trip_status = recent_status;
   }
