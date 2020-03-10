@@ -225,17 +225,23 @@ const cancelTrip = async (request_id,cancel_time, callback) => {
 }
 
 const cancelTripForDriver = async (trip_id, callback) => {
-  const request_id = await util.promisifyQuery(`SELECT request.id 
+  const cancel_request_id = await util.promisifyQuery(`SELECT request.id 
                                                 FROM trip LEFT JOIN request ON trip.id = request.trip_id 
-                                                WHERE trip.id = ?`, [trip_id]);
-  var req_id = []
-  for(const id in request_id){
-    req_id.push(request_id[id].id);
+                                                WHERE trip.id = ? AND trip.status = 'scheduled'
+                                                AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+  let cancel_req_id = cancel_request_id.map(data => data.id);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const refund_request_id = await util.promisifyQuery(`SELECT request.id 
+                                                      FROM trip LEFT JOIN request ON trip.id = request.trip_id 
+                                                      WHERE trip.id = ? AND trip.status = 'scheduled'
+                                                      AND request.request_status = 'paid'`, [trip_id])
+  let refund_req_id = refund_request_id.map(data => data.id);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if (cancel_req_id.length != 0){
+    const cancel_request = await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [cancel_req_id]);
   }
 
-  await util.promisifyQuery(`UPDATE trip SET status = 'canceled' WHERE id = ?`, [trip_id]);
-  return db.query(`UPDATE request SET request_status = 'canceled' 
-                  WHERE id IN (?)`, [req_id] , callback);
+  return db.query(`UPDATE trip SET status = 'canceled' WHERE id = ? AND status = 'scheduled'`, [trip_id], callback);
 }
 
 module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip, cancelTripForDriver };
