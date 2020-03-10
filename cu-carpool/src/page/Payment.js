@@ -76,6 +76,7 @@ const Payment = ({ history }) => {
 
   const handleClose = () => {
     setOpen(false);
+    history.push("/trip-history");
   };
 
   const getPrice = async () => {
@@ -132,7 +133,9 @@ const Payment = ({ history }) => {
       card_expiry_date: "",
       card_code: ""
     });
+    setErrorMessage("");
   }
+
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history" >Payment</MyHeaderWithArrow>
