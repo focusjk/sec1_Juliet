@@ -147,15 +147,15 @@ router.post('/cancelRequest', (req, res, next) => {
   })
 });
 
-router.post('/cancelTripForDriver', (req, res, next) => {
-  const {id: trip_id} = req.body;
+router.post('/cancelTrip', (req, res, next) => {
+  const { trip_id } = req.body;
   const cancel_time = util.timeformatter(new Date());
-  tripService.cancelTripForDriver({ trip_id, cancel_time }, (err, result) => {
+  tripService.cancelTrip({ trip_id, cancel_time }, (err, result) => {
     if (err) {
-      res.json({ success: false, message: 'Cannot cancel your trip' });
+      res.json({ success: false, message: 'Cannot access database' });
     } else {
-      if (result.affectedRows == 0){
-        res.json({ success: false, message: 'Cannot cancel your trip' });
+      if (result.affectedRows == 0) {
+        res.json({ success: false, message: 'Your trip cannot be canceled' });
       }
       else {
         res.json({ success: true });
