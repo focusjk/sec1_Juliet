@@ -21,12 +21,15 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
     request_id,
     request_status,
     departure_detail,
-    destination_detail
+    destination_detail,
+    driver_departed_at
   } = data;
+  const [error,setError]=useState("");
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
-      const { success } = response.data;
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id:request_id, trip_id });
+      const { success,error } = response.data;
+      setError(error)
       if (success) {
         fetchData();
       }
@@ -36,7 +39,7 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id: request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id:request_id, trip_id });
       const { success } = response.data;
       if (success) {
         fetchData();
@@ -88,8 +91,8 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
           marginTop: "24px"
         }}
       >
-        {request_status == 'paid' && <MyButton onClick={PickUp} >Pick up</MyButton>}
-        {request_status != 'paid' && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
         {request_status == 'on going' && <MyButton onClick={DropOff} >Drop off</MyButton>}
         {request_status != 'on going' && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
