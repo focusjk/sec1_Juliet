@@ -207,18 +207,22 @@ const cancelTrip = async (request_id,cancel_time, callback) => {
   console.log(request_status);
 
   if (request_status == 'pending' || request_status == 'approved') {
+    console.log('1');
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else if (request_status == 'paid') {
+    console.log('2');
     // transactionService.create( something ) TODO
     // TODO เขียน service ของ transaction แยก ตามที่บอกไว้ตอนประชุม
     // เขียน service (1) ที่ใช้ในการสร้าง transaction
     // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
     // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
     // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
-    const trip_id = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
+    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
+    const {trip_id} = trip[0];
     transactionService.refundTransaction(request_id,trip_id,cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
+    console.log('3');
     callback(true)
     return
   }
