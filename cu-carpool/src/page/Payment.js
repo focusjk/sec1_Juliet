@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import { Input, Grid, TextField } from "@material-ui/core";
 import { MyButton, MyWhiteButton } from "../component/MyButton";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const Payment = ({ history }) => {
   const { request_id } = useParams();
   const [errorMessage, setErrorMessage] = useState('')
   const [price, setPrice] = useState(0)
+  const [paid_at, setPaidAt] = useState('')
   const [form, setForm] = useState({
-    card_number: "4916350758733533",
-    card_holder_name: "Boonyawee Kiatsilp",
-    card_expiry_date: "02/2014",
-    card_code: "456"
+    card_number: "",
+    card_holder_name: "",
+    card_expiry_date: "",
+    card_code: ""
   });
   const [error, setError] = useState({
     card_number: false,
@@ -34,24 +39,76 @@ const Payment = ({ history }) => {
       form.card_expiry_date &&
       form.card_code
   };
-  useEffect(() => {
-    //YIN TODO: get price by request id -> setPrice
+
+  function getModalStyle() {
+    const top = 50;
+    const left = 50;
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`
+    };
   }
-    , [])
+
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      position: "absolute",
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      width: '250px'
+    },
+    margin: {
+      marginBottom: 16
+    }
+  }));  
+
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    history.push("/trip-history");
+  };
+
+  const getPrice = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/request/price", {
+        request_id
+      });
+      const { success, price } = response.data;
+      setPrice(price);
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+
+  useEffect(() => {
+    getPrice();
+  }
+    , [request_id])
+
   const handlePayment = async () => {
     if (validate()) {
       try {
         const response = await axios.post("http://localhost:4000/user/payment", {
           id: request_id,
           ...form,
-          price: 200
-          //YIN TODO แก้เป็น price เฉยๆ
+          price
         });
-        const { success } = response.data;
+        const { success, id, request_status, paid_at } = response.data;
         if (success) {
-          //history.push("/trip-history");
-          console.log(success + response);
-          setErrorMessage(null)
+            handleOpen();
+            setPaidAt(paid_at);    
+          setErrorMessage(null);
         } else {
           setErrorMessage("what's wrong")
         }
@@ -70,11 +127,13 @@ const Payment = ({ history }) => {
       card_expiry_date: "",
       card_code: ""
     });
+    setErrorMessage("");
   }
+
   return (
     <div>
       <MyHeaderWithArrow goto="/trip-history" >Payment</MyHeaderWithArrow>
-      <form autoComplete="on">
+      <form autoComplete="off">
         <Grid container direction="column" justify="flex-start"  >
           <TextField
             fullWidth
@@ -100,13 +159,11 @@ const Payment = ({ history }) => {
               setErrorMessage('')
             }}
           />
-          <Grid container direction="row" justify="space-between" style={{ marginBottom: "5px" }}>
-            <div>
+          <div style={{display: 'flex', direction:"row", justifyContent: "space-between"}}>
               <TextField
-                fullWidth
                 required
                 label="Expiry Date"
-                style={{ marginTop: 25 }}
+                style={{ marginTop: 25, width:"152px" }}
                 value={form.card_expiry_date}
                 error={error.card_expiry_date}
                 onChange={e => {
@@ -114,13 +171,10 @@ const Payment = ({ history }) => {
                   setErrorMessage('')
                 }}
               />
-            </div>
-            <div>
               <TextField
-                fullWidth
                 required
                 label="CVV"
-                style={{ marginTop: 25 }}
+                style={{ marginTop: 25, width:"152px" }}
                 value={form.card_code}
                 error={error.card_code}
                 onChange={e => {
@@ -128,18 +182,32 @@ const Payment = ({ history }) => {
                   setErrorMessage('')
                 }}
               />
-            </div>
-          </Grid>
+          </div>
           {error !== "" &&
             <div style={{ marginTop: 20, color: "red" }}>{errorMessage}</div>
           }
           <Grid container direction="column" alignItems='flex-end' >
             <div style={{ marginTop: 25, marginBottom: 5 }}>Payment Amount</div>
-            <div style={{ marginTop: 5, marginBottom: 60, fontSize: "20px" }}>200 ฿</div>
+            <div style={{ marginTop: 5, marginBottom: 60, fontSize: "20px" }}>{price} ฿</div>
           </Grid>
-          <Grid container direction="row" justify="space-evenly">
-            <MyButton style={{ width: 150 }} onClick={handlePayment}>Pay</MyButton>
-            <MyWhiteButton style={{ width: 150 }} onClick={clearData}>Cancel</MyWhiteButton>
+          <Grid container direction="row" justify="space-between">
+            <MyButton style={{ width: 140 }} onClick={handlePayment}>Pay</MyButton>
+              <Modal
+                  open={open}
+                  onClose={handleClose}
+              >
+                  <div style={getModalStyle()} className={classes.paper}>
+                  <div style={{marginTop:"15px",display: 'flex', justifyContent: "center"}}>
+                  <CheckCircleIcon color="secondary" style={{ fontSize:40, marginBottom:"10px" }} />
+                  </div>
+                    <MyHeader style={{ marginBottom:"13px" }}>Payment Successful</MyHeader>
+                    <div style={{marginBottom:"13px",display: 'flex', justifyContent: "center",border: "0.5px solid #BDBDBD"}}/>
+                    <div style={{ display: "flex", alignItems: "flex-end" }}>Paid At: {paid_at} </div>
+                    <div style={{ display: "flex", alignItems: "flex-end" }}>Payment Amount: {price} ฿</div>
+                    <Button onClick={handleClose} color="secondary" style={{ marginTop: "15px", display: 'flex',fontSize: 16, flexGrow: 1 }}>OK</Button>
+                  </div>
+                </Modal>
+            <MyWhiteButton style={{ width: 140 }} onClick={clearData}>Cancel</MyWhiteButton>
           </Grid>
         </Grid>
       </form>

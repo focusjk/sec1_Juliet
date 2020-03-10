@@ -14,4 +14,16 @@ router.post('/',(req, res, next) => {
         }
     });
 });
+
+router.post('/price',(req, res, next) => {
+    const {request_id} = req.body;
+    requestService.getPrice(request_id,(err,result) => {
+        if (err){
+            res.json({success: false, error: err.sqlMessage, message: "Cannot access database"});
+        } else {
+            res.json({success: true, price:result[0]['price']});
+        }
+    });
+});
+
 module.exports = router;
