@@ -183,7 +183,7 @@ const dropOff = (request_id, depart_time, callback) => {
 }
 
 const updateTripStatus = async (trip_id, status, callback) => {
-  
+
   // status : 0 - pick up , 1 - drop off , 2 - cancel
   const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
   const recent_status = que[0].status;
@@ -195,12 +195,15 @@ const updateTripStatus = async (trip_id, status, callback) => {
   } else if (recent_status == 'on going' && status == 1 && amount_passenger_left == 0) { //drop-off
     trip_status = 4;
     const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending','paid')`,[trip_id]);
-    const left = await util.promisifyQuery(`SELECT count(*) as leftover FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending','paid')`,[trip_id]);
-    const {leftover:left_req} = left[0];
-    for (i=0;i<left_req;i++){
-      var req = left_requests[i].id
-      await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id = ?`,[req]);
-    }
+    // const left = await util.promisifyQuery(`SELECT count(*) as leftover FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending','paid')`,[trip_id]);
+    // const {leftover:left_req} = left[0];
+    const id_left_request = left_requests.map(i => i.id)
+    console.log('id left req: ',id_left_request); 
+    const left_request_update= await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)` ,[id_left_request]);
+    // for (i=0;i<left_req;i++){
+    //   var req = left_requests[i].id
+    //   await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id = ?`,[req]);
+    // }
   } else {
     trip_status = recent_status;
   }
