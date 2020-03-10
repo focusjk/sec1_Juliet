@@ -11,9 +11,7 @@ class MyTrip extends React.Component {
   }
   fetchData = async () => {
     const response = await axios.get("http://localhost:4000/driver/mytrip", {
-      params: {
-        member_id: this.props.user.id
-      }
+      params: { member_id: this.props.user.id }
     });
     const { success, trip } = response.data;
     if (success) {
@@ -24,7 +22,7 @@ class MyTrip extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader style={{ marginBottom: "30px" }}>My Trip</MyHeader>
+        <MyHeader style={{ marginBottom: "25px" }}>My Trip</MyHeader>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((trip, index) => (
           <TripBox key={index} data={trip} />
