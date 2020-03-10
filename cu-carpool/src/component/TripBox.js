@@ -1,13 +1,13 @@
 import React from "react";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
-import axios from "axios";
 
-const TripBox = ({ history, data }) => {
+const TripBox = ({ history, data, fetchData }) => {
   const {
     trip_id,
     start_datetime,
@@ -25,19 +25,19 @@ const TripBox = ({ history, data }) => {
     departure_province,
     destination_province
   } = data;
-
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
-
   const handleCancel = async () => {
-    console.log("yes");
-    // TODO
-    const response = await axios.post("http://localhost:4000/trip/cancelTrip", {
-      id: trip_id
-    });
-    console.log(response);
-    const { success } = response.data;
-    if (success) {
-      this.fetchData();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/trip/cancelTripForDriver",
+        { id: trip_id }
+      );
+      const { success } = response.data;
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
