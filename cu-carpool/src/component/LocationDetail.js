@@ -35,10 +35,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LocationDetail = ({trip_id}) => {
+const LocationDetail = ({trip_id,departure_detail,destination_detail}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [trip, setTrip] = React.useState("");
   const handleOpen = () => {
     setOpen(true);
   };
@@ -46,23 +45,7 @@ const LocationDetail = ({trip_id}) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const fetchData = async () => {
-    try {
-      //TO-DO เดี๋ยวรอ backend แล้วเปี่ยนเป็นของ request
-      const response = await axios.get("http://localhost:4000/trip/detail", {params: {
-        tripId: trip_id
-      } });
-      const { success,trip } = response.data;
-      if (success) {
-        setTrip(trip);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-   useEffect(() => {
-    fetchData();
-  }, []);
+  
   return (
     <div>
       <div className={classes.link} onClick={handleOpen}>
@@ -75,13 +58,13 @@ const LocationDetail = ({trip_id}) => {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <MyHeader>Location detail</MyHeader>
-          <div className={classes.margin}>Pick up:{trip.departure_detail}</div>
+          <div className={classes.margin}>Pick up:{departure_detail}</div>
           <MapData
             fixed
             longitude={100.493117}
             latitude={13.769059}
           />
-          <div className={classes.margin}>Destination:{trip.destination_detail}</div>
+          <div className={classes.margin}>Destination:{destination_detail}</div>
           <MapData
             fixed
             longitude={100.493117}

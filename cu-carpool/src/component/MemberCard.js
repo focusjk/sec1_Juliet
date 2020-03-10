@@ -19,7 +19,9 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
     phone_number,
     photo,
     request_id,
-    request_status
+    request_status,
+    departure_detail,
+    destination_detail
   } = data;
   const PickUp = async () => {
     try {
@@ -64,7 +66,7 @@ const MemberCard = ({ data, trip_id,fetchData }) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <LocationDetail trip_id={trip_id} />
+          <LocationDetail trip_id={trip_id} departure_detail={departure_detail} destination_detail={destination_detail} />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
