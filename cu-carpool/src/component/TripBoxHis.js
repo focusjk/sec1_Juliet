@@ -35,7 +35,7 @@ const TripBoxHis = ({ history, data, fetchData }) => {
   const cancel = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/trip/cancelTrip",
+        "http://localhost:4000/trip/cancelRequest",
         { id }
       );
       const { success } = response.data;
@@ -173,14 +173,18 @@ const TripBoxHis = ({ history, data, fetchData }) => {
           {!cancelable() && <MyGreyButton disabled>Cancel</MyGreyButton>}
 
           {request_status == "approved" && (
-            <MyButton onClick={() => {}}>Payment</MyButton>
+            <MyButton
+              onClick={() => history.push("/payment/" + id + "/request")}
+            >
+              Payment
+            </MyButton>
           )}
           {request_status != "approved" && (
             <MyGreyButton disabled>Payment</MyGreyButton>
           )}
 
           {request_status == "done" && (
-            <MyButton onClick={() => {}}>Review</MyButton>
+            <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
           )}
           {request_status != "done" && (
             <MyGreyButton disabled>Review</MyGreyButton>

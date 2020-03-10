@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Map from "../component/Map"
@@ -34,7 +36,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RequestJoin = ({ trip_id, member_id }) => {
+const RequestJoin = ({ trip_id, member_id,history }) => {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   //const [joined,setJoined] = React.useState(false);
@@ -46,6 +49,7 @@ const RequestJoin = ({ trip_id, member_id }) => {
     destination_longtitude: 100.493117,
     destination_detail: ""
   });
+  
   const handleOpen = () => {
     setOpen(true);
   };
@@ -75,8 +79,9 @@ const RequestJoin = ({ trip_id, member_id }) => {
       const response = await axios.post("http://localhost:4000/request", { trip_id,member_id, ...data});
       const { success } = response.data;
       if (success) {
-	//fetchData();
 	setOpen(false);
+        const path = '/trip-history';
+    	history.push(path);
       }
     } catch (e) {
       console.log(e);
@@ -120,4 +125,4 @@ const RequestJoin = ({ trip_id, member_id }) => {
     </div>
   );
 }
-export default RequestJoin
+export default withRouter(RequestJoin)

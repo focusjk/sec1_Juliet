@@ -164,7 +164,7 @@ const getAllPassengerForDriver = (trip_id, callback) => {
 
 const pickUpMember = (request_id, pickup_time, callback) => {
   return db.query(`UPDATE request
-		//ตรงนี้ไม่เปลี่ยน status หรอ
+		
                    SET driver_departed_at = ?
                    WHERE id = ? `, [pickup_time, request_id], callback);
 }
@@ -202,27 +202,21 @@ const updateTripStatus = async (trip_id, status, callback) => {
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
-const cancelTrip = async (request_id,cancel_time, callback) => {
+const cancelRequest = async (request_id, cancel_time, callback) => {
   const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
-  console.log(request_status);
 
   if (request_status == 'pending' || request_status == 'approved') {
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else if (request_status == 'paid') {
-    // transactionService.create( something ) TODO
-    // TODO เขียน service ของ transaction แยก ตามที่บอกไว้ตอนประชุม
-    // เขียน service (1) ที่ใช้ในการสร้าง transaction
-    // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
-    // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
-    // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
-    const trip_id = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`,[request_id]);
-    transactionService.refundTransaction(request_id,trip_id,cancel_time);
+    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`, [request_id]);
+    const { trip_id } = trip[0];
+    transactionService.refundTransaction(request_id, trip_id, cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
-    callback(true)
+    callback(false);
     return
   }
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip };
+module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelRequest };

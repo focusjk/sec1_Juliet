@@ -25,12 +25,15 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
     departure_longtitude,
     departure_latitude,
     destination_longtitude,
-    destination_latitude
+    destination_latitude,
+    driver_departed_at
   } = data;
+  const [error, setError] = useState("");
   const PickUp = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
-      const { success } = response.data;
+      const { success, error } = response.data;
+      setError(error)
       if (success) {
         fetchData();
       }
@@ -100,8 +103,8 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
           marginTop: "24px"
         }}
       >
-        {request_status == 'paid' && <MyButton onClick={PickUp} >Pick up</MyButton>}
-        {request_status != 'paid' && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
         {request_status == 'on going' && <MyButton onClick={DropOff} >Drop off</MyButton>}
         {request_status != 'on going' && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
