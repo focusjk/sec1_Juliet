@@ -43,7 +43,7 @@ const Payment = ({ history }) => {
   function getModalStyle() {
     const top = 50;
     const left = 50;
-  
+
     return {
       top: `${top}%`,
       left: `${left}%`,
@@ -64,12 +64,12 @@ const Payment = ({ history }) => {
     margin: {
       marginBottom: 16
     }
-  }));  
+  }));
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -106,8 +106,8 @@ const Payment = ({ history }) => {
         });
         const { success, id, request_status, paid_at } = response.data;
         if (success) {
-            handleOpen();
-            setPaidAt(paid_at);    
+          handleOpen();
+          setPaidAt(paid_at);
           setErrorMessage(null);
         } else {
           setErrorMessage("what's wrong")
@@ -159,29 +159,29 @@ const Payment = ({ history }) => {
               setErrorMessage('')
             }}
           />
-          <div style={{display: 'flex', direction:"row", justifyContent: "space-between"}}>
-              <TextField
-                required
-                label="Expiry Date"
-                style={{ marginTop: 25, width:"152px" }}
-                value={form.card_expiry_date}
-                error={error.card_expiry_date}
-                onChange={e => {
-                  setForm({ ...form, card_expiry_date: e.target.value });
-                  setErrorMessage('')
-                }}
-              />
-              <TextField
-                required
-                label="CVV"
-                style={{ marginTop: 25, width:"152px" }}
-                value={form.card_code}
-                error={error.card_code}
-                onChange={e => {
-                  setForm({ ...form, card_code: e.target.value });
-                  setErrorMessage('')
-                }}
-              />
+          <div style={{ display: 'flex', direction: "row", justifyContent: "space-between" }}>
+            <TextField
+              required
+              label="Expiry Date"
+              style={{ marginTop: 25, width: "152px" }}
+              value={form.card_expiry_date}
+              error={error.card_expiry_date}
+              onChange={e => {
+                setForm({ ...form, card_expiry_date: e.target.value });
+                setErrorMessage('')
+              }}
+            />
+            <TextField
+              required
+              label="CVV"
+              style={{ marginTop: 25, width: "152px" }}
+              value={form.card_code}
+              error={error.card_code}
+              onChange={e => {
+                setForm({ ...form, card_code: e.target.value });
+                setErrorMessage('')
+              }}
+            />
           </div>
           {error !== "" &&
             <div style={{ marginTop: 20, color: "red" }}>{errorMessage}</div>
@@ -192,21 +192,21 @@ const Payment = ({ history }) => {
           </Grid>
           <Grid container direction="row" justify="space-between">
             <MyButton style={{ width: 140 }} onClick={handlePayment}>Pay</MyButton>
-              <Modal
-                  open={open}
-                  onClose={handleClose}
-              >
-                  <div style={getModalStyle()} className={classes.paper}>
-                  <div style={{marginTop:"15px",display: 'flex', justifyContent: "center"}}>
-                  <CheckCircleIcon color="secondary" style={{ fontSize:40, marginBottom:"10px" }} />
-                  </div>
-                    <MyHeader style={{ marginBottom:"13px" }}>Payment Successful</MyHeader>
-                    <div style={{marginBottom:"13px",display: 'flex', justifyContent: "center",border: "0.5px solid #BDBDBD"}}/>
-                    <div style={{ display: "flex", alignItems: "flex-end" }}>Paid At: {paid_at} </div>
-                    <div style={{ display: "flex", alignItems: "flex-end" }}>Payment Amount: {price} ฿</div>
-                    <Button onClick={handleClose} color="secondary" style={{ marginTop: "15px", display: 'flex',fontSize: 16, flexGrow: 1 }}>OK</Button>
-                  </div>
-                </Modal>
+            <Modal
+              open={open}
+              onClose={handleClose}
+            >
+              <div style={getModalStyle()} className={classes.paper}>
+                <div style={{ marginTop: "15px", display: 'flex', justifyContent: "center" }}>
+                  <CheckCircleIcon color="secondary" style={{ fontSize: 40, marginBottom: "10px" }} />
+                </div>
+                <MyHeader style={{ marginBottom: "13px" }}>Payment Successful</MyHeader>
+                <div style={{ marginBottom: "13px", display: 'flex', justifyContent: "center", border: "0.5px solid #BDBDBD" }} />
+                <div style={{ display: "flex", alignItems: "flex-end" }}>Paid At: {paid_at} </div>
+                <div style={{ display: "flex", alignItems: "flex-end" }}>Payment Amount: {price} ฿</div>
+                <Button onClick={handleClose} color="secondary" style={{ marginTop: "15px", display: 'flex', fontSize: 16, flexGrow: 1 }}>OK</Button>
+              </div>
+            </Modal>
             <MyWhiteButton style={{ width: 140 }} onClick={clearData}>Cancel</MyWhiteButton>
           </Grid>
         </Grid>

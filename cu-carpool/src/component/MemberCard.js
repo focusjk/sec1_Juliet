@@ -105,8 +105,8 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
       >
         {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
         {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
-        {request_status == 'on going' && <MyButton onClick={DropOff} >Drop off</MyButton>}
-        {request_status != 'on going' && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
+        {request_status == 'on going' && driver_departed_at != null && <MyButton onClick={DropOff} >Drop off</MyButton>}
+        {(request_status != 'on going' || driver_departed_at == null) && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
     </Paper>
   );
