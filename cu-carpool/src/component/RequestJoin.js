@@ -8,7 +8,7 @@ import Map from "../component/Map"
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import { MyHeader } from "../component/MyTitle";
-import { MyButton,MyGreyButton } from "../component/MyButton";
+import { MyButton, MyGreyButton } from "../component/MyButton";
 
 function getModalStyle() {
   const top = 50;
@@ -36,10 +36,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RequestJoin = ({ trip_id, member_id,history }) => {
-  
+const RequestJoin = ({ trip_id, member_id, history }) => {
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [err, setErr] = React.useState(null);
   //const [joined,setJoined] = React.useState(false);
   const [form, setForm] = useState({
     departure_latitude: 13.769059,
@@ -49,7 +50,7 @@ const RequestJoin = ({ trip_id, member_id,history }) => {
     destination_longtitude: 100.493117,
     destination_detail: ""
   });
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -76,20 +77,25 @@ const RequestJoin = ({ trip_id, member_id,history }) => {
   const join = async () => {
     try {
       const { ...data } = form;
-      const response = await axios.post("http://localhost:4000/request", { trip_id,member_id, ...data});
-      const { success } = response.data;
+      const response = await axios.post("http://localhost:4000/request", { trip_id, member_id, ...data });
+      const { success, message } = response.data;
+      console.log(response.data)
       if (success) {
-	setOpen(false);
+        setOpen(false);
+        console.log('ficus')
         const path = '/trip-history';
-    	history.push(path);
+        history.push(path);
+      } else {
+        setErr(message)
       }
     } catch (e) {
+      setErr('Cannot access database')
       console.log(e);
     }
   };
   return (
     <div>
-	<MyButton type="button" onClick={handleOpen}>
+      <MyButton type="button" onClick={handleOpen}>
         Join
        </MyButton>
       <Modal
@@ -101,21 +107,24 @@ const RequestJoin = ({ trip_id, member_id,history }) => {
           <TextField
             label="Pick up"
             className={classes.margin}
-	    value={form.departure_detail}
+            value={form.departure_detail}
             onChange={e => {
-              setForm({ ...form ,departure_detail: e.target.value });
+              setForm({ ...form, departure_detail: e.target.value });
+              setErr(null)
             }}
           />
           <Map setLocation={(departure_longtitude, departure_latitude) => setForm({ ...form, departure_longtitude, departure_latitude })} />
           <TextField
             label="Destination"
             className={classes.margin}
-	    value={form.destination_detail}
+            value={form.destination_detail}
             onChange={e => {
-              setForm({ ...form , destination_detail: e.target.value });
+              setForm({ ...form, destination_detail: e.target.value });
+              setErr(null)
             }}
           />
           <Map setLocation={(destination_longtitude, destination_latitude) => setForm({ ...form, destination_longtitude, destination_latitude })} />
+          {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "25px", display: 'flex' }}>
             <Button onClick={join} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
             <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
