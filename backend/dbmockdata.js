@@ -106,12 +106,12 @@ const request = [
         member_id: 4
     }
 ]
-var mock = () => {
+var mock = async () => {
     //members
     var created_at = util.timeformatter(new Date());
     var amount = 0;
     var photo = userimage
-    members.map(item => userService.register(item.username, { ...item, photo }, created_at, amount, (err, result) => {
+    members.map(async (item) => await userService.register(item.username, { ...item, photo }, created_at, amount, (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -120,7 +120,7 @@ var mock = () => {
     }))
 
     //admin
-    db.query(
+    await db.query(
         `insert into admin (username, password) values ('admin','1234')`, (err, result) => {
             if (err) {
                 console.log(err);
@@ -132,8 +132,8 @@ var mock = () => {
 
     //request to be driver
     var drivers = [1, 2]
-    drivers.map(i => {
-        driverService.driverReq(i, { driving_license: "1234567890123456789012345", edited_at: created_at }, (err, result) => {
+    drivers.map(async (i) => {
+        await driverService.driverReq(i, { driving_license: "1234567890123456789012345", edited_at: created_at }, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -143,8 +143,8 @@ var mock = () => {
     })
 
     //approved driver
-    drivers.map(i =>
-        adminService.driverApprove('admin', created_at, i, (err, result) => {
+    drivers.map(async (i) =>
+        await adminService.driverApprove('admin', created_at, i, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -158,8 +158,8 @@ var mock = () => {
     var departure_longtitude = 100.493117
     var destination_latitude = 13.747879
     var destination_longtitude = 100.493117
-    trip.map(item =>
-        tripService.createTrip(created_at, { ...item, departure_latitude, departure_longtitude, destination_latitude, destination_longtitude }, (err, result) => {
+    trip.map(async (item) =>
+        await tripService.createTrip(created_at, { ...item, departure_latitude, departure_longtitude, destination_latitude, destination_longtitude }, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -170,7 +170,7 @@ var mock = () => {
     )
 
     //request
-    request.map(({ trip_id, member_id }) => {
+    request.map(async ({ trip_id, member_id }) => {
         const data = {
             departure_latitude,
             departure_longtitude,
@@ -179,7 +179,7 @@ var mock = () => {
             departure_detail: 'test',
             destination_detail: 'test'
         }
-        requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
+        await requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -189,8 +189,8 @@ var mock = () => {
     })
 
     //report
-    request.map(({ member_id }) => {
-        reportService.createReport(created_at, { member_id, topic: "test", comment: "testtttttttttttttt" }, (err, result) => {
+    request.map(async ({ member_id }) => {
+        await reportService.createReport(created_at, { member_id, topic: "test", comment: "testtttttttttttttt" }, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -198,7 +198,10 @@ var mock = () => {
             }
         })
     })
-    db.end();
+
+    // console.log("Done!!!")
+    // console.log("click control+C to turn off")
+    // db.end();
 }
 
 mock()

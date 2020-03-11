@@ -1,6 +1,6 @@
 var db = require("../dbconnection");
 var transactionService = require('../service/transaction');
-var util = require('../util')
+var util = require('../util');
 
 const createTrip = (
   created_at,
@@ -176,7 +176,16 @@ const getInTheCar = (request_id, depart_time, callback) => {
                    WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const dropOff = (request_id, depart_time, callback) => {
+const dropOff = async (request_id, depart_time, callback) => {
+  const trip = await util.promisifyQuery(`SELECT trip.price,trip.owner FROM trip LEFT JOIN request ON trip.id = request.trip_id WHERE request.id = ?`, [request_id]);
+  const { price, owner } = trip[0];
+  const type = 2;
+  const time = util.timeformatter(new Date());
+  transactionService.createTransaction(price, owner, time, type);
+  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`, [owner]);
+  const { amount } = wallet_amount[0];
+  const updated_amount = amount + ((90 / 100) * price);
+  transactionService.updateWallet(updated_amount, owner);
   const req_status = 6;
   return db.query(`UPDATE request
                    SET request_status = ? , driver_arrived_at = ?
@@ -184,7 +193,6 @@ const dropOff = (request_id, depart_time, callback) => {
 }
 
 const updateTripStatus = async (trip_id, status, callback) => {
-
   // status : 0 - pick up , 1 - drop off , 2 - cancel
   const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
   const recent_status = que[0].status;
@@ -197,7 +205,9 @@ const updateTripStatus = async (trip_id, status, callback) => {
     trip_status = 4;
     const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending')`, [trip_id]);
     const id_left_request = left_requests.map(i => i.id)
-    const left_request_update = await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)`, [id_left_request]);
+    if (id_left_request.length > 0) {
+      await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)`, [id_left_request]);
+    }
   } else {
     trip_status = recent_status;
   }
