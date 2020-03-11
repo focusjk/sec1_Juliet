@@ -64,6 +64,8 @@ router.post('/member', (req, res, next) => {
     } else {
       const driver = result;
       tripService.getAllPassenger(trip_id, (err, result) => {
+        // Jedi TODO
+        // tripService.getAllPassengerForDriver(trip_id, (err, result) => {
         if (err) {
           res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
         } else {
@@ -147,5 +149,20 @@ router.post('/cancelRequest', (req, res, next) => {
   })
 });
 
-
+router.post('/cancelTrip', (req, res, next) => {
+  const { trip_id } = req.body;
+  const cancel_time = util.timeformatter(new Date());
+  tripService.cancelTrip({ trip_id, cancel_time }, (err, result) => {
+    if (err) {
+      res.json({ success: false, message: 'Cannot access database' });
+    } else {
+      if (result.affectedRows == 0) {
+        res.json({ success: false, message: 'Your trip cannot be canceled' });
+      }
+      else {
+        res.json({ success: true });
+      }
+    }
+  })
+})
 module.exports = router;
