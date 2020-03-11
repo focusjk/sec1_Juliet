@@ -53,7 +53,7 @@ var trip = [
         owner: 1,
         car_brand: "toyota",
         plate_license: "AB1234",
-        capacity: 4,
+        capacity: 2,
         departure_province: "Bangkok",
         destination_province: "Bangkok",
         price: 20,
@@ -96,11 +96,11 @@ var trip = [
 
 const request = [
     {
-        trip_id: 1,
-        member_id: 3
-    }, {
         trip_id: 2,
         member_id: 3
+    }, {
+        trip_id: 1,
+        member_id: 4
     }, {
         trip_id: 2,
         member_id: 4
