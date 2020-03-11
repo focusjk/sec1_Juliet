@@ -164,6 +164,7 @@ const getAllPassengerForDriver = (trip_id, callback) => {
 
 const pickUpMember = (request_id, pickup_time, callback) => {
   return db.query(`UPDATE request
+		
                    SET driver_departed_at = ?
                    WHERE id = ? `, [pickup_time, request_id], callback);
 }
@@ -198,12 +199,14 @@ const updateTripStatus = async (trip_id, status, callback) => {
   const recent_status = que[0].status;
   const passenger_left = await util.promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
   const { amount: amount_passenger_left } = passenger_left[0]
-
   var trip_status;
   if (recent_status == 'scheduled' && status == 0) { //pick up
     trip_status = 2;
   } else if (recent_status == 'on going' && status == 1 && amount_passenger_left == 0) { //drop-off
     trip_status = 4;
+    const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending')`, [trip_id]);
+    const id_left_request = left_requests.map(i => i.id)
+    const left_request_update = await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)`, [id_left_request]);
   } else {
     trip_status = recent_status;
   }
@@ -227,4 +230,35 @@ const cancelRequest = async (request_id, cancel_time, callback) => {
   }
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelRequest };
+const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
+  const request = await util.promisifyQuery(`SELECT request.id, request.request_status 
+                                                FROM trip LEFT JOIN request ON trip.id = request.trip_id
+                                                WHERE trip.id = ? AND trip.status = 'scheduled'
+                                                AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+  const request_id = request.map(data => data.id);
+
+  await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
+  request.map(({ id, request_status }) => {
+    if (request_status === 'paid') {
+      transactionService.refundTransaction(id, trip_id, cancel_time);
+    }
+  })
+  return db.query(`UPDATE trip SET status = 'canceled' WHERE id = ? AND status = 'scheduled'`, [trip_id], callback);
+}
+
+module.exports = {
+  createTrip,
+  searchTrip,
+  getTripDetail,
+  getOwnerDetail,
+  getAllPassenger,
+  getDriver,
+  getAllPassengerForDriver,
+  pickUpMember,
+  getInTheCar,
+  updateTripStatus,
+  dropOff,
+  cancelRequest,
+  cancelTrip
+};
+

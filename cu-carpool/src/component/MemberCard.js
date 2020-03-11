@@ -11,7 +11,7 @@ import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall';
 import LocationDetail from '../component/LocationDetail'
 
-const MemberCard = ({ data, trip_id }) => {
+const MemberCard = ({ data, trip_id, fetchData }) => {
   const {
     username,
     firstname,
@@ -19,14 +19,23 @@ const MemberCard = ({ data, trip_id }) => {
     phone_number,
     photo,
     request_id,
-    request_status
+    request_status,
+    departure_detail,
+    destination_detail,
+    departure_longtitude,
+    departure_latitude,
+    destination_longtitude,
+    destination_latitude,
+    driver_departed_at
   } = data;
+  const [error, setError] = useState("");
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/pickupMember", { request_id, trip_id });
-      const { success } = response.data;
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
+      const { success, error } = response.data;
+      setError(error)
       if (success) {
-        this.props.fetchData();
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -34,10 +43,10 @@ const MemberCard = ({ data, trip_id }) => {
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id: request_id, trip_id });
       const { success } = response.data;
       if (success) {
-        this.props.fetchData();
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -64,7 +73,15 @@ const MemberCard = ({ data, trip_id }) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <LocationDetail />
+          <LocationDetail
+            trip_id={trip_id}
+            departure_detail={departure_detail}
+            destination_detail={destination_detail}
+            departure_longtitude={departure_longtitude}
+            departure_latitude={departure_latitude}
+            destination_longtitude={destination_longtitude}
+            destination_latitude={destination_latitude}
+          />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
@@ -86,8 +103,8 @@ const MemberCard = ({ data, trip_id }) => {
           marginTop: "24px"
         }}
       >
-        {request_status == 'paid' && <MyButton onClick={PickUp} >Pick up</MyButton>}
-        {request_status != 'paid' && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
         {request_status == 'on going' && <MyButton onClick={DropOff} >Drop off</MyButton>}
         {request_status != 'on going' && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>

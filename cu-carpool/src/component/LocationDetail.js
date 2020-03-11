@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import MapData from "../component/MapData"
@@ -34,7 +35,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LocationDetail = () => {
+const LocationDetail = ({
+  trip_id,
+  departure_detail,
+  destination_detail,
+  departure_longtitude,
+  departure_latitude,
+  destination_longtitude,
+  destination_latitude
+}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -57,17 +66,17 @@ const LocationDetail = () => {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <MyHeader>Location detail</MyHeader>
-          <div className={classes.margin}>Pick up:xxxxxxxx</div>
+          <div className={classes.margin}>Pick up:{departure_detail}</div>
           <MapData
             fixed
-            longitude={100.493117}
-            latitude={13.769059}
+            longitude={departure_longtitude}
+            latitude={departure_latitude}
           />
-          <div className={classes.margin}>Destination:xxxxxxxx</div>
+          <div className={classes.margin}>Destination:{destination_detail}</div>
           <MapData
             fixed
-            longitude={100.493117}
-            latitude={13.769059}
+            longitude={destination_longtitude}
+            latitude={destination_latitude}
           />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={handleClose} color="secondary" style={{ marginTop: "16px", flexGrow: 1 }}>OK</Button>
