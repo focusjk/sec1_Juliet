@@ -110,7 +110,7 @@ const Payment = ({ history }) => {
           setPaidAt(paid_at);
           setErrorMessage(null);
         } else {
-          setErrorMessage("what's wrong")
+          setErrorMessage("Payment failed. Please try again.")
         }
       } catch (e) {
         setErrorMessage("Payment failed. Please try again.")
