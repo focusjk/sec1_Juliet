@@ -20,8 +20,8 @@ const refundTransaction = async (request_id,trip_id,created_at,callback) => {
     // return db.query(`UPDATE members SET members.amount = ? WHERE members.id = ?`,[updated_amount,member_id],callback);
 }
 
-const updateWallet = (amount,member_ID,callback) => {
-    return db.query(`UPDATE members SET members.amount = ? WHERE members.id = ?`,[updated_amount,member_id],callback);
+const updateWallet = (amount,member_id,callback) => {
+    return db.query(`UPDATE members SET members.amount = ? WHERE members.id = ?`,[amount,member_id],callback);
 } 
 
 module.exports = {createTransaction,refundTransaction,updateWallet}; 

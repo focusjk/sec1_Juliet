@@ -178,13 +178,13 @@ const getInTheCar = (request_id, depart_time, callback) => {
 
 const dropOff = async (request_id, depart_time, callback) => {
   const trip = await util.promisifyQuery(`SELECT trip.price,trip.owner FROM trip LEFT JOIN request ON trip.id = request.trip_id WHERE request.id = ?`,[request_id]);
-  const {trip_price: price,driver: owner} = trip[0];
+  const {price,owner} = trip[0];
   const type = 2;
   const time = util.timeformatter(new Date());
-  transactionService.createTransaction(trip_price,driver,time,type);
-  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`,[member_id]);
-  const {amount:member_wallet_amount} = wallet_amount[0];
-  const updated_amount = trip_price+member_wallet_amount;
+  transactionService.createTransaction(price,owner,time,type);
+  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`,[owner]);
+  const {amount} = wallet_amount[0];
+  const updated_amount = amount+((90/100)*price);
   transactionService.updateWallet(updated_amount,owner);
   const req_status = 6;
   return db.query(`UPDATE request
