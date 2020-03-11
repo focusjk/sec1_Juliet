@@ -10,7 +10,7 @@ router.post('/',(req, res, next) => {
         if (err){
             res.json({success: false, error: err.sqlMessage, message: "Cannot access database"});
         } else {
-            res.json({success: true});
+            res.json({success: true}); 
         }
     });
 });
