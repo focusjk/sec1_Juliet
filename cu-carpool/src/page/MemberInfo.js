@@ -3,14 +3,15 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
 import { MyButton, MyGreyButton } from '../component/MyButton';
-import { MemberInfoCard } from '../component/MemberInfoCard';
+import MemberInfoCard  from '../component/MemberInfoCard';
 import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { withStyles } from "@material-ui/core/styles";
-
-
+import Textfield from "@material-ui/core/Textfield";
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 
 const MyToggleButton = withStyles({
@@ -30,34 +31,8 @@ const MyToggleButton = withStyles({
   },
 })(ToggleButton);
 
+
 class MemberInfo extends React.Component {
-
-  state = { list: [], filteredList: [], mode: 0 }
-  componentDidMount() {
-    this.fetchData()
-  }
-  fetchData = async () => {
-    const response = await axios.get("http://localhost:4000/admin/report");
-    const { success, report } = response.data
-    if (success) {
-      this.setState({ list: report })
-    }
-    this.filter(this.state.mode)
-  }
- 
-  handleMode = (e, value) => {
-    if (value !== null) {
-      this.setState({ mode: value })
-      this.filter(value)
-    }
-  }
-
-  filter = mode => {
-    const { list } = this.state
-    let filteredList = []
-    filteredList = list
-    this.setState({ filteredList })
-  }
   render() {
     return (
 
@@ -65,14 +40,31 @@ class MemberInfo extends React.Component {
         <MyHeader style={{ justifyContent: 'left' }}>
           > Member Info
       </MyHeader>
-
+	<Textfield
+	  variant="outlined"
+          style={{
+    	  alignSelf: "center",
+	  width : "50%",
+	  marginBottom: 20,   
+	  }}
+	  placeholder=" Search by ID, name, username"
+          InputProps={{
+	  border:'transparent',
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+	/>
+	
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40 px' }}>
-          <ToggleButtonGroup exclusive value={this.state.mode} onChange={this.handleMode}>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={0}> All </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={1}> Active </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={2}> Banned </MyToggleButton>
+          <ToggleButtonGroup>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> All </MyToggleButton>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Active </MyToggleButton>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Banned </MyToggleButton>
           </ToggleButtonGroup>
-	  <MemberInfo />
+		<MemberInfoCard />
         </div>
       </Grid>
     )
