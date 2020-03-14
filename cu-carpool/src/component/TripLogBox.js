@@ -5,20 +5,37 @@ import Modal from "@material-ui/core/Modal";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import Button from "@material-ui/core/Button";
 import { Paper } from "@material-ui/core/";
-import { MyHeader,MyTitle, MyLink } from "../component/MyTitle";
+import { MyHeader,MyTitle } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "@material-ui/core/";
+import EmptyBox from '../component/EmptyBox';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import TripMember from "../component/TripMember";
 
-const TripLogBox = ({ history, data, fetchData }) => {
+const TripLogBox = ({ history, data }) => {
   const {
     trip_id,driver_id,start_datetime,status,car_brand,plate_license,price,created_at,departure_latitude,
     departure_longtitude,departure_detail,destination_latitude,destination_longtitude,destination_detail,username,firstname,lastname,photo
   } = data;
   const starttime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
-  const createtime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
+  const createtime = moment(created_at).format("MMMM Do YYYY h:mm a");
+
+  const [state, setState] = React.useState({ list: [] });
+  
+  const fetchData = async () => {
+    const response = await axios.get("http://localhost:4000/admin/tripMember?id="+trip_id);
+    const { success, members } = response.data
+    if (success) {
+      setState({ list: members })
+    }
+  }
+
 
   function getModalStyle() {
     const top = 50;
@@ -47,6 +64,8 @@ const TripLogBox = ({ history, data, fetchData }) => {
 
   const classes = useStyles();
 
+  const [expanded, setExpanded] = React.useState(false);
+    
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -56,6 +75,16 @@ const TripLogBox = ({ history, data, fetchData }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleClick = async () => {
+    if(expanded){
+      setExpanded(false)
+    }
+    else{
+      setExpanded(true);
+      fetchData();
+    }
+  }
 
   return (
     <Paper square variant="outlined"
@@ -78,7 +107,9 @@ const TripLogBox = ({ history, data, fetchData }) => {
                 <div> Price: {price}</div>
                 <div> Trip Created At: {createtime}</div>
             </div>
-            <MyLink onClick={handleOpen} style={{ marginBottom: 6 }} > see trip location detail </MyLink>
+            <Link onClick={handleOpen} style={{ color: "#C78899", textDecoration: "underline", fontSize: 14}}>
+              See trip location detail
+            </Link>
             <Modal open={open} onClose={handleClose}>
               <div style={getModalStyle()} className={classes.paper}>
                 <MyHeader style={{ marginBottom: "13px" }}>Location detail</MyHeader>
@@ -90,9 +121,19 @@ const TripLogBox = ({ history, data, fetchData }) => {
               </div>
             </Modal>
         </Paper>
-        <Paper square style={{display: "flex",justifyContent: "center",borderTop: '1px solid #BDBDBD'}}>
-            <ExpandMoreIcon fontSize="large"/>
-        </Paper>
+          <ExpansionPanel onClick={handleClick}>
+          <ExpansionPanelSummary>
+          <div style={{alignItems: 'center'}}><ExpandMoreIcon fontSize="large" style={{color:"grey"}}/></div>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <div >
+            <EmptyBox data={state.list} />
+            {state.list.map((members, index) => (
+              <TripMember key={index} data={members} />
+            ))}
+            </div>
+        </ExpansionPanelDetails>
+        </ExpansionPanel>    
     </Paper>
   );
 };

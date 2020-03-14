@@ -7,6 +7,7 @@ import { MyHeader,MyLink,MyTitle } from '../component/MyTitle'
 import { Paper } from "@material-ui/core/";
 import EmptyBox from '../component/EmptyBox';
 import TripLogBox from "../component/TripLogBox";
+import TripMember from "../component/TripMember";
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 class AdminTripLog extends React.Component {
@@ -33,7 +34,6 @@ class AdminTripLog extends React.Component {
         {this.state.list.map((trip, index) => (
           <TripLogBox key={index} data={trip} />
         ))}
-
       </Grid>
     )
   }
