@@ -96,6 +96,7 @@ const getAllTrip = (callback) => {
                   trip.car_brand, 
                   trip.plate_license, 
                   trip.price,
+                  trip.created_at,
                   members.username,
                   members.firstname,
                   members.lastname,
@@ -117,7 +118,7 @@ const getTripMember = (ID, callback) => {
                           members.firstname,
                           members.lastname,
                           members.photo
-                          FROM request left join members on request.member_id = members.id 
+                          FROM request LEFT JOIN members ON request.member_id = members.id 
                           WHERE request.trip_id = ? `,[ID],callback);
 };
 
