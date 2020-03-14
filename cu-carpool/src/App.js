@@ -27,6 +27,7 @@ import TripRequest from "./page/TripRequest";
 import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 import Payment from "./page/Payment";
+import AdminTrip from "./page/AdminTrip";
 
 
 const theme = createMuiTheme({
@@ -59,9 +60,9 @@ const App = () => {
   //for member
   // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-  //  const [user, setUser] = React.useState({ username: 'admin' });
+   const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -142,6 +143,9 @@ const App = () => {
                     </Route>
                     <Route path="/admin/report" exact>
                       <AdminReport user={user} />
+                    </Route>
+                    <Route path="/admin/trip" exact>
+                      <AdminTrip user={user} />
                     </Route>
                     <Redirect to="/admin/driver" />
                   </Switch>
