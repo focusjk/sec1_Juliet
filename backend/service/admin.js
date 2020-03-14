@@ -8,7 +8,6 @@ const login = (username, password, callback) => {
   );
 };
 
-// YIN
 const getAllMember = callback => {
   return db.query(
     `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,driving_license,
@@ -89,4 +88,37 @@ const isRead = ({ id, is_read }, callback) => {
                   WHERE id = ?`, [ is_read , id ] , callback);
 }
 
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
+const getAllTrip = (callback) => {
+  return db.query(`SELECT trip.id as trip_id,
+                  trip.owner as driver_id,
+                  trip.start_datetime,
+                  trip.status,
+                  trip.car_brand, 
+                  trip.plate_license, 
+                  trip.price,
+                  members.username,
+                  members.firstname,
+                  members.lastname,
+                  members.photo
+                  FROM trip INNER JOIN members ON trip.owner = members.id`,callback);
+}
+
+const getTripMember = (ID, callback) => {
+  return db.query(`SELECT 
+                          request.id AS request_id,
+                          request.driver_departed_at,
+                          request.driver_arrived_at,
+                          request.departed_at,
+                          request.request_status,
+                          request.created_at AS request_at,   
+                          request.paid_at,
+                          members.id AS member_id,
+                          members.username,
+                          members.firstname,
+                          members.lastname,
+                          members.photo
+                          FROM request left join members on request.member_id = members.id 
+                          WHERE request.trip_id = ? `,[ID],callback);
+};
+
+module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead, getAllTrip, getTripMember };
