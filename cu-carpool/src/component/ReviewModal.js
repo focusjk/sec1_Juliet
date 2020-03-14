@@ -84,7 +84,7 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
     //   console.log(response.data)
     //   if (success) {
     //     setOpen(false);
-    //     console.log('ficus')
+    //     console.log('review success')
     //     const path = '/trip-history';
     //     history.push(path);
     //   } else {
@@ -121,7 +121,6 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
           <TextField
             label="Comment"
             className={classes.margin}
-            // value="Hello"
             value={form.comment}
             multiline
             // InputProps={{
