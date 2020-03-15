@@ -33,6 +33,21 @@ const MyToggleButton = withStyles({
 
 
 class MemberInfo extends React.Component {
+  state = { list: [], filteredList: [], mode: 0 }
+  fetchData = async () => {
+    try {
+    const response = await axios.get("http://localhost:4000/admin/member");
+    const { success, member} = response.data;
+    if (success) {
+      this.setState({ list:member});
+    }
+    }catch (e) {
+      console.log(e);
+    }
+  }
+  componentDidMount() {
+    this.fetchData();
+  }
   render() {
     return (
 
@@ -64,8 +79,11 @@ class MemberInfo extends React.Component {
             <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Active </MyToggleButton>
             <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Banned </MyToggleButton>
           </ToggleButtonGroup>
-		<MemberInfoCard />
-        </div>
+        <EmptyBox data={this.state.list} />
+          {this.state.list.map((member,index) =>	
+	  <MemberInfoCard key={index} data={member}/>
+	)}
+	</div>
       </Grid>
     )
   }
