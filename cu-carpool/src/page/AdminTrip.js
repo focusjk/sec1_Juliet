@@ -2,14 +2,11 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { MyButton, MyWhiteButton } from '../component/MyButton';
-import { MyHeader,MyLink,MyTitle } from '../component/MyTitle'
+import { MyHeader } from '../component/MyTitle'
 import { Paper } from "@material-ui/core/";
 import EmptyBox from '../component/EmptyBox';
 import TripLogBox from "../component/TripLogBox";
-import TripMember from "../component/TripMember";
 
-const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 class AdminTripLog extends React.Component {
   state = { list: [] }
   componentDidMount() {

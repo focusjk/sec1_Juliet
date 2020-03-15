@@ -2,14 +2,12 @@ import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
-import { MyButton, MyGreyButton } from "../component/MyButton";
 import Button from "@material-ui/core/Button";
 import { Paper } from "@material-ui/core/";
 import { MyHeader,MyTitle } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "@material-ui/core/";
 import EmptyBox from '../component/EmptyBox';
@@ -36,7 +34,6 @@ const TripLogBox = ({ history, data }) => {
       setState({ list: members })
     }
   }
-
 
   function getModalStyle() {
     const top = 50;
@@ -122,7 +119,7 @@ const TripLogBox = ({ history, data }) => {
               </div>
             </Modal>
         </Paper>
-        <ExpansionPanel onClick={handleClick}>
+        <ExpansionPanel square onClick={handleClick}> 
           <ExpansionPanelSummary 
             expandIcon={<ExpandMoreIcon fontSize="large" style={{color:"grey"}}/>}>
           </ExpansionPanelSummary>
