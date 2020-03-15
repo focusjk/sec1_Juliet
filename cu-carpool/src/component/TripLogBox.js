@@ -17,6 +17,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import TripMember from "../component/TripMember";
+import Grid from '@material-ui/core/Grid';
 
 const TripLogBox = ({ history, data }) => {
   const {
@@ -89,12 +90,12 @@ const TripLogBox = ({ history, data }) => {
   return (
     <Paper square variant="outlined"
       style={{display: "flex",justifyContent: "space-between",flexDirection: "column",borderColor: "#BDBDBD",
-            marginBottom: "16px",maxWidth:700}}>
+            marginBottom: "16px",width:700}}>
         <Paper square elevation={0} style={{padding: 3,display: "flex",justifyContent: "space-between",backgroundColor: "#C78899"}}>
             <MyTitle style={{fontSize: "20px",color: "#FFFFFF",marginLeft: "6px"}}>{status}</MyTitle>
             <MyTitle style={{fontSize: "20px",color: "#FFFFFF",marginRight: "6px"}}>{starttime}</MyTitle>
         </Paper>
-        <Paper square elevation={0} style={{padding: 12,display: "flex",justifyContent: "space-between",flexDirection: "row"}}>
+        <Paper square elevation={0} variant="outlined" style={{padding: 12,display: "flex",justifyContent: "space-between",flexDirection: "row"}}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '150px', marginRight: '16px' }}>
                 <img src={photo} height={100} width={100} style={{ alignItems: 'center', borderRadius: "100%", marginBottom: "16px" }}/>
                 <div style={{ alignSelf: 'center' }}>{username}</div>
@@ -104,7 +105,7 @@ const TripLogBox = ({ history, data }) => {
                 <div> Driver's Name: {firstname} {lastname}</div>
                 <div> License Plate: {plate_license}</div>
                 <div> Car Brand: {car_brand}</div>
-                <div> Price: {price}</div>
+                <div> Price: {price} ฿</div>
                 <div> Trip Created At: {createtime}</div>
             </div>
             <Link onClick={handleOpen} style={{ color: "#C78899", textDecoration: "underline", fontSize: 14}}>
@@ -121,18 +122,18 @@ const TripLogBox = ({ history, data }) => {
               </div>
             </Modal>
         </Paper>
-          <ExpansionPanel onClick={handleClick}>
-          <ExpansionPanelSummary>
-          <div style={{alignItems: 'center'}}><ExpandMoreIcon fontSize="large" style={{color:"grey"}}/></div>
+        <ExpansionPanel onClick={handleClick}>
+          <ExpansionPanelSummary 
+            expandIcon={<ExpandMoreIcon fontSize="large" style={{color:"grey"}}/>}>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-          <div >
-            <EmptyBox data={state.list} />
-            {state.list.map((members, index) => (
-              <TripMember key={index} data={members} />
-            ))}
-            </div>
-        </ExpansionPanelDetails>
+            <Grid container direction="column" justify="center" alignItems="center" >
+              <EmptyBox data={state.list} />
+                {state.list.map((members, index) => (
+                  <TripMember key={index} data={members} />
+                ))}
+              </Grid>
+          </ExpansionPanelDetails>
         </ExpansionPanel>    
     </Paper>
   );

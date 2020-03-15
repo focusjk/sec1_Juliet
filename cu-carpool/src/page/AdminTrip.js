@@ -30,10 +30,12 @@ class AdminTripLog extends React.Component {
         <MyHeader style={{ justifyContent: 'left' }}>
           > Trip Log
         </MyHeader>
-        <EmptyBox data={this.state.list} />
-        {this.state.list.map((trip, index) => (
-          <TripLogBox key={index} data={trip} />
-        ))}
+        <Grid container direction="column" justify="center" alignItems="center" >
+          <EmptyBox data={this.state.list} />
+          {this.state.list.map((trip, index) => (
+            <TripLogBox key={index} data={trip} />
+          ))}
+        </Grid>
       </Grid>
     )
   }

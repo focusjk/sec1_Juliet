@@ -19,11 +19,21 @@ const TripMember = ({ history, data }) => {
     departure_latitude,departure_longtitude,departure_detail,destination_latitude,destination_longtitude,destination_detail,        
     member_id,username,firstname,lastname,photo 
   } = data;
-  const requesttime = moment(request_at).format("MMMM Do YYYY h:mm a");
-  const paidtime = moment(paid_at).format("MMMM Do YYYY h:mm a");
-  const arrivetime = moment(driver_arrived_at).format("MMMM Do YYYY h:mm a");  
-  const departtime = moment(driver_departed_at).format("MMMM Do YYYY h:mm a");
-  const departat = moment(departed_at).format("MMMM Do YYYY h:mm a");
+
+  function timeformat(time){
+    if(time != null){
+      return moment(time).format("MMMM Do YYYY h:mm a");
+    }
+    else{
+      return "-";
+    }
+  }
+
+  const requesttime = timeformat(request_at);
+  const paidtime = timeformat(paid_at);
+  const arrivetime = timeformat(driver_arrived_at);
+  const departtime = timeformat(driver_departed_at);
+  const departat = timeformat(departed_at);
 
   function getModalStyle() {
     const top = 50;
@@ -73,9 +83,9 @@ const TripMember = ({ history, data }) => {
   };
 
   return (
-    <Paper square elevation={0} variant="outlined"
+    <Paper square elevation={0} variant="outlined" 
       style={{display: "flex",justifyContent: "space-between",flexDirection: "column",borderColor: "#BDBDBD",
-            marginBottom: "16px", width:650}}>
+            marginBottom: "-1px", width:650}}>
         <Paper square elevation={0} style={{padding: 12,display: "flex",justifyContent: "space-between",flexDirection: "row",backgroundColor: "#f2f2f2"}}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img src={photo} height={50} width={50} style={{ alignItems: 'center', borderRadius: "100%"}}/>
@@ -90,7 +100,7 @@ const TripMember = ({ history, data }) => {
             </div>
             <div style={{ display: "flex",flexDirection: 'column'}}>
             <Link onClick={handleOpenLocation} style={{ color: "#C78899", textDecoration: "underline", fontSize: 14,marginBottom: "7px"}}>
-              see location detail
+              See location detail
             </Link>
             <Modal open={openLocation} onClose={handleCloseLocation}>
               <div style={getModalStyle()} className={classes.paper}>
@@ -103,7 +113,7 @@ const TripMember = ({ history, data }) => {
               </div>
             </Modal>
             <Link onClick={handleOpenInfo} style={{ color: "#C78899", textDecoration: "underline", fontSize: 14}}>
-              see trip info
+              See trip info
             </Link>
             <Modal open={openInfo} onClose={handleCloseInfo}>
               <div style={getModalStyle()} className={classes.paper}>
