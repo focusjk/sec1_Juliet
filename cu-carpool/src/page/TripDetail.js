@@ -3,7 +3,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { MyFullWidthButton } from "../component/MyButton";
 import moment from "moment";
-import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
+import { MyHeader, MyTitle, MyHeaderWithArrow} from "../component/MyTitle";
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton } from "../component/MyButton";
@@ -14,6 +14,7 @@ import Rating from "@material-ui/lab/Rating";
 import { useParams, withRouter } from "react-router-dom";
 import MemberCardSmall from '../component/MemberCardSmall'
 import RequestJoin from '../component/RequestJoin'
+import ReviewModal from "../component/ReviewModal"
 
 class TripDetail extends React.Component {
   state = {
@@ -26,6 +27,7 @@ class TripDetail extends React.Component {
     owner: {},
     passenger: []
   }
+
   async componentDidMount() {
     const { trip_id } = this.props.match.params;
     const response = await axios.get("http://localhost:4000/trip/detail", {
@@ -52,10 +54,11 @@ class TripDetail extends React.Component {
               <img src={owner.photo} height={50} width={50} style={{ borderRadius: "100%" }} />
               <MyTitle style={{ marginLeft: "16px" }}>{owner.username}</MyTitle>
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <div style={{ display: "flex", alignItems: "flex-end", marginBottom: 6 }}>
               Average rating:
             <Rating disabled name="half-rating" defaultValue={owner.avg_rating} precision={0.01} style={{ marginLeft: 8 }} />
             </div>
+            <ReviewModal modeButton={false}/>
           </div>
 
           <div style={{ margin: "8px 0" }}>

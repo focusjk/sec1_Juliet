@@ -7,6 +7,9 @@ import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 
+import ReviewModal from "../component/ReviewModal";
+
+
 const TripBox = ({ history, data, fetchData }) => {
   const {
     trip_id,
@@ -26,6 +29,7 @@ const TripBox = ({ history, data, fetchData }) => {
     destination_province
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
+
   const handleCancel = async () => {
     try {
       const response = await axios.post(
@@ -171,8 +175,9 @@ const TripBox = ({ history, data, fetchData }) => {
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
           {(status == "on going" || status == "done") && (
-            <MyButton onClick={() => history.push("/")}>Review</MyButton> //review page sprint3
+            <ReviewModal modeButton={true}/>
           )}
+
           {(status == "scheduled" || status == "canceled") && (
             <MyGreyButton disabled>Review</MyGreyButton>
           )}
