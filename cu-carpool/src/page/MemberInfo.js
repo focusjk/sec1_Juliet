@@ -2,8 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { MyButton, MyGreyButton } from '../component/MyButton';
-import MemberInfoCard  from '../component/MemberInfoCard';
+import MemberInfoCard from '../component/MemberInfoCard';
 import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
 import ToggleButton from '@material-ui/lab/ToggleButton';
@@ -19,6 +18,8 @@ const MyToggleButton = withStyles({
     borderRadius: 20,
     border: "1px solid #C78899",
     color: "#C78899",
+    width: '140px',
+    height: '40px'
   },
   label: {
     textTransform: "capitalize",
@@ -35,13 +36,13 @@ class MemberInfo extends React.Component {
   state = { list: [], filteredList: [], mode: 0 }
   fetchData = async () => {
     try {
-    const response = await axios.get("http://localhost:4000/admin/member");
-    const { success, member} = response.data;
-    if (success) {
-      this.setState({ list:member});
-    }
-    this.filter(this.state.mode)
-    }catch (e) {
+      const response = await axios.get("http://localhost:4000/admin/member");
+      const { success, member } = response.data;
+      if (success) {
+        this.setState({ list: member });
+      }
+      this.filter(this.state.mode)
+    } catch (e) {
       console.log(e);
     }
   }
@@ -58,9 +59,9 @@ class MemberInfo extends React.Component {
     if (mode == 0) {
       filteredList = list
     } else if (mode == 1) {
-      filteredList = list.filter(({banned_at}) => banned_at==null)
+      filteredList = list.filter(({ banned_at }) => banned_at == null)
     } else {
-      filteredList = list.filter(({banned_at}) => banned_at!=null)
+      filteredList = list.filter(({ banned_at }) => banned_at != null)
     }
     this.setState({ filteredList })
   }
@@ -73,36 +74,34 @@ class MemberInfo extends React.Component {
       <Grid container direction="column" justify="center" style={{ width: "100%" }}>
         <MyHeader style={{ justifyContent: 'left' }}>
           > Member Info
-      </MyHeader>
-	<Textfield
-	  variant="outlined"
-          style={{
-    	  alignSelf: "center",
-	  width : "50%",
-	  marginBottom: 20,   
-	  }}
-	  placeholder=" Search by ID, name, username"
-          InputProps={{
-	  border:'transparent',
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-	/>
-	
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40 px' }}>
+        </MyHeader>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px' }}>
+          <Textfield
+            variant="outlined"
+            size="small"
+            style={{
+              width: "418px",
+              marginBottom: 20,
+            }}
+            placeholder=" Search by ID, name, username"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon color="primary" />
+                </InputAdornment>
+              ),
+            }}
+          />
           <ToggleButtonGroup exclusive value={this.state.mode} onChange={this.handleMode}>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={0}> All </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={1}> Active </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={2}> Banned </MyToggleButton>
+            <MyToggleButton value={0} style={{ border: "1px solid #C78899", }}> All </MyToggleButton>
+            <MyToggleButton value={1} style={{ border: "1px solid #C78899", }}> Active </MyToggleButton>
+            <MyToggleButton value={2} style={{ border: "1px solid #C78899", }}> Banned </MyToggleButton>
           </ToggleButtonGroup>
-        <EmptyBox data={this.state.filteredList} />
-          {this.state.filteredList.map((member,index) =>	
-	  <MemberInfoCard key={index} data={member}/>
-	)}
-	</div>
+          <EmptyBox data={this.state.filteredList} />
+          {this.state.filteredList.map((member, index) =>
+            <MemberInfoCard key={index} data={member} />
+          )}
+        </div>
       </Grid>
     )
   }

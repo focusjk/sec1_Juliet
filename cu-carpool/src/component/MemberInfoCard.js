@@ -14,7 +14,8 @@ import moment from 'moment';
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 
-const MemberInfoCard = ({data}) => {  
+const MemberInfoCard = ({ data }) => {
+
   const {
     id,
     username,
@@ -33,14 +34,13 @@ const MemberInfoCard = ({data}) => {
     rejected_by
   } = data;
   return (
-    <div style={{ width: '45%', display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
-              <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginRight: '16px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
+    <div style={{ width: '45%', display: 'flex', alignItems: 'center',border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
+                <div style={{ display: 'flex', flexDirection:'column',alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
                   <img
                     src={photo}
                     height={100}
                     width={100}
-                    style={{ alignItems: 'center', borderRadius: "100%", marginBottom: "16px" }}
+                    style={{ alignSelf: 'center',borderRadius: "100%", marginBottom: "16px" }}
                   />
                   <div style={{ alignSelf: 'center' }}>{username}</div>
                 </div>
@@ -57,15 +57,13 @@ const MemberInfoCard = ({data}) => {
 		  {(rejected_by!=null)&&(<div> <b>Rejected by:</b> {rejected_by}</div>)}
                   {(banned_at!=null)&&(<div> <b>Banned At:</b> {formatter(banned_at)}</div>)}
 		  {(banned_by!=null)&&(<div> <b>Banned By:</b> {banned_by}</div>)}
-		  
                 </div>
-		<div style={{ display: 'flex', justifyContent: 'right', marginLeft: '16px' }}>
+		<div style={{ display: 'flex-center',alignItems: 'center', marginLeft: '16px' }}>
                 {(banned_at==null)&&(<MyButton>Ban</MyButton>)}
 		{(banned_at!=null)&&(<MyWhiteButton>Unban</MyWhiteButton>)}
 		</div>
-              </div>
-     </div>
+   </div>
   );
 };
 
-export default withRouter(MemberInfoCard);
+export default MemberInfoCard;
