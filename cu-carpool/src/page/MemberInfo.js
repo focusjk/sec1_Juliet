@@ -2,8 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { MyButton, MyGreyButton } from '../component/MyButton';
-import MemberInfoCard  from '../component/MemberInfoCard';
+import MemberInfoCard from '../component/MemberInfoCard';
 import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
 import ToggleButton from '@material-ui/lab/ToggleButton';
@@ -20,6 +19,8 @@ const MyToggleButton = withStyles({
     borderRadius: 20,
     border: "1px solid #C78899",
     color: "#C78899",
+    width: '140px',
+    height: '40px'
   },
   label: {
     textTransform: "capitalize",
@@ -36,12 +37,12 @@ class MemberInfo extends React.Component {
   state = { list: [], filteredList: [], mode: 0 }
   fetchData = async () => {
     try {
-    const response = await axios.get("http://localhost:4000/admin/member");
-    const { success, member} = response.data;
-    if (success) {
-      this.setState({ list:member});
-    }
-    }catch (e) {
+      const response = await axios.get("http://localhost:4000/admin/member");
+      const { success, member } = response.data;
+      if (success) {
+        this.setState({ list: member });
+      }
+    } catch (e) {
       console.log(e);
     }
   }
@@ -54,36 +55,34 @@ class MemberInfo extends React.Component {
       <Grid container direction="column" justify="center" style={{ width: "100%" }}>
         <MyHeader style={{ justifyContent: 'left' }}>
           > Member Info
-      </MyHeader>
-	<Textfield
-	  variant="outlined"
-          style={{
-    	  alignSelf: "center",
-	  width : "50%",
-	  marginBottom: 20,   
-	  }}
-	  placeholder=" Search by ID, name, username"
-          InputProps={{
-	  border:'transparent',
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-	/>
-	
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40 px' }}>
+        </MyHeader>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px' }}>
+          <Textfield
+            variant="outlined"
+            size="small"
+            style={{
+              width: "418px",
+              marginBottom: 20,
+            }}
+            placeholder=" Search by ID, name, username"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon color="primary" />
+                </InputAdornment>
+              ),
+            }}
+          />
           <ToggleButtonGroup>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> All </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Active </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Banned </MyToggleButton>
+            <MyToggleButton style={{ border: "1px solid #C78899", }}> All </MyToggleButton>
+            <MyToggleButton style={{ border: "1px solid #C78899", }}> Active </MyToggleButton>
+            <MyToggleButton style={{ border: "1px solid #C78899", }}> Banned </MyToggleButton>
           </ToggleButtonGroup>
-        <EmptyBox data={this.state.list} />
-          {this.state.list.map((member,index) =>	
-	  <MemberInfoCard key={index} data={member}/>
-	)}
-	</div>
+          <EmptyBox data={this.state.list} />
+          {this.state.list.map((member, index) =>
+            <MemberInfoCard key={index} data={member} />
+          )}
+        </div>
       </Grid>
     )
   }
