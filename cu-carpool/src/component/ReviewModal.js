@@ -85,12 +85,12 @@ const useStyles = makeStyles(theme => ({
           <div style={{ display: 'flex', flexDirection: 'row'}}>
             <div style={{ display: 'flex', flexDirection: 'row'}}>
               <div style={{ display: 'flex', flexDirection: 'column',/* alignItems: 'center',  flexWrap: 'wrap', /*width: '150px',*/ marginRight: '16px' }}>
-                  <img
+                  {/* <img
                     src= "/Users/pimkunut/Downloads/S.png"
                     height={40}
                     width={40}
                     style={{ borderRadius: "100%"}}
-                  />
+                  /> */}
               </div>
               <div style = {{display: 'flex', flexDirection: 'column'}}>
               <div> yinza55+ </div>
