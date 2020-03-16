@@ -78,11 +78,13 @@ foreign key(trip_id) references trip(id)
 CREATE TABLE review
 (
 id int not null AUTO_INCREMENT,
+reviewer int not null,
 reviewee int not null,
 rating int not null,
 comment varchar(1000),
 created_at datetime not null,
 primary key(id),
+foreign key(reviewer) references members(id),
 foreign key(reviewee) references members(id)
 );
 CREATE TABLE withdrawal
