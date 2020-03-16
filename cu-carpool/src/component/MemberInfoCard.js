@@ -7,10 +7,12 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import EmptyBox from '../component/EmptyBox'
 import { Box, Input, Paper, Grid, Typography,Textfield} from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
-import { MyButton, MyGreyButton } from "../component/MyButton";
+import { MyButton, MyWhiteButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall';
 import LocationDetail from '../component/LocationDetail'
+import moment from 'moment';
 
+const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 
 const MemberInfoCard = ({data}) => {  
   const {
@@ -22,11 +24,17 @@ const MemberInfoCard = ({data}) => {
     photo,
     email,
     banned_at,
-    banned_by
+    banned_by,
+    driver_status,
+    driving_license,
+    approved_at, 
+    approved_by,
+    rejected_at,
+    rejected_by
   } = data;
   return (
-    <div style={{ maxWidth: 740, display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
-              <div style={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
+    <div style={{ width: '45%', display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
+              <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginRight: '16px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
                   <img
                     src={photo}
@@ -36,18 +44,24 @@ const MemberInfoCard = ({data}) => {
                   />
                   <div style={{ alignSelf: 'center' }}>{username}</div>
                 </div>
-                <div style={{ maxWidth: 407, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div style={{ width: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div> <b> Member ID:</b> {id}</div>
                   <div> <b>Name:</b> {firstname} {lastname}</div>
                   <div> <b>Email:</b> {email}</div>
                   <div> <b>Phone number:</b> {phone_number}</div>
-                  {(banned_at!=null)&&(<div> <b>Banned At:</b> {banned_at}</div>)}
+                  {(driver_status!=null)&&(<div> <b>Driver Status:</b> {driver_status}</div>)}
+		  {(driving_license!=null)&&(<div> <b>Driving License:</b> {driving_license}</div>)}
+	          {(approved_at!=null)&&(<div> <b>Approved at:</b> {formatter(approved_at)}</div>)}
+		  {(approved_by!=null)&&(<div> <b>Approved by:</b> {approved_by}</div>)}
+		  {(rejected_at!=null)&&(<div> <b>Rejected at:</b> {formatter(rejected_at)}</div>)}
+		  {(rejected_by!=null)&&(<div> <b>Rejected by:</b> {rejected_by}</div>)}
+                  {(banned_at!=null)&&(<div> <b>Banned At:</b> {formatter(banned_at)}</div>)}
 		  {(banned_by!=null)&&(<div> <b>Banned By:</b> {banned_by}</div>)}
-		  {(banned_at==null)&&(<div> <b>Banned At:</b> -</div>)}
-		  {(banned_by==null)&&(<div> <b>Banned By:</b> -</div>)}
+		  
                 </div>
-		<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '16px' }}>
-                <MyButton>Ban</MyButton>
+		<div style={{ display: 'flex', justifyContent: 'right', marginLeft: '16px' }}>
+                {(banned_at==null)&&(<MyButton>Ban</MyButton>)}
+		{(banned_at!=null)&&(<MyWhiteButton>Unban</MyWhiteButton>)}
 		</div>
               </div>
      </div>

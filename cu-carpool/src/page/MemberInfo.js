@@ -12,7 +12,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Textfield from "@material-ui/core/Textfield";
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
-const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 
 const MyToggleButton = withStyles({
   root: {
