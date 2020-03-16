@@ -111,7 +111,7 @@ const CreateReviewModal = ({ trip_id, member_id }) => {
           <div style={{ margin: "0 auto" }}>
             <Rating name="sizeLarge"
               defaultValue={form.rating}
-              precision={0.5}
+              precision={1}
               size="large"
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
               onChange={(event, newValue) => {
