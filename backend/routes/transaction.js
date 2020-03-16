@@ -13,7 +13,8 @@ router.get("/log", (req, res, next) => {
         message: "Cannot access database"
       });
     } else {
-      res.json({ success: true, transaction: result });
+      const group_result = util.groupByDate(result)
+      res.json({ success: true, transaction: group_result });
     }
   });
 });
