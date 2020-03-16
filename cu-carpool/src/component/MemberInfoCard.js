@@ -34,17 +34,17 @@ const MemberInfoCard = ({ data }) => {
     rejected_by
   } = data;
   return (
-    <div style={{ width: '45%', display: 'flex', alignItems: 'center',border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
+    <div style={{ width: '45%', display: 'flex', alignItems: 'center',border: "1px solid #C4C4C4", padding: '16px 48px', margin: '16px 0'}}>
                 <div style={{ display: 'flex', flexDirection:'column',alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
                   <img
                     src={photo}
                     height={100}
                     width={100}
-                    style={{ alignSelf: 'center',borderRadius: "100%", marginBottom: "16px" }}
+                    style={{ borderRadius: "100%", marginBottom: "16px" }}
                   />
                   <div style={{ alignSelf: 'center' }}>{username}</div>
                 </div>
-                <div style={{ width: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div style={{ width: '60%', display: 'flex', flexDirection: 'column'}}>
                   <div> <b> Member ID:</b> {id}</div>
                   <div> <b>Name:</b> {firstname} {lastname}</div>
                   <div> <b>Email:</b> {email}</div>
