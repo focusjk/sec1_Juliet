@@ -52,11 +52,13 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
     setOpen(true);
   };
 
-// Click 'Cancel' button
   const handleClose = () => {
     setOpen(false);
   };
-  //TO-DO check duplicate request
+
+  var reviewed = false; //have already review? <check from database> TODO
+  
+  //TO-DO check if reviewed =>get review =>if null => mean not review yet
   /*const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4000/trip/passenger", { params: { trip_id } });
@@ -86,7 +88,7 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
     //     setOpen(false);
     //     console.log('review success')
     //     const path = '/trip-history';
-    //     history.push(path);
+    //     history.push(path); //tell that if success will go to this path
     //   } else {
     //     setErr(message)
     //   }
@@ -95,6 +97,8 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
       console.log(e);
     }
   };
+
+  
 
   return (
     <div>
@@ -112,7 +116,7 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
               defaultValue={form.rating} 
               precision={0.01} 
               size="large"
-              /*emptyIcon={<StarBorderIcon fontSize="inherit"/>}*/ 
+              emptyIcon={<StarBorderIcon fontSize="inherit"/>}
               onChange={(event, newValue) => {
                 setForm({...form, rating:newValue});
               }}
@@ -123,9 +127,9 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
             className={classes.margin}
             value={form.comment}
             multiline
-            // InputProps={{
-            //     readOnly: true,
-            //   }}
+            InputProps={{
+                readOnly: reviewed,
+              }}
             onChange={e => {
               setForm({...form, comment: e.target.value });
               setErr(null)
@@ -133,8 +137,12 @@ const ReviewModal = ({ trip_id, member_id, history }) => {
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "0px", display: 'flex' }}>
-            <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
-            <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
+            {reviewed? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button> ) : 
+            <React.Fragment>
+              <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button> 
+              <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
+            </React.Fragment>
+            }
           </div>
         </div>
       </Modal>
