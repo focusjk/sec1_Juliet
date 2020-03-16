@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateReviewModal = ({ trip_id, member_id }) => {
+const CreateReviewModal = ({review_id, driver_id, passenger_id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
