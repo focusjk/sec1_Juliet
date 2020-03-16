@@ -15,7 +15,7 @@ import Rating from "@material-ui/lab/Rating";
 import EmptyBox from "../component/EmptyBox";
 import ReviewModal from "../component/ReviewModal";
 
-import ReviewModal from "../component/ReviewModal";
+import CreateReviewModal from "../component/CreateReviewModal";
 
 class ButtonComponent extends React.Component {
   render() {
@@ -55,6 +55,7 @@ class ButtonComponent extends React.Component {
         <Button style={{ color: "#BDBDBD" }}>Button</Button>
         <Rating name="half-rating" defaultValue={2.34} precision={0.01} />
         <ReviewModal/>
+        <CreateReviewModal/>
       </div>
     );
   }
