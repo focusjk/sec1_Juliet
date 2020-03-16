@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
 import { MyHeader } from "../component/MyTitle";
 import { MyButton } from "../component/MyButton"
@@ -67,29 +66,27 @@ const ReviewModal = ({ modeButton }) => {
       >
         <div className={classes.paper}>
           <ReviewHeaderWithClose />
-          {[1, 2, 3, 4].map(i => (
-            <div style={{
-              display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '12px', marginBottom: "8px"
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <div style={{ display: 'flex' }}>
-                  <img
-                    height={40}
-                    width={40}
-                    style={{ borderRadius: "100%", marginRight: '16px' }}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div> yinza55+ </div>
-                    <Rating name="read-only" defaultValue={4} readOnly />
-                  </div>
+          <div style={{
+            display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '12px', marginBottom: "8px"
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ display: 'flex' }}>
+                <img
+                  height={40}
+                  width={40}
+                  style={{ borderRadius: "100%", marginRight: '16px' }}
+                />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div> yinza55+ </div>
+                  <Rating name="read-only" defaultValue={4} readOnly />
                 </div>
-                <div style={{ fontSize: 14, color: "#BDBDBD" }}>
-                  22/03/2020
               </div>
+              <div style={{ fontSize: 14, color: "#BDBDBD" }}>
+                22/03/2020
               </div>
-              <div> comment blah blah blah comment blah blah blah comment blah blah blah comment blah blah blah </div>
             </div>
-          ))}
+            <div> comment blah blah blah comment blah blah blah comment blah blah blah comment blah blah blah </div>
+          </div>
         </div>
       </Modal>
     </div>
