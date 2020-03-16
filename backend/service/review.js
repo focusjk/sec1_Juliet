@@ -5,4 +5,10 @@ const createReview = ({passenger_id, driver_id, rating, comment, created_at}, ca
                     VALUES (?,?,?,?,?)`, [passenger_id, driver_id, rating, comment, created_at], callback);
 }
 
-module.exports = { createReview };
+const getReviewById = (review_id, callback) => {
+    return db.query(`SELECT comment, rating 
+                    FROM review 
+                    WHERE id = ?`, [review_id] , callback);
+}
+
+module.exports = { createReview , getReviewById };

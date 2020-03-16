@@ -16,4 +16,15 @@ router.post('/create', (req, res, next) => {
     })
 });
 
+router.get('/getReviewById', (req, res, next) => {
+    const {review_id} = req.query;
+    reviewService.getReviewById(review_id, (err, result) => {
+        if (err) {
+            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+        } else {
+            res.json({ success: true, review : result[0] });
+        } 
+    })
+})
+
 module.exports = router;
