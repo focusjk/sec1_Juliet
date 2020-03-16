@@ -41,9 +41,29 @@ class MemberInfo extends React.Component {
     if (success) {
       this.setState({ list:member});
     }
+    this.filter(this.state.mode)
     }catch (e) {
       console.log(e);
     }
+  }
+  handleMode = (e, value) => {
+    if (value !== null) {
+      this.setState({ mode: value })
+      this.filter(value)
+    }
+  }
+
+  filter = mode => {
+    const { list } = this.state
+    let filteredList = []
+    if (mode == 0) {
+      filteredList = list
+    } else if (mode == 1) {
+      filteredList = list.filter(({banned_at}) => banned_at==null)
+    } else {
+      filteredList = list.filter(({banned_at}) => banned_at!=null)
+    }
+    this.setState({ filteredList })
   }
   componentDidMount() {
     this.fetchData();
@@ -74,13 +94,13 @@ class MemberInfo extends React.Component {
 	/>
 	
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40 px' }}>
-          <ToggleButtonGroup>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> All </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Active </MyToggleButton>
-            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }}> Banned </MyToggleButton>
+          <ToggleButtonGroup exclusive value={this.state.mode} onChange={this.handleMode}>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={0}> All </MyToggleButton>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={1}> Active </MyToggleButton>
+            <MyToggleButton style={{ width: '140px', height: '42px', border: "1px solid #C78899", }} value={2}> Banned </MyToggleButton>
           </ToggleButtonGroup>
-        <EmptyBox data={this.state.list} />
-          {this.state.list.map((member,index) =>	
+        <EmptyBox data={this.state.filteredList} />
+          {this.state.filteredList.map((member,index) =>	
 	  <MemberInfoCard key={index} data={member}/>
 	)}
 	</div>

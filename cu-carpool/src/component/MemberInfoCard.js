@@ -14,12 +14,15 @@ import LocationDetail from '../component/LocationDetail'
 
 const MemberInfoCard = ({data}) => {  
   const {
+    id,
     username,
     firstname,
     lastname,
     phone_number,
     photo,
-    email
+    email,
+    banned_at,
+    banned_by
   } = data;
   return (
     <div style={{ maxWidth: 740, display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px',marginTop: '16px'  }}>
@@ -34,12 +37,14 @@ const MemberInfoCard = ({data}) => {
                   <div style={{ alignSelf: 'center' }}>{username}</div>
                 </div>
                 <div style={{ maxWidth: 407, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div> <b> Member ID:</b> 0</div>
+                  <div> <b> Member ID:</b> {id}</div>
                   <div> <b>Name:</b> {firstname} {lastname}</div>
                   <div> <b>Email:</b> {email}</div>
                   <div> <b>Phone number:</b> {phone_number}</div>
-                  <div> <b>BannedAt:</b> dd/mm/yyy</div>
-		  <div> <b>BannedBy:</b> Admin Z</div>
+                  {(banned_at!=null)&&(<div> <b>Banned At:</b> {banned_at}</div>)}
+		  {(banned_by!=null)&&(<div> <b>Banned By:</b> {banned_by}</div>)}
+		  {(banned_at==null)&&(<div> <b>Banned At:</b> -</div>)}
+		  {(banned_by==null)&&(<div> <b>Banned By:</b> -</div>)}
                 </div>
 		<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '16px' }}>
                 <MyButton>Ban</MyButton>

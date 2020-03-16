@@ -20,8 +20,8 @@ const getAllMember = callback => {
 
 const getAllUser = (callback) => {
   return db.query(
-    `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,driving_license,
-                  approved_at, approved_by,rejected_at,rejected_by,edited_at, driver_status
+    `SELECT id,username,firstname,lastname,phone_number,email,photo,
+                  banned_at,banned_by
                   FROM members`,
     callback
   );
