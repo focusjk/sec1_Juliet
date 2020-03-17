@@ -148,6 +148,6 @@ module.exports = {
   driverReject,
   getAllReport,
   isRead,
-  geteWithdrawalRequest,
+  getWithdrawalRequest,
   withdrawalApprove
 };
