@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { MyButton, MyWhiteButton } from '../component/MyButton';
+import { MyButton, MyWhiteButton, MyGreyButton } from '../component/MyButton';
 import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
 
@@ -138,11 +138,12 @@ class AdminWithdrawal extends React.Component {
                                 <div> <b>Bank account name:</b> {account_name}</div>
                                 <div> <b>Bank account number:</b> {account_number}</div>
                                 <div> <b>Bank name:</b> {bank_name}</div>
-                                <div> <b>Amount:</b> {amount}</div>
+                                <div> <b>Amount:</b> <div style={{ color: balance < amount ? 'red' : 'black', display: 'inline' }}>{amount} ฿</div></div>
                                 <div> <b>Created at:</b> {formatter(created_at)}</div>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '24px' }}>
-                                <MyButton style={{ marginBottom: '16px' }} onClick={() => this.handleApprove(id)}>Approve</MyButton>
+                                {(balance < amount) && <MyGreyButton style={{ marginBottom: '16px' }} disabled>Approve</MyGreyButton>}
+                                {!(balance < amount) && <MyButton style={{ marginBottom: '16px' }} onClick={() => this.handleApprove(id)} >Approve</MyButton>}
                                 <MyWhiteButton onClick={() => this.handleReject(id)}>Reject</MyWhiteButton>
                             </div>
                         </div>
