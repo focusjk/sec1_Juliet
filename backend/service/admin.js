@@ -96,7 +96,7 @@ const isRead = ({ id, is_read }, callback) => {
   );
 };
 
-const geteWithdrawalRequest = callback => {
+const getWithdrawalRequest = callback => {
   return db.query(
     `SELECT withdrawal.id as id , 
             withdrawal.member_id as member_id, 
