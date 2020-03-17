@@ -1,33 +1,71 @@
 import React from "react";
-// import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeader } from "../component/MyTitle";
 import { MyLink } from "../component/MyTitle";
 import { MyFullWidthButton } from "../component/MyButton";
 
-class Wallet extends React.Component {
-  render() {
-    return (
+const Wallet = ({ history, user }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "80vh"
+      }}
+    >
+      <MyHeader>My Wallet</MyHeader>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between"
+          alignSelf: "center",
+          justifyContent: "space-around",
+          borderRadius: "100%",
+          border: "1px solid",
+          borderColor: "#BDBDBD",
+          height: "165px",
+          width: "165px"
         }}
+        onClick={() => history.push("/")} // TODO link to transaction history page
       >
-        <MyHeader>Wallet</MyHeader>
         <div
           style={{
+            color: "#BDBDBD",
+            fontSize: 16,
             display: "flex",
             justifyContent: "center",
-            borderRadius: "100%",
-            border: "1px solid",
-            borderColor: "#BDBDBD"
+            marginTop: "32px"
           }}
-        ></div>
+        >
+          Balance
+        </div>
+        <div
+          style={{
+            color: "#C78899",
+            fontSize: 50,
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          {user.amount}
+        </div>
+        <div
+          style={{
+            color: "#BDBDBD",
+            fontSize: 20,
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "32px"
+          }}
+        >
+          THB
+        </div>
+      </div>
+      <div>
         <MyFullWidthButton
-          style={{ marginTop: "16px", marginBottom: "16px" }}
-          onClick={() => this.props.history.push("/")} // TODO link to withdrawal request form page
+          style={{ marginBottom: "16px" }}
+          onClick={() => history.push("/")} // TODO link to withdrawal request form page
         >
           Withdraw
         </MyFullWidthButton>
@@ -41,8 +79,8 @@ class Wallet extends React.Component {
           See withdrawal history
         </MyLink>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default withRouter(Wallet);
