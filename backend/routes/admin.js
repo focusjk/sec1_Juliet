@@ -117,4 +117,50 @@ router.get("/withdrawal/request", (req, res, next) => {
   });
 });
 
+router.post("/withdrawal-approve", function(req, res, next) {
+  const { admin_name, id } = req.body;
+  const approved_at = util.timeformatter(new Date());
+  const action = 0;
+  adminService.withdrawalApprove(
+    admin_name,
+    approved_at,
+    id,
+    action,
+    (err, result) => {
+      if (err) {
+        res.json({
+          success: false,
+          error: err.sqlMessage,
+          message: "Cannot access database"
+        });
+      } else {
+        res.json({ success: true });
+      }
+    }
+  );
+});
+
+router.post("/withdrawal-reject", function(req, res, next) {
+  const { admin_name, id } = req.body;
+  const rejected_at = util.timeformatter(new Date());
+  const action = 1;
+  adminService.withdrawalApprove(
+    admin_name,
+    rejected_at,
+    id,
+    action,
+    (err, result) => {
+      if (err) {
+        res.json({
+          success: false,
+          error: err.sqlMessage,
+          message: "Cannot access database"
+        });
+      } else {
+        res.json({ success: true });
+      }
+    }
+  );
+});
+
 module.exports = router;

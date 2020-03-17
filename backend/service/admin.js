@@ -115,6 +115,31 @@ const geteWithdrawalRequest = callback => {
   );
 };
 
+const withdrawalApprove = (
+  admin_name,
+  time,
+  withdrawal_id,
+  action,
+  callback
+) => {
+  if (!action) {
+    const status = "approved";
+    return db.query(
+      `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
+      [admin_name, time, status, withdrawal_id],
+      callback
+    );
+  }
+  if (action) {
+    const status = "rejected";
+    return db.query(
+      `UPDATE withdrawal SET rejected_by = ?, rejected_at = ?, status = ? WHERE id = ?`,
+      [admin_name, time, status, withdrawal_id],
+      callback
+    );
+  }
+};
+
 module.exports = {
   login,
   getAllMember,
@@ -123,5 +148,6 @@ module.exports = {
   driverReject,
   getAllReport,
   isRead,
-  geteWithdrawalRequest
+  geteWithdrawalRequest,
+  withdrawalApprove
 };
