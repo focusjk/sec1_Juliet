@@ -1,4 +1,4 @@
-var db = require('../dbconnection'); //reference of dbconnection.js
+var db = require("../dbconnection"); //reference of dbconnection.js
 
 const login = (username, password, callback) => {
   return db.query(
@@ -19,8 +19,8 @@ const getAllMember = callback => {
 };
 
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
-  console.log('Approved by : ', admin_name);
-  console.log('Member ID: ', driver_id);
+  console.log("Approved by : ", admin_name);
+  console.log("Member ID: ", driver_id);
   const driver_status = 1;
   return db.query(
     `UPDATE members SET approved_by = ?,approved_at = ? ,driver_status = ? WHERE id = ?`,
@@ -30,8 +30,8 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
 };
 
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
-  console.log('Rejected by : ', admin_name);
-  console.log('Member ID: ', driver_id);
+  console.log("Rejected by : ", admin_name);
+  console.log("Member ID: ", driver_id);
   const driver_status = 3;
   return db.query(
     `UPDATE members SET rejected_by = ?, rejected_at = ? ,driver_status = ? WHERE id = ?`,
@@ -44,33 +44,34 @@ function getCurrentDateTimeString() {
   const date = new Date();
   return (
     date.getFullYear() +
-    '-' +
-    (date.getMonth() + 1).toString().padStart(2, '0') +
-    '-' +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
     date
       .getDate()
       .toString()
-      .padStart(2, '0') +
-    ':' +
+      .padStart(2, "0") +
+    ":" +
     date
       .getHours()
       .toString()
-      .padStart(2, '0') +
-    ':' +
+      .padStart(2, "0") +
+    ":" +
     date
       .getMinutes()
       .toString()
-      .padStart(2, '0') +
-    ':' +
+      .padStart(2, "0") +
+    ":" +
     date
       .getSeconds()
       .toString()
-      .padStart(2, '0')
+      .padStart(2, "0")
   );
 }
 
-const getAllReport = (callback) => {
-  return db.query(`SELECT report.id as id, 
+const getAllReport = callback => {
+  return db.query(
+    `SELECT report.id as id, 
                   report.topic as topic, 
                   report.comment as comment , 
                   report.created_at as created_at,
@@ -80,13 +81,47 @@ const getAllReport = (callback) => {
                   members.lastname as lastname, 
                   members.photo as photo , 
                   members.username as username
-                  FROM report INNER JOIN members ON report.member_id = members.id`,callback);
-}
+                  FROM report INNER JOIN members ON report.member_id = members.id`,
+    callback
+  );
+};
 
 const isRead = ({ id, is_read }, callback) => {
-  return db.query(`UPDATE report 
+  return db.query(
+    `UPDATE report 
                   SET is_read = ?
-                  WHERE id = ?`, [ is_read , id ] , callback);
-}
+                  WHERE id = ?`,
+    [is_read, id],
+    callback
+  );
+};
 
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
+const geteWithdrawalRequest = callback => {
+  return db.query(
+    `SELECT withdrawal.id as id , 
+            withdrawal.member_id as member_id, 
+            withdrawal.amount as amount, 
+            withdrawal.created_at as created_at, 
+            withdrawal.account_name as account_name, 
+            withdrawal.account_number as account_number, 
+            withdrawal.bank_name as bank_name,
+            members.username as username, 
+            members.photo as photo, 
+            members.amount as balance, 
+            members.firstname as firstname, 
+            members.lastname as lastname
+    FROM withdrawal INNER JOIN members ON withdrawal.member_id = members.id`,
+    callback
+  );
+};
+
+module.exports = {
+  login,
+  getAllMember,
+  driverApprove,
+  getCurrentDateTimeString,
+  driverReject,
+  getAllReport,
+  isRead,
+  geteWithdrawalRequest
+};
