@@ -26,4 +26,16 @@ const createWithdrawal = async (member_id, created_at, data, callback) => {
     callback(false);
   }
 };
-module.exports = { createWithdrawal };
+
+const getWithdrawal = (member_id, callback) => {
+  return db.query(
+    `SELECT id as withdrawal_id, amount, created_at, status,
+      account_number, account_name, bank_name
+      FROM withdrawal
+      WHERE member_id = ?`,
+    [member_id],
+    callback
+  );
+};
+
+module.exports = { createWithdrawal, getWithdrawal };
