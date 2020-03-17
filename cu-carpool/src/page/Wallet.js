@@ -22,8 +22,7 @@ const Wallet = ({ history, user }) => {
           alignSelf: "center",
           justifyContent: "space-around",
           borderRadius: "100%",
-          border: "1px solid",
-          borderColor: "#BDBDBD",
+          border: "1px solid #BDBDBD",
           height: "165px",
           width: "165px"
         }}
