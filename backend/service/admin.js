@@ -127,7 +127,7 @@ const withdrawalApprove = (
 ) => {
   if (!action) {
     const status = "approved";
-    transactionService.createTransaction(amount, member_id, time, "withdraw");
+    transactionService.createTransaction(-amount, member_id, time, "withdraw");
     return db.query(
       `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
       [admin_name, time, status, withdrawal_id],
