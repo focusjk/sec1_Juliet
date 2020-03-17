@@ -137,8 +137,8 @@ class AdminWithdrawal extends React.Component {
                                 <div> <b>Name:</b> {firstname} {lastname}</div>
                                 <div> <b>Bank account name:</b> {account_name}</div>
                                 <div> <b>Bank account number:</b> {account_number}</div>
-                                <div> <b>Bank name:</b> {bank_name}</div>
-                                <div> <b>Amount:</b> <div style={{ color: balance < amount ? 'red' : 'black', display: 'inline' }}>{amount} ฿</div></div>
+                                <div> <b>Bank:</b> {bank_name}</div>
+                                <div> <b>Amount:</b> <div style={{ color: balance < amount ? 'red' : 'black', display: 'inline' }}> {amount} ฿</div></div>
                                 <div> <b>Created at:</b> {formatter(created_at)}</div>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '24px' }}>
