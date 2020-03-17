@@ -44,7 +44,7 @@ const MemberInfoCard = ({ data }) => {
                   />
                   <div style={{ alignSelf: 'center' }}>{username}</div>
                 </div>
-                <div style={{ width: '60%', display: 'flex', flexDirection: 'column'}}>
+                <div style={{ width: '70%', display: 'flex', flexDirection: 'column'}}>
                   <div> <b> Member ID:</b> {id}</div>
                   <div> <b>Name:</b> {firstname} {lastname}</div>
                   <div> <b>Email:</b> {email}</div>
