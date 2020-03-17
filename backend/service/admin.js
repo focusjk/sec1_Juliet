@@ -1,4 +1,5 @@
 var db = require("../dbconnection"); //reference of dbconnection.js
+var transactionService = require("../service/transaction");
 
 const login = (username, password, callback) => {
   return db.query(
@@ -119,11 +120,14 @@ const withdrawalApprove = (
   admin_name,
   time,
   withdrawal_id,
+  member_id,
+  amount,
   action,
   callback
 ) => {
   if (!action) {
     const status = "approved";
+    transactionService.createTransaction(amount, member_id, time, "withdraw");
     return db.query(
       `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
       [admin_name, time, status, withdrawal_id],

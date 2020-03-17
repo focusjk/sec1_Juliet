@@ -118,13 +118,15 @@ router.get("/withdrawal/request", (req, res, next) => {
 });
 
 router.post("/withdrawal-approve", function(req, res, next) {
-  const { admin_name, id } = req.body;
+  const { admin_name, id, member_id, amount } = req.body;
   const approved_at = util.timeformatter(new Date());
   const action = 0;
   adminService.withdrawalApprove(
     admin_name,
     approved_at,
     id,
+    member_id,
+    amount,
     action,
     (err, result) => {
       if (err) {
@@ -148,6 +150,8 @@ router.post("/withdrawal-reject", function(req, res, next) {
     admin_name,
     rejected_at,
     id,
+    member_id,
+    amount,
     action,
     (err, result) => {
       if (err) {
