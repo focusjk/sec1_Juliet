@@ -35,15 +35,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetchData}) => {
+const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fetchData }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
   const [form, setForm] = useState({
     comment: "",
-    rating: 0.00
+    rating: 0
   });
-  
+
   const handleOpen = async () => {
     if (review_id != null) {
       await getReview();
@@ -54,7 +54,7 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const getReview = async () => {
     try {
       const response = await axios.get("http://localhost:4000/review/getReviewById", { params: { review_id } });
@@ -72,7 +72,7 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
   const review = async () => {
     try {
       const { ...data } = form;
-      const response = await axios.post("http://localhost:4000/review/create", {passenger_id, driver_id, request_id, ...data});
+      const response = await axios.post("http://localhost:4000/review/create", { passenger_id, driver_id, request_id, ...data });
       const { success, message } = response.data;
       if (success) {
         setOpen(false);
@@ -101,11 +101,11 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
               defaultValue={form.rating}
               precision={1}
               size="large"
+              disabled={review_id != null}
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
               onChange={(event, newValue) => {
                 setForm({ ...form, rating: newValue });
               }}
-              readOnly= {review_id != null}
             />
           </div>
           <TextField
@@ -113,12 +113,9 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
             className={classes.margin}
             value={form.comment}
             multiline
-            InputProps={{
-              readOnly: review_id != null,
-            }}
+            disabled={review_id != null}
             onChange={e => {
               setForm({ ...form, comment: e.target.value });
-              setErr(null)
             }}
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
