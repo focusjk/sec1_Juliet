@@ -13,89 +13,28 @@ class AdminWithdrawal extends React.Component {
         this.fetchData()
     }
     fetchData = async () => {
-        // const response = await axios.get("http://localhost:4000/admin/driver");
-        // const { success, driver } = response.data
-        // if (success) {
-        //     this.setState({ list: driver })
-        // }
-        this.setState({
-            list: [
-                {
-                    id: 1,
-                    member_id: 1,
-                    amount: 100,
-                    created_at: "2020-03-09T03:00:00.000Z",
-                    approved_at: null,
-                    approved_by: null,
-                    rejected_at: null,
-                    rejected_by: null,
-                    status: "pending",
-                    account_name: "jiraphat klll",
-                    account_number: "1234567890",
-                    bank_name: "kbank",
-                    username: "focustsu",
-                    image: "",
-                    balance: 100,
-                    firstname: "jiraphat",
-                    lastname: "khuapnit"
-                }, {
-                    id: 1,
-                    member_id: 1,
-                    amount: 100,
-                    created_at: "2020-03-09T03:00:00.000Z",
-                    approved_at: 'admineiei',
-                    approved_by: "2020-03-09T03:00:00.000Z",
-                    rejected_at: null,
-                    rejected_by: null,
-                    status: "approving",
-                    account_name: "jiraphat klll",
-                    account_number: "1234567890",
-                    bank_name: "kbank",
-                    username: "focustsu",
-                    image: "",
-                    balance: 100,
-                    firstname: "jiraphat",
-                    lastname: "khuapnit"
-                }, {
-                    id: 1,
-                    member_id: 1,
-                    amount: 100,
-                    created_at: "2020-03-09T03:00:00.000Z",
-                    approved_at: null,
-                    approved_by: null,
-                    rejected_at: null,
-                    rejected_by: null,
-                    status: "pending",
-                    account_name: "jiraphat klll",
-                    account_number: "1234567890",
-                    bank_name: "kbank",
-                    username: "focustsu",
-                    image: "",
-                    balance: 20,
-                    firstname: "jiraphat",
-                    lastname: "khuapnit"
-                },
-            ]
-        })
+        const response = await axios.get("http://localhost:4000/admin/withdrawal/request");
+        const { success, request } = response.data
+        if (success) {
+            this.setState({ list: request })
+        }
     }
     handleApprove = async id => {
-        const { username } = this.props.user;
-        console.log({ id, admin_name: username })
-        // const response = await axios.post("http://localhost:4000/admin/driver-approve", { id, admin_name: username });
-        // const { success } = response.data
-        // if (success) {
-        //     this.fetchData()
-        // }
+        const { username: admin_name } = this.props.user;
+        const response = await axios.post("http://localhost:4000/admin/withdrawal-approve", { id, admin_name });
+        const { success } = response.data
+        if (success) {
+            this.fetchData()
+        }
     }
 
     handleReject = async id => {
-        const { username } = this.props.user;
-        console.log({ id, admin_name: username })
-        // const response = await axios.post("http://localhost:4000/admin/driver-reject", { id, admin_name: username });
-        // const { success } = response.data
-        // if (success) {
-        //     this.fetchData()
-        // }
+        const { username: admin_name } = this.props.user;
+        const response = await axios.post("http://localhost:4000/admin/withdrawal-reject", { id, admin_name });
+        const { success } = response.data
+        if (success) {
+            this.fetchData()
+        }
     }
     render() {
         return (
@@ -135,7 +74,7 @@ class AdminWithdrawal extends React.Component {
                             <div style={{ flexGrow: 4, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                 <div> <b>Member ID:</b> {member_id}</div>
                                 <div> <b>Name:</b> {firstname} {lastname}</div>
-                                <div> <b>Bank account name:</b> {account_name}</div>
+                                <div> <b>Account holder name:</b> {account_name}</div>
                                 <div> <b>Bank account number:</b> {account_number}</div>
                                 <div> <b>Bank:</b> {bank_name}</div>
                                 <div> <b>Amount:</b> <div style={{ color: balance < amount ? 'red' : 'black', display: 'inline' }}> {amount} ฿</div></div>
