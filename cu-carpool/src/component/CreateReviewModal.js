@@ -116,6 +116,7 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
             disabled={review_id != null}
             onChange={e => {
               setForm({ ...form, comment: e.target.value });
+              setErr(null)
             }}
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
