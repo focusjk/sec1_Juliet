@@ -62,9 +62,9 @@ const App = () => {
   //for member
   //  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-  const [user, setUser] = React.useState({ username: 'admin' });
+  // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  //const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -127,8 +127,8 @@ const App = () => {
                     <Route path="/wallet" exact>
                       <Wallet user={user} />
                     </Route>
-                    <Route path ="/withdrawal" exact>
-                      <CreateWtihdrawal user = {user}/>
+                    <Route path="/withdrawal" exact>
+                      <CreateWtihdrawal user={user} />
                     </Route>
                     <Route exact path="/">
                       <Home user={user} />
