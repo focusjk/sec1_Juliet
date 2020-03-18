@@ -128,9 +128,7 @@ const App = () => {
                       <Wallet user={user} />
                     </Route>
                     <Route path ="/withdrawal" exact>
-                      <CreateWtihdrawal
-                        user = {user}
-                      />
+                      <CreateWtihdrawal user = {user}/>
                     </Route>
                     <Route exact path="/">
                       <Home user={user} />

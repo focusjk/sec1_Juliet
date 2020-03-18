@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Modal from "@material-ui/core/Modal";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { MyHeader, MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
-import { Input, Grid, TextField } from "@material-ui/core";
+import { MyHeaderWithArrow } from "../component/MyTitle";
+import { TextField } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-const CreateWithdrawal = ({history}) => {
+
+const CreateWithdrawal = () => {
     const [form, setForm] = useState({
         account_number: "",
         account_name: "",
@@ -82,7 +78,7 @@ const CreateWithdrawal = ({history}) => {
             </div>
             </form>
           <div >
-            <MyFullWidthButton >Request</MyFullWidthButton>
+            <MyFullWidthButton>Request</MyFullWidthButton>
           </div>
         </div>
       )
