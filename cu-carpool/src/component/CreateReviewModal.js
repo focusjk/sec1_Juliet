@@ -58,7 +58,6 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
   const getReview = async () => {
     try {
       const response = await axios.get("http://localhost:4000/review/getReviewById", { params: { review_id } });
-      console.log("response.data",response.data);
       const { success, review, message } = response.data;
       if (success) {
         setForm({ comment: review.comment, rating: review.rating });
@@ -77,7 +76,6 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetc
       const { success, message } = response.data;
       if (success) {
         setOpen(false);
-        console.log('review success');
         fetchData();
       } else {
         setErr(message);
