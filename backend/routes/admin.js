@@ -118,7 +118,7 @@ router.post("/report/read", function(req, res, next) {
 });
 
 router.get("/withdrawal/request", (req, res, next) => {
-  adminService.geteWithdrawalRequest((err, result) => {
+  adminService.getWithdrawalRequest((err, result) => {
     if (err) {
       res.json({
         success: false,
