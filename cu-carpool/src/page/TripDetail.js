@@ -26,12 +26,11 @@ class TripDetail extends React.Component {
             <MyTitle style={{ marginLeft: "8px" }}>Driver Username</MyTitle>
           </div>
           <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
           Average rating :
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <MyTitle style={{ marginLeft: "8px" }}>Car detail</MyTitle>
+            <MyTitle style={{ marginLeft: "8px" }}>License plate</MyTitle>
             
-          </div> 
-          <div>
-            <MyTitle style={{ marginLeft: "8px" }}>Driver Username</MyTitle>
           </div>
            
         
