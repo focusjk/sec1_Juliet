@@ -27,6 +27,12 @@ const getReviewById = (review_id, callback) => {
   );
 };
 
+const getAllReviewOfDriver = (driver_id, callback) => {
+    return db.query(`SELECT members.username, review.rating, review.comment, review.created_at, members.photo
+                    FROM review INNER JOIN members ON review.reviewer = members.id 
+                    WHERE review.reviewee = ?`, [driver_id], callback);
+}
+
 const getTripReview = (trip_id, callback) => {
   return db.query(
     `SELECT review.comment as comment, 
@@ -42,4 +48,4 @@ const getTripReview = (trip_id, callback) => {
   );
 };
 
-module.exports = { createReview, getReviewById, getTripReview };
+module.exports = { createReview, getReviewById, getTripReview, getAllReviewOfDriver };
