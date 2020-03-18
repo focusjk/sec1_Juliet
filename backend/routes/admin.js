@@ -27,6 +27,16 @@ router.get('/driver', function (req, res, next) {
   });
 });
 
+router.get('/member', function (req, res, next) {
+  adminService.getAllUser((err, result) => {
+    if (err) {
+      res.json({ success: false, error: err, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true, member: result });
+    }
+  });
+});
+
 router.post('/driver-approve', function (req, res, next) {
   const { admin_name, id } = req.body;
   const approved_at = util.timeformatter(new Date());

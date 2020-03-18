@@ -18,6 +18,15 @@ const getAllMember = callback => {
   );
 };
 
+const getAllUser = (callback) => {
+  return db.query(
+    `SELECT id,username,firstname,lastname,phone_number,email,photo,
+                  driver_status,driving_license,approved_at,approved_by,rejected_at,rejected_by,banned_at,banned_by
+                  FROM members`,
+    callback
+  );
+};
+
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
   console.log('Approved by : ', admin_name);
   console.log('Member ID: ', driver_id);
@@ -89,4 +98,4 @@ const isRead = ({ id, is_read }, callback) => {
                   WHERE id = ?`, [ is_read , id ] , callback);
 }
 
-module.exports = { login, getAllMember, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
+module.exports = { login, getAllMember,getAllUser, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
