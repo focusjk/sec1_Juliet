@@ -28,4 +28,15 @@ router.get('/getReviewById', (req, res, next) => {
     })
 })
 
+router.get('/getAllReviewOfDriver', (req, res, next) => {
+    const {driver_id} = req.query;
+    reviewService.getAllReviewOfDriver(driver_id, (err, result) => {
+        if (err) {
+            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+        } else {
+            res.json({ success: true, review: result});
+        }    
+    })
+})
+
 module.exports = router;

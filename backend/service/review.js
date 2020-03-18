@@ -13,4 +13,10 @@ const getReviewById = (review_id, callback) => {
                     WHERE id = ?`, [review_id] , callback);
 }
 
-module.exports = { createReview , getReviewById };
+const getAllReviewOfDriver = (driver_id, callback) => {
+    return db.query(`SELECT members.username, review.rating, review.comment, review.created_at, members.photo
+                    FROM review INNER JOIN members ON review.reviewer = members.id 
+                    WHERE review.reviewee = ?`, [driver_id], callback);
+}
+
+module.exports = { createReview , getReviewById , getAllReviewOfDriver };
