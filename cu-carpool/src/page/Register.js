@@ -4,14 +4,13 @@ import { withRouter } from "react-router-dom";
 import { MyFullWidthButton } from "../component/MyButton";
 import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 import { Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import userImage from '../component/UserImage';
+import userImage from "../component/UserImage";
 import { MyLink } from "../component/MyTitle";
 
 const useStyles = makeStyles({
@@ -20,15 +19,15 @@ const useStyles = makeStyles({
     marginBottom: 20
   },
   input: {
-    display: 'none',
+    display: "none"
   },
   label: {
-    border: '1px dashed #BDBDBD',
-    color: '#BDBDBD',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    border: "1px dashed #BDBDBD",
+    color: "#BDBDBD",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     height: "100px",
     width: "100px"
   }
@@ -42,7 +41,7 @@ const Register = ({ history, handleLogin }) => {
     username: null,
     password: null,
     email: null,
-    phone_number: null,
+    phone_number: null
   });
   const [error, setError] = useState({
     firstname: false,
@@ -90,7 +89,7 @@ const Register = ({ history, handleLogin }) => {
         }
       } catch (e) {
         console.log(e);
-        setErrorMessage("Invalid data, please check your input again")
+        setErrorMessage("Invalid data, please check your input again");
       }
     }
   };
@@ -150,7 +149,6 @@ const Register = ({ history, handleLogin }) => {
         />
 
         <div style={{ marginBottom: 5 }}>PASSWORD</div>
-        {/* <Input fullWidth placeholder="Password" className={classes.root} /> */}
         <Input
           placeholder="Password"
           className={classes.root}
@@ -200,11 +198,19 @@ const Register = ({ history, handleLogin }) => {
       {errorMessage !== "" && (
         <div style={{ color: "red" }}>{errorMessage}</div>
       )}
-      <MyLink goto="/login" style={{ marginTop: 25, alignSelf: "center", color: "#bdbdbd", fontSize: 16 }}>Already a member ?</MyLink>
+      <MyLink
+        goto="/login"
+        style={{
+          marginTop: 25,
+          alignSelf: "center",
+          color: "#bdbdbd",
+          fontSize: 16
+        }}
+      >
+        Already a member ?
+      </MyLink>
     </Grid>
   );
-  //   }
-  // }
 };
 
 export default withRouter(Register);

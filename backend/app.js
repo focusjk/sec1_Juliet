@@ -12,7 +12,8 @@ var tripRouter = require('./routes/trip');
 var reportRouter = require('./routes/report');
 var requestRouter = require('./routes/request');
 var transactionRouter = require('./routes/transaction');
-
+var withdrawalRouter = require('./routes/withdrawal');
+var reviewRouter =  require('./routes/review');
 
 var app = express();
 
@@ -40,7 +41,8 @@ app.use('/trip', tripRouter);
 app.use('/report', reportRouter);
 app.use('/request', requestRouter);
 app.use('/transaction', transactionRouter);
-
+app.use('/withdrawal', withdrawalRouter);
+app.use('/review', reviewRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
