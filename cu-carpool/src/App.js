@@ -15,6 +15,7 @@ import DriverProfile from "./page/DriverProfile";
 import CreateTrip from "./page/CreateTrip";
 import MyTrip from "./page/MyTrip";
 import AdminLogin from "./page/AdminLogin";
+import AdminWithdrawal from "./page/AdminWithdrawal";
 import DriverRequest from "./page/DriverRequest";
 import TripMemberforMember from "./page/TripMemberforMember";
 import TripMemberforDriver from "./page/TripMemberforDriver";
@@ -58,11 +59,11 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  //const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -149,6 +150,9 @@ const App = () => {
                     </Route>
                     <Route path="/admin/member" exact>
                       <MemberInfo user={user} />
+                    </Route>
+                    <Route path="/admin/withdrawal" exact>
+                      <AdminWithdrawal user={user} />
                     </Route>
                     <Redirect to="/admin/driver" />
                   </Switch>
