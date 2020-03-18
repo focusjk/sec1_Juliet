@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeaderWithArrow } from "../component/MyTitle";
 import { TextField } from "@material-ui/core";
-import { MyFullWidthButton } from "../component/MyButton";
+import { MyFullWidthButton,MyDisabledFullWidthButton } from "../component/MyButton";
 
 
-const CreateWithdrawal = ({user}) => {
+const CreateWithdrawal = ({history , user}) => {
     const [form, setForm] = useState({
         account_number: "",
         account_name: "",
@@ -32,20 +32,25 @@ const CreateWithdrawal = ({user}) => {
           form.bank_name &&
           form.amount
       };
+      const clickable = () => {
+        return (
+          form.account_name !== "" &&
+          form.account_number !== "" &&
+          form.bank_name !== "" &&
+          form.amount !== ""
+        );
+      };
       const handleRequest = async () => {
         if (validate()) {
           try {
-            const response = await axios.post("http://localhost:4000/withdrawal/", {
+            const response = await axios.post("http://localhost:4000/withdrawal", {
               member_id: user.id, 
-              account_name, 
-              account_number, 
-              bank_name,
-              amount
+              ...form
             });
             const { success } = response.data;
             if (success) {
-              history.push("/wallet");
               setErrorMessage(null);
+              history.push("/wallet"); 
             } else {
               setErrorMessage("Request failed. Please try again.")
             }
@@ -68,7 +73,7 @@ const CreateWithdrawal = ({user}) => {
                 value={form.account_number}
                 error={error.account_number}
                 onChange={e => {
-                  setForm({ ...form, bank_account_number: e.target.value });
+                  setForm({ ...form, account_number: e.target.value });
                   setErrorMessage('')
                 }}
               />
@@ -103,8 +108,9 @@ const CreateWithdrawal = ({user}) => {
                 style={{ marginTop: 15 }}
                 value={form.amount}
                 error={error.amount}
+                type = "number"
                 onChange={e => {
-                  setForm({ ...form, account_name: e.target.value });
+                  setForm({ ...form, amount: e.target.value });
                   setErrorMessage('')
                 }}
               />
@@ -114,7 +120,12 @@ const CreateWithdrawal = ({user}) => {
             </div>
             </form>
           <div >
-            <MyFullWidthButton onclick={handleRequest}>Request</MyFullWidthButton>
+            {!clickable() &&(
+              <MyDisabledFullWidthButton disabled> Request</MyDisabledFullWidthButton>
+            )}
+            {clickable() &&(
+              <MyFullWidthButton onClick={handleRequest}>Request</MyFullWidthButton>
+            )}
           </div>
         </div>
       )
