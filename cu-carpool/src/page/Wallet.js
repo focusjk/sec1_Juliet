@@ -64,7 +64,7 @@ const Wallet = ({ history, user }) => {
       <div>
         <MyFullWidthButton
           style={{ marginBottom: "16px" }}
-          onClick={() => history.push("/withdrawal")} // TODO link to withdrawal request form page
+          onClick={() => history.push("/withdrawal")} 
         >
           Withdraw
         </MyFullWidthButton>
