@@ -162,8 +162,6 @@ router.post("/withdrawal-reject", function(req, res, next) {
     admin_name,
     rejected_at,
     id,
-    member_id,
-    amount,
     action,
     (err, result) => {
       if (err) {

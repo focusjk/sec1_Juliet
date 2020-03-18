@@ -147,16 +147,12 @@ const withdrawalApprove = async (
     );
     const { amount: balance } = wallet_amount[0];
     const updated_amount = balance - amount;
-    if (updated_amount >= 0) {
-      transactionService.updateWallet(updated_amount, member_id);
-      return db.query(
-        `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
-        [admin_name, time, status, withdrawal_id],
-        callback
-      );
-    } else {
-      callback(false);
-    }
+    transactionService.updateWallet(updated_amount, member_id);
+    return db.query(
+      `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
+      [admin_name, time, status, withdrawal_id],
+      callback
+    );
   }
   if (action) {
     const status = "rejected";
