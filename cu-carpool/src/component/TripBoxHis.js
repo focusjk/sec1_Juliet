@@ -6,6 +6,7 @@ import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
+import CreateReviewModal from "../component/CreateReviewModal";
 
 const TripBoxHis = ({ history, data, fetchData }) => {
   const {
@@ -184,7 +185,9 @@ const TripBoxHis = ({ history, data, fetchData }) => {
           )}
 
           {request_status == "done" && (
-            <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
+            // <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
+            <CreateReviewModal/>
+            
           )}
           {request_status != "done" && (
             <MyGreyButton disabled>Review</MyGreyButton>

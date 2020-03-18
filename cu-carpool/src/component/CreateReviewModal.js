@@ -36,11 +36,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateReviewModal = ({review_id, driver_id, passenger_id }) => {
+const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
-  //const [joined,setJoined] = React.useState(false);
   const [form, setForm] = useState({
     comment: "",
     rating: 0.00
@@ -81,17 +80,15 @@ const CreateReviewModal = ({review_id, driver_id, passenger_id }) => {
   const review = async () => {
     try {
       const { ...data } = form;
-      //   const response = await axios.post("http://localhost:4000/request", { trip_id, member_id, ...data });
-      //   const { success, message } = response.data;
-      //   console.log(response.data)
-      //   if (success) {
-      //     setOpen(false);
-      //     console.log('review success')
-      //     const path = '/trip-history';
-      //     history.push(path); //tell that if success will go to this path
-      //   } else {
-      //     setErr(message)
-      //   }
+      const response = await axios.post("http://locahost:4000/review/create", {passenger_id, driver_id, request_id, data});
+      console.log(response);
+      const { success, message } = response.data;
+      if (success) {
+        setOpen(false);
+        console.log('review success');
+      } else {
+        setErr(message);
+      }
     } catch (e) {
       setErr('Cannot access database')
     }
@@ -125,7 +122,7 @@ const CreateReviewModal = ({review_id, driver_id, passenger_id }) => {
             value={form.comment}
             multiline
             InputProps={{
-              readOnly: reviewed,
+              readOnly: review_id != null,
             }}
             onChange={e => {
               setForm({ ...form, comment: e.target.value });
@@ -134,7 +131,7 @@ const CreateReviewModal = ({review_id, driver_id, passenger_id }) => {
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "0px", display: 'flex' }}>
-            {reviewed ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
+            {review_id ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
               <React.Fragment>
                 <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
                 <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
