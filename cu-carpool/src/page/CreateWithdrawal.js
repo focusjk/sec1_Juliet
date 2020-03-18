@@ -6,7 +6,7 @@ import { TextField } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
 
 
-const CreateWithdrawal = () => {
+const CreateWithdrawal = ({user}) => {
     const [form, setForm] = useState({
         account_number: "",
         account_name: "",
@@ -15,11 +15,47 @@ const CreateWithdrawal = () => {
       });
     const [errorMessage, setErrorMessage] = useState('')
     const [error, setError] = useState({
-        card_number: false,
-        card_holder_name: false,
-        card_expiry_date: false,
-        card_code: false
+        account_number: false,
+        account_name: false,
+        bank_name: false,
+        amount: false
       });
+      const validate = () => {
+        setError({
+          account_number: !form.account_number,
+          account_name: !form.account_name,
+          bank_name: !form.bank_name,
+          amount: !form.amount
+        })
+        return form.account_number &&
+          form.account_name &&
+          form.bank_name &&
+          form.amount
+      };
+      const handleRequest = async () => {
+        if (validate()) {
+          try {
+            const response = await axios.post("http://localhost:4000/withdrawal/", {
+              member_id: user.id, 
+              account_name, 
+              account_number, 
+              bank_name,
+              amount
+            });
+            const { success } = response.data;
+            if (success) {
+              history.push("/wallet");
+              setErrorMessage(null);
+            } else {
+              setErrorMessage("Request failed. Please try again.")
+            }
+          } catch (e) {
+            setErrorMessage("Request failed. Please try again.")
+          }
+        } else {
+          setErrorMessage("Please fill all inputs with valid data")
+        }
+      };
     return (
         <div style ={{display:"flex",flexDirection: "column" ,height: "80vh",justifyContent: "space-between"}}>
           <form autoComplete="off">
@@ -78,7 +114,7 @@ const CreateWithdrawal = () => {
             </div>
             </form>
           <div >
-            <MyFullWidthButton>Request</MyFullWidthButton>
+            <MyFullWidthButton onclick={handleRequest}>Request</MyFullWidthButton>
           </div>
         </div>
       )
