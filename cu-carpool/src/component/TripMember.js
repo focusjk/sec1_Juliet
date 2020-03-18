@@ -39,6 +39,11 @@ const TripMember = ({ history, data }) => {
       justifyContent: "space-between",
       flexDirection: "row",
       backgroundColor: "#f2f2f2"
+    },
+    img:{
+      borderRadius: "100%",
+      marginLeft:"20px",
+      marginRight:"8px"
     }
   }));
 
@@ -46,12 +51,12 @@ const TripMember = ({ history, data }) => {
 
   return (
         <Paper square elevation={0} className={classes.paper}>
-            <img src={photo} height={50} width={50} style={{borderRadius: "100%"}}/>
-            <div style={{ flexDirection: 'column',width: '150px' }}>
+            <img src={photo} height={50} width={50} className={classes.img}/>
+            <div style={{ flexDirection: 'column',width: '165px'}}>
                 <MyTitle style={{ color: "#C78899" }}>Status: {request_status}</MyTitle>
                 <div style={{ alignSelf: 'center' }}>{username}</div>
             </div>
-            <div style={{ flexDirection: 'column',width: '250px'}}>
+            <div style={{ flexDirection: 'column',width: '300px'}}>
                 <div style={{marginBottom:'7px'}}> Request ID: {request_id}</div>
                 <div> Name: {firstname} {lastname}</div>
             </div>
