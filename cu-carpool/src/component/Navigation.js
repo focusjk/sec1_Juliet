@@ -20,17 +20,21 @@ const listPath = {
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
+    { name: "Wallet", path: "/wallet", icon: "account_balance_wallet" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
+    { name: "Report", path: "/report", icon: "report" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ],
   driver: [
     { name: "Home", path: "/", icon: "home" },
     { name: "Profile", path: "/profile", icon: "person" },
     { name: "Driver", path: "/driver", icon: "assignment_ind" },
+    { name: "Wallet", path: "/wallet", icon: "account_balance_wallet" },
     { name: "Create trip", path: "/create-trip", icon: "edit" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
+    { name: "Report", path: "/report", icon: "report" },
     { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
   ]
 };

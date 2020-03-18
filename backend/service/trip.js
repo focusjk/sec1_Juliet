@@ -1,4 +1,6 @@
 var db = require("../dbconnection");
+var transactionService = require('../service/transaction');
+var util = require('../util');
 
 const createTrip = (
   created_at,
@@ -162,6 +164,7 @@ const getAllPassengerForDriver = (trip_id, callback) => {
 
 const pickUpMember = (request_id, pickup_time, callback) => {
   return db.query(`UPDATE request
+		
                    SET driver_departed_at = ?
                    WHERE id = ? `, [pickup_time, request_id], callback);
 }
@@ -173,59 +176,90 @@ const getInTheCar = (request_id, depart_time, callback) => {
                    WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const dropOff = (request_id, depart_time, callback) => {
+const dropOff = async (request_id, depart_time, callback) => {
+  const trip = await util.promisifyQuery(`SELECT trip.price,trip.owner FROM trip LEFT JOIN request ON trip.id = request.trip_id WHERE request.id = ?`, [request_id]);
+  const { price, owner } = trip[0];
+  const type = 2;
+  const time = util.timeformatter(new Date());
+  transactionService.createTransaction(price, owner, time, type);
+  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`, [owner]);
+  const { amount } = wallet_amount[0];
+  const updated_amount = amount + ((90 / 100) * price);
+  transactionService.updateWallet(updated_amount, owner);
   const req_status = 6;
   return db.query(`UPDATE request
                    SET request_status = ? , driver_arrived_at = ?
                    WHERE id = ?`, [req_status, depart_time, request_id], callback);
 }
 
-const promisifyQuery = (query, args) => new Promise((resolve, reject) => db.query(query, args,
-  (err, result) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(result);
-    }
-  }))
-
 const updateTripStatus = async (trip_id, status, callback) => {
-
   // status : 0 - pick up , 1 - drop off , 2 - cancel
-  const que = await promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
+  const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
   const recent_status = que[0].status;
-  const passenger_left = await promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
+  const passenger_left = await util.promisifyQuery(`SELECT count(*) as amount FROM  request WHERE trip_id = ? and request_status in ('on going','paid')`, [trip_id]);
   const { amount: amount_passenger_left } = passenger_left[0]
-
   var trip_status;
   if (recent_status == 'scheduled' && status == 0) { //pick up
     trip_status = 2;
   } else if (recent_status == 'on going' && status == 1 && amount_passenger_left == 0) { //drop-off
     trip_status = 4;
+    const left_requests = await util.promisifyQuery(`SELECT request.id FROM request WHERE request.trip_id = ? and request.request_status IN ('approved','pending')`, [trip_id]);
+    const id_left_request = left_requests.map(i => i.id)
+    if (id_left_request.length > 0) {
+      await util.promisifyQuery(`UPDATE request SET request.request_status = 3 WHERE request.id in (?)`, [id_left_request]);
+    }
   } else {
     trip_status = recent_status;
   }
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
-const cancelTrip = async (request_id, callback) => {
-  const query_result = await promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
+const cancelRequest = async (request_id, cancel_time, callback) => {
+  const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
   const { request_status } = query_result[0]
 
   if (request_status == 'pending' || request_status == 'approved') {
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else if (request_status == 'paid') {
-    // transactionService.create( something ) TODO
-    // TODO เขียน service ของ transaction แยก ตามที่บอกไว้ตอนประชุม
-    // เขียน service (1) ที่ใช้ในการสร้าง transaction
-    // เขียน service (2) สำหรับการคืนเงิน ให้กับ passenger โดยเรียกใช้ (1)
-    // ใ่สอันนี้ใน (2) var amount = await promisifyQuery(`SELECT trip.price FROM trip WHERE trip_id = ?`, [trip_id]);
-    // ใ่สอันนี้ใน (2) var result = await promisifyQuery(`INSERT INTO transaction (amount,member_id,created_at,type) VALUES (?,?,?,?)`, [amount, member_id, time, transact_type])
+    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`, [request_id]);
+    const { trip_id } = trip[0];
+    transactionService.refundTransaction(request_id, trip_id, cancel_time);
     return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
   } else {
-    callback(true)
+    callback(false);
     return
   }
 }
 
-module.exports = { createTrip, searchTrip, getTripDetail, getOwnerDetail, getAllPassenger, getDriver, getAllPassengerForDriver, pickUpMember, getInTheCar, updateTripStatus, dropOff, cancelTrip };
+const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
+  const request = await util.promisifyQuery(`SELECT request.id, request.request_status 
+                                                FROM trip LEFT JOIN request ON trip.id = request.trip_id
+                                                WHERE trip.id = ? AND trip.status = 'scheduled'
+                                                AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+  const request_id = request.map(data => data.id);
+
+  await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
+  request.map(({ id, request_status }) => {
+    if (request_status === 'paid') {
+      transactionService.refundTransaction(id, trip_id, cancel_time);
+    }
+  })
+  return db.query(`UPDATE trip SET status = 'canceled' WHERE id = ? AND status = 'scheduled'`, [trip_id], callback);
+}
+
+module.exports = {
+  createTrip,
+  searchTrip,
+  getTripDetail,
+  getOwnerDetail,
+  getAllPassenger,
+  getDriver,
+  getAllPassengerForDriver,
+  pickUpMember,
+  getInTheCar,
+  updateTripStatus,
+  dropOff,
+  cancelRequest,
+  cancelTrip
+};
+

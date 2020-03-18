@@ -10,7 +10,10 @@ class TripHistory extends React.Component {
     this.fetchData();
   }
   fetchData = async () => {
-    const response = await axios.get("http://localhost:4000/user/trip-history", { params: { member_id: this.props.user.id } }); // TODO
+    const response = await axios.get(
+      "http://localhost:4000/user/trip-history",
+      { params: { member_id: this.props.user.id } }
+    );
     const { success, request } = response.data;
     if (success) {
       this.setState({ list: request });
@@ -20,10 +23,10 @@ class TripHistory extends React.Component {
   render() {
     return (
       <div>
-        <MyHeader style={{ marginBottom: "30px" }}>Trip History</MyHeader>
+        <MyHeader style={{ marginBottom: "25px" }}>Trip History</MyHeader>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((trip, index) => (
-          <TripBoxHis key={index} data={trip} />
+          <TripBoxHis key={index} data={trip} fetchData={this.fetchData} />
         ))}
       </div>
     );

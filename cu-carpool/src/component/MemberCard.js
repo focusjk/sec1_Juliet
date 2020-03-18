@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
 import logo from '../logo.png';
@@ -7,17 +8,50 @@ import EmptyBox from '../component/EmptyBox'
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import MemberCardSmall from '../component/MemberCardSmall'
+import MemberCardSmall from '../component/MemberCardSmall';
+import LocationDetail from '../component/LocationDetail'
 
-const MemberCard = ({ data }) => {
-  const { open, setOpen } = useState(false)
+const MemberCard = ({ data, trip_id, fetchData }) => {
   const {
     username,
     firstname,
     lastname,
     phone_number,
-    photo
+    photo,
+    request_id,
+    request_status,
+    departure_detail,
+    destination_detail,
+    departure_longtitude,
+    departure_latitude,
+    destination_longtitude,
+    destination_latitude,
+    driver_departed_at
   } = data;
+  const [error, setError] = useState("");
+  const PickUp = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
+      const { success, error } = response.data;
+      setError(error)
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const DropOff = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id: request_id, trip_id });
+      const { success } = response.data;
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Paper
       square
@@ -39,12 +73,15 @@ const MemberCard = ({ data }) => {
         />
         <div>
           <MyTitle>{username}</MyTitle>
-          <div
-            style={{ color: "#C78899", textDecoration: "underline", fontSize: 14 }}
-            onClick={() => { setOpen(true) }}
-          >
-            see location detail
-          </div>
+          <LocationDetail
+            trip_id={trip_id}
+            departure_detail={departure_detail}
+            destination_detail={destination_detail}
+            departure_longtitude={departure_longtitude}
+            departure_latitude={departure_latitude}
+            destination_longtitude={destination_longtitude}
+            destination_latitude={destination_latitude}
+          />
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
@@ -66,8 +103,10 @@ const MemberCard = ({ data }) => {
           marginTop: "24px"
         }}
       >
-        <MyButton style={{ alignSelf: "center" }}>Pick up</MyButton>
-        <MyGreyButton disabled={true} style={{ alignSelf: "center" }}>Drop off</MyGreyButton>
+        {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {request_status == 'on going' && driver_departed_at != null && <MyButton onClick={DropOff} >Drop off</MyButton>}
+        {(request_status != 'on going' || driver_departed_at == null) && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
     </Paper>
   );

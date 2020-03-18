@@ -26,18 +26,16 @@ const TripMemberforDriver = () => {
       console.log(e);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   return (
     <div>
       <MyHeaderWithArrow goto="/my-trip">Trip Member</MyHeaderWithArrow>
       <MyTitle>Member</MyTitle>
       <EmptyBox data={memberList} />
       {memberList.map((member, index) => (
-        <MemberCard key={index} data={member} />
+        <MemberCard key={index} data={member} trip_id={trip_id} fetchData={fetchData}/>
       ))}
     </div>
   );

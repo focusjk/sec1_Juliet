@@ -10,9 +10,9 @@ import moment from "moment";
 import PhoneIcon from "@material-ui/icons/Phone";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
+import axios from "axios";
 
-
-const TripBox = ({ history, data }) => {
+const RequestBox = ({ history, data, fetch }) => {
   const {
     id,
     departure_latitude,
@@ -26,6 +26,32 @@ const TripBox = ({ history, data }) => {
     phone_number,
     photo
   } = data;
+
+  const handleApprove = async () => {
+    axios.post("http://localhost:4000/driver/request-approve", {
+      id
+    }).then(response => {
+      const { success } = response.data;
+      if (success) {
+        fetch();
+      }
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  const handleReject = async () => {
+    axios.post("http://localhost:4000/driver/request-reject", {
+      id
+    }).then(response => {
+      const { success } = response.data;
+      if (success) {
+        fetch();
+      }
+    }).catch(error => {
+      console.log("error");
+    });
+  }
 
   return (
     <Paper
@@ -89,12 +115,11 @@ const TripBox = ({ history, data }) => {
           marginTop: "12px"
         }}
       >
-        <MyButton>Accept</MyButton>
-        <MyWhiteButton>Reject</MyWhiteButton>
+        <MyButton onClick={() => handleApprove()}>Accept</MyButton>
+        <MyWhiteButton onClick={() => handleReject()}>Reject</MyWhiteButton>
       </div>
     </Paper>
-    // </Paper>
   );
 };
 
-export default withRouter(TripBox);
+export default withRouter(RequestBox);

@@ -9,7 +9,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiZm9jdXMtamsiLCJhIjoiY2s2aHg3OGhwMGRwOTNrdGkwNzh
 class Map extends React.Component {
     state = {
         viewport: { longitude: 100.493117, latitude: 13.769059, zoom: 15 },
-        marker: { longitude: null, latitude: null }
+        marker: { longitude: 100.493117, latitude: 13.769059 }
     };
     componentDidMount() {
         const { longitude, latitude } = this.props

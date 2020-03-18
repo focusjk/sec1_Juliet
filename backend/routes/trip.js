@@ -3,7 +3,7 @@ var router = express.Router();
 var tripService = require('../service/trip');
 var validate = require('express-validation');
 var validateTrip = require('../validate/trip');
-var util = require('../util')
+var util = require('../util');
 
 router.post('/', (req, res, next) => {
   const { departure, destination, selectedDate } = req.body;
@@ -64,6 +64,8 @@ router.post('/member', (req, res, next) => {
     } else {
       const driver = result;
       tripService.getAllPassenger(trip_id, (err, result) => {
+        // Jedi TODO
+        // tripService.getAllPassengerForDriver(trip_id, (err, result) => {
         if (err) {
           res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
         } else {
@@ -135,9 +137,10 @@ router.post('/getInTheCar', (req, res, next) => {
   })
 });
 
-router.post('/cancelTrip', (req, res, next) => {
+router.post('/cancelRequest', (req, res, next) => {
   const { id: request_id } = req.body;
-  tripService.cancelTrip(request_id, (err, result) => {
+  const cancel_time = util.timeformatter(new Date());
+  tripService.cancelRequest(request_id, cancel_time, (err, result) => {
     if (err) {
       res.json({ success: false, message: 'Cannot cancel your trip' });
     } else {
@@ -146,5 +149,20 @@ router.post('/cancelTrip', (req, res, next) => {
   })
 });
 
-
+router.post('/cancelTrip', (req, res, next) => {
+  const { trip_id } = req.body;
+  const cancel_time = util.timeformatter(new Date());
+  tripService.cancelTrip({ trip_id, cancel_time }, (err, result) => {
+    if (err) {
+      res.json({ success: false, message: 'Cannot access database' });
+    } else {
+      if (result.affectedRows == 0) {
+        res.json({ success: false, message: 'Your trip cannot be canceled' });
+      }
+      else {
+        res.json({ success: true });
+      }
+    }
+  })
+})
 module.exports = router;
