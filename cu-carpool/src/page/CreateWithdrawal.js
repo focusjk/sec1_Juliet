@@ -40,7 +40,7 @@ const CreateWithdrawal = () => {
                 fullWidth
                 required
                 label="Account Holder Name"
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 20 }}
                 value={form.account_name}
                 error={error.account_name}
                 onChange={e => {
@@ -52,7 +52,7 @@ const CreateWithdrawal = () => {
                 fullWidth
                 required
                 label="Bank Name"
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 20 }}
                 value={form.bank_name}
                 error={error.bank_name}
                 onChange={e => {
@@ -64,7 +64,7 @@ const CreateWithdrawal = () => {
                 fullWidth
                 required
                 label="Amount"
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 20 }}
                 value={form.amount}
                 error={error.amount}
                 onChange={e => {
