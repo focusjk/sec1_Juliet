@@ -8,7 +8,7 @@ import MapData from "./MapData";
 import moment from "moment";
 import CreateReviewModal from "../component/CreateReviewModal";
 
-const TripBoxHis = ({ history, data, fetchData }) => {
+const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
   const {
     trip_id,
     start_datetime,
@@ -23,7 +23,9 @@ const TripBoxHis = ({ history, data, fetchData }) => {
     destination_longtitude,
     owner_firstname,
     departure_detail,
-    destination_detail
+    destination_detail,
+    review_id,
+    owner_id
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
   const cancelable = () => {
@@ -186,7 +188,7 @@ const TripBoxHis = ({ history, data, fetchData }) => {
 
           {request_status == "done" && (
             // <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
-            <CreateReviewModal/>
+            <CreateReviewModal request_id={id} review_id={review_id} driver_id={owner_id} passenger_id={passenger_id} fetchData={fetchData} />
             
           )}
           {request_status != "done" && (

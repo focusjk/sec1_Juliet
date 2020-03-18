@@ -20,7 +20,6 @@ function getModalStyle() {
   };
 }
 
-
 const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
@@ -36,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id}) => {
+const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id, fetchData}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
@@ -44,48 +43,42 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id}) => 
     comment: "",
     rating: 0.00
   });
-
-
-  const handleOpen = () => {
+  
+  const handleOpen = async () => {
+    if (review_id != null) {
+      await getReview();
+    }
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
-
-  const reviewed = false; //have already review? <check from database> TODO
-
-  //TO-DO check if reviewed =>get review =>if null => mean not review yet
-  /*const fetchData = async () => {
+  
+  const getReview = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/trip/passenger", { params: { trip_id } });
-      const { success, passenger } = response.data;
+      const response = await axios.get("http://localhost:4000/review/getReviewById", { params: { review_id } });
+      console.log("response.data",response.data);
+      const { success, review, message } = response.data;
       if (success) {
-         setJoined(passenger.filter(i => i.id == member_id)[0]!=null);
+        setForm({ comment: review.comment, rating: review.rating });
+      } else {
+        setErr(message);
       }
     } catch (e) {
-      console.log(e);
+      setErr('Cannot access database');
     }
-  };
-   useEffect(() => {
-    fetchData();
-  }, []);
-  */
+  }
 
-
-  //   TODO: create review => waiting for backend
-  //Click 'OK' button
   const review = async () => {
     try {
       const { ...data } = form;
-      const response = await axios.post("http://locahost:4000/review/create", {passenger_id, driver_id, request_id, data});
-      console.log(response);
+      const response = await axios.post("http://localhost:4000/review/create", {passenger_id, driver_id, request_id, ...data});
       const { success, message } = response.data;
       if (success) {
         setOpen(false);
         console.log('review success');
+        fetchData();
       } else {
         setErr(message);
       }
@@ -114,6 +107,7 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id}) => 
               onChange={(event, newValue) => {
                 setForm({ ...form, rating: newValue });
               }}
+              readOnly= {review_id != null}
             />
           </div>
           <TextField
@@ -131,7 +125,7 @@ const CreateReviewModal = ({request_id, review_id, passenger_id, driver_id}) => 
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "0px", display: 'flex' }}>
-            {review_id ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
+            {review_id != null ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
               <React.Fragment>
                 <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
                 <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
