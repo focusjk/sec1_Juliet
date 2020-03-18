@@ -28,7 +28,7 @@ import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 import MemberInfo from "./page/MemberInfo";
 import Payment from "./page/Payment";
-
+import Wallet from "./page/Wallet";
 
 const theme = createMuiTheme({
   palette: {
@@ -58,9 +58,9 @@ const useStyles = makeStyles({
 });
 const App = () => {
   //for member
-  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-    const [user, setUser] = React.useState({ username: 'admin' });
+  // const [user, setUser] = React.useState({ username: 'admin' });
   // for other
   //const [user, setUser] = React.useState(null);
 
@@ -122,6 +122,9 @@ const App = () => {
                         updateUser={data => setUser({ ...user, ...data })}
                       />
                     </Route>
+                    <Route path="/wallet" exact>
+                      <Wallet user={user} />
+                    </Route>
                     <Route exact path="/">
                       <Home user={user} />
                     </Route>
@@ -144,7 +147,7 @@ const App = () => {
                     <Route path="/admin/report" exact>
                       <AdminReport user={user} />
                     </Route>
-		    <Route path="/admin/member" exact>
+                    <Route path="/admin/member" exact>
                       <MemberInfo user={user} />
                     </Route>
                     <Redirect to="/admin/driver" />
