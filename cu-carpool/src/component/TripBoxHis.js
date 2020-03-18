@@ -187,9 +187,7 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
           )}
 
           {request_status == "done" && (
-            // <MyButton onClick={() => history.push("/")}>Review</MyButton> // TODO
             <CreateReviewModal request_id={id} review_id={review_id} driver_id={owner_id} passenger_id={passenger_id} fetchData={fetchData} />
-            
           )}
           {request_status != "done" && (
             <MyGreyButton disabled>Review</MyGreyButton>
