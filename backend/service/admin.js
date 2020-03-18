@@ -1,5 +1,6 @@
 var db = require("../dbconnection"); //reference of dbconnection.js
 var transactionService = require("../service/transaction");
+var util = require("../util");
 
 const login = (username, password, callback) => {
   return db.query(
@@ -125,23 +126,37 @@ const getWithdrawalRequest = callback => {
   );
 };
 
-const withdrawalApprove = (
+const withdrawalApprove = async (
   admin_name,
   time,
   withdrawal_id,
-  member_id,
-  amount,
   action,
   callback
 ) => {
   if (!action) {
     const status = "approved";
-    transactionService.createTransaction(-amount, member_id, time, "withdraw");
-    return db.query(
-      `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
-      [admin_name, time, status, withdrawal_id],
-      callback
+    const member = await util.promisifyQuery(
+      `SELECT withdrawal.member_id, withdrawal.amount FROM withdrawal WHERE withdrawal.id = ?`,
+      [withdrawal_id]
     );
+    const { member_id, amount } = member[0];
+    transactionService.createTransaction(-amount, member_id, time, "withdraw");
+    const wallet_amount = await util.promisifyQuery(
+      `SELECT members.amount FROM members WHERE members.id = ?`,
+      [member_id]
+    );
+    const { amount: balance } = wallet_amount[0];
+    const updated_amount = balance - amount;
+    if (updated_amount >= 0) {
+      transactionService.updateWallet(updated_amount, member_id);
+      return db.query(
+        `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
+        [admin_name, time, status, withdrawal_id],
+        callback
+      );
+    } else {
+      callback(false);
+    }
   }
   if (action) {
     const status = "rejected";
