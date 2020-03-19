@@ -45,19 +45,6 @@ const TripBox = ({ history, data, fetchData }) => {
     }
   };
 
-  // const handleModal = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://localhost:4000/review/trip",
-  //       { params: { trip_id } });
-  //     const { success, review } = response.data;
-  //     if (success) {
-  //       modeButton:true
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   return (
     <Paper

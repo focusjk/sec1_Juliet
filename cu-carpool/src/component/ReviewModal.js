@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Rating from '@material-ui/lab/Rating';
@@ -7,6 +7,7 @@ import { MyHeader } from "../component/MyTitle";
 import { MyButton } from "../component/MyButton"
 import Link from "@material-ui/core/Link";
 import moment from "moment";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -20,20 +21,57 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ReviewModal = ({ modeButton, review }) => {
+const ReviewModal = ({ modeButton, driver_id, trip_id }) => {
   
-  const {comment, rating, username, photo, created_at} = review;
-  // const formatter = date => moment(created_at).format('Do/MMMM/YYYY');
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
+  const [form, setForm] = useState({
+    comment: "",
+    rating: 0,
+    username: "",
+    photo: "",
+    created_at: ""
+  });
+  
+  const handleOpen = async () => {
+    await handleModal();
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleModal = async () => {
+    try  {
+      var response;
+      if(modeButton == false){
+      console.log("link")
+      console.log(driver_id)
+      response = await axios.get("http://localhost:4000/review/getAllReviewOfDriver", { params: { driver_id } });
+      console.log(modeButton)
+      }
+      else{
+        console.log("button")
+        console.log(trip_id)
+      response = await axios.get("http://localhost:4000/review/trip", { params: { trip_id } });
+        console.log(modeButton)
+      }
+      const { success, review } = response.data;
+      if (success) {
+      const date = moment(review[0].created_at).format('DD/MM/YYYY');
+
+        setForm({comment: review[0].comment,rating: review[0].rating,username: review[0].username,photo:review[0].photo,date:date});
+        
+        console.log('comment = ',form.comment)
+        console.log('rating =' ,form.rating)
+        console.log('username =' , form.username)
+        console.log("created_at= " , form.date)
+      } 
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const ReviewHeaderWithClose = () => {
     return (
@@ -63,7 +101,9 @@ const ReviewModal = ({ modeButton, review }) => {
         </Link>)}
 
       <Modal
+        // handleModal = {handleModal}
         open={open}
+        onOpen={handleModal}
         onClose={handleClose}
         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
@@ -75,21 +115,21 @@ const ReviewModal = ({ modeButton, review }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div style={{ display: 'flex' }}>
                 <img
-                  src={photo}
+                  src={form.photo}
                   height={40}
                   width={40}
                   style={{ borderRadius: "100%", marginRight: '16px' }}
                 />
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div> {username} </div>
-                  <Rating name="read-only" defaultValue={rating} readOnly />
+                  <div> {form.username} </div>
+                  <Rating name="read-only" defaultValue={form.rating} readOnly />
                 </div>
               </div>
               <div style={{ fontSize: 14, color: "#BDBDBD" }}>
-                  {moment(created_at).format("MMMM Do YYYY")}
+                  {form.date}
               </div>
             </div>
-            <div> {comment} </div>
+            <div> {form.comment} </div>
           </div>
         </div>
       </Modal>
