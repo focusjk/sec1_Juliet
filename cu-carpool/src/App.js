@@ -29,6 +29,7 @@ import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 import MemberInfo from "./page/MemberInfo";
 import Payment from "./page/Payment";
+import AdminTrip from "./page/AdminTrip";
 import CreateWtihdrawal from "./page/CreateWithdrawal";
 import Wallet from "./page/Wallet";
 import TransactionLog from "./page/TransactionLog";
@@ -64,7 +65,7 @@ const App = () => {
   // for member
   const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
-   //const [user, setUser] = React.useState({ username: 'admin' });
+  //const [user, setUser] = React.useState({ username: 'admin' });
   // for other
   // const [user, setUser] = React.useState(null);
 
@@ -165,6 +166,9 @@ const App = () => {
                     </Route>
                     <Route path="/admin/report" exact>
                       <AdminReport user={user} />
+                    </Route>
+                    <Route path="/admin/trip" exact>
+                      <AdminTrip user={user} />
                     </Route>
                     <Route path="/admin/member" exact>
                       <MemberInfo user={user} />
