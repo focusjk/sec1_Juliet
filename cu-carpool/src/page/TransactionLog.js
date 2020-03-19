@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 class TransactionLog extends React.Component {
-    state = { list: [] };
+    state = { transaction: {} };
     componentDidMount() {
         this.fetchData();
     }
@@ -16,18 +16,19 @@ class TransactionLog extends React.Component {
         });
         const { success, transaction } = response.data;
         if (success) {
-        this.setState({ list: transaction });
+        this.setState({ transaction });
+        console.log(transaction);
         }
     };
     render(){
         return (
             <div>
                 <MyHeaderWithArrow goto="/wallet">Transaction history</MyHeaderWithArrow>
-                <EmptyBox data={this.state.list} />
-                {this.state.list.map((transaction,index) =>(
+                <EmptyBox data={this.state.transaction}/>
+                {Object.keys(this.state.transaction).map(index =>(
                 <div> 
-                    <MyTitle style={{fontSize:20,marginBottom:"6px"}}>{transaction.created_date}</MyTitle> 
-                    <TransactionBox data={transaction} key={index} />
+                    <MyTitle style={{fontSize:20,marginBottom:"6px"}}>{index}</MyTitle> 
+                    <TransactionBox data={this.state.transaction[index]}/>
                 </div>
                 ))}
             </div>    
