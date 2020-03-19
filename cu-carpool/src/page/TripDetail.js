@@ -43,7 +43,7 @@ class TripDetail extends React.Component {
   }
 
   render() {
-    const { trip, owner, passenger, modeButton, review } = this.state
+    const { trip, owner, passenger } = this.state
     const { joinable, user } = this.props
     return (
       <Grid container direction="column" justify="flex-direction">
@@ -60,9 +60,7 @@ class TripDetail extends React.Component {
               Average rating:
             <Rating disabled name="half-rating" defaultValue={owner.avg_rating} precision={0.01} style={{ marginLeft: 8 }} />
             </div>
-            {/* {owner.id != undefined && */}
-              <ReviewModal modeButton = {false} driver_id = {owner.id}/> 
-             {/* } */}
+              <ReviewModal modeButton = {false} isTrip= {false} id = {owner.id}/> 
             </div>
 
           <div style={{ margin: "8px 0" }}>
