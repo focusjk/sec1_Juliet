@@ -3,7 +3,6 @@ import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
 import TransactionBox from "../component/TransactionBox";
 import axios from "axios";
-import moment from "moment";
 
 class TransactionLog extends React.Component {
   state = { transaction: {} };
