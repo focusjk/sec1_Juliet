@@ -33,7 +33,7 @@ const MyToggleButton = withStyles({
 
 
 class MemberInfo extends React.Component {
-  state = { list: [], filteredList: [], mode: 0 }
+  state = { list: [], filteredList: [], mode: 0, search:null}
   fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4000/admin/member");
@@ -46,22 +46,32 @@ class MemberInfo extends React.Component {
       console.log(e);
     }
   }
-  handleMode = (e, value) => {
+  handleMode = (e,value) => {
     if (value !== null) {
       this.setState({ mode: value })
-      this.filter(value)
+      this.filter(value,this.state.search)
     }
   }
 
-  filter = mode => {
+  handleSearch = (e,value) => {
+     if (e.target.value !== null) {
+      this.setState({ search: e.target.value })
+      this.filter(this.state.mode,e.target.value)
+     }
+  }
+
+  filter = (mode,search) => {
     const { list } = this.state
     let filteredList = []
     if (mode == 0) {
       filteredList = list
     } else if (mode == 1) {
-      filteredList = list.filter(({ banned_at }) => banned_at == null)
+      filteredList = list.filter(({ banned_at }) => banned_at == null) 
     } else {
-      filteredList = list.filter(({ banned_at }) => banned_at != null)
+      filteredList = list.filter(({ banned_at }) => banned_at != null)      
+    }
+    if(search != null ){
+    filteredList = filteredList.filter(({username,firstname,id}) => (username.includes(search))||(firstname.includes(search))||(id == search))
     }
     this.setState({ filteredList })
   }
@@ -83,6 +93,7 @@ class MemberInfo extends React.Component {
               width: "418px",
               marginBottom: 20,
             }}
+            onChange={this.handleSearch}
             placeholder=" Search by ID, name, username"
             InputProps={{
               endAdornment: (
@@ -99,7 +110,7 @@ class MemberInfo extends React.Component {
           </ToggleButtonGroup>
           <EmptyBox data={this.state.filteredList} />
           {this.state.filteredList.map((member, index) =>
-            <MemberInfoCard key={index} data={member} />
+            <MemberInfoCard key={index} data={member} admin_name={this.props.user.username} fetchData={this.fetchData} />
           )}
         </div>
       </Grid>

@@ -81,8 +81,8 @@ router.post('/banmember', function (req, res, next) {
 });
 
 router.post('/unbanmember', function (req, res, next) {
-  const {id } = req.body;
-  adminService.UnbanMember(admin_name, banned_at, id, (err, result) => {
+  const {id} = req.body;
+  adminService.UnbanMember(id, (err, result) => {
     if (err) {
       console.log(err);
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
