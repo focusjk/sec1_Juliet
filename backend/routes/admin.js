@@ -20,8 +20,7 @@ router.post("/login", function(req, res, next) {
   });
 });
 
-// YIN
-router.get("/driver", function(req, res, next) {
+router.get('/driver', function (req, res, next) {
   adminService.getAllMember((err, result) => {
     if (err) {
       res.json({
@@ -175,6 +174,28 @@ router.post("/withdrawal-reject", function(req, res, next) {
       }
     }
   );
+});
+
+router.get('/trip', function (req, res, next) {
+  adminService.getAllTrip((err, result) => {
+    if (err) {
+      res.json({ success: false, error: err, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true, trip: [...result] });
+    }
+  });
+});
+
+router.get('/tripMember/', function (req, res, next) {
+  var ID = req.query.id;
+  adminService.getTripMember(ID, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+    }
+    else {
+      res.json({ success: true, members: [...result] });
+    }
+  });
 });
 
 module.exports = router;
