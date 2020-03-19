@@ -11,6 +11,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import TripMember from "../component/TripMember";
+import LocationDetail from "./LocationDetail";
 import LocationDetailModal from "./LocationDetailModal";
 import Divider from '@material-ui/core/Divider';
 
@@ -101,8 +102,15 @@ const TripLogBox = ({ history, data }) => {
                 <div> Price: {price} ฿</div>
                 <div> Trip Created At: {createtime}</div>
             </div>
-            <LocationDetailModal data={{departure_detail,departure_longtitude,departure_latitude, 
-                                 destination_detail,destination_longtitude,destination_latitude}}/>
+            <LocationDetail
+              trip_id={trip_id}
+              departure_detail={departure_detail}
+              destination_detail={destination_detail}
+              departure_longtitude={departure_longtitude}
+              departure_latitude={departure_latitude}
+              destination_longtitude={destination_longtitude}
+              destination_latitude={destination_latitude}
+            />
         </Paper>
         <ExpansionPanel square onClick={handleClick} className={classes.root}> 
           <ExpansionPanelSummary className={classes.summary}
