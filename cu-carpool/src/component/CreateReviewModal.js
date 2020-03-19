@@ -20,7 +20,6 @@ function getModalStyle() {
   };
 }
 
-
 const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
@@ -36,18 +35,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateReviewModal = ({ trip_id, member_id }) => {
+const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fetchData }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
-  //const [joined,setJoined] = React.useState(false);
   const [form, setForm] = useState({
     comment: "",
-    rating: 0.00
+    rating: 0
   });
 
-
-  const handleOpen = () => {
+  const handleOpen = async () => {
+    if (review_id != null) {
+      await getReview();
+    }
     setOpen(true);
   };
 
@@ -55,43 +55,31 @@ const CreateReviewModal = ({ trip_id, member_id }) => {
     setOpen(false);
   };
 
-
-  const reviewed = false; //have already review? <check from database> TODO
-
-  //TO-DO check if reviewed =>get review =>if null => mean not review yet
-  /*const fetchData = async () => {
+  const getReview = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/trip/passenger", { params: { trip_id } });
-      const { success, passenger } = response.data;
+      const response = await axios.get("http://localhost:4000/review/getReviewById", { params: { review_id } });
+      const { success, review, message } = response.data;
       if (success) {
-         setJoined(passenger.filter(i => i.id == member_id)[0]!=null);
+        setForm({ comment: review.comment, rating: review.rating });
+      } else {
+        setErr(message);
       }
     } catch (e) {
-      console.log(e);
+      setErr('Cannot access database');
     }
-  };
-   useEffect(() => {
-    fetchData();
-  }, []);
-  */
+  }
 
-
-  //   TODO: create review => waiting for backend
-  //Click 'OK' button
   const review = async () => {
     try {
       const { ...data } = form;
-      //   const response = await axios.post("http://localhost:4000/request", { trip_id, member_id, ...data });
-      //   const { success, message } = response.data;
-      //   console.log(response.data)
-      //   if (success) {
-      //     setOpen(false);
-      //     console.log('review success')
-      //     const path = '/trip-history';
-      //     history.push(path); //tell that if success will go to this path
-      //   } else {
-      //     setErr(message)
-      //   }
+      const response = await axios.post("http://localhost:4000/review/create", { passenger_id, driver_id, request_id, ...data });
+      const { success, message } = response.data;
+      if (success) {
+        setOpen(false);
+        fetchData();
+      } else {
+        setErr(message);
+      }
     } catch (e) {
       setErr('Cannot access database')
     }
@@ -113,6 +101,7 @@ const CreateReviewModal = ({ trip_id, member_id }) => {
               defaultValue={form.rating}
               precision={1}
               size="large"
+              disabled={review_id != null}
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
               onChange={(event, newValue) => {
                 setForm({ ...form, rating: newValue });
@@ -124,9 +113,7 @@ const CreateReviewModal = ({ trip_id, member_id }) => {
             className={classes.margin}
             value={form.comment}
             multiline
-            InputProps={{
-              readOnly: reviewed,
-            }}
+            disabled={review_id != null}
             onChange={e => {
               setForm({ ...form, comment: e.target.value });
               setErr(null)
@@ -134,7 +121,7 @@ const CreateReviewModal = ({ trip_id, member_id }) => {
           />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "0px", display: 'flex' }}>
-            {reviewed ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
+            {review_id != null ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
               <React.Fragment>
                 <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
                 <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
