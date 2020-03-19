@@ -12,7 +12,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import TripMember from "../component/TripMember";
 import LocationDetail from "./LocationDetail";
-import LocationDetailModal from "./LocationDetailModal";
 import Divider from '@material-ui/core/Divider';
 
 const TripLogBox = ({ history, data }) => {
