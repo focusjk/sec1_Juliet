@@ -1,9 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import moment from 'moment';
 import { MyHeader } from '../component/MyTitle'
-import { Paper } from "@material-ui/core/";
 import EmptyBox from '../component/EmptyBox';
 import TripLogBox from "../component/TripLogBox";
 
