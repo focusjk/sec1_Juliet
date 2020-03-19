@@ -1,5 +1,5 @@
 import React from "react";
-import { MyTitle,MyHeaderWithArrow } from "../component/MyTitle";
+
 
 
 class TransactionBox extends React.Component {
