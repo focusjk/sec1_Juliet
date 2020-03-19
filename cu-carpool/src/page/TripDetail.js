@@ -25,7 +25,9 @@ class TripDetail extends React.Component {
       destination_latitude: 13.747879
     },
     owner: {},
-    passenger: []
+    passenger: [],
+    // review: [],
+    // modeButton: true
   }
 
   async componentDidMount() {
@@ -40,6 +42,22 @@ class TripDetail extends React.Component {
       this.setState({ trip, owner, passenger })
     }
   }
+
+  // handleModal = async () => {
+  //   try {
+  //     // const { trip_id } = this.props.match.params;
+  //     const response = await axios.get(
+  //       "http://localhost:4000/review/getAllReviewOfDriver",
+  //       { params: { driver_id: owner.member_id } });
+  //     const { success, review } = response.data;
+  //     if (success) {
+  //       this.setState({ modeButton:false })
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
   render() {
     const { trip, owner, passenger } = this.state
     const { joinable, user } = this.props
@@ -58,7 +76,8 @@ class TripDetail extends React.Component {
               Average rating:
             <Rating disabled name="half-rating" defaultValue={owner.avg_rating} precision={0.01} style={{ marginLeft: 8 }} />
             </div>
-            <ReviewModal modeButton={false}/>
+            <ReviewModal modeButton = {false} /> 
+            {/* <ReviewModal review = {review} />  */}
           </div>
 
           <div style={{ margin: "8px 0" }}>
