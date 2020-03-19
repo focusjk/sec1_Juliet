@@ -62,16 +62,16 @@ function getModalStyle() {
     return (
       <div>
         <Link onClick={handleOpen} style={{ color: "#C78899", textDecoration: "underline", fontSize: 14}}>
-              See request info
+              see request info
         </Link>
         <Modal open={open} onClose={handleClose}>
             <div style={getModalStyle()} className={classes.paper}>
-                <MyHeader style={{ marginBottom: "13px" }}>Trip Info</MyHeader>
-                <div className={classes.div}>RequestedAt: {requesttime} </div>
-                <div className={classes.div}>PaidAt: {paidtime} </div>
-                <div className={classes.div}>DriverArrivedAt: {arrivetime} </div>
-                <div className={classes.div}>DriverDepartedAt: {departtime} </div>
-                <div className={classes.div}>DepartedAt: {departat} </div>
+                <MyHeader style={{ marginBottom: "13px" }}>Request Info</MyHeader>
+                <div className={classes.div}><b>Requested At:</b>{requesttime} </div>
+                <div className={classes.div}><b>Paid At:</b>{paidtime} </div>
+                <div className={classes.div}><b>Driver Arrived At:</b>{arrivetime} </div>
+                <div className={classes.div}><b>Driver Departed At:</b>{departtime} </div>
+                <div className={classes.div}><b>Departed At:</b>{departat} </div>
                 <Button onClick={handleClose} color="secondary" className={classes.button}>OK</Button>
               </div>
             </Modal>

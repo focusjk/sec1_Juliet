@@ -6,7 +6,7 @@ import { MyHeader,MyTitle } from "../component/MyTitle";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import RequestInfoModal from "./RequestInfoModal";
-import LocationDetailModal from "./LocationDetailModal";
+import LocationDetail from "./LocationDetail";
 
 const TripMember = ({ history, data }) => {
   const {
@@ -61,8 +61,15 @@ const TripMember = ({ history, data }) => {
                 <div> Name: {firstname} {lastname}</div>
             </div>
             <div style={{ display: "flex",flexDirection: 'column'}}>
-            <LocationDetailModal data={{departure_detail,departure_longtitude,departure_latitude, 
-                                 destination_detail,destination_longtitude,destination_latitude}}/>
+            <LocationDetail
+              trip_id={null}
+              departure_detail={departure_detail}
+              destination_detail={destination_detail}
+              departure_longtitude={departure_longtitude}
+              departure_latitude={departure_latitude}
+              destination_longtitude={destination_longtitude}
+              destination_latitude={destination_latitude}
+            />
             <RequestInfoModal data={{requesttime,paidtime,arrivetime,departtime,departat}}/>
             </div>
         </Paper>
