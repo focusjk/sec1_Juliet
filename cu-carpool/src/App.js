@@ -32,7 +32,7 @@ import Payment from "./page/Payment";
 import CreateWtihdrawal from "./page/CreateWithdrawal";
 import Wallet from "./page/Wallet";
 import TransactionLog from "./page/TransactionLog";
-import HistoryLog from "./page/WithdrawalLog";
+import WithdrawalLog from "./page/WithdrawalLog";
 
 const theme = createMuiTheme({
   palette: {
@@ -135,11 +135,14 @@ const App = () => {
                     <Route path="/wallet" exact>
                       <Wallet user={user} />
                     </Route>
+                    <Route path="/withdrawal" exact>                   
+                      <CreateWtihdrawal user={user} />                  
+                    </Route>
                     <Route path="/transactionlog" exact>
                       <TransactionLog user={user} />
                     </Route>
-                    <Route path="/Withdrawallog" exact>
-                      <HistoryLog user={user} />
+                    <Route path="/withdrawallog" exact>
+                      <WithdrawalLog user={user} />
                     </Route>
                     <Route exact path="/">
                       <Home user={user} />
