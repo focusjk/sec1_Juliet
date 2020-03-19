@@ -1,38 +1,41 @@
 import React from "react";
-import { MyTitle,MyHeaderWithArrow } from "../component/MyTitle";
+import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
 import TransactionBox from "../component/TransactionBox";
 import axios from "axios";
-
+import moment from "moment";
 
 class TransactionLog extends React.Component {
-    state = { transaction: {} };
-    componentDidMount() {
-        this.fetchData();
+  state = { transaction: {} };
+  componentDidMount() {
+    this.fetchData();
+  }
+  fetchData = async () => {
+    const response = await axios.get("http://localhost:4000/transaction/log", {
+      params: { member_id: this.props.user.id }
+    });
+    const { success, transaction } = response.data;
+    if (success) {
+      this.setState({ transaction });
     }
-    fetchData = async () => {//ดึงข้อมูลจากแบลค//ไปเอาดาต้ามา
-        const response = await axios.get("http://localhost:4000/transaction/log", {//รอ
-        params: { member_id: this.props.user.id }//จะgetมา ต้องให้ para เขาส
-        });
-        const { success, transaction } = response.data;
-        if (success) {
-        this.setState({ transaction });
-        console.log(transaction);
-        }
-    };
-    render(){
-        return (
-            <div>
-                <MyHeaderWithArrow goto="/wallet">Transaction history</MyHeaderWithArrow>
-                <EmptyBox data={this.state.transaction}/>
-                {Object.keys(this.state.transaction).map(index =>(
-                <div> 
-                    <MyTitle style={{fontSize:20,marginBottom:"6px"}}>{index}</MyTitle> 
-                    <TransactionBox data={this.state.transaction[index]}/>
-                </div>
-                ))}
-            </div>    
-        );
-    }        
+  };
+  render() {
+    return (
+      <div>
+        <MyHeaderWithArrow goto="/wallet">
+          Transaction history
+        </MyHeaderWithArrow>
+        <EmptyBox data={this.state.transaction} />
+        {Object.keys(this.state.transaction).map(index => (
+          <div style={{ marginBottom: "16px" }}>
+            <MyTitle style={{ fontSize: 20, marginBottom: "6px" }}>
+              {index}
+            </MyTitle>
+            <TransactionBox data={this.state.transaction[index]} />
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
 export default TransactionLog;
