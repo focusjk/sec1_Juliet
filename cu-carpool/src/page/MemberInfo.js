@@ -56,7 +56,7 @@ class MemberInfo extends React.Component {
   handleSearch = (e,value) => {
      if (e.target.value !== null) {
       this.setState({ search: e.target.value })
-      this.filter(this.state.mode,e.target.value)
+      this.filter(this.state.mode,e.target.value.toLowerCase())
      }
   }
 
@@ -71,7 +71,7 @@ class MemberInfo extends React.Component {
       filteredList = list.filter(({ banned_at }) => banned_at != null)      
     }
     if(search != null ){
-    filteredList = filteredList.filter(({username,firstname,id}) => (username.includes(search))||(firstname.includes(search))||(id == search))
+    filteredList = filteredList.filter(({username,firstname,lastname,id}) => (username.toLowerCase().includes(search))||(firstname.toLowerCase().includes(search))||(lastname.toLowerCase().includes(search))||(id == search))
     }
     this.setState({ filteredList })
   }
