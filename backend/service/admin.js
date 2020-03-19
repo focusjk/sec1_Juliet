@@ -38,6 +38,26 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
   );
 };
 
+const BanMember = (admin_name, banned_at, member_id, callback) => {
+  console.log('Banned by : ', admin_name);
+  console.log('Member ID: ', member_id);
+  return db.query(
+    `UPDATE members SET banned_by = ?,banned_at = ? WHERE id = ?`,
+    [admin_name, banned_at, member_id],
+    callback
+  );
+};
+
+const UnbanMember = (member_id, callback) => {
+  console.log('Unban sucessful');
+  return db.query(
+    `UPDATE members SET banned_by = null,banned_at = null WHERE id = ?`,
+    [member_id],
+    callback
+  );
+};
+
+
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
   console.log('Rejected by : ', admin_name);
   console.log('Member ID: ', driver_id);
@@ -98,4 +118,4 @@ const isRead = ({ id, is_read }, callback) => {
                   WHERE id = ?`, [ is_read , id ] , callback);
 }
 
-module.exports = { login, getAllMember,getAllUser, driverApprove, getCurrentDateTimeString, driverReject, getAllReport , isRead };
+module.exports = { login, getAllMember,getAllUser, driverApprove,BanMember, getCurrentDateTimeString, driverReject, getAllReport , isRead };
