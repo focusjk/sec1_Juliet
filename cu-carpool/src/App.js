@@ -106,12 +106,6 @@ const App = () => {
                     <Route path="/trip-history/:trip_id/detail" exact>
                       <TripDetail path="/trip-history" user={user} />
                     </Route>
-                    <Route path="/trip/:trip_id/detail" exact>
-                      <TripDetail joinable path="/" user={user} />
-                    </Route>
-                    <Route path="/trip-history/:trip_id/detail" exact>
-                      <TripDetail path="/trip-history" user={user} />
-                    </Route>
                     <Route path="/trip-history/:trip_id/member" exact>
                       <TripMemberforMember user={user} />
                     </Route>
@@ -139,10 +133,10 @@ const App = () => {
                     <Route path="/withdrawal" exact>                   
                       <CreateWtihdrawal user={user} />                  
                     </Route>
-                    <Route path="/transactionlog" exact>
+                    <Route path="/transactionLog" exact>
                       <TransactionLog user={user} />
                     </Route>
-                    <Route path="/withdrawallog" exact>
+                    <Route path="/withdrawalLog" exact>
                       <WithdrawalLog user={user} />
                     </Route>
                     <Route exact path="/">
