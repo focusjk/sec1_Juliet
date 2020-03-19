@@ -29,6 +29,7 @@ import TripHistory from "./page/TripHistory";
 import AdminReport from "./page/AdminReport";
 import MemberInfo from "./page/MemberInfo";
 import Payment from "./page/Payment";
+import CreateWtihdrawal from "./page/CreateWithdrawal";
 import Wallet from "./page/Wallet";
 import TransactionLog from "./page/TransactionLog";
 import HistoryLog from "./page/WithdrawalLog";
