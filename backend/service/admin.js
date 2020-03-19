@@ -121,7 +121,7 @@ const getWithdrawalRequest = callback => {
             members.amount as balance, 
             members.firstname as firstname, 
             members.lastname as lastname
-    FROM withdrawal INNER JOIN members ON withdrawal.member_id = members.id`,
+    FROM withdrawal INNER JOIN members ON withdrawal.member_id = members.id where withdrawal.status = 'pending'`,
     callback
   );
 };

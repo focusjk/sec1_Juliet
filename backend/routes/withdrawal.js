@@ -2,8 +2,10 @@ var express = require("express");
 var withdrawalService = require("../service/withdrawal");
 var router = express.Router();
 var util = require("../util");
+var validate = require('express-validation');
+var validateWithdrawal = require('../validate/withdrawal');
 
-router.post("/", function(req, res, next) {
+router.post("/",validate(validateWithdrawal), function(req, res, next) {
   const { member_id, ...data } = req.body;
   const created_at = util.timeformatter(new Date());
   withdrawalService.createWithdrawal(
