@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 const ReviewModal = ({ modeButton,isTrip,id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [state, setState] = React.useState({ list: [] });
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,22 +35,17 @@ const ReviewModal = ({ modeButton,isTrip,id }) => {
     setOpen(false);
   };
 
-  const [state, setState] = React.useState({ list: [] });
-
   const fetchData = async () => {
+    var response = {data:{success:false,review:[]}};
     if(isTrip){
-      const response = await axios.get("http://localhost:4000/review/trip?trip_id="+id);
-      const { success, review } = response.data
-      if(success){
-        setState({ list: review })
-      }
+       response = await axios.get("http://localhost:4000/review/trip?trip_id="+id);
     }
     else{
-      const response = await axios.get("http://localhost:4000/review/getAllReviewOfDriver?driver_id="+id);
-      const { success, review } = response.data
-      if(success){
-        setState({ list: review })
+      response = await axios.get("http://localhost:4000/review/getAllReviewOfDriver?driver_id="+id);
       }
+    const { success, review } = response.data
+    if(success){
+      setState({ list: review })
     }
   };
 
@@ -89,9 +85,7 @@ const ReviewModal = ({ modeButton,isTrip,id }) => {
           <ReviewHeaderWithClose />
           <EmptyBox data={state.list} />
           {state.list.map((review, index) => (
-              <div>
                 <ReviewBox key={index} data={review}/>
-              </div>
             ))}
         </div>
       </Modal>
