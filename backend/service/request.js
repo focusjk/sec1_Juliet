@@ -13,7 +13,7 @@ const createRequest = async (trip_id, member_id, data, created_at, callback) => 
         values (?,?,?,?,?,?,?,?,?,?)`,
             [member_id, trip_id, departure_latitude, departure_longtitude, departure_detail, destination_latitude, destination_longtitude, destination_detail, reqStatus, created_at], callback);
     } else {
-        callback(false);
+        callback(true);
     }
 
 }
