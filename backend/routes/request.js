@@ -8,7 +8,7 @@ router.post('/', (req, res, next) => {
     var created_at = util.timeformatter(new Date());
     requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
         if (err) {
-            res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
+            res.json({ success: false, error: err.sqlMessage, message: "Cannot join this trip" });
         } else {
             res.json({ success: true });
         }
