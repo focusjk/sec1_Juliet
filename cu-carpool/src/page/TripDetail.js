@@ -40,6 +40,7 @@ class TripDetail extends React.Component {
       this.setState({ trip, owner, passenger })
     }
   }
+
   render() {
     const { trip, owner, passenger } = this.state
     const { joinable, user } = this.props
@@ -58,8 +59,8 @@ class TripDetail extends React.Component {
               Average rating:
             <Rating disabled name="half-rating" defaultValue={owner.avg_rating} precision={0.01} style={{ marginLeft: 8 }} />
             </div>
-            <ReviewModal modeButton={false}/>
-          </div>
+              <ReviewModal modeButton = {false} isTrip= {false} id = {owner.id}/> 
+            </div>
 
           <div style={{ margin: "8px 0" }}>
             <MyTitle style={{ margin: "8px 0" }}>Car detail</MyTitle>
