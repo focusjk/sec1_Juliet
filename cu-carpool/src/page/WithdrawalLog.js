@@ -9,7 +9,7 @@ class WithdrawalLog extends React.Component {
             <div>
                 <MyHeaderWithArrow goto="/wallet">Withdrawal history</MyHeaderWithArrow>
                 <MyTitle style={{fontSize:20,marginBottom:"6px"}}>Date</MyTitle> 
-                <div style={{ border: '1px solid #BDBDBD',padding: "/20px 16px",flexDirection:"column",alignItems:"flex-start"}}>
+                <div style={{ border: '1px solid #BDBDBD',padding: "20px 16px",flexDirection:"column",alignItems:"flex-start"}}>
                     <div style={{ display: "flex",flexDirection:"row",justifyContent:"space-between"}}>
                         <div style={{fontSize:16,marginTop:'6px',marginBottom:'6px'}}>
                             Status:
