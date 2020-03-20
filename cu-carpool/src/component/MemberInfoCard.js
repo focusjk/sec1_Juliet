@@ -14,7 +14,7 @@ import moment from 'moment';
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 
-const MemberInfoCard = ({ data }) => {
+const MemberInfoCard = ({ data,admin_name,fetchData }) => {
 
   const {
     id,
@@ -33,6 +33,31 @@ const MemberInfoCard = ({ data }) => {
     rejected_at,
     rejected_by
   } = data;
+  
+  const Ban = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/admin/banmember", { admin_name,id });
+      const { success, error } = response.data;
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const UnBan = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/admin/unbanmember", {id });
+      const { success, error } = response.data;
+      if (success) {
+        fetchData();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div style={{ width: '45%', display: 'flex', alignItems: 'center',border: "1px solid #C4C4C4", padding: '16px 48px', margin: '16px 0'}}>
                 <div style={{ display: 'flex', flexDirection:'column',alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
@@ -59,8 +84,8 @@ const MemberInfoCard = ({ data }) => {
 		  {(banned_by!=null)&&(<div> <b>Banned By:</b> {banned_by}</div>)}
                 </div>
 		<div style={{ display: 'flex-center',alignItems: 'center', marginLeft: '16px' }}>
-                {(banned_at==null)&&(<MyButton>Ban</MyButton>)}
-		{(banned_at!=null)&&(<MyWhiteButton>Unban</MyWhiteButton>)}
+                {(banned_at==null)&&(<MyButton onClick={Ban}>Ban</MyButton>)}
+		{(banned_at!=null)&&(<MyWhiteButton onClick={UnBan}>Unban</MyWhiteButton>)}
 		</div>
    </div>
   );
