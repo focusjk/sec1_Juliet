@@ -66,6 +66,29 @@ router.post("/driver-approve", function(req, res, next) {
   });
 });
 
+router.post('/banmember', function (req, res, next) {
+  const { admin_name, id } = req.body;
+  const banned_at = util.timeformatter(new Date());
+  adminService.BanMember(admin_name, banned_at, id, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true });
+    }
+  });
+});
+
+router.post('/unbanmember', function (req, res, next) {
+  const {id} = req.body;
+  adminService.UnbanMember(id, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
+    } else {
+      res.json({ success: true });
+    }
+  });
+});
+
 router.post("/driver-reject", function(req, res, next) {
   const { admin_name, id } = req.body;
   console.log(req.body);

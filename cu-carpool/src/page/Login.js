@@ -19,8 +19,13 @@ class Login extends React.Component {
     const { success, information, message } = response.data;
     if (success) {
       const user = information[0];
+      if(user.banned_at==null){
       this.props.handleLogin(user);
       this.props.history.push("/");
+      }
+      else{
+	 this.setState({ error: "Your account has been suspended" });
+      }
     } else {
       this.setState({ error: message });
     }
