@@ -10,7 +10,6 @@ const login = (username, password, callback) => {
   );
 };
 
-// YIN
 const getAllMember = callback => {
   return db.query(
     `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,driving_license,
@@ -39,6 +38,23 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
     callback
   );
 };
+
+const BanMember = (admin_name, banned_at, member_id, callback) => {
+  return db.query(
+    `UPDATE members SET banned_by = ?,banned_at = ? WHERE id = ?`,
+    [admin_name, banned_at, member_id],
+    callback
+  );
+};
+
+const UnbanMember = (member_id, callback) => {
+  return db.query(
+    `UPDATE members SET banned_by = null,banned_at = null WHERE id = ?`,
+    [member_id],
+    callback
+  );
+};
+
 
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
   console.log("Rejected by : ", admin_name);
@@ -105,6 +121,52 @@ const isRead = ({ id, is_read }, callback) => {
     [is_read, id],
     callback
   );
+};
+
+const getAllTrip = (callback) => {
+  return db.query(`SELECT trip.id as trip_id,
+                  trip.owner as driver_id,
+                  trip.start_datetime,
+                  trip.status,
+                  trip.car_brand, 
+                  trip.plate_license, 
+                  trip.price,
+                  trip.created_at,
+                  trip.departure_latitude,
+                  trip.departure_longtitude ,
+                  trip.departure_detail,
+                  trip.destination_latitude,
+                  trip.destination_longtitude ,
+                  trip.destination_detail,
+                  members.username,
+                  members.firstname,
+                  members.lastname,
+                  members.photo
+                  FROM trip INNER JOIN members ON trip.owner = members.id`,callback);
+}
+
+const getTripMember = (ID, callback) => {
+  return db.query(`SELECT 
+                          request.id AS request_id,
+                          request.driver_departed_at,
+                          request.driver_arrived_at,
+                          request.departed_at,
+                          request.request_status,
+                          request.created_at AS request_at,   
+                          request.paid_at,
+                          request.departure_latitude,
+                          request.departure_longtitude ,
+                          request.departure_detail,
+                          request.destination_latitude,
+                          request.destination_longtitude ,
+                          request.destination_detail,        
+                          members.id AS member_id,
+                          members.username,
+                          members.firstname,
+                          members.lastname,
+                          members.photo
+                          FROM request LEFT JOIN members ON request.member_id = members.id 
+                          WHERE request.trip_id = ? `,[ID],callback);
 };
 
 const getWithdrawalRequest = callback => {
@@ -174,5 +236,9 @@ module.exports = {
   getAllReport,
   isRead,
   getWithdrawalRequest,
-  withdrawalApprove
+  withdrawalApprove,
+  getAllTrip, 
+  getTripMember,
+  BanMember,
+  UnbanMember
 };
