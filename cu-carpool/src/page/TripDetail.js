@@ -36,7 +36,6 @@ class TripDetail extends React.Component {
       }
     })
     const { success, trip, owner, passenger } = response.data
-    console.log(owner.id)
     if (success) {
       this.setState({ trip, owner, passenger })
     }
