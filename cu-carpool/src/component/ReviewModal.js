@@ -36,7 +36,7 @@ const ReviewModal = ({ modeButton,isTrip,id }) => {
   };
 
   const fetchData = async () => {
-    var response = {data:{success:false,review:[]}};
+    let response
     if(isTrip){
        response = await axios.get("http://localhost:4000/review/trip?trip_id="+id);
     }
