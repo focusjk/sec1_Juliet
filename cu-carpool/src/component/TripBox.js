@@ -6,7 +6,6 @@ import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
-
 import ReviewModal from "../component/ReviewModal";
 
 
@@ -44,6 +43,7 @@ const TripBox = ({ history, data, fetchData }) => {
       console.log(e);
     }
   };
+
 
   return (
     <Paper
@@ -175,7 +175,7 @@ const TripBox = ({ history, data, fetchData }) => {
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
           {(status == "on going" || status == "done") && (
-            <ReviewModal modeButton={true}/>
+            <ReviewModal modeButton = {true} isTrip= {true} id = {trip_id}/> 
           )}
 
           {(status == "scheduled" || status == "canceled") && (

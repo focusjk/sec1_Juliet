@@ -65,7 +65,7 @@ const App = () => {
   // for admin
   //const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+   const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
