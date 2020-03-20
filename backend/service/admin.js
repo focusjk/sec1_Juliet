@@ -39,6 +39,23 @@ const driverApprove = (admin_name, approved_at, driver_id, callback) => {
   );
 };
 
+const BanMember = (admin_name, banned_at, member_id, callback) => {
+  return db.query(
+    `UPDATE members SET banned_by = ?,banned_at = ? WHERE id = ?`,
+    [admin_name, banned_at, member_id],
+    callback
+  );
+};
+
+const UnbanMember = (member_id, callback) => {
+  return db.query(
+    `UPDATE members SET banned_by = null,banned_at = null WHERE id = ?`,
+    [member_id],
+    callback
+  );
+};
+
+
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
   console.log("Rejected by : ", admin_name);
   console.log("Member ID: ", driver_id);
@@ -221,5 +238,7 @@ module.exports = {
   getWithdrawalRequest,
   withdrawalApprove,
   getAllTrip, 
-  getTripMember
+  getTripMember,
+  BanMember,
+  UnbanMember
 };
