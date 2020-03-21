@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import PersonIcon from "@material-ui/icons/Person";
 import MailIcon from "@material-ui/icons/Mail";
 import PhoneIcon from "@material-ui/icons/Phone";
-import CreditCardIcon from "@material-ui/icons/CreditCard";
-import LockIcon from "@material-ui/icons/Lock";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import { Box, Input, Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import {
@@ -77,7 +74,7 @@ const Profile = ({ user, updateUser }) => {
         setError(message);
       }
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
       setError('Invalid data, please check your input again');
     }
   };

@@ -87,7 +87,7 @@ const Payment = ({ history }) => {
       const { success, price } = response.data;
       setPrice(price);
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
     }
   };
 

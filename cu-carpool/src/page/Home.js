@@ -42,7 +42,7 @@ const Home = ({ user }) => {
       const { trip } = response.data;
       setTripList(trip);
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
     }
   };
   useEffect(() => {

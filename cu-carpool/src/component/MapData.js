@@ -4,7 +4,6 @@ import ReactMapGL, { Marker } from 'react-map-gl';
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiZm9jdXMtamsiLCJhIjoiY2s2aHg3OGhwMGRwOTNrdGkwNzhhMGNqYiJ9.Bh94-cyf4LgURAD9WLxLXA';
-// Set your mapbox token here
 
 class Map extends React.Component {
     state = {

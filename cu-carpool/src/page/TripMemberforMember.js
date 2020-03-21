@@ -11,14 +11,14 @@ import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
 import MemberCardSmall from '../component/MemberCardSmall'
 
-const TripMemberforMember = ({ user, updateUser }) => {
+const TripMemberforMember = ({ user }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
   const [driver, setDriver] = useState('');
   const [request_id, setRequest_id] = useState(null);
   const [request_status, setRequest_status] = useState(null);
   const [departed_at, setDeparted_at] = useState(null);
-  
+
   const fetchData = async () => {
     try {
       const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
@@ -66,7 +66,7 @@ const TripMemberforMember = ({ user, updateUser }) => {
           justifyContent: "space-between"
         }}
       >
-        <Typography style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <img
               src={driver.photo}
@@ -88,7 +88,7 @@ const TripMemberforMember = ({ user, updateUser }) => {
               {driver.phone_number}
             </div>
           </div>
-        </Typography>
+        </div>
         {
           (departed_at == null && request_status == 'paid') &&
           <MyButton onClick={getIn} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>

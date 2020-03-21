@@ -21,7 +21,6 @@ import TripMemberforMember from "./page/TripMemberforMember";
 import TripMemberforDriver from "./page/TripMemberforDriver";
 import Navigation from "./component/Navigation";
 import NavigationDesktop from "./component/NavigationDesktop";
-import ButtonComponent from "./page/ButtonComponent";
 import MemberReport from "./page/MemberReport";
 import TripDetail from "./page/TripDetail";
 import TripRequest from "./page/TripRequest";
@@ -30,7 +29,7 @@ import AdminReport from "./page/AdminReport";
 import MemberInfo from "./page/MemberInfo";
 import Payment from "./page/Payment";
 import AdminTrip from "./page/AdminTrip";
-import CreateWtihdrawal from "./page/CreateWithdrawal";
+import CreateWithdrawal from "./page/CreateWithdrawal";
 import Wallet from "./page/Wallet";
 import TransactionLog from "./page/TransactionLog";
 import WithdrawalLog from "./page/WithdrawalLog";
@@ -62,12 +61,7 @@ const useStyles = makeStyles({
   }
 });
 const App = () => {
-  // for member
-  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
-  // for admin
-  //const [user, setUser] = React.useState({ username: 'admin' });
-  // for other
-  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -80,9 +74,6 @@ const App = () => {
                 <Navigation user={user} handleLogout={() => setUser(null)} />
                 <div className={classes.body}>
                   <Switch>
-                    <Route path="/ButtonComponent" exact>
-                      <ButtonComponent />
-                    </Route>
                     <Route path="/profile" exact>
                       <Profile
                         user={user}
@@ -130,8 +121,8 @@ const App = () => {
                     <Route path="/wallet" exact>
                       <Wallet user={user} />
                     </Route>
-                    <Route path="/withdrawal" exact>                   
-                      <CreateWtihdrawal user={user} />                  
+                    <Route path="/withdrawal" exact>
+                      <CreateWithdrawal user={user} />
                     </Route>
                     <Route path="/transactionLog" exact>
                       <TransactionLog user={user} />
@@ -178,9 +169,6 @@ const App = () => {
             {!user && (
               <div className={classes.body}>
                 <Switch>
-                  <Route path="/ButtonComponent" exact>
-                    <ButtonComponent />
-                  </Route>
                   <Route path="/register" exact>
                     <Register handleLogin={user => setUser(user)} />
                   </Route>

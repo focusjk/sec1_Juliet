@@ -21,13 +21,12 @@ class MemberReport extends React.Component {
         topic,
         comment
       });
-      console.log(response);
       const { success } = response.data;
       if (success) {
         this.setState({ topic: "", comment: "", msg: "successfully" });
       }
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
     }
   };
   render() {

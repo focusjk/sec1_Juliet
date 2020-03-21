@@ -9,9 +9,6 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { withStyles } from "@material-ui/core/styles";
 
-
-const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
-
 const MyToggleButton = withStyles({
   root: {
     background: "linear-gradient( white 30%, white 90%)",
@@ -61,12 +58,12 @@ class AdminReport extends React.Component {
   filter = mode => {
     const { list } = this.state
     let filteredList = []
-    if (mode == 0) {
+    if (mode === 0) {
       filteredList = list
-    } else if (mode == 1) {
-      filteredList = list.filter(({ is_read }) => is_read == 1)
+    } else if (mode === 1) {
+      filteredList = list.filter(({ is_read }) => is_read === 1)
     } else {
-      filteredList = list.filter(({ is_read }) => is_read == 0)
+      filteredList = list.filter(({ is_read }) => is_read === 0)
     }
     this.setState({ filteredList })
   }
@@ -89,7 +86,7 @@ class AdminReport extends React.Component {
         <div style={{ margin: "32px 0", alignSelf: 'center' }}>
           <EmptyBox data={this.state.filteredList} />
           {this.state.filteredList.map(({ id, member_id, username, firstname, lastname, topic, comment, photo, created_at, is_read }) =>
-            <div style={{ maxWidth: 740, display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px' }}>
+            <div key={id} style={{ maxWidth: 740, display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '16px 48px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', marginRight: '16px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap', width: '150px', marginRight: '16px' }}>
                   <img

@@ -44,7 +44,6 @@ const DriverProfile = ({ user, updateUser }) => {
         setError(message);
       }
     } catch (e) {
-      console.log(e.response);
       setError('Invalid data, please check your input again');
     }
   };
@@ -91,7 +90,7 @@ const DriverProfile = ({ user, updateUser }) => {
             onChange={e => {
               setForm({ ...form, driving_license: e.target.value });
               setChange(
-                e.target.value && e.target.value.length == 25
+                e.target.value && e.target.value.length === 25
               );
             }}
           />
@@ -99,16 +98,16 @@ const DriverProfile = ({ user, updateUser }) => {
       </Box>
       {time && <div style={{ color: "grey" }}>Modified at: {time}</div>}
 
-      {status == "approved" && (
+      {status === "approved" && (
         <div style={{ color: "pink" }}>Status : Approved</div>
       )}
-      {status == "pending" && (
+      {status === "pending" && (
         <div style={{ color: "grey" }}>Status : Pending</div>
       )}
-      {status == "rejected" && (
+      {status === "rejected" && (
         <div style={{ color: "red" }}>Status : Rejected</div>
       )}
-      {status == "-" && <div style={{ color: "grey" }}>Status : -</div>}
+      {status === "-" && <div style={{ color: "grey" }}>Status : -</div>}
 
       {!change && (
         <MyDisabledFullWidthButton style={{ margin: "10px 0" }} disabled={true}>

@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
-import logo from '../logo.png';
+import { MyTitle } from "../component/MyTitle";
 import PhoneIcon from "@material-ui/icons/Phone";
-import EmptyBox from '../component/EmptyBox'
-import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import MemberCardSmall from '../component/MemberCardSmall';
 import LocationDetail from '../component/LocationDetail'
 
 const MemberCard = ({ data, trip_id, fetchData }) => {

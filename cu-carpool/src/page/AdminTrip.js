@@ -13,7 +13,6 @@ class AdminTripLog extends React.Component {
   fetchData = async () => {
     const response = await axios.get("http://localhost:4000/admin/trip");
     const { success, trip } = response.data
-    console.log(response.data)
     if (success) {
       this.setState({ list: trip })
     }

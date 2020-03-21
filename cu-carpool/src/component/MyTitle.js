@@ -23,7 +23,6 @@ const MyTitle = withStyles({
     fontSize: "18px",
     display: "flex",
     justifyContent: "flex-start"
-    // marginBottom: "10px"
   }
 })(Typography);
 

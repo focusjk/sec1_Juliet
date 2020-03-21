@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Map from "../component/Map"
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import { MyHeader } from "../component/MyTitle";
-import { MyButton, MyGreyButton } from "../component/MyButton";
+import { MyButton } from "../component/MyButton";
 
 function getModalStyle() {
   const top = 50;
@@ -41,7 +40,6 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
-  //const [joined,setJoined] = React.useState(false);
   const [form, setForm] = useState({
     departure_latitude: 13.769059,
     departure_longtitude: 100.493117,
@@ -79,7 +77,6 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
       const { ...data } = form;
       const response = await axios.post("http://localhost:4000/request", { trip_id, member_id, ...data });
       const { success, message } = response.data;
-      console.log(response.data)
       if (success) {
         setOpen(false);
         console.log('ficus')

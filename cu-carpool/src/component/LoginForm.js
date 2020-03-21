@@ -5,7 +5,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-// import { withRouter } from 'react-router-dom';
 import { MyFullWidthButton } from "./MyButton";
 const useStyles = makeStyles({
   root: {
@@ -23,8 +22,6 @@ const LoginForm = ({
   error
 }) => {
   const classes = useStyles();
-  // const [username, setUsername] = React.useState('');
-  // const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   return (
     <Grid container direction="column" justify="flex-start">

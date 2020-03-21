@@ -18,7 +18,7 @@ const RegisterForm = () => {
   const classes = useStyles();
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
-  // const [text, setError] = React.useState('');
+
   return (
     <Grid container direction="column" justify="flex-start" alignItems="stretch">
 
@@ -32,7 +32,6 @@ const RegisterForm = () => {
       <Input fullWidth placeholder="Username" className={classes.root} />
 
       <div style={{ marginBottom: 5 }}>PASSWORD</div>
-      {/* <Input fullWidth placeholder="Password" className={classes.root} /> */}
       <Input placeholder="Password" className={classes.root}
         id="standard-adornment-password"
         type={showPassword ? 'text' : 'password'}
@@ -43,7 +42,7 @@ const RegisterForm = () => {
             <IconButton
               aria-label="toggle password visibility"
               onClick={() => {
-                setShowPassword( !showPassword );
+                setShowPassword(!showPassword);
               }}
             >
               {showPassword ? <Visibility /> : <VisibilityOff />}

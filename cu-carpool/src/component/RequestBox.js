@@ -1,9 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { MyButton, MyWhiteButton } from "../component/MyButton";
-import { Link, Divider, Paper, Typography } from "@material-ui/core/";
-import { MyTitle, MyLink } from "../component/MyTitle";
+import { Paper } from "@material-ui/core/";
+import { MyTitle } from "../component/MyTitle";
 import MapData from "./MapData"
 import { Grid } from "@material-ui/core";
 import moment from "moment";
@@ -35,8 +34,8 @@ const RequestBox = ({ history, data, fetch }) => {
       if (success) {
         fetch();
       }
-    }).catch(error => {
-      console.log(error);
+    }).catch(e => {
+      console.log(e);
     });
   }
 
@@ -48,8 +47,8 @@ const RequestBox = ({ history, data, fetch }) => {
       if (success) {
         fetch();
       }
-    }).catch(error => {
-      console.log("error");
+    }).catch(e => {
+      console.log(e);
     });
   }
 

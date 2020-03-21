@@ -1,12 +1,8 @@
 import React from "react";
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
 import moment from "moment";
 import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
-import { Grid, Typography } from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import { MyButton } from "../component/MyButton";
-import logo from '../logo.png';
+import { Grid } from "@material-ui/core";
 import MapData from "../component/MapData"
 import Rating from "@material-ui/lab/Rating";
 import { withRouter } from "react-router-dom";

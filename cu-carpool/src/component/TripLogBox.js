@@ -131,9 +131,9 @@ const TripLogBox = ({ history, data }) => {
           <div className={classes.request}>
             {(state.list.length == 0 || false) && <div style={{ margin: 20, color: "#BDBDBD" }}>no trip request</div>}
             {state.list.map((members, index) => (
-              <div>
+              <div key={index}>
                 <Divider classes={{ root: classes.divider }} />
-                <TripMember key={index} data={members} />
+                <TripMember data={members} />
               </div>
             ))}
           </div>

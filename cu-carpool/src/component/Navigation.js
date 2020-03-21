@@ -23,8 +23,7 @@ const listPath = {
     { name: "Wallet", path: "/wallet", icon: "account_balance_wallet" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
-    { name: "Report", path: "/report", icon: "report" },
-    { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
+    { name: "Report", path: "/report", icon: "report" }
   ],
   driver: [
     { name: "Home", path: "/", icon: "home" },
@@ -34,8 +33,7 @@ const listPath = {
     { name: "Create trip", path: "/create-trip", icon: "edit" },
     { name: "My Trip", path: "/my-trip", icon: "emoji_transportation" },
     { name: "Trip History", path: "/trip-history", icon: "history" },
-    { name: "Report", path: "/report", icon: "report" },
-    { name: "Test", path: "/ButtonComponent", icon: "assignment_ind" }
+    { name: "Report", path: "/report", icon: "report" }
   ]
 };
 const useStyles = makeStyles({

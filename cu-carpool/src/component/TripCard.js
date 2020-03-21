@@ -40,15 +40,15 @@ const TripCard = ({ history, data, user }) => {
         justifyContent: "space-between"
       }}
     >
-      <Typography style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <LocationOnIcon fontSize="small" style={{ marginRight: "8px" }} />
-          <Typography style={{ display: "flex", alignItems: "flex-end" }}>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
             {departure_detail}
             <div style={{ fontSize: 14, color: "#BDBDBD", marginLeft: "8px" }}>
               ({departure_province})
             </div>
-          </Typography>
+          </div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
@@ -71,8 +71,8 @@ const TripCard = ({ history, data, user }) => {
           {request}/{capacity}
         </div>
         <MyLink goto={"/trip/" + id + "/detail"}>More detail...</MyLink>
-      </Typography>
-      <Typography
+      </div>
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -83,8 +83,7 @@ const TripCard = ({ history, data, user }) => {
         <div style={{ fontSize: "20px" }}>{price} ฿</div>
         {request < capacity && <RequestJoin trip_id={id} member_id={user.id} />}
         {request >= capacity && <MyButton disabled >Join</MyButton>}
-
-      </Typography>
+      </div>
     </Paper>
   );
 };

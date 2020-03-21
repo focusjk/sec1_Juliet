@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { TextField } from "@material-ui/core";
@@ -80,7 +80,6 @@ const CreateTrip = ({ history, user }) => {
           setErrorMessage(message)
         }
       } catch (e) {
-        console.log(e.response);
         setErrorMessage("Invalid data, please check your input again")
       }
     } else {
