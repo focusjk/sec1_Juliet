@@ -1,7 +1,7 @@
 import React from "react";
 import { MyTitle,MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
-import WithdrawalBox from "../component/TransactionBox";
+import WithdrawalBox from "../component/WithdrawalBox";
 import axios from "axios";
 
 class WithdrawalLog extends React.Component {
@@ -9,6 +9,9 @@ class WithdrawalLog extends React.Component {
     componentDidMount() {
         this.fetchData();
     }
+
+    
+
     fetchData = async () => {
         const response = await axios.get("http://localhost:4000/withdrawal/log", {
             params: { member_id: this.props.user.id }
