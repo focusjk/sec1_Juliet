@@ -73,7 +73,7 @@ const Wallet = ({ history, user }) => {
             display: "flex",
             justifyContent: "center"
           }}
-          goto={"/"} // TODO link to withdrawal history page
+          goto={"/withdrawalLog"}
         >
           See withdrawal history
         </MyLink>

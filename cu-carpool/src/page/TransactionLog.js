@@ -27,7 +27,7 @@ class TransactionLog extends React.Component {
         <EmptyBox data={this.state.transaction} />
         {Object.keys(this.state.transaction).map(index => (
           <div style={{ marginBottom: "16px" }}>
-            <MyTitle style={{ fontSize: 20, marginBottom: "6px" }}>
+            <MyTitle style={{ fontSize: 20, marginBottom: "10px" }}>
               {index}
             </MyTitle>
             <TransactionBox data={this.state.transaction[index]} />

@@ -5,14 +5,14 @@ const TransactionBox = ({ data }) => {
     <div>
       {data.map((x, index) => (
         <div
+          key={index}
           style={{
             display: "flex",
             border: "1px solid #BDBDBD",
             padding: "8px 16px",
-            flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "6px"
+            marginBottom: "10px"
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>

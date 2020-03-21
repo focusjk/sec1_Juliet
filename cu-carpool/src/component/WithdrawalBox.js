@@ -2,40 +2,35 @@ import React from "react";
 import Divider from '@material-ui/core/Divider';
 
 const WithdrawalBox = ({ data }) => {
-    const {
-        created_time,
-        withdrawal_id,
-        amount,
-        status,
-        account_number,
-        account_name,
-        bank_name
-  } = data;
     return (
         <div>
             {data.map((x, index) => (
-                 <div style={{ border: '1px solid #BDBDBD',padding: "20px 16px",flexDirection:"column",alignItems:"flex-start"}}>
-                 <div style={{ display: "flex",flexDirection:"row",justifyContent:"space-between"}}>
-                     <div style={{fontSize:16,marginTop:'6px',marginBottom:'6px'}}>
-                         Status: {x.status}
-                     </div>
-                     <div style={{fontSize:20}}>
-                        {x.amount} ฿
-                     </div>
-                 </div>
-                 <Divider/>
-                 <div style={{fontSize:16,marginTop:'6px'}}>
-                     {x.bank_name}    {x.account_number}
-                 </div>
-                 <div style={{fontSize:16}}>
-                     {x.account_name}
-                 </div>
-                 <div style={{fontSize:14,color:'#BDBDBD'}}>
-                     {x.created_time}
-                 </div>
-             </div>
+                <div
+                    key={index}
+                    style={{
+                        border: '1px solid #BDBDBD',
+                        padding: "8px 16px",
+                        flexDirection: "column",
+                        marginBottom: '10px',
+                        fontSize: 16
+                    }}
+                >
+                    <div style={{ display: "flex", alignItems: 'center', justifyContent: "space-between" }}>
+                        <div>Status: {x.status}</div>
+                        <div style={{ fontSize: 20 }}>{x.amount} ฿</div>
+                    </div>
+                    <Divider style={{ margin: '8px 0' }} />
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div>{x.bank_name}</div>
+                        <div>{x.account_number}</div>
+                    </div>
+                    <div>{x.account_name}</div>
+                    <div style={{ fontSize: 14, color: '#BDBDBD' }}>
+                        {x.created_time}
+                    </div>
+                </div>
             ))}
-        </div>   
-    );   
+        </div>
+    );
 };
 export default WithdrawalBox;

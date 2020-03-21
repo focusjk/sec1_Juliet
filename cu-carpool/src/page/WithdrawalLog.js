@@ -1,5 +1,5 @@
 import React from "react";
-import { MyTitle,MyHeaderWithArrow } from "../component/MyTitle";
+import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
 import WithdrawalBox from "../component/WithdrawalBox";
 import axios from "axios";
@@ -10,8 +10,6 @@ class WithdrawalLog extends React.Component {
         this.fetchData();
     }
 
-    
-
     fetchData = async () => {
         const response = await axios.get("http://localhost:4000/withdrawal/log", {
             params: { member_id: this.props.user.id }
@@ -21,7 +19,7 @@ class WithdrawalLog extends React.Component {
             this.setState({ withdrawal });
         }
     };
-    render(){
+    render() {
         return (
             <div>
                 <MyHeaderWithArrow goto="/wallet">
@@ -30,14 +28,14 @@ class WithdrawalLog extends React.Component {
                 <EmptyBox data={this.state.withdrawal} />
                 {Object.keys(this.state.withdrawal).map(index => (
                     <div style={{ marginBottom: "16px" }}>
-                        <MyTitle style={{ fontSize: 20, marginBottom: "6px" }}>
+                        <MyTitle style={{ fontSize: 20, marginBottom: "10px" }}>
                             {index}
                         </MyTitle>
                         <WithdrawalBox data={this.state.withdrawal[index]} />
                     </div>
                 ))}
-            </div>     
+            </div>
         );
-    }        
+    }
 }
 export default WithdrawalLog;
