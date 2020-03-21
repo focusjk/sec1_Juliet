@@ -32,6 +32,8 @@ import Payment from "./page/Payment";
 import AdminTrip from "./page/AdminTrip";
 import CreateWtihdrawal from "./page/CreateWithdrawal";
 import Wallet from "./page/Wallet";
+import TransactionLog from "./page/TransactionLog";
+import WithdrawalLog from "./page/WithdrawalLog";
 
 const theme = createMuiTheme({
   palette: {
@@ -60,12 +62,12 @@ const useStyles = makeStyles({
   }
 });
 const App = () => {
-  //for member
-  // const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
+  // for member
+  const [user, setUser] = React.useState({ id: 1, driver_status: "approved" });
   // for admin
   //const [user, setUser] = React.useState({ username: 'admin' });
   // for other
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   const classes = useStyles();
   return (
@@ -128,8 +130,14 @@ const App = () => {
                     <Route path="/wallet" exact>
                       <Wallet user={user} />
                     </Route>
-                    <Route path="/withdrawal" exact>
-                      <CreateWtihdrawal user={user} />
+                    <Route path="/withdrawal" exact>                   
+                      <CreateWtihdrawal user={user} />                  
+                    </Route>
+                    <Route path="/transactionLog" exact>
+                      <TransactionLog user={user} />
+                    </Route>
+                    <Route path="/withdrawalLog" exact>
+                      <WithdrawalLog user={user} />
                     </Route>
                     <Route exact path="/">
                       <Home user={user} />

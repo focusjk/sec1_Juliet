@@ -26,7 +26,7 @@ const Wallet = ({ history, user }) => {
           height: "165px",
           width: "165px"
         }}
-        onClick={() => history.push("/")} // TODO link to transaction history page
+        onClick={() => history.push("/transactionLog")}
       >
         <div
           style={{
@@ -64,7 +64,7 @@ const Wallet = ({ history, user }) => {
       <div>
         <MyFullWidthButton
           style={{ marginBottom: "16px" }}
-          onClick={() => history.push("/withdrawal")} 
+          onClick={() => history.push("/withdrawal")}
         >
           Withdraw
         </MyFullWidthButton>
@@ -73,7 +73,7 @@ const Wallet = ({ history, user }) => {
             display: "flex",
             justifyContent: "center"
           }}
-          goto={"/"} // TODO link to withdrawal history page
+          goto={"/withdrawalLog"}
         >
           See withdrawal history
         </MyLink>
