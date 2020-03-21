@@ -1,34 +1,38 @@
 import React from "react";
 import { MyTitle,MyHeaderWithArrow } from "../component/MyTitle";
-import { Text } from 'react';
-import Divider from '@material-ui/core/Divider';
+import EmptyBox from "../component/EmptyBox";
+import WithdrawalBox from "../component/TransactionBox";
+import axios from "axios";
 
 class WithdrawalLog extends React.Component {
+    state = { withdrawal: {} };
+    componentDidMount() {
+        this.fetchData();
+    }
+    fetchData = async () => {
+        const response = await axios.get("http://localhost:4000/withdrawal/log", {
+            params: { member_id: this.props.user.id }
+        });
+        const { success, withdrawal } = response.data;
+        if (success) {
+            this.setState({ withdrawal });
+        }
+    };
     render(){
         return (
             <div>
-                <MyHeaderWithArrow goto="/wallet">Withdrawal history</MyHeaderWithArrow>
-                <MyTitle style={{fontSize:20,marginBottom:"6px"}}>Date</MyTitle> 
-                <div style={{ border: '1px solid #BDBDBD',padding: "20px 16px",flexDirection:"column",alignItems:"flex-start"}}>
-                    <div style={{ display: "flex",flexDirection:"row",justifyContent:"space-between"}}>
-                        <div style={{fontSize:16,marginTop:'6px',marginBottom:'6px'}}>
-                            Status:
-                        </div>
-                        <div style={{fontSize:20}}>
-                        Cash ฿
-                        </div>
+                <MyHeaderWithArrow goto="/wallet">
+                    Withdrawal history
+                </MyHeaderWithArrow>
+                <EmptyBox data={this.state.withdrawal} />
+                {Object.keys(this.state.withdrawal).map(index => (
+                    <div style={{ marginBottom: "16px" }}>
+                        <MyTitle style={{ fontSize: 20, marginBottom: "6px" }}>
+                            {index}
+                        </MyTitle>
+                        <WithdrawalBox data={this.state.withdrawal[index]} />
                     </div>
-                    <Divider/>
-                    <div style={{fontSize:16,marginTop:'6px'}}>
-                        Bank    account number
-                    </div>
-                    <div style={{fontSize:16}}>
-                        Firstname Lastname
-                    </div>
-                    <div style={{fontSize:14,color:'#BDBDBD'}}>
-                        hr.mm
-                    </div>
-                </div>
+                ))}
             </div>     
         );
     }        
