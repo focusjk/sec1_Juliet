@@ -8,7 +8,7 @@ const createWithdrawal = async (member_id, created_at, data, callback) => {
     `SELECT members.amount FROM members WHERE id = ?`,
     [member_id]
   );
-  const {amount: current_wallet_amount} = current_wallet[0];
+  const { amount: current_wallet_amount } = current_wallet[0];
   if (amount <= current_wallet_amount) {
     return db.query(
       `INSERT INTO withdrawal (member_id,amount,created_at,status,account_name,account_number,bank_name) VALUES (?,?,?,?,?,?,?)`,

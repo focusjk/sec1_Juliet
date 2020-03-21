@@ -3,7 +3,7 @@ var adminService = require("../service/admin");
 var router = express.Router();
 var util = require("../util");
 
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res, next) {
   const { username, password } = req.body;
   adminService.login(username, password, (err, result) => {
     if (err) {
@@ -34,7 +34,7 @@ router.get('/driver', function (req, res, next) {
   });
 });
 
-router.get("/member", function(req, res, next) {
+router.get("/member", function (req, res, next) {
   adminService.getAllUser((err, result) => {
     if (err) {
       res.json({
@@ -48,7 +48,7 @@ router.get("/member", function(req, res, next) {
   });
 });
 
-router.post("/driver-approve", function(req, res, next) {
+router.post("/driver-approve", function (req, res, next) {
   const { admin_name, id } = req.body;
   const approved_at = util.timeformatter(new Date());
   adminService.driverApprove(admin_name, approved_at, id, (err, result) => {
@@ -60,7 +60,6 @@ router.post("/driver-approve", function(req, res, next) {
         message: "Cannot access database"
       });
     } else {
-      console.log(result);
       res.json({ success: true });
     }
   });
@@ -79,7 +78,7 @@ router.post('/banmember', function (req, res, next) {
 });
 
 router.post('/unbanmember', function (req, res, next) {
-  const {id} = req.body;
+  const { id } = req.body;
   adminService.UnbanMember(id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
@@ -89,10 +88,8 @@ router.post('/unbanmember', function (req, res, next) {
   });
 });
 
-router.post("/driver-reject", function(req, res, next) {
+router.post("/driver-reject", function (req, res, next) {
   const { admin_name, id } = req.body;
-  console.log(req.body);
-  console.log(admin_name);
   const rejected_at = util.timeformatter(new Date());
   adminService.driverReject(admin_name, rejected_at, id, (err, result) => {
     if (err) {
@@ -103,13 +100,12 @@ router.post("/driver-reject", function(req, res, next) {
         message: "Cannot reject user"
       });
     } else {
-      console.log(result);
       res.json({ success: true });
     }
   });
 });
 
-router.get("/report", function(req, res, next) {
+router.get("/report", function (req, res, next) {
   adminService.getAllReport((err, result) => {
     if (err) {
       console.log(err);
@@ -124,7 +120,7 @@ router.get("/report", function(req, res, next) {
   });
 });
 
-router.post("/report/read", function(req, res, next) {
+router.post("/report/read", function (req, res, next) {
   const { id, is_read } = req.body;
   adminService.isRead({ id, is_read }, (err, result) => {
     if (err) {
@@ -153,7 +149,7 @@ router.get("/withdrawal/request", (req, res, next) => {
   });
 });
 
-router.post("/withdrawal-approve", function(req, res, next) {
+router.post("/withdrawal-approve", function (req, res, next) {
   const { admin_name, id } = req.body;
   const approved_at = util.timeformatter(new Date());
   const action = 0;
@@ -176,7 +172,7 @@ router.post("/withdrawal-approve", function(req, res, next) {
   );
 });
 
-router.post("/withdrawal-reject", function(req, res, next) {
+router.post("/withdrawal-reject", function (req, res, next) {
   const { admin_name, id } = req.body;
   const rejected_at = util.timeformatter(new Date());
   const action = 1;

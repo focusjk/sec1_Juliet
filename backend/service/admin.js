@@ -29,8 +29,6 @@ const getAllUser = callback => {
 };
 
 const driverApprove = (admin_name, approved_at, driver_id, callback) => {
-  console.log("Approved by : ", admin_name);
-  console.log("Member ID: ", driver_id);
   const driver_status = 1;
   return db.query(
     `UPDATE members SET approved_by = ?,approved_at = ? ,driver_status = ? WHERE id = ?`,
@@ -57,8 +55,6 @@ const UnbanMember = (member_id, callback) => {
 
 
 const driverReject = (admin_name, rejected_at, driver_id, callback) => {
-  console.log("Rejected by : ", admin_name);
-  console.log("Member ID: ", driver_id);
   const driver_status = 3;
   return db.query(
     `UPDATE members SET rejected_by = ?, rejected_at = ? ,driver_status = ? WHERE id = ?`,
@@ -142,7 +138,7 @@ const getAllTrip = (callback) => {
                   members.firstname,
                   members.lastname,
                   members.photo
-                  FROM trip INNER JOIN members ON trip.owner = members.id`,callback);
+                  FROM trip INNER JOIN members ON trip.owner = members.id`, callback);
 }
 
 const getTripMember = (ID, callback) => {
@@ -166,7 +162,7 @@ const getTripMember = (ID, callback) => {
                           members.lastname,
                           members.photo
                           FROM request LEFT JOIN members ON request.member_id = members.id 
-                          WHERE request.trip_id = ? `,[ID],callback);
+                          WHERE request.trip_id = ? `, [ID], callback);
 };
 
 const getWithdrawalRequest = callback => {
@@ -237,7 +233,7 @@ module.exports = {
   isRead,
   getWithdrawalRequest,
   withdrawalApprove,
-  getAllTrip, 
+  getAllTrip,
   getTripMember,
   BanMember,
   UnbanMember

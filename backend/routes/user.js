@@ -20,7 +20,6 @@ router.post('/', validate(validateUser), (req, res, next) => {
 router.post('/register', validate(validateUser), (req, res, next) => {
   var amount = 0;
   var created_at = util.timeformatter(new Date());
-  console.log(created_at);
   const { username, ...data } = req.body
   userService.register(username, data, created_at, amount, (err, result) => {
     if (err) {

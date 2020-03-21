@@ -24,18 +24,18 @@ const tripRequest = (ID, callback) => {
                             members.phone_number,
                             members.photo
                             FROM request left join members on request.member_id = members.id 
-                            WHERE request.trip_id = ? AND request.request_status = "pending"`,[ID],callback);
-  };
+                            WHERE request.trip_id = ? AND request.request_status = "pending"`, [ID], callback);
+};
 
 const requestApprove = (ID, callback) => {
-    return db.query(`UPDATE request SET request_status = 'approved' WHERE id = ?`,[ID],callback);
+    return db.query(`UPDATE request SET request_status = 'approved' WHERE id = ?`, [ID], callback);
 }
 
 const requestReject = (ID, callback) => {
-    return db.query(`UPDATE request SET request_status = 'rejected' WHERE id = ?`,[ID],callback);
+    return db.query(`UPDATE request SET request_status = 'rejected' WHERE id = ?`, [ID], callback);
 }
 
-const getMyTrip = (member_id , callback) => {
+const getMyTrip = (member_id, callback) => {
     return db.query(`SELECT id as trip_id,
                     departure_latitude,
                     departure_longtitude,

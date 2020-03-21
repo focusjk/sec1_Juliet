@@ -28,7 +28,7 @@ const getReviewById = (review_id, callback) => {
 };
 
 const getAllReviewOfDriver = (driver_id, callback) => {
-    return db.query(`SELECT members.username, review.rating, review.comment, review.created_at, members.photo
+  return db.query(`SELECT members.username, review.rating, review.comment, review.created_at, members.photo
                     FROM review INNER JOIN members ON review.reviewer = members.id 
                     WHERE review.reviewee = ?`, [driver_id], callback);
 }
