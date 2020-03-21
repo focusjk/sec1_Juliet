@@ -1,11 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Rating from '@material-ui/lab/Rating';
 import CloseIcon from '@material-ui/icons/Close';
 import { MyHeader } from "../component/MyTitle";
 import { MyButton } from "../component/MyButton"
 import Link from "@material-ui/core/Link";
+import axios from "axios";
+import ReviewBox from "../component/ReviewBox";
+import EmptyBox from "../component/EmptyBox";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -19,17 +21,32 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ReviewModal = ({ modeButton }) => {
-
+const ReviewModal = ({ modeButton,isTrip,id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [state, setState] = React.useState({ list: [] });
 
   const handleOpen = () => {
     setOpen(true);
+    fetchData();
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const fetchData = async () => {
+    let response
+    if(isTrip){
+       response = await axios.get("http://localhost:4000/review/trip?trip_id="+id);
+    }
+    else{
+      response = await axios.get("http://localhost:4000/review/getAllReviewOfDriver?driver_id="+id);
+      }
+    const { success, review } = response.data
+    if(success){
+      setState({ list: review })
+    }
   };
 
   const ReviewHeaderWithClose = () => {
@@ -66,27 +83,10 @@ const ReviewModal = ({ modeButton }) => {
       >
         <div className={classes.paper}>
           <ReviewHeaderWithClose />
-          <div style={{
-            display: 'flex', flexDirection: 'column', border: "1px solid #C4C4C4", padding: '12px', marginBottom: "8px"
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <div style={{ display: 'flex' }}>
-                <img
-                  height={40}
-                  width={40}
-                  style={{ borderRadius: "100%", marginRight: '16px' }}
-                />
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div> yinza55+ </div>
-                  <Rating name="read-only" defaultValue={4} readOnly />
-                </div>
-              </div>
-              <div style={{ fontSize: 14, color: "#BDBDBD" }}>
-                22/03/2020
-              </div>
-            </div>
-            <div> comment blah blah blah comment blah blah blah comment blah blah blah comment blah blah blah </div>
-          </div>
+          <EmptyBox data={state.list} />
+          {state.list.map((review, index) => (
+                <ReviewBox key={index} data={review}/>
+            ))}
         </div>
       </Modal>
     </div>

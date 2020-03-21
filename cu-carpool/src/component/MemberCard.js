@@ -103,8 +103,8 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
           marginTop: "24px"
         }}
       >
-        {driver_departed_at == null && <MyButton onClick={PickUp} >Pick up</MyButton>}
-        {driver_departed_at != null && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
+        {driver_departed_at == null && (request_status == 'paid' || request_status == 'on going') && <MyButton onClick={PickUp} >Pick up</MyButton>}
+        {!(driver_departed_at == null && (request_status == 'paid' || request_status == 'on going')) && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
         {request_status == 'on going' && driver_departed_at != null && <MyButton onClick={DropOff} >Drop off</MyButton>}
         {(request_status != 'on going' || driver_departed_at == null) && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
       </div>
