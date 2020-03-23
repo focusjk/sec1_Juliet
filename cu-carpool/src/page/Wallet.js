@@ -5,7 +5,7 @@ import { MyHeader } from "../component/MyTitle";
 import { MyLink } from "../component/MyTitle";
 import { MyFullWidthButton } from "../component/MyButton";
 
-const Wallet = ({ history, user }) => {
+const Wallet = ({ history, user, updateUser }) => {
   const [amount, setAmount] = useState(0);
   const getMoney = async () => {
     try {
@@ -14,7 +14,8 @@ const Wallet = ({ history, user }) => {
       });
       const { success, amount } = response.data;
       if (success) {
-        setAmount(amount[0]);
+        setAmount(amount);
+        updateUser(amount)
       }
     } catch (e) {
       console.log(e);
@@ -66,7 +67,7 @@ const Wallet = ({ history, user }) => {
             justifyContent: "center"
           }}
         >
-          {amount.amount}
+          {amount}
         </div>
         <div
           style={{
