@@ -13,9 +13,9 @@ import ReviewModal from "../component/ReviewModal"
 class TripDetail extends React.Component {
   state = {
     trip: {
-      departure_longtitude: 100.493117,
+      departure_longitude: 100.493117,
       departure_latitude: 13.747879,
-      destination_longtitude: 100.493117,
+      destination_longitude: 100.493117,
       destination_latitude: 13.747879
     },
     owner: {},
@@ -75,12 +75,12 @@ class TripDetail extends React.Component {
               </div>
             </div>
             <div style={{ margin: "8px 0" }}>
-              <MapData fixed longitude={trip.departure_longtitude} latitude={trip.departure_latitude} />
+              <MapData fixed longitude={trip.departure_longitude} latitude={trip.departure_latitude} />
             </div>
             <div style={{ margin: "4px 0" }}> Destination province: {trip.destination_province}</div>
             <div style={{ margin: "4px 0" }}>Destination detail: {trip.destination_detail}</div>
             <div style={{ margin: "8px 0" }}>
-              <MapData fixed longitude={trip.destination_longtitude} latitude={trip.destination_latitude} style={{ margin: "8px 0" }} />
+              <MapData fixed longitude={trip.destination_longitude} latitude={trip.destination_latitude} style={{ margin: "8px 0" }} />
             </div>
           </div>
           <div style={{ margin: "8px 0" }}>

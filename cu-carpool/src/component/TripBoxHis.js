@@ -18,9 +18,9 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
     price,
     id,
     departure_latitude,
-    departure_longtitude,
+    departure_longitude,
     destination_latitude,
-    destination_longtitude,
+    destination_longitude,
     owner_firstname,
     departure_detail,
     destination_detail,
@@ -155,13 +155,13 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
         <div style={{ marginBottom: 6 }}>Pick up: {departure_detail}</div>
         <MapData
           fixed
-          longitude={departure_longtitude}
+          longitude={departure_longitude}
           latitude={departure_latitude}
         />
         <div style={{ margin: "6px 0" }}>Destination: {destination_detail}</div>
         <MapData
           fixed
-          longitude={destination_longtitude}
+          longitude={destination_longitude}
           latitude={destination_latitude}
         />
 

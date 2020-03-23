@@ -15,9 +15,9 @@ const RequestBox = ({ history, data, fetch }) => {
   const {
     id,
     departure_latitude,
-    departure_longtitude,
+    departure_longitude,
     destination_latitude,
-    destination_longtitude,
+    destination_longitude,
     departure_detail,
     destination_detail,
     member_id,
@@ -97,7 +97,7 @@ const RequestBox = ({ history, data, fetch }) => {
           {departure_detail}
         </div>
       </div>
-      <MapData fixed longitude={departure_longtitude} latitude={departure_latitude} />
+      <MapData fixed longitude={departure_longitude} latitude={departure_latitude} />
 
       <div style={{ display: "flex", alignItems: "left", marginBottom: "8px", marginTop: "8px" }}>
         <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
@@ -105,7 +105,7 @@ const RequestBox = ({ history, data, fetch }) => {
           {destination_detail}
         </div>
       </div>
-      <MapData fixed longitude={destination_longtitude} latitude={destination_latitude} />
+      <MapData fixed longitude={destination_longitude} latitude={destination_latitude} />
 
       <div
         style={{

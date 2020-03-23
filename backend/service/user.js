@@ -34,10 +34,10 @@ const payment = (ID, body, callback) => {
 const getTripHistory = (member_id, callback) => {
   return db.query(`SELECT request.id as id,
                   request.departure_latitude,
-                  request.departure_longtitude,
+                  request.departure_longitude,
                   request.departure_detail,
                   request.destination_latitude,
-                  request.destination_longtitude,
+                  request.destination_longitude,
                   request.destination_detail,
                   request.departed_at,
                   request.driver_departed_at,

@@ -42,10 +42,10 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
   const [err, setErr] = React.useState(null);
   const [form, setForm] = useState({
     departure_latitude: 13.769059,
-    departure_longtitude: 100.493117,
+    departure_longitude: 100.493117,
     departure_detail: "",
     destination_latitude: 13.769059,
-    destination_longtitude: 100.493117,
+    destination_longitude: 100.493117,
     destination_detail: ""
   });
 
@@ -110,7 +110,7 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
               setErr(null)
             }}
           />
-          <Map setLocation={(departure_longtitude, departure_latitude) => setForm({ ...form, departure_longtitude, departure_latitude })} />
+          <Map setLocation={(departure_longitude, departure_latitude) => setForm({ ...form, departure_longitude, departure_latitude })} />
           <TextField
             label="Destination"
             className={classes.margin}
@@ -120,7 +120,7 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
               setErr(null)
             }}
           />
-          <Map setLocation={(destination_longtitude, destination_latitude) => setForm({ ...form, destination_longtitude, destination_latitude })} />
+          <Map setLocation={(destination_longitude, destination_latitude) => setForm({ ...form, destination_longitude, destination_latitude })} />
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
           <div style={{ marginTop: "25px", display: 'flex' }}>
             <Button onClick={join} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>

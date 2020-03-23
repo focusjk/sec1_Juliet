@@ -17,8 +17,8 @@ import Divider from '@material-ui/core/Divider';
 const TripLogBox = ({ history, data }) => {
   const {
     trip_id, driver_id, start_datetime, status, car_brand, plate_license, price, created_at,
-    departure_latitude, departure_longtitude, departure_detail,
-    destination_latitude, destination_longtitude, destination_detail,
+    departure_latitude, departure_longitude, departure_detail,
+    destination_latitude, destination_longitude, destination_detail,
     username, firstname, lastname, photo
   } = data;
   const starttime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
@@ -116,9 +116,9 @@ const TripLogBox = ({ history, data }) => {
           trip_id={trip_id}
           departure_detail={departure_detail}
           destination_detail={destination_detail}
-          departure_longtitude={departure_longtitude}
+          departure_longitude={departure_longitude}
           departure_latitude={departure_latitude}
-          destination_longtitude={destination_longtitude}
+          destination_longitude={destination_longitude}
           destination_latitude={destination_latitude}
         />
       </Paper>
