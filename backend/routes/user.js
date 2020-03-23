@@ -49,7 +49,7 @@ router.post("/register", validate(validateUser), (req, res, next) => {
   });
 });
 
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res, next) {
   const { username, password } = req.body;
   userService.login(username, password, (err, result) => {
     if (err) {
@@ -115,7 +115,7 @@ router.get("/wallet", (req, res, next) => {
         message: "Cannot access database"
       });
     } else {
-      res.json({ success: true, amount: result });
+      res.json({ success: true, amount: result[0].amount });
     }
   });
 });
