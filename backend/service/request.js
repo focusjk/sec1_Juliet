@@ -2,24 +2,23 @@ var db = require('../dbconnection');
 var util = require('../util');
 
 const createRequest = async (trip_id, member_id, data, created_at, callback) => {
-    const check = await util.promisifyQuery(`SELECT count(*) as count FROM request WHERE request.trip_id = ? AND request.member_id = ? AND request.request_status != 'canceled'`, [trip_id, member_id]);
+    const check = await util.promisifyQuery(`SELECT count(*) as count FROM request WHERE request.trip_id = ? AND request.member_id = ? AND request.request_status not in ('canceled','rejected')`, [trip_id, member_id]);
     const driver = await util.promisifyQuery(`SELECT owner FROM request JOIN trip ON request.trip_id = trip.id WHERE trip_id = ?`, [trip_id]);
     const { owner } = driver[0];
     const { count } = check[0];
     if (count == 0 && owner != member_id) {
-        const { departure_latitude, departure_longtitude, departure_detail, destination_latitude, destination_longtitude, destination_detail } = data;
+        const { departure_latitude, departure_longitude, departure_detail, destination_latitude, destination_longitude, destination_detail } = data;
         const reqStatus = 2; //set to pending 
-        return db.query(`INSERT INTO request (member_id,trip_id,departure_latitude,departure_longtitude,departure_detail,destination_latitude,destination_longtitude,destination_detail,request_status,created_at) 
+        return db.query(`INSERT INTO request (member_id,trip_id,departure_latitude,departure_longitude,departure_detail,destination_latitude,destination_longitude,destination_detail,request_status,created_at) 
         values (?,?,?,?,?,?,?,?,?,?)`,
-            [member_id, trip_id, departure_latitude, departure_longtitude, departure_detail, destination_latitude, destination_longtitude, destination_detail, reqStatus, created_at], callback);
+            [member_id, trip_id, departure_latitude, departure_longitude, departure_detail, destination_latitude, destination_longitude, destination_detail, reqStatus, created_at], callback);
     } else {
         callback(true);
     }
-
 }
 
 function getRequestInfo(request_id, callback) {
-    return db.query(`SELECT id,member_id,trip_id,departure_latitude,departure_longtitude,departure_detail,destination_latitude,destination_longtitude,destination_detail,
+    return db.query(`SELECT id,member_id,trip_id,departure_latitude,departure_longitude,departure_detail,destination_latitude,destination_longitude,destination_detail,
     request_status,review_id,departed_at,driver_departed_at,driver_arrived_at,created_at,paid_at
     FROM request
     WHERE id = ?`

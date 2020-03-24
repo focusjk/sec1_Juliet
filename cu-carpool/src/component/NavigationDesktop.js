@@ -9,6 +9,7 @@ const listPath = [
   { name: 'Member info', path: '/admin/member' },
   { name: 'Driver info', path: '/admin/driver' },
   { name: 'Withdrawal', path: '/admin/withdrawal' },
+  { name: 'Trip', path: '/admin/trip' },
   { name: 'Report', path: '/admin/report' },
 ];
 const useStyles = makeStyles({
