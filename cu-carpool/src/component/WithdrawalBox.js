@@ -25,28 +25,12 @@ const WithdrawalBox = ({ data }) => {
             <div>Status: {x.status}</div>
             <div style={{ fontSize: 20 }}>{x.amount} ฿</div>
           </div>
-          <Divider style={{ margin: "3px 0 8px" }} />
-          <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div
-              style={{
-                marginBottom: "1px",
-                display: "flex",
-                flexGrow: 1
-              }}
-            >
-              {x.bank_name}
-            </div>
-            <div
-              style={{
-                marginBottom: "1px",
-                display: "flex",
-                flexGrow: 4
-              }}
-            >
-              {x.account_number}
-            </div>
+          <Divider style={{ margin: "8px 0" }} />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>{x.bank_name}</div>
+            <div>{x.account_number}</div>
           </div>
-          <div style={{ marginBottom: "1px" }}>{x.account_name}</div>
+          <div>{x.account_name}</div>
           <div style={{ fontSize: 14, color: "#BDBDBD" }}>{x.created_time}</div>
         </div>
       ))}
