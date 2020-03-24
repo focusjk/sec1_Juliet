@@ -51,7 +51,7 @@ class TripDetail extends React.Component {
             </div>
             <div style={{ display: "flex", alignItems: "flex-end", marginBottom: 6 }}>
               Average rating:
-              <Rating disabled name="half-rating" value={parseFloat(owner.avg_rating)} precision={0.01} style={{ marginLeft: 8 }} />
+              <Rating name="half-rating" value={parseFloat(owner.avg_rating)} precision={0.01} style={{ marginLeft: 8 }} />
             </div>
             <ReviewModal modeButton={false} isTrip={false} id={owner.id} />
           </div>
