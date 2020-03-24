@@ -155,11 +155,11 @@ var mock = async () => {
 
     //trip
     var departure_latitude = 13.747879
-    var departure_longtitude = 100.493117
+    var departure_longitude = 100.493117
     var destination_latitude = 13.747879
-    var destination_longtitude = 100.493117
+    var destination_longitude = 100.493117
     trip.map(async (item) =>
-        await tripService.createTrip(created_at, { ...item, departure_latitude, departure_longtitude, destination_latitude, destination_longtitude }, (err, result) => {
+        await tripService.createTrip(created_at, { ...item, departure_latitude, departure_longitude, destination_latitude, destination_longitude }, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -173,9 +173,9 @@ var mock = async () => {
     request.map(async ({ trip_id, member_id }) => {
         const data = {
             departure_latitude,
-            departure_longtitude,
+            departure_longitude,
             destination_latitude,
-            destination_longtitude,
+            destination_longitude,
             departure_detail: 'test',
             destination_detail: 'test'
         }

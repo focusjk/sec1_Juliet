@@ -3,11 +3,11 @@ var Joi = require('joi');
 module.exports = {
     body: {
         departure_latitude: Joi.number().required(),
-        departure_longtitude: Joi.number().required(),
+        departure_longitude: Joi.number().required(),
         departure_detail: Joi.string().max(50).required(),
         departure_province: Joi.string().required(),
         destination_latitude: Joi.number().required(),
-        destination_longtitude: Joi.number().required(),
+        destination_longitude: Joi.number().required(),
         destination_detail: Joi.string().max(50).required(),
         destination_province: Joi.string().required(),
         start_datetime: Joi.string().isoDate().required(),
