@@ -19,9 +19,9 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
     request_status,
     departure_detail,
     destination_detail,
-    departure_longtitude,
+    departure_longitude,
     departure_latitude,
-    destination_longtitude,
+    destination_longitude,
     destination_latitude,
     driver_departed_at
   } = data;
@@ -74,9 +74,9 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
             trip_id={trip_id}
             departure_detail={departure_detail}
             destination_detail={destination_detail}
-            departure_longtitude={departure_longtitude}
+            departure_longitude={departure_longitude}
             departure_latitude={departure_latitude}
-            destination_longtitude={destination_longtitude}
+            destination_longitude={destination_longitude}
             destination_latitude={destination_latitude}
           />
         </div>

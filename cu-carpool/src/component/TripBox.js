@@ -19,9 +19,9 @@ const TripBox = ({ history, data, fetchData }) => {
     capacity,
     price,
     departure_latitude,
-    departure_longtitude,
+    departure_longitude,
     destination_latitude,
-    destination_longtitude,
+    destination_longitude,
     departure_detail,
     destination_detail,
     departure_province,
@@ -146,7 +146,7 @@ const TripBox = ({ history, data, fetchData }) => {
         </div>
         <MapData
           fixed
-          longitude={departure_longtitude}
+          longitude={departure_longitude}
           latitude={departure_latitude}
         />
         <div style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
@@ -157,7 +157,7 @@ const TripBox = ({ history, data, fetchData }) => {
         </div>
         <MapData
           fixed
-          longitude={destination_longtitude}
+          longitude={destination_longitude}
           latitude={destination_latitude}
         />
 
@@ -175,7 +175,7 @@ const TripBox = ({ history, data, fetchData }) => {
             <MyGreyButton disabled>Cancel</MyGreyButton>
           )}
           {(status == "on going" || status == "done") && (
-            <ReviewModal modeButton = {true} isTrip= {true} id = {trip_id}/> 
+            <ReviewModal modeButton={true} isTrip={true} id={trip_id} />
           )}
 
           {(status == "scheduled" || status == "canceled") && (

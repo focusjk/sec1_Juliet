@@ -39,9 +39,9 @@ const LocationDetail = ({
   trip_id,
   departure_detail,
   destination_detail,
-  departure_longtitude,
+  departure_longitude,
   departure_latitude,
-  destination_longtitude,
+  destination_longitude,
   destination_latitude
 }) => {
   const classes = useStyles();
@@ -69,13 +69,13 @@ const LocationDetail = ({
           <div className={classes.margin}>Pick up:{departure_detail}</div>
           <MapData
             fixed
-            longitude={departure_longtitude}
+            longitude={departure_longitude}
             latitude={departure_latitude}
           />
           <div className={classes.margin}>Destination:{destination_detail}</div>
           <MapData
             fixed
-            longitude={destination_longtitude}
+            longitude={destination_longitude}
             latitude={destination_latitude}
           />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
