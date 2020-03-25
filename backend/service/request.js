@@ -3,7 +3,7 @@ var util = require('../util');
 
 const createRequest = async (trip_id, member_id, data, created_at, callback) => {
     const check = await util.promisifyQuery(`SELECT count(*) as count FROM request WHERE request.trip_id = ? AND request.member_id = ? AND request.request_status not in ('canceled','rejected')`, [trip_id, member_id]);
-    const driver = await util.promisifyQuery(`SELECT owner FROM request JOIN trip ON request.trip_id = trip.id WHERE trip_id = ?`, [trip_id]);
+    const driver = await util.promisifyQuery(`SELECT owner FROM trip WHERE trip_id = ?`, [trip_id]);
     const { owner } = driver[0];
     const { count } = check[0];
     if (count == 0 && owner != member_id) {
