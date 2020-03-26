@@ -131,9 +131,6 @@ const App = () => {
                     <Route path="/withdrawalLog" exact>
                       <WithdrawalLog user={user} />
                     </Route>
-                    <Route path="/test" exact>
-                      <ButtonComponent/>
-                    </Route>
                     <Route exact path="/">
                       <Home user={user} />
                     </Route>
@@ -181,6 +178,9 @@ const App = () => {
                   </Route>
                   <Route path="/login" exact>
                     <Login handleLogin={user => setUser(user)} />
+                  </Route>
+                  <Route path="/test" exact>
+                    <ButtonComponent />
                   </Route>
                   <Redirect to="/login" />
                 </Switch>

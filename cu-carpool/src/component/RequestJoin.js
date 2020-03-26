@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 4),
     width: '250px'
   },
   margin: {
@@ -121,8 +121,8 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
             }}
           />
           <Map setLocation={(destination_longitude, destination_latitude) => setForm({ ...form, destination_longitude, destination_latitude })} />
-          {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
-          <div style={{ marginTop: "25px", display: 'flex' }}>
+          {err !== "" && <div style={{ color: "red", marginBottom: '16px' }}>{err}</div>}
+          <div style={{ display: 'flex' }}>
             <Button onClick={join} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
             <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
           </div>

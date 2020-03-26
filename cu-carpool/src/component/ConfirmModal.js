@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 2),
+    padding: theme.spacing(2, 4),
     width: '250px'
   },
   margin: {
@@ -44,7 +44,11 @@ const ConfirmModal = ({ message, confirm, cancel, onConfirm, action }) => {
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
 
-  const handleOpen = async () => {
+  const handleConfirm = async () => {
+    await onConfirm()
+    handleClose()
+  }
+  const handleOpen = () => {
     setOpen(true);
   };
 
@@ -56,19 +60,19 @@ const ConfirmModal = ({ message, confirm, cancel, onConfirm, action }) => {
     <div>
       <MyButton type="button" onClick={handleOpen}>
         {action || 'Action'}
-       </MyButton>
+      </MyButton>
       <Modal
         open={open}
         onClose={handleClose}
       >
         <div style={getModalStyle()} className={classes.paper}>
           <MyHeader>Confirmation</MyHeader>
-          <div style={{ margin: "0 auto" }}>
+          <div style={{ margin: "16px auto" }}>
             {message || 'Please confirm your action.'}
           </div>
           {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
-          <div style={{ marginTop: "0px", display: 'flex' }}>
-            <Button onClick={onConfirm || handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>{confirm || 'Confirm'}</Button>
+          <div style={{ display: 'flex' }}>
+            <Button onClick={handleConfirm} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>{confirm || 'Confirm'}</Button>
             <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>{cancel || 'Cancel'}</Button>
           </div>
         </div>
