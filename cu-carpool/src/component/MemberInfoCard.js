@@ -160,6 +160,7 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
           <ConfirmModal
             onConfirm={Ban}
             btn="0"
+            width="110px"
             action="Ban"
             message="Are you sure you want to ban this member ?"
             confirm="OK"
@@ -170,6 +171,7 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
           <ConfirmModal
             onConfirm={UnBan}
             btn="2"
+            width="110px"
             action="Unban"
             message="Are you sure you want to unban this member ?"
             confirm="OK"
