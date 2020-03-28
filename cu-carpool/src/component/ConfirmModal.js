@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { MyHeader } from "./MyTitle";
-import { MyButton } from "./MyButton";
+import { MyButton, MyFullWidthButton, MyWhiteButton } from "./MyButton";
 import Button from "@material-ui/core/Button";
-
-// class ConfirmModal extends React.Component {
-//     static defaultProps = {
-//         message: "Please confirm your action.",
-//         confirm: "confirm",
-//         cancel: "cancel",       
-//     }
-// }
 
 function getModalStyle() {
   const top = 50;
@@ -27,27 +18,35 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4),
-    width: '250px'
+    width: "240px"
   },
   margin: {
     marginBottom: 16
   }
 }));
 
-const ConfirmModal = ({ message, confirm, cancel, onConfirm, action }) => {
+const ConfirmModal = ({
+  message,
+  confirm,
+  cancel,
+  onConfirm,
+  action,
+  btn,
+  disabled
+}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
 
   const handleConfirm = async () => {
-    await onConfirm()
-    handleClose()
-  }
+    await onConfirm();
+    handleClose();
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -58,28 +57,67 @@ const ConfirmModal = ({ message, confirm, cancel, onConfirm, action }) => {
 
   return (
     <div>
-      <MyButton type="button" onClick={handleOpen}>
-        {action || 'Action'}
-      </MyButton>
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
+      {btn == 0 && (
+        <MyButton type="button" onClick={handleOpen}>
+          {action || "Action"}
+        </MyButton>
+      )}
+      {btn == 1 && (
+        <MyFullWidthButton
+          type="button"
+          onClick={handleOpen}
+          style={{ marginTop: "10px" }}
+          disabled={disabled || false}
+        >
+          {action || "Action"}
+        </MyFullWidthButton>
+      )}
+      {btn == 2 && (
+        <MyWhiteButton
+          type="button"
+          onClick={handleOpen}
+          style={{ width: 146 }}
+        >
+          {action || "Action"}
+        </MyWhiteButton>
+      )}
+      {btn == 3 && (
+        <MyButton type="button" onClick={handleOpen} style={{ width: 146 }}>
+          {action || "Action"}
+        </MyButton>
+      )}
+      <Modal open={open} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>
-          <MyHeader>Confirmation</MyHeader>
-          <div style={{ margin: "16px auto" }}>
-            {message || 'Please confirm your action.'}
+          <div style={{ margin: "12px auto 2px", lineHeight: "20px" }}>
+            {message || "Please confirm your action."}
           </div>
-          {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
-          <div style={{ display: 'flex' }}>
-            <Button onClick={handleConfirm} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>{confirm || 'Confirm'}</Button>
-            <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>{cancel || 'Cancel'}</Button>
+          {err !== "" && (
+            <div style={{ color: "red", marginTop: "16px" }}>{err}</div>
+          )}
+          <div style={{ display: "flex" }}>
+            <Button
+              onClick={handleConfirm}
+              color="secondary"
+              style={{ fontSize: 16, flexGrow: 1, textTransform: "capitalize" }}
+            >
+              {confirm || "Confirm"}
+            </Button>
+            <Button
+              onClick={handleClose}
+              style={{
+                color: "#BDBDBD",
+                fontSize: 16,
+                flexGrow: 1,
+                textTransform: "capitalize"
+              }}
+            >
+              {cancel || "Cancel"}
+            </Button>
           </div>
         </div>
       </Modal>
     </div>
   );
-}
+};
 
-export default ConfirmModal
-
+export default ConfirmModal;
