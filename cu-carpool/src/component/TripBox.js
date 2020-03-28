@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { MyButton, MyGreyButton } from "../component/MyButton";
+import { MyGreyButton } from "../component/MyButton";
 import { Paper } from "@material-ui/core/";
 import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 import ReviewModal from "../component/ReviewModal";
-
+import ConfirmModal from "../component/ConfirmModal";
 
 const TripBox = ({ history, data, fetchData }) => {
   const {
@@ -43,7 +43,6 @@ const TripBox = ({ history, data, fetchData }) => {
       console.log(e);
     }
   };
-
 
   return (
     <Paper
@@ -169,7 +168,14 @@ const TripBox = ({ history, data, fetchData }) => {
           }}
         >
           {status == "scheduled" && (
-            <MyButton onClick={handleCancel}>Cancel</MyButton>
+            <ConfirmModal
+              onConfirm={handleCancel}
+              btn="0"
+              action="Cancel"
+              message="Are you sure you want to cancel this trip ?"
+              confirm="OK"
+              cancel="Cancel"
+            />
           )}
           {status != "scheduled" && (
             <MyGreyButton disabled>Cancel</MyGreyButton>
