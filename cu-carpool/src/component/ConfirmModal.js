@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { MyButton, MyFullWidthButton, MyWhiteButton } from "./MyButton";
@@ -37,7 +37,8 @@ const ConfirmModal = ({
   onConfirm,
   action,
   btn,
-  disabled
+  disabled,
+  width
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -58,7 +59,7 @@ const ConfirmModal = ({
   return (
     <div>
       {btn == 0 && (
-        <MyButton type="button" onClick={handleOpen}>
+        <MyButton type="button" onClick={handleOpen} style={{ width: width }}>
           {action || "Action"}
         </MyButton>
       )}
@@ -76,15 +77,10 @@ const ConfirmModal = ({
         <MyWhiteButton
           type="button"
           onClick={handleOpen}
-          style={{ width: 146 }}
+          style={{ width: width }}
         >
           {action || "Action"}
         </MyWhiteButton>
-      )}
-      {btn == 3 && (
-        <MyButton type="button" onClick={handleOpen} style={{ width: 146 }}>
-          {action || "Action"}
-        </MyButton>
       )}
       <Modal open={open} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>

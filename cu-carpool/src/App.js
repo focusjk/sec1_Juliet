@@ -120,7 +120,10 @@ const App = () => {
                       />
                     </Route>
                     <Route path="/wallet" exact>
-                      <Wallet user={user} updateUser={amount => setUser({ ...user, amount })} />
+                      <Wallet
+                        user={user}
+                        updateUser={amount => setUser({ ...user, amount })}
+                      />
                     </Route>
                     <Route path="/withdrawal" exact>
                       <CreateWithdrawal user={user} />
@@ -162,7 +165,7 @@ const App = () => {
                     <Route path="/admin/withdrawal" exact>
                       <AdminWithdrawal user={user} />
                     </Route>
-                    <Redirect to="/admin/driver" />
+                    <Redirect to="/admin/member" />
                   </Switch>
                 </div>
               </div>

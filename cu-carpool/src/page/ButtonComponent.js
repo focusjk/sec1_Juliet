@@ -63,6 +63,7 @@ class ButtonComponent extends React.Component {
         <CreateReviewModal />
         <ConfirmModal btn="0" />
         <ConfirmModal btn="1" />
+        <ConfirmModal btn="2" />
       </div>
     );
   }

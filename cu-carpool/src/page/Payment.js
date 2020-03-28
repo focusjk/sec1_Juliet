@@ -205,7 +205,8 @@ const Payment = ({ history }) => {
           <Grid container direction="row" justify="space-between">
             <ConfirmModal
               onConfirm={handlePayment}
-              btn="3"
+              btn="0"
+              width="146px"
               action="Pay"
               message="Are you sure you want to make a payment ?"
               confirm="OK"
@@ -259,6 +260,7 @@ const Payment = ({ history }) => {
             <ConfirmModal
               onConfirm={clearData}
               btn="2"
+              width="146px"
               action="Cancel"
               message="Are you sure you want to cancel this payment ?"
               confirm="OK"
