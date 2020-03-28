@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { Box, TextField, Grid } from "@material-ui/core";
-import {
-  MyFullWidthButton,
-  MyDisabledFullWidthButton
-} from "../component/MyButton";
+import { MyDisabledFullWidthButton } from "../component/MyButton";
 import NoteIcon from "@material-ui/icons/Note";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 import moment from "moment";
+import ConfirmModal from "../component/ConfirmModal";
 
 const formatter = t => {
   return t ? moment(t).format("MMMM Do YYYY h:mm a") : null;
@@ -38,13 +36,13 @@ const DriverProfile = ({ user, updateUser }) => {
       if (success) {
         setStatus(driver_status);
         setTime(formatter(edited_at));
-        setError('');
+        setError("");
         updateUser({ driving_license, edited_at, driver_status: "pending" });
       } else {
         setError(message);
       }
     } catch (e) {
-      setError('Invalid data, please check your input again');
+      setError("Invalid data, please check your input again");
     }
   };
 
@@ -89,9 +87,7 @@ const DriverProfile = ({ user, updateUser }) => {
             helperText="Please input value from QR code at back of driving license card"
             onChange={e => {
               setForm({ ...form, driving_license: e.target.value });
-              setChange(
-                e.target.value && e.target.value.length === 25
-              );
+              setChange(e.target.value && e.target.value.length === 25);
             }}
           />
         </div>
@@ -115,9 +111,14 @@ const DriverProfile = ({ user, updateUser }) => {
         </MyDisabledFullWidthButton>
       )}
       {change && (
-        <MyFullWidthButton style={{ margin: "10px 0" }} onClick={request}>
-          Request
-        </MyFullWidthButton>
+        <ConfirmModal
+          onConfirm={request}
+          btn="1"
+          action="Request"
+          message="Are you sure you want to request ?"
+          confirm="OK"
+          cancel="Cancel"
+        />
       )}
       {error !== "" && <div style={{ color: "red" }}>{error}</div>}
     </div>
