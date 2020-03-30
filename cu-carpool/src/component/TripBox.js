@@ -9,7 +9,7 @@ import moment from "moment";
 import ReviewModal from "../component/ReviewModal";
 import ConfirmModal from "../component/ConfirmModal";
 
-const TripBox = ({ history, data, fetchData }) => {
+const TripBox = ({ data, fetchData }) => {
   const {
     trip_id,
     start_datetime,
@@ -33,7 +33,7 @@ const TripBox = ({ history, data, fetchData }) => {
     try {
       const response = await axios.post(
         "http://localhost:4000/trip/cancelTrip",
-        { id: trip_id }
+        { trip_id }
       );
       const { success } = response.data;
       if (success) {

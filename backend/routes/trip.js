@@ -154,7 +154,7 @@ router.post('/cancelTrip', (req, res, next) => {
     if (err) {
       res.json({ success: false, message: 'Cannot access database' });
     } else {
-      if (result.affectedRows == 0) {
+      if (result.affectedRows === 0) {
         res.json({ success: false, message: 'Your trip cannot be canceled' });
       }
       else {

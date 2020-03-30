@@ -84,70 +84,18 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
         <div style={{ alignSelf: "center" }}>{username}</div>
       </div>
       <div style={{ width: "70%", display: "flex", flexDirection: "column" }}>
-        <div>
-          {" "}
-          <b> Member ID:</b> {id}
-        </div>
-        <div>
-          {" "}
-          <b>Name:</b> {firstname} {lastname}
-        </div>
-        <div>
-          {" "}
-          <b>Email:</b> {email}
-        </div>
-        <div>
-          {" "}
-          <b>Phone number:</b> {phone_number}
-        </div>
-        {driver_status != null && (
-          <div>
-            {" "}
-            <b>Driver Status:</b> {driver_status}
-          </div>
-        )}
-        {driving_license != null && (
-          <div>
-            {" "}
-            <b>Driving License:</b> {driving_license}
-          </div>
-        )}
-        {approved_at != null && (
-          <div>
-            {" "}
-            <b>Approved at:</b> {formatter(approved_at)}
-          </div>
-        )}
-        {approved_by != null && (
-          <div>
-            {" "}
-            <b>Approved by:</b> {approved_by}
-          </div>
-        )}
-        {rejected_at != null && (
-          <div>
-            {" "}
-            <b>Rejected at:</b> {formatter(rejected_at)}
-          </div>
-        )}
-        {rejected_by != null && (
-          <div>
-            {" "}
-            <b>Rejected by:</b> {rejected_by}
-          </div>
-        )}
-        {banned_at != null && (
-          <div>
-            {" "}
-            <b>Banned At:</b> {formatter(banned_at)}
-          </div>
-        )}
-        {banned_by != null && (
-          <div>
-            {" "}
-            <b>Banned By:</b> {banned_by}
-          </div>
-        )}
+        <div><b> Member ID:</b> {id}</div>
+        <div><b>Name:</b> {firstname} {lastname}</div>
+        <div><b>Email:</b> {email}</div>
+        <div><b>Phone number:</b> {phone_number}</div>
+        {driver_status != null && (<div><b>Driver Status:</b> {driver_status}</div>)}
+        {driving_license != null && (<div><b>Driving License:</b> {driving_license}</div>)}
+        {approved_at != null && (<div><b>Approved at:</b> {formatter(approved_at)}</div>)}
+        {approved_by != null && (<div><b>Approved by:</b> {approved_by}</div>)}
+        {rejected_at != null && (<div><b>Rejected at:</b> {formatter(rejected_at)}</div>)}
+        {rejected_by != null && (<div><b>Rejected by:</b> {rejected_by}</div>)}
+        {banned_at != null && (<div><b>Banned At:</b> {formatter(banned_at)}</div>)}
+        {banned_by != null && (<div><b>Banned By:</b> {banned_by}</div>)}
       </div>
       <div
         style={{

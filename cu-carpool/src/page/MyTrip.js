@@ -25,7 +25,7 @@ class MyTrip extends React.Component {
         <MyHeader style={{ marginBottom: "25px" }}>My Trip</MyHeader>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((trip, index) => (
-          <TripBox key={index} data={trip} />
+          <TripBox key={index} data={trip} fetchData={this.fetchData} />
         ))}
       </div>
     );
