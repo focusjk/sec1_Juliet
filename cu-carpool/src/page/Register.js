@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { MyFullWidthButton } from "../component/MyButton";
 import { Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Input } from "@material-ui/core";
@@ -12,6 +11,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from "../component/UserImage";
 import { MyLink } from "../component/MyTitle";
+import ConfirmModal from "../component/ConfirmModal";
 
 const useStyles = makeStyles({
   root: {
@@ -191,10 +191,16 @@ const Register = ({ history, handleLogin }) => {
           onChange={e => setForm({ ...form, phone_number: e.target.value })}
         />
       </Grid>
-
-      <MyFullWidthButton style={{ marginTop: 32 }} onClick={handleRegister}>
-        Sign Up
-      </MyFullWidthButton>
+      <div style={{ marginTop: 32 }}>
+        <ConfirmModal
+          onConfirm={handleRegister}
+          btn="1"
+          action="Sign Up"
+          message="Are you sure you want to sing up with this information ?"
+          confirm="OK"
+          cancel="Cancel"
+        />
+      </div>
       {errorMessage !== "" && (
         <div style={{ color: "red" }}>{errorMessage}</div>
       )}

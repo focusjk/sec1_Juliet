@@ -238,7 +238,8 @@ const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
                                                 AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
   const request_id = request.map(data => data.id);
 
-  await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
+  if (request_id.length > 0)
+    await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
   request.map(({ id, request_status }) => {
     if (request_status === 'paid') {
       transactionService.refundTransaction(id, trip_id, cancel_time);

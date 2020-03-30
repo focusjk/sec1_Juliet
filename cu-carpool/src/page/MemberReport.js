@@ -1,11 +1,9 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import { MyFullWidthButton, MyGreyButton } from "../component/MyButton";
-import { MyHeader, MyTitle } from "../component/MyTitle";
+import { MyHeader } from "../component/MyTitle";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { Box } from "@material-ui/core";
 import axios from "axios";
+import ConfirmModal from "../component/ConfirmModal";
 
 class MemberReport extends React.Component {
   state = {
@@ -69,13 +67,15 @@ class MemberReport extends React.Component {
             {!!msg && (
               <div style={{ color: "green", marginBottom: 8 }}>{msg}</div>
             )}
-            <MyFullWidthButton
-              style={{ display: "flex" }}
-              onClick={this.handleSend}
+            <ConfirmModal
+              onConfirm={this.handleSend}
               disabled={!topic || !comment}
-            >
-              Send
-            </MyFullWidthButton>
+              btn="1"
+              action="Send"
+              message="Are you sure you want to send this report to admin ?"
+              confirm="OK"
+              cancel="Cancel"
+            />
           </div>
         </div>
       </Grid>

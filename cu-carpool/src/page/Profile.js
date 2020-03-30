@@ -5,14 +5,12 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import { Box, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import {
-  MyFullWidthButton,
-  MyDisabledFullWidthButton
-} from "../component/MyButton";
+import { MyDisabledFullWidthButton } from "../component/MyButton";
 import { TextField } from "@material-ui/core";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
+import ConfirmModal from "../component/ConfirmModal";
 
 const Profile = ({ user, updateUser }) => {
   const [change, setChange] = useState(false);
@@ -75,7 +73,7 @@ const Profile = ({ user, updateUser }) => {
       }
     } catch (e) {
       console.log(e);
-      setError('Invalid data, please check your input again');
+      setError("Invalid data, please check your input again");
     }
   };
   return (
@@ -123,7 +121,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.firstname}
             onChange={e => {
               setForm({ ...form, firstname: e.target.value });
-              setChange(!!e.target.value)
+              setChange(!!e.target.value);
             }}
           />
         </div>
@@ -136,7 +134,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.lastname}
             onChange={e => {
               setForm({ ...form, lastname: e.target.value });
-              setChange(!!e.target.value)
+              setChange(!!e.target.value);
             }}
           />
         </div>
@@ -149,7 +147,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.email}
             onChange={e => {
               setForm({ ...form, email: e.target.value });
-              setChange(!!e.target.value)
+              setChange(!!e.target.value);
             }}
           />
         </div>
@@ -162,7 +160,7 @@ const Profile = ({ user, updateUser }) => {
             value={form.phone_number}
             onChange={e => {
               setForm({ ...form, phone_number: e.target.value });
-              setChange(!!e.target.value)
+              setChange(!!e.target.value);
             }}
           />
         </div>
@@ -243,9 +241,14 @@ const Profile = ({ user, updateUser }) => {
           </MyDisabledFullWidthButton>
         )}
         {change && (
-          <MyFullWidthButton style={{ margin: "10px 0" }} onClick={update}>
-            Save
-          </MyFullWidthButton>
+          <ConfirmModal
+            onConfirm={update}
+            btn="1"
+            action="Save"
+            message="Are you sure you want to save ?"
+            confirm="OK"
+            cancel="Cancel"
+          />
         )}
       </Switch>
       {error !== "" && <div style={{ color: "red" }}>{error}</div>}

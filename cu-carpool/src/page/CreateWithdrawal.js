@@ -3,7 +3,8 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { MyHeaderWithArrow } from "../component/MyTitle";
 import { TextField } from "@material-ui/core";
-import { MyFullWidthButton, MyDisabledFullWidthButton } from "../component/MyButton";
+import { MyDisabledFullWidthButton } from "../component/MyButton";
+import ConfirmModal from "../component/ConfirmModal";
 
 const CreateWithdrawal = ({ history, user }) => {
   const [form, setForm] = useState({
@@ -12,7 +13,7 @@ const CreateWithdrawal = ({ history, user }) => {
     bank_name: "",
     amount: ""
   });
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState({
     account_number: false,
     account_name: false,
@@ -38,17 +39,26 @@ const CreateWithdrawal = ({ history, user }) => {
         setErrorMessage(null);
         history.push("/wallet");
       } else {
-        setErrorMessage("Request failed. Please try again.")
+        setErrorMessage("Request failed. Please try again.");
       }
     } catch (e) {
-      setErrorMessage("Please fill all inputs with valid data")
+      setErrorMessage("Please fill all inputs with valid data");
     }
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "80vh", justifyContent: "space-between" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "80vh",
+        justifyContent: "space-between"
+      }}
+    >
       <form autoComplete="off">
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <MyHeaderWithArrow goto="/wallet" >Withdrawal Request</MyHeaderWithArrow>
+          <MyHeaderWithArrow goto="/wallet">
+            Withdrawal Request
+          </MyHeaderWithArrow>
           <TextField
             fullWidth
             required
@@ -57,7 +67,7 @@ const CreateWithdrawal = ({ history, user }) => {
             error={error.account_number}
             onChange={e => {
               setForm({ ...form, account_number: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
           <TextField
@@ -69,7 +79,7 @@ const CreateWithdrawal = ({ history, user }) => {
             error={error.account_name}
             onChange={e => {
               setForm({ ...form, account_name: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
           <TextField
@@ -81,7 +91,7 @@ const CreateWithdrawal = ({ history, user }) => {
             error={error.bank_name}
             onChange={e => {
               setForm({ ...form, bank_name: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
           <TextField
@@ -94,24 +104,32 @@ const CreateWithdrawal = ({ history, user }) => {
             type="number"
             onChange={e => {
               setForm({ ...form, amount: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
-          {error !== "" &&
+          {error !== "" && (
             <div style={{ marginTop: 20, color: "red" }}>{errorMessage}</div>
-          }
+          )}
         </div>
       </form>
-      <div >
+      <div>
         {!clickable() && (
-          <MyDisabledFullWidthButton disabled>Request</MyDisabledFullWidthButton>
+          <MyDisabledFullWidthButton disabled>
+            Request
+          </MyDisabledFullWidthButton>
         )}
         {clickable() && (
-          <MyFullWidthButton onClick={handleRequest}>Request</MyFullWidthButton>
+          <ConfirmModal
+            onConfirm={handleRequest}
+            btn="1"
+            action="Request"
+            message="Are you sure you want to request ?"
+            confirm="OK"
+            cancel="Cancel"
+          />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 export default withRouter(CreateWithdrawal);
-
