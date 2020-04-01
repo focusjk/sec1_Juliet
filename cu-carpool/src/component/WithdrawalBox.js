@@ -1,10 +1,20 @@
 import React from "react";
 import Divider from "@material-ui/core/Divider";
+import moment from "moment"
 
+const formatter = a => {
+  let b = a
+  b.sort((i, j) => {
+    const ii = new moment('23 Mar 2555 ' + i.created_time, 'DD MMM YYYY h:mm a').format('x')
+    const jj = new moment('23 Mar 2555 ' + j.created_time, 'DD MMM YYYY h:mm a').format('x')
+    return jj - ii;
+  });
+  return b
+}
 const WithdrawalBox = ({ data }) => {
   return (
     <div>
-      {data.map((x, index) => (
+      {formatter(data).map((x, index) => (
         <div
           key={index}
           style={{

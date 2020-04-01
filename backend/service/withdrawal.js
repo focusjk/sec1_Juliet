@@ -8,6 +8,7 @@ const createWithdrawal = async (member_id, created_at, data, callback) => {
     `SELECT members.amount FROM members WHERE id = ?`,
     [member_id]
   );
+
   const { amount: current_wallet_amount } = current_wallet[0];
   if (amount <= current_wallet_amount) {
     return db.query(
@@ -24,7 +25,7 @@ const createWithdrawal = async (member_id, created_at, data, callback) => {
       callback
     );
   } else {
-    callback(false);
+    callback(true);
   }
 };
 

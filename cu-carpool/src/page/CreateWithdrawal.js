@@ -39,7 +39,7 @@ const CreateWithdrawal = ({ history, user }) => {
         setErrorMessage(null);
         history.push("/wallet");
       } else {
-        setErrorMessage("Request failed. Please try again.");
+        setErrorMessage("The inserted amount exceeds your current balance.");
       }
     } catch (e) {
       setErrorMessage("Please fill all inputs with valid data");
