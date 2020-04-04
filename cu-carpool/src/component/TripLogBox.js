@@ -27,7 +27,7 @@ const TripLogBox = ({ history, data }) => {
   const [state, setState] = React.useState({ list: [] });
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:4000/admin/tripMember?id=" + trip_id);
+    const response = await axios.get("http://localhost:4000/admin/trip-request?id=" + trip_id);
     const { success, members } = response.data
     if (success) {
       setState({ list: members })

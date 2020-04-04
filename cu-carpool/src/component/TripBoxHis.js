@@ -39,7 +39,7 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
   const cancel = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/trip/cancelRequest",
+        "http://localhost:4000/request/cancel",
         { id }
       );
       const { success } = response.data;

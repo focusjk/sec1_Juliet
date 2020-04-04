@@ -1,7 +1,7 @@
 var db = require('./dbconnection');
 var util = require('./util');
 var tripService = require('./service/trip');
-var userService = require('./service/user');
+var memberService = require('./service/member');
 var driverService = require('./service/driver');
 var adminService = require('./service/admin');
 var requestService = require('./service/request');
@@ -111,7 +111,7 @@ var mock = async () => {
     var created_at = util.timeformatter(new Date());
     var amount = 0;
     var photo = userimage
-    members.map(async (item) => await userService.register(item.username, { ...item, photo }, created_at, amount, (err, result) => {
+    members.map(async (item) => await memberService.register(item.username, { ...item, photo }, created_at, amount, (err, result) => {
         if (err) {
             console.log(err);
         } else {

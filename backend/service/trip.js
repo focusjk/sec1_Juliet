@@ -95,103 +95,6 @@ const getTripDetail = (trip_id, callback) => {
                           owner as owner_id FROM trip WHERE id = `+ trip_id, callback);
 }
 
-const getOwnerDetail = (owner_id, callback) => {
-  return db.query(`SELECT
-                          members.id as id,
-                          members.username as username,
-                          members.firstname as firstname,
-                          members.lastName as lastname,
-                          members.phone_number as phone_number,
-                          members.email as email,
-                          members.photo as photo,
-                          AVG(review.rating ) as avg_rating
-                          FROM members  left join review on review.reviewee=members.id
-                          WHERE members.id = `+ owner_id +
-    ` GROUP BY members.id`, callback);
-}
-
-const getAllPassenger = (trip_id, callback) => {
-  return db.query(`SELECT
-                          members.id,
-                          members.username,
-                          members.firstname,
-                          members.lastname,
-                          members.phone_number,
-                          members.photo,
-                          request.id as request_id,
-                          request.request_status,
-                          request.departed_at
-                          FROM members inner join request on request.member_id = members.id
-                          WHERE request.request_status IN ('approved','paid','on going','done') AND request.trip_id =`+ trip_id, callback);
-}
-
-const getDriver = (trip_id, callback) => {
-  return db.query(`SELECT  
-                    members.id,
-                    members.username,
-                    members.firstname,
-                    members.lastname,
-                    members.phone_number,
-                    members.photo
-                    FROM members LEFT JOIN trip ON members.id = trip.owner
-                    WHERE trip.id = ? `, [trip_id], callback);
-}
-
-const getAllPassengerForDriver = (trip_id, callback) => {
-  return db.query(`SELECT 
-                          members.id, 
-                          members.username, 
-                          members.firstname,
-                          members.lastname,
-                          members.phone_number,
-                          members.photo ,
-                          request.id as request_id,
-                          request.departure_latitude,
-                          request.departure_longitude,
-                          request.departure_detail,
-                          request.destination_latitude,
-                          request.destination_longitude,
-                          request.destination_detail,
-                          request.request_status,
-                          request.driver_arrived_at,
-                          request.departed_at,
-                          request.driver_departed_at
-                          FROM trip LEFT JOIN request ON trip.id = request.trip_id 
-                          LEFT JOIN members ON request.member_id = members.id
-                          WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id = ? `, [trip_id], callback);
-}
-
-
-const pickUpMember = (request_id, pickup_time, callback) => {
-  return db.query(`UPDATE request
-		
-                   SET driver_departed_at = ?
-                   WHERE id = ? `, [pickup_time, request_id], callback);
-}
-
-const getInTheCar = (request_id, depart_time, callback) => {
-  const req_status = 5;
-  return db.query(`UPDATE request
-                   SET request_status = ? , departed_at = ?
-                   WHERE id = ?`, [req_status, depart_time, request_id], callback);
-}
-
-const dropOff = async (request_id, depart_time, callback) => {
-  const trip = await util.promisifyQuery(`SELECT trip.price,trip.owner FROM trip LEFT JOIN request ON trip.id = request.trip_id WHERE request.id = ?`, [request_id]);
-  const { price, owner } = trip[0];
-  const type = 2;
-  const time = util.timeformatter(new Date());
-  transactionService.createTransaction(price, owner, time, type);
-  const wallet_amount = await util.promisifyQuery(`SELECT members.amount FROM members WHERE members.id = ?`, [owner]);
-  const { amount } = wallet_amount[0];
-  const updated_amount = amount + ((90 / 100) * price);
-  transactionService.updateWallet(updated_amount, owner);
-  const req_status = 6;
-  return db.query(`UPDATE request
-                   SET request_status = ? , driver_arrived_at = ?
-                   WHERE id = ?`, [req_status, depart_time, request_id], callback);
-}
-
 const updateTripStatus = async (trip_id, status, callback) => {
   // status : 0 - pick up , 1 - drop off , 2 - cancel
   const que = await util.promisifyQuery(`SELECT trip.status FROM trip WHERE id = ? `, [trip_id]);
@@ -214,53 +117,88 @@ const updateTripStatus = async (trip_id, status, callback) => {
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
-const cancelRequest = async (request_id, cancel_time, callback) => {
-  const query_result = await util.promisifyQuery(`SELECT request_status FROM request WHERE id = ?`, [request_id]);
-  const { request_status } = query_result[0]
-
-  if (request_status == 'pending' || request_status == 'approved') {
-    return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
-  } else if (request_status == 'paid') {
-    const trip = await util.promisifyQuery(`SELECT request.trip_id FROM request WHERE id = ?`, [request_id]);
-    const { trip_id } = trip[0];
-    transactionService.refundTransaction(request_id, trip_id, cancel_time);
-    return db.query(`UPDATE request SET request_status = 'canceled' WHERE id = ?`, [request_id], callback);
-  } else {
-    callback(false);
-    return
-  }
-}
-
 const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
-  const request = await util.promisifyQuery(`SELECT request.id, request.request_status 
-                                                FROM trip LEFT JOIN request ON trip.id = request.trip_id
-                                                WHERE trip.id = ? AND trip.status = 'scheduled'
-                                                AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+  const request = await requestService.getByTripId(trip_id)
   const request_id = request.map(data => data.id);
 
-  if (request_id.length > 0)
-    await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
+  if (request_id.length > 0) {
+    await requestService.setStatusInList(request_id)
+  }
   request.map(({ id, request_status }) => {
     if (request_status === 'paid') {
       transactionService.refundTransaction(id, trip_id, cancel_time);
     }
   })
+
   return db.query(`UPDATE trip SET status = 'canceled' WHERE id = ? AND status = 'scheduled'`, [trip_id], callback);
+}
+
+const getPrice = (trip_id, callback) => {
+  return db.query(`SELECT trip.price,trip.owner FROM trip WHERE trip.id = ?`, [trip_id], callback);
+}
+
+const getPriceByRequestId = (request_id, callback) => {
+  return db.query(`SELECT trip.price FROM request LEFT JOIN trip ON request.id = trip.id WHERE request.id = ?`
+    , [request_id], callback);
+};
+
+const getOwner = async (trip_id) => {
+  const driver = await util.promisifyQuery(`SELECT owner FROM trip WHERE id = ?`, [trip_id]);
+  const { owner } = driver[0];
+  return owner
+}
+
+const getTripByMemberID = (member_id, callback) => {
+  return db.query(`SELECT id as trip_id,
+                  departure_latitude,
+                  departure_longitude,
+                  departure_province,
+                  departure_detail,
+                  destination_latitude,
+                  destination_longitude,
+                  destination_province,
+                  destination_detail,
+                  start_datetime,
+                  car_brand,
+                  plate_license,
+                  capacity,
+                  status,
+                  price FROM trip 
+                  WHERE owner =?`, [member_id], callback);
+}
+
+const getAll = (callback) => {
+  return db.query(`SELECT trip.id as trip_id,
+                  trip.owner as driver_id,
+                  trip.start_datetime,
+                  trip.status,
+                  trip.car_brand, 
+                  trip.plate_license, 
+                  trip.price,
+                  trip.created_at,
+                  trip.departure_latitude,
+                  trip.departure_longitude ,
+                  trip.departure_detail,
+                  trip.destination_latitude,
+                  trip.destination_longitude ,
+                  trip.destination_detail,
+                  members.username,
+                  members.firstname,
+                  members.lastname,
+                  members.photo
+                  FROM trip INNER JOIN members ON trip.owner = members.id`, callback);
 }
 
 module.exports = {
   createTrip,
   searchTrip,
   getTripDetail,
-  getOwnerDetail,
-  getAllPassenger,
-  getDriver,
-  getAllPassengerForDriver,
-  pickUpMember,
-  getInTheCar,
   updateTripStatus,
-  dropOff,
-  cancelRequest,
-  cancelTrip
+  cancelTrip,
+  getPrice,
+  getPriceByRequestId,
+  getOwner,
+  getTripByMemberID,
+  getAll
 };
 

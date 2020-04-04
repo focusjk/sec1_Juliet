@@ -11,7 +11,7 @@ class TripHistory extends React.Component {
   }
   fetchData = async () => {
     const response = await axios.get(
-      "http://localhost:4000/user/trip-history",
+      "http://localhost:4000/request/trip-history",
       { params: { member_id: this.props.user.id } }
     );
     const { success, request } = response.data;
@@ -26,7 +26,7 @@ class TripHistory extends React.Component {
         <MyHeader style={{ marginBottom: "25px" }}>Trip History</MyHeader>
         <EmptyBox data={this.state.list} />
         {this.state.list.map((request, index) => (
-          <TripBoxHis key={index} data={request} fetchData={this.fetchData} passenger_id = {this.props.user.id } />
+          <TripBoxHis key={index} data={request} fetchData={this.fetchData} passenger_id={this.props.user.id} />
         ))}
       </div>
     );

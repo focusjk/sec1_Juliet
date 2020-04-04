@@ -10,31 +10,6 @@ const driverReq = (ID, data, callback) => {
                     rejected_by = null , ? WHERE id = ?`, [data, ID], callback);
 }
 
-const tripRequest = (ID, callback) => {
-    return db.query(`SELECT 
-                            request.id AS id,
-                            request.departure_latitude,
-                            request.departure_longitude,
-                            request.destination_latitude,
-                            request.destination_longitude,   
-                            request.departure_detail,
-                            request.destination_detail,                       
-                            members.id AS member_id,
-                            members.username,
-                            members.phone_number,
-                            members.photo
-                            FROM request left join members on request.member_id = members.id 
-                            WHERE request.trip_id = ? AND request.request_status = "pending"`, [ID], callback);
-};
-
-const requestApprove = (ID, callback) => {
-    return db.query(`UPDATE request SET request_status = 'approved' WHERE id = ?`, [ID], callback);
-}
-
-const requestReject = (ID, callback) => {
-    return db.query(`UPDATE request SET request_status = 'rejected' WHERE id = ?`, [ID], callback);
-}
-
 const getMyTrip = (member_id, callback) => {
     return db.query(`SELECT id as trip_id,
                     departure_latitude,
@@ -54,5 +29,5 @@ const getMyTrip = (member_id, callback) => {
                     WHERE owner =?`, [member_id], callback);
 }
 
-module.exports = { getByID, driverReq, tripRequest, getMyTrip, requestApprove, requestReject };
+module.exports = { getByID, driverReq, getMyTrip };
 

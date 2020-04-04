@@ -101,7 +101,7 @@ const Payment = ({ history }) => {
     if (validate()) {
       try {
         const response = await axios.post(
-          "http://localhost:4000/user/payment",
+          "http://localhost:4000/request/payment",
           {
             id: request_id,
             ...form,

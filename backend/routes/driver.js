@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var driverService = require('../service/driver');
+var requestService = require('../service/request');
+var tripService = require('../service/trip');
 var util = require('../util')
 
+//checked
 router.post('/', function (req, res, next) {
   const { id, ...data } = req.body
   var edited = util.timeformatter(new Date());
@@ -16,9 +19,10 @@ router.post('/', function (req, res, next) {
   });
 });
 
-router.get('/tripRequest/', function (req, res, next) {
+// checked
+router.get('/tripRequest', function (req, res, next) {
   var ID = req.query.id;
-  driverService.tripRequest(ID, (err, result) => {
+  requestService.getPendingRequest(ID, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
     }
@@ -28,9 +32,10 @@ router.get('/tripRequest/', function (req, res, next) {
   });
 });
 
+//checked
 router.post('/request-approve', function (req, res, next) {
   const { id } = req.body;
-  driverService.requestApprove(id, (err, result) => {
+  requestService.requestApprove(id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
@@ -39,9 +44,10 @@ router.post('/request-approve', function (req, res, next) {
   });
 });
 
+//checked
 router.post('/request-reject', function (req, res, next) {
   const { id } = req.body;
-  driverService.requestReject(id, (err, result) => {
+  requestService.requestReject(id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
@@ -50,9 +56,10 @@ router.post('/request-reject', function (req, res, next) {
   });
 });
 
+//checked
 router.get('/mytrip', (req, res, next) => {
   const { member_id } = req.query;
-  driverService.getMyTrip(member_id, (err, result) => {
+  tripService.getTripByMemberID(member_id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: "Cannot access database" });
     } else {

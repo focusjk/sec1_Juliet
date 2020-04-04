@@ -39,7 +39,7 @@ const TripMemberforMember = ({ user }) => {
   };
   const getIn = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/getInTheCar", { id: request_id });
+      const response = await axios.post("http://localhost:4000/request/get-in", { id: request_id });
       const { success } = response.data;
       if (success) {
         fetchData();

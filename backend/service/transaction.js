@@ -1,5 +1,6 @@
 var db = require("../dbconnection");
 var util = require("../util");
+var memberService = require('./member')
 
 const createTransaction = (amount, member_id, created_at, type, callback) => {
   return db.query(
@@ -28,15 +29,7 @@ const refundTransaction = async (request_id, trip_id, created_at, callback) => {
   );
   const { amount: member_wallet_amount } = wallet_amount[0];
   const updated_amount = trip_price + member_wallet_amount;
-  updateWallet(updated_amount, member_id, callback);
-};
-
-const updateWallet = (amount, member_id, callback) => {
-  return db.query(
-    `UPDATE members SET members.amount = ? WHERE members.id = ?`,
-    [amount, member_id],
-    callback
-  );
+  memberService.updateWallet(updated_amount, member_id, callback);
 };
 
 const getTransaction = (member_id, callback) => {
@@ -52,6 +45,5 @@ const getTransaction = (member_id, callback) => {
 module.exports = {
   createTransaction,
   refundTransaction,
-  updateWallet,
   getTransaction
 };

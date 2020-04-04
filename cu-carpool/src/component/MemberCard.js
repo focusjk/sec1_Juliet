@@ -28,7 +28,7 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
   const [error, setError] = useState("");
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/pickupMember", { id: request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/request/pick-up", { id: request_id, trip_id });
       const { success, error } = response.data;
       setError(error)
       if (success) {
@@ -40,7 +40,7 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/dropOffMember", { id: request_id, trip_id });
+      const response = await axios.post("http://localhost:4000/request/drop-off", { id: request_id, trip_id });
       const { success } = response.data;
       if (success) {
         fetchData();

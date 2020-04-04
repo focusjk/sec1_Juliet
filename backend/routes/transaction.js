@@ -3,6 +3,7 @@ var router = express.Router();
 var transactionService = require("../service/transaction");
 var util = require("../util");
 
+//checked
 router.get("/log", (req, res, next) => {
   const { member_id } = req.query;
   transactionService.getTransaction(member_id, (err, result) => {
