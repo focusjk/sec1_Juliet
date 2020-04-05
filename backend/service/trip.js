@@ -1,5 +1,6 @@
 var db = require("../dbconnection");
 var transactionService = require('../service/transaction');
+var requestService = require('../service/request');
 var util = require('../util');
 
 const createTrip = (
