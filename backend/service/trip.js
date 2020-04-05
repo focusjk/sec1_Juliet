@@ -1,6 +1,5 @@
 var db = require("../dbconnection");
 var transactionService = require('../service/transaction');
-var requestService = require('../service/request');
 var util = require('../util');
 
 const createTrip = (
@@ -118,12 +117,17 @@ const updateTripStatus = async (trip_id, status, callback) => {
   return await db.query(`UPDATE trip SET status = ? WHERE id = ?`, [trip_status, trip_id], callback);
 }
 
+// XXXXXXXXX
 const cancelTrip = async ({ trip_id, cancel_time }, callback) => {
-  const request = await requestService.getByTripId(trip_id)
+  const request = await util.promisifyQuery(`SELECT request.id, request.request_status 
+    FROM trip LEFT JOIN request ON trip.id = request.trip_id
+    WHERE trip.id = ? AND trip.status = 'scheduled'
+    AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
+
   const request_id = request.map(data => data.id);
 
   if (request_id.length > 0) {
-    await requestService.setStatusInList(request_id)
+    await util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
   }
   request.map(({ id, request_status }) => {
     if (request_status === 'paid') {

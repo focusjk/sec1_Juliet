@@ -4,8 +4,8 @@ var transactionService = require('./transaction')
 var tripService = require('./trip')
 const createRequest = async (trip_id, member_id, data, created_at, callback) => {
     const check = await util.promisifyQuery(`SELECT count(*) as count FROM request WHERE request.trip_id = ? AND request.member_id = ? AND request.request_status not in ('canceled','rejected')`, [trip_id, member_id]);
-    const owner = await tripService.getOwner(trip_id)
     const { count } = check[0];
+    const owner = await tripService.getOwner(trip_id)
     if (count == 0 && owner != member_id) {
         const { departure_latitude, departure_longitude, departure_detail, destination_latitude, destination_longitude, destination_detail } = data;
         const reqStatus = 2; //set to pending 
@@ -130,17 +130,6 @@ const cancelRequest = async (request_id, cancel_time, callback) => {
     }
 }
 
-const getByTripId = (trip_id) => {
-    return util.promisifyQuery(`SELECT request.id, request.request_status 
-    FROM trip LEFT JOIN request ON trip.id = request.trip_id
-    WHERE trip.id = ? AND trip.status = 'scheduled'
-    AND request.request_status IN ('pending','approved','paid')`, [trip_id]);
-}
-
-const setStatusInList = request_id => {
-    return util.promisifyQuery(`UPDATE request SET request_status = 'canceled' WHERE id IN (?)`, [request_id]);
-}
-
 const setReview = (review_id, request_id, callback) => {
     return db.query(
         `UPDATE request SET review_id = ? WHERE id = ?`,
@@ -247,8 +236,6 @@ module.exports = {
     dropOff,
     getInTheCar,
     cancelRequest,
-    getByTripId,
-    setStatusInList,
     setReview,
     requestApprove,
     requestReject,

@@ -110,7 +110,7 @@ router.post('/get-in', (req, res, next) => {
 });
 
 //checked
-router.post('/cancelRequest', (req, res, next) => {
+router.post('/cancel', (req, res, next) => {
     const { id: request_id } = req.body;
     const cancel_time = util.timeformatter(new Date());
     requestService.cancelRequest(request_id, cancel_time, (err, result) => {
