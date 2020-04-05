@@ -105,7 +105,7 @@ router.post('/banmember', function (req, res, next) {
 //checked
 router.post('/unbanmember', function (req, res, next) {
   const { id } = req.body;
-  memberService.UnbanMember(id, (err, result) => {
+  memberService.unbanMember(id, (err, result) => {
     if (err) {
       res.json({ success: false, error: err.sqlMessage, message: 'Cannot access database' });
     } else {
