@@ -6,7 +6,12 @@ import {
   MyFullWidthButton,
   MyDisabledFullWidthButton
 } from "../component/MyButton";
-import { MyHeader, MyTitle, MyHeaderWithArrow, MyLink } from "../component/MyTitle";
+import {
+  MyHeader,
+  MyTitle,
+  MyHeaderWithArrow,
+  MyLink
+} from "../component/MyTitle";
 import Button from "@material-ui/core/Button";
 import MyModal from "../component/MyModal";
 import RequestJoin from "../component/RequestJoin";
@@ -14,8 +19,8 @@ import LocationDetail from "../component/LocationDetail";
 import Rating from "@material-ui/lab/Rating";
 import EmptyBox from "../component/EmptyBox";
 import ReviewModal from "../component/ReviewModal";
-
 import CreateReviewModal from "../component/CreateReviewModal";
+import ConfirmModal from "../component/ConfirmModal";
 
 class ButtonComponent extends React.Component {
   render() {
@@ -54,8 +59,11 @@ class ButtonComponent extends React.Component {
         <Button color="secondary">Button_secondary</Button>
         <Button style={{ color: "#BDBDBD" }}>Button</Button>
         <Rating name="half-rating" defaultValue={2.34} precision={0.01} />
-        <ReviewModal/>
-        <CreateReviewModal/>
+        <ReviewModal />
+        <CreateReviewModal />
+        <ConfirmModal btn="0" />
+        <ConfirmModal btn="1" />
+        <ConfirmModal btn="2" />
       </div>
     );
   }

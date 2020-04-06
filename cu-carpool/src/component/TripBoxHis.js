@@ -7,6 +7,7 @@ import { MyTitle, MyLink } from "../component/MyTitle";
 import MapData from "./MapData";
 import moment from "moment";
 import CreateReviewModal from "../component/CreateReviewModal";
+import ConfirmModal from "../component/ConfirmModal";
 
 const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
   const {
@@ -172,7 +173,16 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
             marginTop: "12px"
           }}
         >
-          {cancelable() && <MyButton onClick={cancel}>Cancel</MyButton>}
+          {cancelable() && (
+            <ConfirmModal
+              onConfirm={cancel}
+              btn="0"
+              action="Cancel"
+              message="Are you sure you want to cancel this request ?"
+              confirm="OK"
+              cancel="Cancel"
+            />
+          )}
           {!cancelable() && <MyGreyButton disabled>Cancel</MyGreyButton>}
 
           {request_status == "approved" && (
@@ -187,7 +197,13 @@ const TripBoxHis = ({ history, data, fetchData, passenger_id }) => {
           )}
 
           {request_status == "done" && (
-            <CreateReviewModal request_id={id} review_id={review_id} driver_id={owner_id} passenger_id={passenger_id} fetchData={fetchData} />
+            <CreateReviewModal
+              request_id={id}
+              review_id={review_id}
+              driver_id={owner_id}
+              passenger_id={passenger_id}
+              fetchData={fetchData}
+            />
           )}
           {request_status != "done" && (
             <MyGreyButton disabled>Review</MyGreyButton>

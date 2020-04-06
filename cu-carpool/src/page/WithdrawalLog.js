@@ -3,7 +3,17 @@ import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
 import WithdrawalBox from "../component/WithdrawalBox";
 import axios from "axios";
+import moment from "moment"
 
+const formatter = a => {
+    let b = Object.keys(a)
+    b.sort((i, j) => {
+        const ii = new moment(i, 'DD MMM YYYY').format('x')
+        const jj = new moment(j, 'DD MMM YYYY').format('x')
+        return jj - ii;
+    });
+    return b
+}
 class WithdrawalLog extends React.Component {
     state = { withdrawal: {} };
     componentDidMount() {
@@ -19,6 +29,7 @@ class WithdrawalLog extends React.Component {
             this.setState({ withdrawal });
         }
     };
+
     render() {
         return (
             <div>
@@ -26,7 +37,7 @@ class WithdrawalLog extends React.Component {
                     Withdrawal history
                 </MyHeaderWithArrow>
                 <EmptyBox data={this.state.withdrawal} />
-                {Object.keys(this.state.withdrawal).map(index => (
+                {formatter(this.state.withdrawal).map(index => (
                     <div key={index} style={{ marginBottom: "16px" }}>
                         <MyTitle style={{ fontSize: 20, marginBottom: "10px" }}>
                             {index}

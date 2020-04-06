@@ -2,9 +2,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import moment from 'moment';
-import { MyButton, MyWhiteButton } from '../component/MyButton';
 import { MyHeader } from '../component/MyTitle'
 import EmptyBox from '../component/EmptyBox';
+import ConfirmModal from "../component/ConfirmModal";
 
 const formatter = date => moment(date).format('MMMM Do YYYY, h:mm a');
 class DriverRequest extends React.Component {
@@ -64,8 +64,25 @@ class DriverRequest extends React.Component {
                 <div> Modified at : {formatter(edited_at)}</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '16px' }}>
-                <MyButton style={{ marginBottom: '16px' }} onClick={() => this.handleApprove(id)}>Approve</MyButton>
-                <MyWhiteButton onClick={() => this.handleReject(id)}>Reject</MyWhiteButton>
+                <ConfirmModal
+                  onConfirm={() => this.handleApprove(id)}
+                  btn="0"
+                  width="120px"
+                  action="Approve"
+                  message="Are you sure you want to approve driver's request of this member  ?"
+                  confirm="OK"
+                  cancel="Cancel"
+                />
+                <div style={{ marginBottom: "16px" }} />
+                <ConfirmModal
+                  onConfirm={() => this.handleReject(id)}
+                  btn="2"
+                  width="120px"
+                  action="Reject"
+                  message="Are you sure you want to reject driver's request of this member ?"
+                  confirm="OK"
+                  cancel="Cancel"
+                />
               </div>
             </div>
           )}
