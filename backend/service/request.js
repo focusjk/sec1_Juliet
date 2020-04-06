@@ -25,22 +25,6 @@ function getRequestInfo(request_id, callback) {
         , [request_id], callback);
 };
 
-const payment = (ID, body, callback) => {
-    const {
-        card_number,
-        card_holder_name,
-        card_expiry_date,
-        card_code,
-        paid_at
-    } = body;
-    // call external service
-    return db.query(
-        `UPDATE request SET request_status = 'paid', paid_at = ? WHERE id = ? `,
-        [paid_at, ID],
-        callback
-    );
-};
-
 const getRequestByMemberId = (member_id, callback) => {
     return db.query(
         `SELECT request.id as id,
@@ -226,11 +210,9 @@ const getAllPassengerForDriver = (trip_id, callback) => {
                             WHERE request.request_status IN ('approved','paid','on going','done') AND trip.id = ? `, [trip_id], callback);
 }
 
-
 module.exports = {
     createRequest,
     getRequestInfo,
-    payment,
     getRequestByMemberId,
     pickUp,
     dropOff,

@@ -73,11 +73,11 @@ const withdrawalAction = async (
     );
     const { member_id, amount } = member[0];
     transactionService.createTransaction(-amount, member_id, time, "withdraw");
-    const wallet_amount = await util.promisifyQuery(
-      `SELECT members.amount FROM members WHERE members.id = ?`,
-      [member_id]
-    );
-    const { amount: balance } = wallet_amount[0];
+    let balance
+    memberService.getWallet(member_id, (err, result) => {
+      if (err) callback(true);
+      balance = result[0].amount;
+    })
     const updated_amount = balance - amount;
     memberService.updateWallet(updated_amount, member_id);
     return db.query(

@@ -83,24 +83,6 @@ const getAll = callback => {
   );
 };
 
-const driverApprove = (admin_name, approved_at, driver_id, callback) => {
-  const driver_status = 1;
-  return db.query(
-    `UPDATE members SET approved_by = ?,approved_at = ? ,driver_status = ? WHERE id = ?`,
-    [admin_name, approved_at, driver_status, driver_id],
-    callback
-  );
-};
-
-const driverReject = (admin_name, rejected_at, driver_id, callback) => {
-  const driver_status = 3;
-  return db.query(
-    `UPDATE members SET rejected_by = ?, rejected_at = ? ,driver_status = ? WHERE id = ?`,
-    [admin_name, rejected_at, driver_status, driver_id],
-    callback
-  );
-};
-
 const banMember = (admin_name, banned_at, member_id, callback) => {
   return db.query(
     `UPDATE members SET banned_by = ?,banned_at = ? WHERE id = ?`,
@@ -153,8 +135,6 @@ module.exports = {
   updateWallet,
   getDriverRequest,
   getAll,
-  driverApprove,
-  driverReject,
   banMember,
   unbanMember,
   getOwnerDetail,

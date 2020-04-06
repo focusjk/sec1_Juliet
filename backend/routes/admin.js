@@ -1,5 +1,6 @@
 var express = require("express");
 var adminService = require("../service/admin");
+var driverService = require("../service/driver");
 var memberService = require("../service/member");
 var reportService = require("../service/report");
 var withdrawalService = require("../service/withdrawal");
@@ -59,7 +60,7 @@ router.get("/member", function (req, res, next) {
 router.post("/driver-approve", function (req, res, next) {
   const { admin_name, id } = req.body;
   const approved_at = util.timeformatter(new Date());
-  memberService.driverApprove(admin_name, approved_at, id, (err, result) => {
+  driverService.driverApprove(admin_name, approved_at, id, (err, result) => {
     if (err) {
       res.json({
         success: false,
@@ -76,7 +77,7 @@ router.post("/driver-approve", function (req, res, next) {
 router.post("/driver-reject", function (req, res, next) {
   const { admin_name, id } = req.body;
   const rejected_at = util.timeformatter(new Date());
-  memberService.driverReject(admin_name, rejected_at, id, (err, result) => {
+  driverService.driverReject(admin_name, rejected_at, id, (err, result) => {
     if (err) {
       res.json({
         success: false,

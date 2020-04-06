@@ -3,6 +3,7 @@ var router = express.Router();
 var validate = require("express-validation");
 var requestService = require('../service/request');
 var tripService = require('../service/trip');
+var paymentService = require('../service/payment');
 var validatePayment = require("../validate/payment");
 var util = require('../util')
 
@@ -35,7 +36,7 @@ router.post('/price', (req, res, next) => {
 router.post("/payment", validate(validatePayment), (req, res, next) => {
     const { id, ...data } = req.body;
     var paid_at = util.timeformatter(new Date());
-    requestService.payment(id, { ...data, paid_at }, (err, result) => {
+    paymentService.payment(id, { ...data, paid_at }, (err, result) => {
         if (err) {
             res.json({
                 success: false,
