@@ -72,8 +72,7 @@ router.get("/trip-history", (req, res, next) => {
 
 // checked
 router.post('/pick-up', (req, res, next) => {
-    const status = 0;
-    const { id: request_id, trip_id } = req.body;
+    const { id: request_id } = req.body;
     const pickup_time = util.timeformatter(new Date());
     requestService.pickUp(request_id, pickup_time, (err, result) => {
         if (err) {

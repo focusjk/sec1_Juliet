@@ -1,0 +1,1366 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Yet Another Node.js Blogg Application API",
+        "description": "Yet Another Node.js Blogg Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Admin"
+        },
+        {
+            "name": "Driver"
+        },
+        {
+            "name": "Report"
+        },
+        {
+            "name": "Request"
+        },
+        {
+            "name": "Review"
+        },
+        {
+            "name": "Transaction"
+        },
+        {
+            "name": "Trip"
+        },
+        {
+            "name": "User"
+        },
+        {
+            "name": "Withdrawal"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/admin/login": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "body"
+                    },
+                    {
+                        "name": "password",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/driver": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "driver": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/member": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "member": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/driver-approve": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/driver-reject": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "driving_license",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "driver_status": {
+                                    "type": "string"
+                                },
+                                "edited_at": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver/tripRequest": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver/request-approve": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver/request-reject": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver/mytrip": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "trip": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/report/create": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "topic",
+                        "in": "body"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "id": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "trip_id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "member_id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_latitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_longitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_detail",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_latitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_longitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_detail",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/price": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "request_id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "price": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/payment": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "card_number",
+                        "in": "body"
+                    },
+                    {
+                        "name": "card_holder_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "card_expiry_date",
+                        "in": "body"
+                    },
+                    {
+                        "name": "card_code",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "paid_at": {
+                                    "type": "string"
+                                },
+                                "request_status": {
+                                    "type": "string"
+                                },
+                                "request_id": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/pick-up": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/drop-off": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "trip_id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/get-in": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/trip-history": {
+            "get": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/request/cancel": {
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/review/create": {
+            "post": {
+                "tags": [
+                    "Review"
+                ],
+                "parameters": [
+                    {
+                        "name": "passenger_id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "driver_id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "rating",
+                        "in": "body"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "body"
+                    },
+                    {
+                        "name": "request_id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/review/getReviewById": {
+            "get": {
+                "tags": [
+                    "Review"
+                ],
+                "parameters": [
+                    {
+                        "name": "review_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "review": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/review/trip": {
+            "get": {
+                "tags": [
+                    "Review"
+                ],
+                "parameters": [
+                    {
+                        "name": "trip_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "review": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/review/getAllReviewOfDriver": {
+            "get": {
+                "tags": [
+                    "Review"
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "review": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction/log": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "transaction": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trip": {
+            "post": {
+                "tags": [
+                    "Trip"
+                ],
+                "parameters": [
+                    {
+                        "name": "departure",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination",
+                        "in": "body"
+                    },
+                    {
+                        "name": "selectedDate",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "trip": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trip/create": {
+            "post": {
+                "tags": [
+                    "Trip"
+                ],
+                "parameters": [
+                    {
+                        "name": "start_datetime",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_latitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_longitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_detail",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_latitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_longitude",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_detail",
+                        "in": "body"
+                    },
+                    {
+                        "name": "owner",
+                        "in": "body"
+                    },
+                    {
+                        "name": "car_brand",
+                        "in": "body"
+                    },
+                    {
+                        "name": "plate_license",
+                        "in": "body"
+                    },
+                    {
+                        "name": "capacity",
+                        "in": "body"
+                    },
+                    {
+                        "name": "departure_province",
+                        "in": "body"
+                    },
+                    {
+                        "name": "destination_province",
+                        "in": "body"
+                    },
+                    {
+                        "name": "price",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "id": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trip/detail": {
+            "get": {
+                "tags": [
+                    "Trip"
+                ],
+                "parameters": [
+                    {
+                        "name": "tripId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "owner": {
+                                    "type": "number"
+                                },
+                                "passenger": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                },
+                                "trip": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/trip/member": {
+                "post": {
+                    "tags": [
+                        "Trip"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "trip_id",
+                            "in": "body"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean"
+                                    },
+                                    "driver": {
+                                        "type": "object",
+                                        "properties": {}
+                                    },
+                                    "member": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/trip/passenger": {
+                "get": {
+                    "tags": [
+                        "Trip"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "trip_id",
+                            "in": "query"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean"
+                                    },
+                                    "passenger": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/trip/cancelTrip": {
+                "post": {
+                    "tags": [
+                        "Trip"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "trip_id",
+                            "in": "body"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/user": {
+                "post": {
+                    "tags": [
+                        "User"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "body"
+                        },
+                        {
+                            "name": "firstname",
+                            "in": "body"
+                        },
+                        {
+                            "name": "lastname",
+                            "in": "body"
+                        },
+                        {
+                            "name": "phone_number",
+                            "in": "body"
+                        },
+                        {
+                            "name": "email",
+                            "in": "body"
+                        },
+                        {
+                            "name": "photo",
+                            "in": "body"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "body"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "body"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "body"
+                    },
+                    {
+                        "name": "email",
+                        "in": "body"
+                    },
+                    {
+                        "name": "photo",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "body"
+                    },
+                    {
+                        "name": "password",
+                        "in": "body"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "body"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "body"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "body"
+                    },
+                    {
+                        "name": "email",
+                        "in": "body"
+                    },
+                    {
+                        "name": "photo",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "information": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "body"
+                    },
+                    {
+                        "name": "password",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "information": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/wallet": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/withdrawal": {
+            "post": {
+                "tags": [
+                    "Withdrawal"
+                ],
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "amount",
+                        "in": "body"
+                    },
+                    {
+                        "name": "account_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "account_number",
+                        "in": "body"
+                    },
+                    {
+                        "name": "bank_name",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/withdrawal/log": {
+            "get": {
+                "tags": [
+                    "Withdrawal"
+                ],
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "withdrawal": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "definitions": {}
+    }
+}

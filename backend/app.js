@@ -13,7 +13,10 @@ var reportRouter = require('./routes/report');
 var requestRouter = require('./routes/request');
 var transactionRouter = require('./routes/transaction');
 var withdrawalRouter = require('./routes/withdrawal');
-var reviewRouter =  require('./routes/review');
+var reviewRouter = require('./routes/review');
+
+var swaggerUi = require('swagger-ui-express'),
+  swaggerDocument = require('./swagger.json');
 
 var app = express();
 
@@ -33,6 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
@@ -45,12 +49,12 @@ app.use('/withdrawal', withdrawalRouter);
 app.use('/review', reviewRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
