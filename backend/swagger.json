@@ -195,6 +195,269 @@
                 }
             }
         },
+        "/admin/banmember": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/unbanmember": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    },
+                    {
+                        "name": "id",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/report": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "report": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/report/read": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "is_read",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/withdrawal/request": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "request": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/withdrawal-approve": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/withdrawal-reject": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body"
+                    },
+                    {
+                        "name": "admin_name",
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/trip": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "trip": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/trip-request": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "members": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/driver": {
             "post": {
                 "tags": [
@@ -984,226 +1247,16 @@
                         }
                     }
                 }
-            },
-            "/trip/member": {
-                "post": {
-                    "tags": [
-                        "Trip"
-                    ],
-                    "parameters": [
-                        {
-                            "name": "trip_id",
-                            "in": "body"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "success": {
-                                        "type": "boolean"
-                                    },
-                                    "driver": {
-                                        "type": "object",
-                                        "properties": {}
-                                    },
-                                    "member": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "/trip/passenger": {
-                "get": {
-                    "tags": [
-                        "Trip"
-                    ],
-                    "parameters": [
-                        {
-                            "name": "trip_id",
-                            "in": "query"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "success": {
-                                        "type": "boolean"
-                                    },
-                                    "passenger": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "/trip/cancelTrip": {
-                "post": {
-                    "tags": [
-                        "Trip"
-                    ],
-                    "parameters": [
-                        {
-                            "name": "trip_id",
-                            "in": "body"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "success": {
-                                        "type": "boolean"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "/user": {
-                "post": {
-                    "tags": [
-                        "User"
-                    ],
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "in": "body"
-                        },
-                        {
-                            "name": "firstname",
-                            "in": "body"
-                        },
-                        {
-                            "name": "lastname",
-                            "in": "body"
-                        },
-                        {
-                            "name": "phone_number",
-                            "in": "body"
-                        },
-                        {
-                            "name": "email",
-                            "in": "body"
-                        },
-                        {
-                            "name": "photo",
-                            "in": "body"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "success": {
-                                        "type": "boolean"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
-        "/user": {
+        "/trip/member": {
             "post": {
                 "tags": [
-                    "User"
+                    "Trip"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "body"
-                    },
-                    {
-                        "name": "firstname",
-                        "in": "body"
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "body"
-                    },
-                    {
-                        "name": "phone_number",
-                        "in": "body"
-                    },
-                    {
-                        "name": "email",
-                        "in": "body"
-                    },
-                    {
-                        "name": "photo",
-                        "in": "body"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/user/register": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "body"
-                    },
-                    {
-                        "name": "password",
-                        "in": "body"
-                    },
-                    {
-                        "name": "firstname",
-                        "in": "body"
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "body"
-                    },
-                    {
-                        "name": "phone_number",
-                        "in": "body"
-                    },
-                    {
-                        "name": "email",
-                        "in": "body"
-                    },
-                    {
-                        "name": "photo",
+                        "name": "trip_id",
                         "in": "body"
                     }
                 ],
@@ -1216,43 +1269,15 @@
                                 "success": {
                                     "type": "boolean"
                                 },
-                                "information": {
+                                "driver": {
                                     "type": "object",
                                     "properties": {}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/user/login": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "body"
-                    },
-                    {
-                        "name": "password",
-                        "in": "body"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
                                 },
-                                "information": {
-                                    "type": "object",
-                                    "properties": {}
+                                "member": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
@@ -1260,14 +1285,14 @@
                 }
             }
         },
-        "/user/wallet": {
+        "/trip/passenger": {
             "get": {
                 "tags": [
-                    "User"
+                    "Trip"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "trip_id",
                         "in": "query"
                     }
                 ],
@@ -1280,8 +1305,11 @@
                                 "success": {
                                     "type": "boolean"
                                 },
-                                "amount": {
-                                    "type": "number"
+                                "passenger": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
@@ -1289,30 +1317,14 @@
                 }
             }
         },
-        "/withdrawal": {
+        "/trip/cancelTrip": {
             "post": {
                 "tags": [
-                    "Withdrawal"
+                    "Trip"
                 ],
                 "parameters": [
                     {
-                        "name": "member_id",
-                        "in": "body"
-                    },
-                    {
-                        "name": "amount",
-                        "in": "body"
-                    },
-                    {
-                        "name": "account_name",
-                        "in": "body"
-                    },
-                    {
-                        "name": "account_number",
-                        "in": "body"
-                    },
-                    {
-                        "name": "bank_name",
+                        "name": "trip_id",
                         "in": "body"
                     }
                 ],
@@ -1330,37 +1342,243 @@
                     }
                 }
             }
-        },
-        "/withdrawal/log": {
-            "get": {
-                "tags": [
-                    "Withdrawal"
-                ],
-                "parameters": [
-                    {
-                        "name": "member_id",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "withdrawal": {
-                                    "type": "object",
-                                    "properties": {}
-                                }
+        }
+    },
+    "/user": {
+        "post": {
+            "tags": [
+                "User"
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "body"
+                },
+                {
+                    "name": "firstname",
+                    "in": "body"
+                },
+                {
+                    "name": "lastname",
+                    "in": "body"
+                },
+                {
+                    "name": "phone_number",
+                    "in": "body"
+                },
+                {
+                    "name": "email",
+                    "in": "body"
+                },
+                {
+                    "name": "photo",
+                    "in": "body"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
                             }
                         }
                     }
                 }
             }
-        },
-        "definitions": {}
-    }
+        }
+    },
+    "/user/register": {
+        "post": {
+            "tags": [
+                "User"
+            ],
+            "parameters": [
+                {
+                    "name": "username",
+                    "in": "body"
+                },
+                {
+                    "name": "password",
+                    "in": "body"
+                },
+                {
+                    "name": "firstname",
+                    "in": "body"
+                },
+                {
+                    "name": "lastname",
+                    "in": "body"
+                },
+                {
+                    "name": "phone_number",
+                    "in": "body"
+                },
+                {
+                    "name": "email",
+                    "in": "body"
+                },
+                {
+                    "name": "photo",
+                    "in": "body"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
+                            },
+                            "information": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/user/login": {
+        "post": {
+            "tags": [
+                "User"
+            ],
+            "parameters": [
+                {
+                    "name": "username",
+                    "in": "body"
+                },
+                {
+                    "name": "password",
+                    "in": "body"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
+                            },
+                            "information": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/user/wallet": {
+        "get": {
+            "tags": [
+                "User"
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "query"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
+                            },
+                            "amount": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/withdrawal": {
+        "post": {
+            "tags": [
+                "Withdrawal"
+            ],
+            "parameters": [
+                {
+                    "name": "member_id",
+                    "in": "body"
+                },
+                {
+                    "name": "amount",
+                    "in": "body"
+                },
+                {
+                    "name": "account_name",
+                    "in": "body"
+                },
+                {
+                    "name": "account_number",
+                    "in": "body"
+                },
+                {
+                    "name": "bank_name",
+                    "in": "body"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/withdrawal/log": {
+        "get": {
+            "tags": [
+                "Withdrawal"
+            ],
+            "parameters": [
+                {
+                    "name": "member_id",
+                    "in": "query"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "boolean"
+                            },
+                            "withdrawal": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}
 }
