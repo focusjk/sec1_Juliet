@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  backend:
+    build: backend
+    ports:
+      - '4000:4000'
+    # links:
+    #   - db:db
+    # depends_on:
+    #   - db
+    environment:
+      # - DATABASE_HOST:db
+      - PORT=4000
+  db:
+    build: database
+    restart: always
+  frontend:
+    build: cu-carpool
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    # links:
+    #   - backend:backend
+    environment:
+      - PORT=3000
