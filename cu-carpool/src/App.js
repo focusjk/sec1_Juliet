@@ -28,6 +28,7 @@ import CreateWithdrawal from './page/CreateWithdrawal';
 import Wallet from './page/Wallet';
 import TransactionLog from './page/TransactionLog';
 import WithdrawalLog from './page/WithdrawalLog';
+import axios from 'axios';
 
 const theme = createMuiTheme({
 	palette: {
@@ -58,9 +59,25 @@ const useStyles = makeStyles({
 const App = () => {
 	const [user, setUser] = React.useState(null);
 
-	useEffect(() => {
+	useEffect(async () => {
 		const data = localStorage.getItem('user');
-		setUser(JSON.parse(data));
+		const storage_user = JSON.parse(data);
+		const { username, password } = storage_user;
+		const response = await axios.post('http://localhost:4000/user/login', {
+			username,
+			password,
+		});
+		const { success, information, message } = response.data;
+		if (success) {
+			const user = information[0];
+			if (user.banned_at == null) {
+				handleSetUser(user);
+			} else {
+				setUser(null);
+			}
+		} else {
+			setUser(null);
+		}
 	}, []);
 
 	const handleSetUser = (data) => {
