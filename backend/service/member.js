@@ -37,6 +37,15 @@ function login(username, password, callback) {
   ); //credit-card-related fields are removed from this line
 }
 
+function getByUsername(username, callback) {
+  return db.query(
+    `SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,
+    amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at,banned_at,banned_by FROM members WHERE username = ?`,
+    [username],
+    callback
+  ); //credit-card-related fields are removed from this line
+}
+
 const editMemberInfo = (id, body, callback) => {
   const { firstname, lastname, phone_number, email, photo } = body; //credit-card-related fields are removed from this line
   return db.query(
@@ -100,7 +109,8 @@ const unbanMember = (member_id, callback) => {
 };
 
 const getOwnerDetail = (owner_id, callback) => {
-  return db.query(`SELECT
+  return db.query(
+    `SELECT
                           members.id as id,
                           members.username as username,
                           members.firstname as firstname,
@@ -110,12 +120,16 @@ const getOwnerDetail = (owner_id, callback) => {
                           members.photo as photo,
                           AVG(review.rating ) as avg_rating
                           FROM members  left join review on review.reviewee=members.id
-                          WHERE members.id = `+ owner_id +
-    ` GROUP BY members.id`, callback);
-}
+                          WHERE members.id = ` +
+      owner_id +
+      ` GROUP BY members.id`,
+    callback
+  );
+};
 
 const getDriverDetail = (trip_id, callback) => {
-  return db.query(`SELECT  
+  return db.query(
+    `SELECT  
                     members.id,
                     members.username,
                     members.firstname,
@@ -123,13 +137,17 @@ const getDriverDetail = (trip_id, callback) => {
                     members.phone_number,
                     members.photo
                     FROM members LEFT JOIN trip ON members.id = trip.owner
-                    WHERE trip.id = ? `, [trip_id], callback);
-}
+                    WHERE trip.id = ? `,
+    [trip_id],
+    callback
+  );
+};
 
 module.exports = {
   register,
   getMemberInfo,
   login,
+  getByUsername,
   editMemberInfo,
   getWallet,
   updateWallet,

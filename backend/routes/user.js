@@ -69,6 +69,25 @@ router.post("/login", (req, res, next) => {
   });
 });
 
+router.post("/fetch-data", (req, res, next) => {
+  const { username } = req.body;
+  memberService.getByUsername(username, (err, result) => {
+    if (err) {
+      res.json({
+        success: false,
+        error: err.sqlMessage,
+        message: "Cannot access database"
+      });
+    } else {
+      if (result == "") {
+        res.json({ success: false, message: "Invalid username/password" });
+      } else {
+        res.json({ success: true, information: result });
+      }
+    }
+  });
+});
+
 //checked
 router.get("/wallet", (req, res, next) => {
   const { id: member_id } = req.query;
