@@ -1,18 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var validate = require("express-validation");
+var validateRequest = require('../validate/request');
 var requestService = require('../service/request');
 var tripService = require('../service/trip');
 var validatePayment = require("../validate/payment");
 var util = require('../util')
 
 //checked
-router.post('/', (req, res, next) => {
+router.post('/',validate(validateRequest), (req, res, next) => {
     const { trip_id, member_id, ...data } = req.body;
     var created_at = util.timeformatter(new Date());
     requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
         if (err) {
-            res.json({ success: false, error: err.sqlMessage, message: "Cannot join this trip" });
+            res.json({ success: false, error: err.sqlMessage, message: "Invalid data, please check your input again" });
         } else {
             res.json({ success: true });
         }

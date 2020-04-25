@@ -14,7 +14,7 @@ module.exports = {
         owner: Joi.number().required(),
         car_brand: Joi.string().max(50).required(),
         plate_license: Joi.string().max(7).required(),
-        capacity: Joi.number().positive().integer().required(),
+        capacity: Joi.number().max(50).positive().integer().required(),
         price: Joi.number().precision(2).positive().required(),
     }
 }
