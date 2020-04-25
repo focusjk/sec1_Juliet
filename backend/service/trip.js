@@ -185,7 +185,7 @@ const getPrice = async (trip_id) =>
 
 const getPriceByRequestId = (request_id, callback) => {
 	return db.query(
-		`SELECT trip.price FROM request LEFT JOIN trip ON request.id = trip.id WHERE request.id = ?`,
+		`SELECT trip.price FROM request LEFT JOIN trip ON request.trip_id = trip.id WHERE request.id = ?`,
 		[request_id],
 		callback
 	);

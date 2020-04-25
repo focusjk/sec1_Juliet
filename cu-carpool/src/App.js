@@ -59,30 +59,37 @@ const useStyles = makeStyles({
 const App = () => {
 	const [user, setUser] = React.useState(null);
 
-	useEffect(async () => {
-		const data = localStorage.getItem('user');
-		const storage_user = JSON.parse(data);
-		const { username, password } = storage_user;
-		const response = await axios.post('http://localhost:4000/user/login', {
-			username,
-			password,
-		});
+	const getData = async (body) => {
+		const response = await axios.post('http://localhost:4000/user/fetch-data', body);
 		const { success, information, message } = response.data;
+		// const { success, information, message } = {
+		//   success: true,
+		//   information: [{ a: 1 }]
+		// };
 		if (success) {
-			const user = information[0];
-			if (user.banned_at == null) {
-				handleSetUser(user);
+			const a = information[0];
+
+			if (a.banned_at == null) {
+				handleSetUser(a);
 			} else {
 				setUser(null);
 			}
 		} else {
 			setUser(null);
 		}
+	};
+
+	useEffect(() => {
+		const data = localStorage.getItem('user');
+		const storage_user = JSON.parse(data);
+		if (storage_user) {
+			const { username } = storage_user;
+			getData({ username });
+		}
 	}, []);
 
 	const handleSetUser = (data) => {
 		localStorage.setItem('user', JSON.stringify(data));
-		console.log(data);
 		setUser(data);
 	};
 

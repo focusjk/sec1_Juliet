@@ -86,7 +86,7 @@ const getRequestByMemberId = (member_id, callback) => {
 	);
 };
 
-const pickUp = async (request_id, pickup_time, callback) => {
+const pickUp = async (request_id, trip_id, pickup_time, callback) => {
 	db.query(
 		`UPDATE request SET driver_departed_at = ? WHERE id = ? `,
 		[pickup_time, request_id],
@@ -94,7 +94,7 @@ const pickUp = async (request_id, pickup_time, callback) => {
 			if (err) {
 				callback(true);
 			} else {
-				tripService.updateTripStatus(trip_id, status, callback);
+				tripService.updateTripStatus(trip_id, 0, callback);
 			}
 		}
 	);
@@ -106,7 +106,7 @@ const dropOff = async (request_id, time, trip_id, callback) => {
 	let price;
 	let owner;
 	let amount;
-	tripService.updateTripStatus(trip_id, 1);
+	await tripService.updateTripStatus(trip_id, 1);
 	const tripDetail = await tripService.getPrice(trip_id);
 	price = tripDetail[0].price;
 	owner = tripDetail[0].owner;

@@ -1,47 +1,40 @@
-var db = require("../dbconnection");
-var util = require("../util");
-var memberService = require('./member')
+var db = require('../dbconnection');
+var util = require('../util');
+var memberService = require('./member');
+var transactionService = require('./transaction');
 
 const createWithdrawal = async (member_id, created_at, data, callback) => {
-  const { amount, account_name, account_number, bank_name } = data;
-  const status = "pending";
-  memberService.getWallet(member_id, (err, result) => {
-    if (err) callback(true);
-    const { amount: current_wallet_amount } = result[0];
-    if (amount <= current_wallet_amount) {
-      return db.query(
-        `INSERT INTO withdrawal (member_id,amount,created_at,status,account_name,account_number,bank_name) VALUES (?,?,?,?,?,?,?)`,
-        [
-          member_id,
-          amount,
-          created_at,
-          status,
-          account_name,
-          account_number,
-          bank_name
-        ],
-        callback
-      );
-    } else {
-      callback(true);
-    }
-  })
+	const { amount, account_name, account_number, bank_name } = data;
+	const status = 'pending';
+	memberService.getWallet(member_id, (err, result) => {
+		if (err) callback(true);
+		const { amount: current_wallet_amount } = result[0];
+		if (amount <= current_wallet_amount) {
+			return db.query(
+				`INSERT INTO withdrawal (member_id,amount,created_at,status,account_name,account_number,bank_name) VALUES (?,?,?,?,?,?,?)`,
+				[member_id, amount, created_at, status, account_name, account_number, bank_name],
+				callback
+			);
+		} else {
+			callback(true);
+		}
+	});
 };
 
 const getWithdrawal = (member_id, callback) => {
-  return db.query(
-    `SELECT id as withdrawal_id, amount, created_at, status,
+	return db.query(
+		`SELECT id as withdrawal_id, amount, created_at, status,
       account_number, account_name, bank_name
       FROM withdrawal
       WHERE member_id = ?`,
-    [member_id],
-    callback
-  );
+		[member_id],
+		callback
+	);
 };
 
-const getWithdrawalRequest = callback => {
-  return db.query(
-    `SELECT withdrawal.id as id , 
+const getWithdrawalRequest = (callback) => {
+	return db.query(
+		`SELECT withdrawal.id as id , 
             withdrawal.member_id as member_id, 
             withdrawal.amount as amount, 
             withdrawal.created_at as created_at, 
@@ -54,46 +47,38 @@ const getWithdrawalRequest = callback => {
             members.firstname as firstname, 
             members.lastname as lastname
     FROM withdrawal INNER JOIN members ON withdrawal.member_id = members.id where withdrawal.status = 'pending'`,
-    callback
-  );
+		callback
+	);
 };
 
-const withdrawalAction = async (
-  admin_name,
-  time,
-  withdrawal_id,
-  action,
-  callback
-) => {
-  if (!action) {
-    const status = "approved";
-    const member = await util.promisifyQuery(
-      `SELECT withdrawal.member_id, withdrawal.amount FROM withdrawal WHERE withdrawal.id = ?`,
-      [withdrawal_id]
-    );
-    const { member_id, amount } = member[0];
-    transactionService.createTransaction(-amount, member_id, time, "withdraw");
-    let balance
-    memberService.getWallet(member_id, (err, result) => {
-      if (err) callback(true);
-      balance = result[0].amount;
-    })
-    const updated_amount = balance - amount;
-    memberService.updateWallet(updated_amount, member_id);
-    return db.query(
-      `UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
-      [admin_name, time, status, withdrawal_id],
-      callback
-    );
-  }
-  if (action) {
-    const status = "rejected";
-    return db.query(
-      `UPDATE withdrawal SET rejected_by = ?, rejected_at = ?, status = ? WHERE id = ?`,
-      [admin_name, time, status, withdrawal_id],
-      callback
-    );
-  }
+const withdrawalAction = async (admin_name, time, withdrawal_id, action, callback) => {
+	if (!action) {
+		const status = 'approved';
+		const member = await util.promisifyQuery(
+			`SELECT withdrawal.member_id, withdrawal.amount FROM withdrawal WHERE withdrawal.id = ?`,
+			[withdrawal_id]
+		);
+		const { member_id, amount } = member[0];
+		await transactionService.createTransaction(-amount, member_id, time, 'withdraw');
+		const getBalance = await memberService.getWallet2(member_id);
+		const balance = getBalance[0].amount;
+
+		const updated_amount = balance - amount;
+		memberService.updateWallet(updated_amount, member_id);
+		return db.query(
+			`UPDATE withdrawal SET approved_by = ?, approved_at = ?, status = ? WHERE id = ?`,
+			[admin_name, time, status, withdrawal_id],
+			callback
+		);
+	}
+	if (action) {
+		const status = 'rejected';
+		return db.query(
+			`UPDATE withdrawal SET rejected_by = ?, rejected_at = ?, status = ? WHERE id = ?`,
+			[admin_name, time, status, withdrawal_id],
+			callback
+		);
+	}
 };
 
 module.exports = { createWithdrawal, getWithdrawal, getWithdrawalRequest, withdrawalAction };

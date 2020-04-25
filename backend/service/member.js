@@ -28,6 +28,15 @@ function login(username, password, callback) {
 	); //credit-card-related fields are removed from this line
 }
 
+function getByUsername(username, callback) {
+	return db.query(
+		`SELECT id,username,firstname,lastname,phone_number,email,photo,driver_status,
+    amount,driving_license,approved_at,approved_by,rejected_at,rejected_by,edited_at,banned_at,banned_by FROM members WHERE username = ?`,
+		[username],
+		callback
+	); //credit-card-related fields are removed from this line
+}
+
 const editMemberInfo = (id, body, callback) => {
 	const { firstname, lastname, phone_number, email, photo } = body; //credit-card-related fields are removed from this line
 	return db.query(
@@ -137,6 +146,7 @@ module.exports = {
 	register,
 	getMemberInfo,
 	login,
+	getByUsername,
 	editMemberInfo,
 	getWallet,
 	getWallet2,
