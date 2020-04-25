@@ -88,7 +88,7 @@ const RequestJoin = ({ trip_id, member_id, history }) => {
 				setErr(message);
 			}
 		} catch (e) {
-			setErr('Cannot access database');
+			setErr('Invalid data, please check your input again');
 			console.log(e);
 		}
 	};

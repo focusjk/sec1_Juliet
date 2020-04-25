@@ -6,9 +6,10 @@ var tripService = require('../service/trip');
 var paymentService = require('../service/payment');
 var validatePayment = require('../validate/payment');
 var util = require('../util');
+var validateRequest = require('../validate/request');
 
 //checked
-router.post('/', (req, res, next) => {
+router.post('/', validate(validateRequest), (req, res, next) => {
 	const { trip_id, member_id, ...data } = req.body;
 	var created_at = util.timeformatter(new Date());
 	requestService.createRequest(trip_id, member_id, data, created_at, (err, result) => {
