@@ -51,6 +51,8 @@ const CreateReviewModal = ({
     rating: 0,
   });
 
+  const isDisabled = form.comment.length > 1000 ;
+
   const handleOpen = async () => {
     if (review_id != null) {
       await getReview();
@@ -149,6 +151,7 @@ const CreateReviewModal = ({
                   onClick={review}
                   color="secondary"
                   style={{ fontSize: 16, flexGrow: 1 }}
+                  disabled={isDisabled}
                 >
                   OK
                 </Button>
