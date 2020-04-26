@@ -9,7 +9,7 @@ import { MyHeader, MyHeaderWithArrow } from "../component/MyTitle";
 import { Grid, TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 const Payment = ({ history }) => {
   const { request_id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
@@ -19,20 +19,20 @@ const Payment = ({ history }) => {
     card_number: "",
     card_holder_name: "",
     card_expiry_date: "",
-    card_code: ""
+    card_code: "",
   });
   const [error, setError] = useState({
     card_number: false,
     card_holder_name: false,
     card_expiry_date: false,
-    card_code: false
+    card_code: false,
   });
   const validate = () => {
     setError({
       card_number: !form.card_number,
       card_holder_name: !form.card_holder_name,
       card_expiry_date: !form.card_expiry_date,
-      card_code: !form.card_code
+      card_code: !form.card_code,
     });
     return (
       form.card_number &&
@@ -49,11 +49,11 @@ const Payment = ({ history }) => {
     return {
       top: `${top}%`,
       left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
+      transform: `translate(-${top}%, -${left}%)`,
     };
   }
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     paper: {
       position: "absolute",
       display: "flex",
@@ -61,11 +61,11 @@ const Payment = ({ history }) => {
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      width: "250px"
+      width: "250px",
     },
     margin: {
-      marginBottom: 16
-    }
+      marginBottom: 16,
+    },
   }));
 
   const classes = useStyles();
@@ -83,8 +83,8 @@ const Payment = ({ history }) => {
 
   const getPrice = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/request/price", {
-        request_id
+      const response = await axios.post(backend + "/request/price", {
+        request_id,
       });
       const { success, price } = response.data;
       setPrice(price);
@@ -100,14 +100,11 @@ const Payment = ({ history }) => {
   const handlePayment = async () => {
     if (validate()) {
       try {
-        const response = await axios.post(
-          "http://localhost:4000/request/payment",
-          {
-            id: request_id,
-            ...form,
-            price
-          }
-        );
+        const response = await axios.post(backend + "/request/payment", {
+          id: request_id,
+          ...form,
+          price,
+        });
         const { success, id, request_status, paid_at } = response.data;
         if (success) {
           handleOpen();
@@ -129,7 +126,7 @@ const Payment = ({ history }) => {
       card_number: "",
       card_holder_name: "",
       card_expiry_date: "",
-      card_code: ""
+      card_code: "",
     });
     setErrorMessage("");
   };
@@ -146,7 +143,7 @@ const Payment = ({ history }) => {
             style={{ marginTop: 25 }}
             value={form.card_number}
             error={error.card_number}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, card_number: e.target.value });
               setErrorMessage("");
             }}
@@ -158,7 +155,7 @@ const Payment = ({ history }) => {
             style={{ marginTop: 25 }}
             value={form.card_holder_name}
             error={error.card_holder_name}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, card_holder_name: e.target.value });
               setErrorMessage("");
             }}
@@ -167,7 +164,7 @@ const Payment = ({ history }) => {
             style={{
               display: "flex",
               direction: "row",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <TextField
@@ -176,7 +173,7 @@ const Payment = ({ history }) => {
               style={{ marginTop: 25, width: "152px" }}
               value={form.card_expiry_date}
               error={error.card_expiry_date}
-              onChange={e => {
+              onChange={(e) => {
                 setForm({ ...form, card_expiry_date: e.target.value });
                 setErrorMessage("");
               }}
@@ -187,7 +184,7 @@ const Payment = ({ history }) => {
               style={{ marginTop: 25, width: "152px" }}
               value={form.card_code}
               error={error.card_code}
-              onChange={e => {
+              onChange={(e) => {
                 setForm({ ...form, card_code: e.target.value });
                 setErrorMessage("");
               }}
@@ -218,7 +215,7 @@ const Payment = ({ history }) => {
                   style={{
                     marginTop: "15px",
                     display: "flex",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <CheckCircleIcon
@@ -234,7 +231,7 @@ const Payment = ({ history }) => {
                     marginBottom: "13px",
                     display: "flex",
                     justifyContent: "center",
-                    border: "0.5px solid #BDBDBD"
+                    border: "0.5px solid #BDBDBD",
                   }}
                 />
                 <div style={{ display: "flex", alignItems: "flex-end" }}>
@@ -250,7 +247,7 @@ const Payment = ({ history }) => {
                     marginTop: "15px",
                     display: "flex",
                     fontSize: 16,
-                    flexGrow: 1
+                    flexGrow: 1,
                   }}
                 >
                   OK

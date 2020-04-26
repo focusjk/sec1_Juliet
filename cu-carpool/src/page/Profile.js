@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import UploadIcon from "../component/UploadIcon";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 const Profile = ({ user, updateUser }) => {
   const [change, setChange] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +24,7 @@ const Profile = ({ user, updateUser }) => {
     // card_number: user.card_number ? '************' + user.card_number.substr(12, 4) : null,
     // card_code: user.card_code ? '***' : null,
     // card_expiry_date: user.card_expiry_date,
-    photo: user.photo
+    photo: user.photo,
   });
 
   const update = async () => {
@@ -35,19 +35,19 @@ const Profile = ({ user, updateUser }) => {
         lastname,
         phone_number,
         email,
-        photo
+        photo,
         // card_holder_name,
         // card_number,
         // card_code,
         // card_expiry_date
       } = form;
-      const response = await axios.post("http://localhost:4000/user/", {
+      const response = await axios.post(backend + "/user/", {
         id,
         firstname,
         lastname,
         phone_number,
         email,
-        photo
+        photo,
         // card_holder_name,
         // card_number,
         // card_code,
@@ -62,7 +62,7 @@ const Profile = ({ user, updateUser }) => {
           lastname,
           phone_number,
           email,
-          photo
+          photo,
           // card_holder_name,
           // card_number,
           // card_code,
@@ -95,7 +95,7 @@ const Profile = ({ user, updateUser }) => {
             style={{ borderRadius: "100%" }}
           />
           <UploadIcon
-            setPhoto={e => {
+            setPhoto={(e) => {
               setForm({ ...form, photo: e });
               setChange(true);
             }}
@@ -108,7 +108,7 @@ const Profile = ({ user, updateUser }) => {
           backgroundColor: "#F8F8F8",
           marginBottom: "40px",
           alignSelf: "center",
-          padding: "8px 24px 24px 24px"
+          padding: "8px 24px 24px 24px",
         }}
       >
         <MyTitle>Personal Info</MyTitle>
@@ -119,7 +119,7 @@ const Profile = ({ user, updateUser }) => {
             fullWidth
             placeholder="First Name"
             value={form.firstname}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, firstname: e.target.value });
               setChange(!!e.target.value);
             }}
@@ -132,7 +132,7 @@ const Profile = ({ user, updateUser }) => {
             fullWidth
             placeholder="Last Name"
             value={form.lastname}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, lastname: e.target.value });
               setChange(!!e.target.value);
             }}
@@ -145,7 +145,7 @@ const Profile = ({ user, updateUser }) => {
             fullWidth
             placeholder="Email"
             value={form.email}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, email: e.target.value });
               setChange(!!e.target.value);
             }}
@@ -158,7 +158,7 @@ const Profile = ({ user, updateUser }) => {
             fullWidth
             placeholder="Telephone No."
             value={form.phone_number}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, phone_number: e.target.value });
               setChange(!!e.target.value);
             }}

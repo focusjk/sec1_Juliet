@@ -4,18 +4,18 @@ import { withRouter } from "react-router-dom";
 import { MyHeader } from "../component/MyTitle";
 import { MyLink } from "../component/MyTitle";
 import { MyFullWidthButton } from "../component/MyButton";
-
+import backend from "../ip";
 const Wallet = ({ history, user, updateUser }) => {
   const [amount, setAmount] = useState(0);
   const getMoney = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/user/wallet", {
-        params: { id: user.id }
+      const response = await axios.get(backend + "/user/wallet", {
+        params: { id: user.id },
       });
       const { success, amount } = response.data;
       if (success) {
         setAmount(amount);
-        updateUser(amount)
+        updateUser(amount);
       }
     } catch (e) {
       console.log(e);
@@ -31,7 +31,7 @@ const Wallet = ({ history, user, updateUser }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "80vh"
+        height: "80vh",
       }}
     >
       <MyHeader>My Wallet</MyHeader>
@@ -44,7 +44,7 @@ const Wallet = ({ history, user, updateUser }) => {
           borderRadius: "100%",
           border: "1px solid #BDBDBD",
           height: "165px",
-          width: "165px"
+          width: "165px",
         }}
         onClick={() => history.push("/transactionLog")}
       >
@@ -54,7 +54,7 @@ const Wallet = ({ history, user, updateUser }) => {
             fontSize: 16,
             display: "flex",
             justifyContent: "center",
-            marginTop: "32px"
+            marginTop: "32px",
           }}
         >
           Balance
@@ -64,7 +64,7 @@ const Wallet = ({ history, user, updateUser }) => {
             color: "#C78899",
             fontSize: 50,
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           {amount}
@@ -75,7 +75,7 @@ const Wallet = ({ history, user, updateUser }) => {
             fontSize: 20,
             display: "flex",
             justifyContent: "center",
-            marginBottom: "32px"
+            marginBottom: "32px",
           }}
         >
           THB
@@ -91,7 +91,7 @@ const Wallet = ({ history, user, updateUser }) => {
         <MyLink
           style={{
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
           goto={"/withdrawalLog"}
         >

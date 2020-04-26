@@ -7,14 +7,14 @@ import NoteIcon from "@material-ui/icons/Note";
 import { MyHeader, MyTitle } from "../component/MyTitle";
 import moment from "moment";
 import ConfirmModal from "../component/ConfirmModal";
-
-const formatter = t => {
+import backend from "../ip";
+const formatter = (t) => {
   return t ? moment(t).format("MMMM Do YYYY h:mm a") : null;
 };
 
 const DriverProfile = ({ user, updateUser }) => {
   const [form, setForm] = useState({
-    driving_license: user.driving_license
+    driving_license: user.driving_license,
   });
   const [status, setStatus] = useState(
     user.driver_status ? user.driver_status : "-"
@@ -28,9 +28,9 @@ const DriverProfile = ({ user, updateUser }) => {
       setChange(false);
       const { id } = user;
       const { driving_license } = form;
-      const response = await axios.post("http://localhost:4000/driver/", {
+      const response = await axios.post(backend + "/driver/", {
         id,
-        driving_license
+        driving_license,
       });
       const { success, driver_status, edited_at, message } = response.data;
       if (success) {
@@ -63,7 +63,7 @@ const DriverProfile = ({ user, updateUser }) => {
             display: "flex",
             marginLeft: "18px",
             marginRight: "24px",
-            borderRadius: "100%"
+            borderRadius: "100%",
           }}
         />
         <MyTitle>{user.username}</MyTitle>
@@ -73,7 +73,7 @@ const DriverProfile = ({ user, updateUser }) => {
           backgroundColor: "#F8F8F8",
           marginBottom: "40px",
           alignSelf: "center",
-          padding: "8px 24px 24px 24px"
+          padding: "8px 24px 24px 24px",
         }}
       >
         <MyTitle>Driver's Info</MyTitle>
@@ -85,7 +85,7 @@ const DriverProfile = ({ user, updateUser }) => {
             placeholder="Driving License"
             value={form.driving_license}
             helperText="Please input value from QR code at back of driving license card"
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, driving_license: e.target.value });
               setChange(e.target.value && e.target.value.length === 25);
             }}

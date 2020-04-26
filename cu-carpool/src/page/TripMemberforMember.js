@@ -3,30 +3,30 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { MyHeader, MyHeaderWithArrow, MyTitle } from "../component/MyTitle";
-import logo from '../logo.png';
+import logo from "../logo.png";
 import PhoneIcon from "@material-ui/icons/Phone";
-import EmptyBox from '../component/EmptyBox'
+import EmptyBox from "../component/EmptyBox";
 import { Box, Input, Paper, Grid, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import MemberCardSmall from '../component/MemberCardSmall'
-
+import MemberCardSmall from "../component/MemberCardSmall";
+import backend from "../ip";
 const TripMemberforMember = ({ user }) => {
   const { trip_id } = useParams();
   const [memberList, setMemberList] = useState([]);
-  const [driver, setDriver] = useState('');
+  const [driver, setDriver] = useState("");
   const [request_id, setRequest_id] = useState(null);
   const [request_status, setRequest_status] = useState(null);
   const [departed_at, setDeparted_at] = useState(null);
 
   const fetchData = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip/member", { trip_id });
+      const response = await axios.post(backend + "/trip/member", { trip_id });
       const { success, member, driver } = response.data;
       if (success) {
         setMemberList(member);
         setDriver(driver);
-        const temp = member.filter(i => i.id == user.id);
+        const temp = member.filter((i) => i.id == user.id);
         if (temp[0] != null) {
           setRequest_status(temp[0].request_status);
           setRequest_id(temp[0].request_id);
@@ -39,7 +39,9 @@ const TripMemberforMember = ({ user }) => {
   };
   const getIn = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/request/get-in", { id: request_id });
+      const response = await axios.post(backend + "/request/get-in", {
+        id: request_id,
+      });
       const { success } = response.data;
       if (success) {
         fetchData();
@@ -63,10 +65,12 @@ const TripMemberforMember = ({ user }) => {
           padding: "16px 30px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", marginTop: "8px" }}
+        >
           <div style={{ display: "flex", alignItems: "center" }}>
             <img
               src={driver.photo}
@@ -76,35 +80,48 @@ const TripMemberforMember = ({ user }) => {
             />
             <MyTitle style={{ marginLeft: "8px" }}>{driver.username}</MyTitle>
           </div>
-          <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
+          <div
+            style={{ display: "flex", alignItems: "left", marginTop: "16px" }}
+          >
             <PersonIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               {driver.firstname} {driver.lastname}
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "left", marginTop: "16px" }}>
+          <div
+            style={{ display: "flex", alignItems: "left", marginTop: "16px" }}
+          >
             <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               {driver.phone_number}
             </div>
           </div>
         </div>
-        {
-          (departed_at == null && request_status == 'paid') &&
-          <MyButton onClick={getIn} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyButton>
-        }
-        {
-          !(departed_at == null && request_status == 'paid') &&
-          <MyGreyButton disabled={true} style={{ alignSelf: "center", marginTop: "24px" }}>Get in</MyGreyButton>
-        }
+        {departed_at == null && request_status == "paid" && (
+          <MyButton
+            onClick={getIn}
+            style={{ alignSelf: "center", marginTop: "24px" }}
+          >
+            Get in
+          </MyButton>
+        )}
+        {!(departed_at == null && request_status == "paid") && (
+          <MyGreyButton
+            disabled={true}
+            style={{ alignSelf: "center", marginTop: "24px" }}
+          >
+            Get in
+          </MyGreyButton>
+        )}
       </Paper>
-      <div style={{
-        marginTop: "16px",
-        padding: 10,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between"
-      }}
+      <div
+        style={{
+          marginTop: "16px",
+          padding: 10,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
       >
         <MyTitle>Member</MyTitle>
         <EmptyBox data={memberList} />

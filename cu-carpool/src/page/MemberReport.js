@@ -4,20 +4,20 @@ import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 class MemberReport extends React.Component {
   state = {
     topic: null,
     comment: null,
-    msg: null
+    msg: null,
   };
   handleSend = async () => {
     const { topic, comment } = this.state;
     try {
-      const response = await axios.post("http://localhost:4000/report/create", {
+      const response = await axios.post(backend + "/report/create", {
         id: this.props.user.id,
         topic,
-        comment
+        comment,
       });
       const { success } = response.data;
       if (success) {
@@ -36,7 +36,7 @@ class MemberReport extends React.Component {
             display: "flex",
             flexDirection: "column",
             height: "80vh",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           <div>
@@ -47,7 +47,7 @@ class MemberReport extends React.Component {
               style={{ margin: "8px 0" }}
               required
               value={topic}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({ topic: e.target.value, msg: null });
               }}
             />
@@ -58,7 +58,7 @@ class MemberReport extends React.Component {
               required
               value={comment}
               style={{ margin: "8px 0" }}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({ comment: e.target.value, msg: null });
               }}
             />

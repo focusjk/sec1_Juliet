@@ -6,14 +6,14 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import { MyLink } from "../component/MyTitle";
-
+import backend from "../ip";
 class Login extends React.Component {
   state = { username: null, password: null, error: "" };
   login = async () => {
     const { username, password } = this.state;
-    const response = await axios.post("http://localhost:4000/user/login", {
+    const response = await axios.post(backend + "/user/login", {
       username,
-      password
+      password,
     });
     const { success, information, message } = response.data;
     if (success) {
@@ -21,8 +21,7 @@ class Login extends React.Component {
       if (user.banned_at == null) {
         this.props.handleLogin(user);
         this.props.history.push("/");
-      }
-      else {
+      } else {
         this.setState({ error: "Your account has been suspended" });
       }
     } else {
@@ -45,8 +44,8 @@ class Login extends React.Component {
         <LoginForm
           username={username}
           password={password}
-          setUsername={username => this.setState({ username })}
-          setPassword={password => this.setState({ password })}
+          setUsername={(username) => this.setState({ username })}
+          setPassword={(password) => this.setState({ password })}
           handleLogin={this.login}
           error={error}
         />
@@ -56,7 +55,9 @@ class Login extends React.Component {
           style={{ color: "#bdbdbd", alignSelf: "center", marginTop: 40 }}
         >
           Don’t have an account ?
-          <MyLink goto="/register" style={{ marginLeft: 10, fontSize: 16 }}>Sign Up</MyLink>
+          <MyLink goto="/register" style={{ marginLeft: 10, fontSize: 16 }}>
+            Sign Up
+          </MyLink>
         </Box>
       </Grid>
     );

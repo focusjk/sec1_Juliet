@@ -12,14 +12,14 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from "../component/UserImage";
 import { MyLink } from "../component/MyTitle";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 const useStyles = makeStyles({
   root: {
     color: "#777777",
-    marginBottom: 20
+    marginBottom: 20,
   },
   input: {
-    display: "none"
+    display: "none",
   },
   label: {
     border: "1px dashed #BDBDBD",
@@ -29,8 +29,8 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     height: "100px",
-    width: "100px"
-  }
+    width: "100px",
+  },
 });
 
 const Register = ({ history, handleLogin }) => {
@@ -41,7 +41,7 @@ const Register = ({ history, handleLogin }) => {
     username: null,
     password: null,
     email: null,
-    phone_number: null
+    phone_number: null,
   });
   const [error, setError] = useState({
     firstname: false,
@@ -49,7 +49,7 @@ const Register = ({ history, handleLogin }) => {
     username: false,
     password: false,
     email: false,
-    phone_number: false
+    phone_number: false,
   });
 
   const validate = () => {
@@ -59,7 +59,7 @@ const Register = ({ history, handleLogin }) => {
       username: !form.username,
       password: !form.password,
       email: !form.email,
-      phone_number: !form.phone_number
+      phone_number: !form.phone_number,
     });
     return !(
       error.firstname ||
@@ -75,10 +75,10 @@ const Register = ({ history, handleLogin }) => {
   const handleRegister = async () => {
     if (validate()) {
       try {
-        const response = await axios.post(
-          "http://localhost:4000/user/register",
-          { ...form, photo: userImage }
-        );
+        const response = await axios.post(backend + "/user/register", {
+          ...form,
+          photo: userImage,
+        });
         const { success, information, message } = response.data;
         if (success) {
           const user = information[0];
@@ -125,7 +125,7 @@ const Register = ({ history, handleLogin }) => {
           className={classes.root}
           value={form.firstname}
           error={error.firstname}
-          onChange={e => setForm({ ...form, firstname: e.target.value })}
+          onChange={(e) => setForm({ ...form, firstname: e.target.value })}
         />
 
         <div style={{ marginBottom: 5 }}>LAST NAME</div>
@@ -135,7 +135,7 @@ const Register = ({ history, handleLogin }) => {
           className={classes.root}
           value={form.lastname}
           error={error.lastname}
-          onChange={e => setForm({ ...form, lastname: e.target.value })}
+          onChange={(e) => setForm({ ...form, lastname: e.target.value })}
         />
 
         <div style={{ marginBottom: 5 }}>USERNAME</div>
@@ -145,7 +145,7 @@ const Register = ({ history, handleLogin }) => {
           className={classes.root}
           value={form.username}
           error={error.username}
-          onChange={e => setForm({ ...form, username: e.target.value })}
+          onChange={(e) => setForm({ ...form, username: e.target.value })}
         />
 
         <div style={{ marginBottom: 5 }}>PASSWORD</div>
@@ -156,7 +156,7 @@ const Register = ({ history, handleLogin }) => {
           type={showPassword ? "text" : "password"}
           value={form.password}
           error={error.password}
-          onChange={e => setForm({ ...form, password: e.target.value })}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -178,7 +178,7 @@ const Register = ({ history, handleLogin }) => {
           className={classes.root}
           value={form.email}
           error={error.email}
-          onChange={e => setForm({ ...form, email: e.target.value })}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
 
         <div style={{ marginBottom: 5 }}>PHONE NUMBER</div>
@@ -188,7 +188,7 @@ const Register = ({ history, handleLogin }) => {
           className={classes.root}
           value={form.phone_number}
           error={error.phone_number}
-          onChange={e => setForm({ ...form, phone_number: e.target.value })}
+          onChange={(e) => setForm({ ...form, phone_number: e.target.value })}
         />
       </Grid>
       <div style={{ marginTop: 32 }}>
@@ -210,7 +210,7 @@ const Register = ({ history, handleLogin }) => {
           marginTop: 25,
           alignSelf: "center",
           color: "#bdbdbd",
-          fontSize: 16
+          fontSize: 16,
         }}
       >
         Already a member ?

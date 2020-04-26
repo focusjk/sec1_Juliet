@@ -3,13 +3,14 @@ import { withRouter } from "react-router-dom";
 import { MyButton, MyWhiteButton } from "../component/MyButton";
 import { Paper } from "@material-ui/core/";
 import { MyTitle } from "../component/MyTitle";
-import MapData from "./MapData"
+import MapData from "./MapData";
 import { Grid } from "@material-ui/core";
 import moment from "moment";
 import PhoneIcon from "@material-ui/icons/Phone";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
 import axios from "axios";
+import backend from "../ip";
 
 const RequestBox = ({ history, data, fetch }) => {
   const {
@@ -23,34 +24,40 @@ const RequestBox = ({ history, data, fetch }) => {
     member_id,
     username,
     phone_number,
-    photo
+    photo,
   } = data;
 
   const handleApprove = async () => {
-    axios.post("http://localhost:4000/driver/request-approve", {
-      id
-    }).then(response => {
-      const { success } = response.data;
-      if (success) {
-        fetch();
-      }
-    }).catch(e => {
-      console.log(e);
-    });
-  }
+    axios
+      .post(backend + "/driver/request-approve", {
+        id,
+      })
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          fetch();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleReject = async () => {
-    axios.post("http://localhost:4000/driver/request-reject", {
-      id
-    }).then(response => {
-      const { success } = response.data;
-      if (success) {
-        fetch();
-      }
-    }).catch(e => {
-      console.log(e);
-    });
-  }
+    axios
+      .post(backend + "/driver/request-reject", {
+        id,
+      })
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          fetch();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <Paper
@@ -62,7 +69,7 @@ const RequestBox = ({ history, data, fetch }) => {
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
-        marginBottom: "12px"
+        marginBottom: "12px",
       }}
     >
       <Grid
@@ -97,21 +104,36 @@ const RequestBox = ({ history, data, fetch }) => {
           {departure_detail}
         </div>
       </div>
-      <MapData fixed longitude={departure_longitude} latitude={departure_latitude} />
+      <MapData
+        fixed
+        longitude={departure_longitude}
+        latitude={departure_latitude}
+      />
 
-      <div style={{ display: "flex", alignItems: "left", marginBottom: "8px", marginTop: "8px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "left",
+          marginBottom: "8px",
+          marginTop: "8px",
+        }}
+      >
         <FlagIcon fontSize="small" style={{ marginRight: "8px" }} />
         <div style={{ display: "flex", alignItems: "flex-end" }}>
           {destination_detail}
         </div>
       </div>
-      <MapData fixed longitude={destination_longitude} latitude={destination_latitude} />
+      <MapData
+        fixed
+        longitude={destination_longitude}
+        latitude={destination_latitude}
+      />
 
       <div
         style={{
           display: "flex",
           justifyContent: "space-evenly",
-          marginTop: "12px"
+          marginTop: "12px",
         }}
       >
         <MyButton onClick={() => handleApprove()}>Accept</MyButton>

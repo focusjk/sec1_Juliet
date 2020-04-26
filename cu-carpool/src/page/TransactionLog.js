@@ -3,17 +3,17 @@ import { MyTitle, MyHeaderWithArrow } from "../component/MyTitle";
 import EmptyBox from "../component/EmptyBox";
 import TransactionBox from "../component/TransactionBox";
 import axios from "axios";
-import moment from "moment"
-
-const formatter = a => {
-  let b = Object.keys(a)
+import moment from "moment";
+import backend from "../ip";
+const formatter = (a) => {
+  let b = Object.keys(a);
   b.sort((i, j) => {
-    const ii = new moment(i, 'DD MMM YYYY').format('x')
-    const jj = new moment(j, 'DD MMM YYYY').format('x')
+    const ii = new moment(i, "DD MMM YYYY").format("x");
+    const jj = new moment(j, "DD MMM YYYY").format("x");
     return jj - ii;
   });
-  return b
-}
+  return b;
+};
 
 class TransactionLog extends React.Component {
   state = { transaction: {} };
@@ -21,8 +21,8 @@ class TransactionLog extends React.Component {
     this.fetchData();
   }
   fetchData = async () => {
-    const response = await axios.get("http://localhost:4000/transaction/log", {
-      params: { member_id: this.props.user.id }
+    const response = await axios.get(backend + "/transaction/log", {
+      params: { member_id: this.props.user.id },
     });
     const { success, transaction } = response.data;
     if (success) {
@@ -36,7 +36,7 @@ class TransactionLog extends React.Component {
           Transaction history
         </MyHeaderWithArrow>
         <EmptyBox data={this.state.transaction} />
-        {formatter(this.state.transaction).map(index => (
+        {formatter(this.state.transaction).map((index) => (
           <div key={index} style={{ marginBottom: "16px" }}>
             <MyTitle style={{ fontSize: 20, marginBottom: "10px" }}>
               {index}

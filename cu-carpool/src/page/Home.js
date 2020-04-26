@@ -7,7 +7,7 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  Link
+  Link,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TripCard from "../component/TripCard";
@@ -15,16 +15,16 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import FlagIcon from "@material-ui/icons/Flag";
 import { ProvinceMenuItem } from "../component/ProvinceMenuItem";
-import EmptyBox from '../component/EmptyBox'
-
+import EmptyBox from "../component/EmptyBox";
+import backend from "../ip";
 const useStyles = makeStyles({
   box: {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
-    flexDirection: "column"
+    flexDirection: "column",
   },
-  panel: { backgroundColor: "#EFEFEF", boxShadow: "none" }
+  panel: { backgroundColor: "#EFEFEF", boxShadow: "none" },
 });
 
 const Home = ({ user }) => {
@@ -34,10 +34,10 @@ const Home = ({ user }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const fetchData = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/trip", {
+      const response = await axios.post(backend + "/trip", {
         departure,
         destination,
-        selectedDate
+        selectedDate,
       });
       const { trip } = response.data;
       setTripList(trip);
@@ -62,9 +62,9 @@ const Home = ({ user }) => {
               id="departure"
               select
               value={departure}
-              onChange={e => setDeparture(e.target.value)}
+              onChange={(e) => setDeparture(e.target.value)}
               InputProps={{
-                startAdornment: <LocationOnIcon style={{ marginRight: 16 }} />
+                startAdornment: <LocationOnIcon style={{ marginRight: 16 }} />,
               }}
               style={{ marginBottom: 16 }}
             >
@@ -74,9 +74,9 @@ const Home = ({ user }) => {
             <TextField
               select
               value={destination}
-              onChange={e => setDestination(e.target.value)}
+              onChange={(e) => setDestination(e.target.value)}
               InputProps={{
-                startAdornment: <FlagIcon style={{ marginRight: 16 }} />
+                startAdornment: <FlagIcon style={{ marginRight: 16 }} />,
               }}
               style={{ marginBottom: 16 }}
             >
@@ -91,10 +91,10 @@ const Home = ({ user }) => {
               InputProps={{
                 startAdornment: (
                   <CalendarTodayIcon style={{ marginRight: 16 }} />
-                )
+                ),
               }}
               value={selectedDate}
-              onChange={e => setSelectedDate(e.target.value)}
+              onChange={(e) => setSelectedDate(e.target.value)}
               style={{ marginBottom: 16 }}
             />
             <Link

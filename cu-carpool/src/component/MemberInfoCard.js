@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 import moment from "moment";
 import ConfirmModal from "../component/ConfirmModal";
-
-const formatter = date => moment(date).format("MMMM Do YYYY, h:mm a");
+import backend from "../ip";
+const formatter = (date) => moment(date).format("MMMM Do YYYY, h:mm a");
 
 const MemberInfoCard = ({ data, admin_name, fetchData }) => {
   const {
@@ -21,15 +21,15 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
     approved_at,
     approved_by,
     rejected_at,
-    rejected_by
+    rejected_by,
   } = data;
 
   const Ban = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/admin/banmember",
-        { admin_name, id }
-      );
+      const response = await axios.post(backend + "/admin/banmember", {
+        admin_name,
+        id,
+      });
       const { success, error } = response.data;
       if (success) {
         fetchData();
@@ -41,10 +41,7 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
 
   const UnBan = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/admin/unbanmember",
-        { id }
-      );
+      const response = await axios.post(backend + "/admin/unbanmember", { id });
       const { success, error } = response.data;
       if (success) {
         fetchData();
@@ -62,7 +59,7 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
         alignItems: "center",
         border: "1px solid #C4C4C4",
         padding: "16px 48px",
-        margin: "16px 0"
+        margin: "16px 0",
       }}
     >
       <div
@@ -72,7 +69,7 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
           alignItems: "center",
           flexWrap: "wrap",
           width: "150px",
-          marginRight: "16px"
+          marginRight: "16px",
         }}
       >
         <img
@@ -84,24 +81,64 @@ const MemberInfoCard = ({ data, admin_name, fetchData }) => {
         <div style={{ alignSelf: "center" }}>{username}</div>
       </div>
       <div style={{ width: "70%", display: "flex", flexDirection: "column" }}>
-        <div><b> Member ID:</b> {id}</div>
-        <div><b>Name:</b> {firstname} {lastname}</div>
-        <div><b>Email:</b> {email}</div>
-        <div><b>Phone number:</b> {phone_number}</div>
-        {driver_status != null && (<div><b>Driver Status:</b> {driver_status}</div>)}
-        {driving_license != null && (<div><b>Driving License:</b> {driving_license}</div>)}
-        {approved_at != null && (<div><b>Approved at:</b> {formatter(approved_at)}</div>)}
-        {approved_by != null && (<div><b>Approved by:</b> {approved_by}</div>)}
-        {rejected_at != null && (<div><b>Rejected at:</b> {formatter(rejected_at)}</div>)}
-        {rejected_by != null && (<div><b>Rejected by:</b> {rejected_by}</div>)}
-        {banned_at != null && (<div><b>Banned At:</b> {formatter(banned_at)}</div>)}
-        {banned_by != null && (<div><b>Banned By:</b> {banned_by}</div>)}
+        <div>
+          <b> Member ID:</b> {id}
+        </div>
+        <div>
+          <b>Name:</b> {firstname} {lastname}
+        </div>
+        <div>
+          <b>Email:</b> {email}
+        </div>
+        <div>
+          <b>Phone number:</b> {phone_number}
+        </div>
+        {driver_status != null && (
+          <div>
+            <b>Driver Status:</b> {driver_status}
+          </div>
+        )}
+        {driving_license != null && (
+          <div>
+            <b>Driving License:</b> {driving_license}
+          </div>
+        )}
+        {approved_at != null && (
+          <div>
+            <b>Approved at:</b> {formatter(approved_at)}
+          </div>
+        )}
+        {approved_by != null && (
+          <div>
+            <b>Approved by:</b> {approved_by}
+          </div>
+        )}
+        {rejected_at != null && (
+          <div>
+            <b>Rejected at:</b> {formatter(rejected_at)}
+          </div>
+        )}
+        {rejected_by != null && (
+          <div>
+            <b>Rejected by:</b> {rejected_by}
+          </div>
+        )}
+        {banned_at != null && (
+          <div>
+            <b>Banned At:</b> {formatter(banned_at)}
+          </div>
+        )}
+        {banned_by != null && (
+          <div>
+            <b>Banned By:</b> {banned_by}
+          </div>
+        )}
       </div>
       <div
         style={{
           display: "flex-center",
           alignItems: "center",
-          marginLeft: "16px"
+          marginLeft: "16px",
         }}
       >
         {banned_at == null && (

@@ -8,7 +8,7 @@ import MapData from "./MapData";
 import moment from "moment";
 import ReviewModal from "../component/ReviewModal";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 const TripBox = ({ data, fetchData }) => {
   const {
     trip_id,
@@ -25,16 +25,15 @@ const TripBox = ({ data, fetchData }) => {
     departure_detail,
     destination_detail,
     departure_province,
-    destination_province
+    destination_province,
   } = data;
   const datetime = moment(start_datetime).format("MMMM Do YYYY h:mm a");
 
   const handleCancel = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/trip/cancelTrip",
-        { trip_id }
-      );
+      const response = await axios.post(backend + "/trip/cancelTrip", {
+        trip_id,
+      });
       const { success } = response.data;
       if (success) {
         fetchData();
@@ -53,7 +52,7 @@ const TripBox = ({ data, fetchData }) => {
         justifyContent: "space-between",
         flexDirection: "column",
         borderColor: "#BDBDBD",
-        marginBottom: "16px"
+        marginBottom: "16px",
       }}
     >
       <Paper
@@ -63,14 +62,14 @@ const TripBox = ({ data, fetchData }) => {
           padding: 3,
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "#C78899"
+          backgroundColor: "#C78899",
         }}
       >
         <MyTitle
           style={{
             fontSize: "20px",
             color: "#FFFFFF",
-            marginLeft: "6px"
+            marginLeft: "6px",
           }}
         >
           {datetime}
@@ -84,13 +83,13 @@ const TripBox = ({ data, fetchData }) => {
           padding: 12,
           display: "flex",
           justifyContent: "space-between",
-          flexDirection: "column"
+          flexDirection: "column",
         }}
       >
         <MyTitle
           style={{
             color: "#C78899",
-            marginBottom: "8px"
+            marginBottom: "8px",
           }}
         >
           Status: {status}
@@ -99,14 +98,14 @@ const TripBox = ({ data, fetchData }) => {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           <div
             style={{
               display: "flex",
               justifyContent: "flex-start",
-              flexDirection: "column"
+              flexDirection: "column",
             }}
           >
             <div style={{ marginBottom: 6 }}>
@@ -119,7 +118,7 @@ const TripBox = ({ data, fetchData }) => {
             style={{
               display: "flex",
               alignItems: "flex-end",
-              flexDirection: "column"
+              flexDirection: "column",
             }}
           >
             <div style={{ fontSize: "20px" }}>{price} ฿</div>
@@ -164,7 +163,7 @@ const TripBox = ({ data, fetchData }) => {
           style={{
             display: "flex",
             justifyContent: "space-evenly",
-            marginTop: "12px"
+            marginTop: "12px",
           }}
         >
           {status == "scheduled" && (

@@ -4,11 +4,11 @@ import { withRouter } from "react-router-dom";
 import { TextField } from "@material-ui/core";
 import { MyFullWidthButton } from "../component/MyButton";
 import { MyHeader, MyTitle } from "../component/MyTitle";
-import { ProvinceMenuItem } from "../component/ProvinceMenuItem"
-import Map from "../component/Map"
-
+import { ProvinceMenuItem } from "../component/ProvinceMenuItem";
+import Map from "../component/Map";
+import backend from "../ip";
 const CreateTrip = ({ history, user }) => {
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     departure_latitude: 13.769059,
     departure_longitude: 100.493117,
@@ -23,7 +23,7 @@ const CreateTrip = ({ history, user }) => {
     car_brand: null,
     plate_license: null,
     capacity: null,
-    price: null
+    price: null,
   });
   const [error, setError] = useState({
     car_brand: false,
@@ -35,8 +35,8 @@ const CreateTrip = ({ history, user }) => {
     destination_detail: false,
     destination_province: false,
     date: false,
-    time: false
-  })
+    time: false,
+  });
   const validate = () => {
     setError({
       car_brand: !form.car_brand,
@@ -48,9 +48,10 @@ const CreateTrip = ({ history, user }) => {
       destination_detail: !form.destination_detail,
       destination_province: !form.destination_province,
       date: !form.date,
-      time: !form.time
-    })
-    return form.car_brand &&
+      time: !form.time,
+    });
+    return (
+      form.car_brand &&
       form.plate_license &&
       form.capacity &&
       form.price &&
@@ -62,28 +63,29 @@ const CreateTrip = ({ history, user }) => {
       form.destination_province &&
       form.date &&
       form.time
+    );
   };
   const handleCreate = async () => {
     if (validate()) {
       try {
         const { id } = user;
         const { time, date, ...data } = form;
-        const response = await axios.post("http://localhost:4000/trip/create", {
+        const response = await axios.post(backend + "/trip/create", {
           ...data,
           owner: id,
-          start_datetime: date + " " + time + ":00"
+          start_datetime: date + " " + time + ":00",
         });
         const { success, message } = response.data;
         if (success) {
           history.push("/my-trip");
         } else {
-          setErrorMessage(message)
+          setErrorMessage(message);
         }
       } catch (e) {
-        setErrorMessage("Invalid data, please check your input again")
+        setErrorMessage("Invalid data, please check your input again");
       }
     } else {
-      setErrorMessage("Please fill all inputs with valid data")
+      setErrorMessage("Please fill all inputs with valid data");
     }
   };
 
@@ -98,9 +100,9 @@ const CreateTrip = ({ history, user }) => {
           label="License plate"
           value={form.plate_license}
           error={error.plate_license}
-          onChange={e => {
+          onChange={(e) => {
             setForm({ ...form, plate_license: e.target.value });
-            setErrorMessage('')
+            setErrorMessage("");
           }}
         />
         <TextField
@@ -109,9 +111,9 @@ const CreateTrip = ({ history, user }) => {
           label="Car brand"
           value={form.car_brand}
           error={error.car_brand}
-          onChange={e => {
+          onChange={(e) => {
             setForm({ ...form, car_brand: e.target.value });
-            setErrorMessage('')
+            setErrorMessage("");
           }}
         />
         <div style={{ display: "flex" }}>
@@ -124,9 +126,9 @@ const CreateTrip = ({ history, user }) => {
             helperText="Excluding a driver"
             value={form.capacity}
             error={error.capacity}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, capacity: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
           <TextField
@@ -138,11 +140,10 @@ const CreateTrip = ({ history, user }) => {
             style={{ marginLeft: 8 }}
             value={form.price}
             error={error.price}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, price: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
-
           />
         </div>
         <MyTitle style={{ marginTop: "30px" }}>Pick Up</MyTitle>
@@ -153,9 +154,9 @@ const CreateTrip = ({ history, user }) => {
           label="Province"
           value={form.departure_province}
           error={error.departure_province}
-          onChange={e => {
+          onChange={(e) => {
             setForm({ ...form, departure_province: e.target.value });
-            setErrorMessage('')
+            setErrorMessage("");
           }}
         >
           {ProvinceMenuItem()}
@@ -166,9 +167,9 @@ const CreateTrip = ({ history, user }) => {
           label="Detail"
           value={form.departure_detail}
           error={error.departure_detail}
-          onChange={e => {
+          onChange={(e) => {
             setForm({ ...form, departure_detail: e.target.value });
-            setErrorMessage('')
+            setErrorMessage("");
           }}
         />
         <div style={{ display: "flex" }}>
@@ -180,9 +181,9 @@ const CreateTrip = ({ history, user }) => {
             InputLabelProps={{ shrink: true }}
             value={form.date}
             error={error.date}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, date: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
           <TextField
@@ -194,13 +195,17 @@ const CreateTrip = ({ history, user }) => {
             style={{ marginLeft: 8, flexGrow: 1 }}
             value={form.time}
             error={error.time}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, time: e.target.value });
-              setErrorMessage('')
+              setErrorMessage("");
             }}
           />
         </div>
-        <Map setLocation={(departure_longitude, departure_latitude) => setForm({ ...form, departure_longitude, departure_latitude })} />
+        <Map
+          setLocation={(departure_longitude, departure_latitude) =>
+            setForm({ ...form, departure_longitude, departure_latitude })
+          }
+        />
         <MyTitle style={{ marginTop: "30px" }}>Destination</MyTitle>
         <TextField
           select
@@ -209,9 +214,9 @@ const CreateTrip = ({ history, user }) => {
           label="Province"
           value={form.destination_province}
           error={error.destination_province}
-          onChange={e => {
-            setForm({ ...form, destination_province: e.target.value })
-            setErrorMessage('')
+          onChange={(e) => {
+            setForm({ ...form, destination_province: e.target.value });
+            setErrorMessage("");
           }}
         >
           {ProvinceMenuItem()}
@@ -222,13 +227,20 @@ const CreateTrip = ({ history, user }) => {
           label="Detail"
           value={form.destination_detail}
           error={error.destination_detail}
-          onChange={e => {
+          onChange={(e) => {
             setForm({ ...form, destination_detail: e.target.value });
-            setErrorMessage('')
+            setErrorMessage("");
           }}
         />
-        <Map setLocation={(destination_longitude, destination_latitude) => setForm({ ...form, destination_longitude, destination_latitude })} />
-        <MyFullWidthButton style={{ margin: "40px 0 10px 0" }} onClick={handleCreate}>
+        <Map
+          setLocation={(destination_longitude, destination_latitude) =>
+            setForm({ ...form, destination_longitude, destination_latitude })
+          }
+        />
+        <MyFullWidthButton
+          style={{ margin: "40px 0 10px 0" }}
+          onClick={handleCreate}
+        >
           Create
         </MyFullWidthButton>
         {errorMessage !== "" && (

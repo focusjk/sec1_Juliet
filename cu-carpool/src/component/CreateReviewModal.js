@@ -7,7 +7,8 @@ import { TextField } from "@material-ui/core";
 import { MyHeader } from "./MyTitle";
 import { MyButton } from "./MyButton";
 import Rating from "@material-ui/lab/Rating";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import backend from "../ip";
 
 function getModalStyle() {
   const top = 50;
@@ -16,32 +17,38 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 2),
-    width: '300px'
+    width: "300px",
   },
   margin: {
-    marginBottom: 16
-  }
+    marginBottom: 16,
+  },
 }));
 
-const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fetchData }) => {
+const CreateReviewModal = ({
+  request_id,
+  review_id,
+  passenger_id,
+  driver_id,
+  fetchData,
+}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = React.useState(null);
   const [form, setForm] = useState({
     comment: "",
-    rating: 0
+    rating: 0,
   });
 
   const handleOpen = async () => {
@@ -57,7 +64,9 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
 
   const getReview = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/review/getReviewById", { params: { review_id } });
+      const response = await axios.get(backend + "/review/getReviewById", {
+        params: { review_id },
+      });
       const { success, review, message } = response.data;
       if (success) {
         setForm({ comment: review.comment, rating: review.rating });
@@ -65,14 +74,19 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
         setErr(message);
       }
     } catch (e) {
-      setErr('Cannot access database');
+      setErr("Cannot access database");
     }
-  }
+  };
 
   const review = async () => {
     try {
       const { ...data } = form;
-      const response = await axios.post("http://localhost:4000/review/create", { passenger_id, driver_id, request_id, ...data });
+      const response = await axios.post(backend + "/review/create", {
+        passenger_id,
+        driver_id,
+        request_id,
+        ...data,
+      });
       const { success, message } = response.data;
       if (success) {
         setOpen(false);
@@ -81,7 +95,7 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
         setErr(message);
       }
     } catch (e) {
-      setErr('Cannot access database')
+      setErr("Cannot access database");
     }
   };
 
@@ -89,15 +103,13 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
     <div>
       <MyButton type="button" onClick={handleOpen}>
         Review
-       </MyButton>
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
+      </MyButton>
+      <Modal open={open} onClose={handleClose}>
         <div style={getModalStyle()} className={classes.paper}>
           <MyHeader>Review</MyHeader>
           <div style={{ margin: "0 auto" }}>
-            <Rating name="sizeLarge"
+            <Rating
+              name="sizeLarge"
               defaultValue={form.rating}
               precision={1}
               size="large"
@@ -114,25 +126,45 @@ const CreateReviewModal = ({ request_id, review_id, passenger_id, driver_id, fet
             value={form.comment}
             multiline
             disabled={review_id != null}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, comment: e.target.value });
-              setErr(null)
+              setErr(null);
             }}
           />
-          {err !== "" && <div style={{ color: "red", marginTop: '16px' }}>{err}</div>}
-          <div style={{ marginTop: "0px", display: 'flex' }}>
-            {review_id != null ? (<Button onClick={handleClose} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>) :
+          {err !== "" && (
+            <div style={{ color: "red", marginTop: "16px" }}>{err}</div>
+          )}
+          <div style={{ marginTop: "0px", display: "flex" }}>
+            {review_id != null ? (
+              <Button
+                onClick={handleClose}
+                color="secondary"
+                style={{ fontSize: 16, flexGrow: 1 }}
+              >
+                OK
+              </Button>
+            ) : (
               <React.Fragment>
-                <Button onClick={review} color="secondary" style={{ fontSize: 16, flexGrow: 1 }}>OK</Button>
-                <Button onClick={handleClose} style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}>Cancel</Button>
+                <Button
+                  onClick={review}
+                  color="secondary"
+                  style={{ fontSize: 16, flexGrow: 1 }}
+                >
+                  OK
+                </Button>
+                <Button
+                  onClick={handleClose}
+                  style={{ color: "#BDBDBD", fontSize: 16, flexGrow: 1 }}
+                >
+                  Cancel
+                </Button>
               </React.Fragment>
-            }
+            )}
           </div>
         </div>
       </Modal>
     </div>
   );
-}
+};
 
-export default CreateReviewModal
-
+export default CreateReviewModal;

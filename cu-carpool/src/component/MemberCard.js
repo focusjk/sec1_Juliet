@@ -6,7 +6,8 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import { Paper } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import { MyButton, MyGreyButton } from "../component/MyButton";
-import LocationDetail from '../component/LocationDetail'
+import LocationDetail from "../component/LocationDetail";
+import backend from "../ip";
 
 const MemberCard = ({ data, trip_id, fetchData }) => {
   const {
@@ -23,14 +24,17 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
     departure_latitude,
     destination_longitude,
     destination_latitude,
-    driver_departed_at
+    driver_departed_at,
   } = data;
   const [error, setError] = useState("");
   const PickUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/request/pick-up", { id: request_id, trip_id });
+      const response = await axios.post(backend + "/request/pick-up", {
+        id: request_id,
+        trip_id,
+      });
       const { success, error } = response.data;
-      setError(error)
+      setError(error);
       if (success) {
         fetchData();
       }
@@ -40,7 +44,10 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
   };
   const DropOff = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/request/drop-off", { id: request_id, trip_id });
+      const response = await axios.post(backend + "/request/drop-off", {
+        id: request_id,
+        trip_id,
+      });
       const { success } = response.data;
       if (success) {
         fetchData();
@@ -58,10 +65,10 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
         padding: "16px 30px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", alignItems: 'center' }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <img
           src={photo}
           height={50}
@@ -89,21 +96,29 @@ const MemberCard = ({ data, trip_id, fetchData }) => {
       </div>
       <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
         <PhoneIcon fontSize="small" style={{ marginRight: "8px" }} />
-        <div>
-          {phone_number}
-        </div>
+        <div>{phone_number}</div>
       </div>
       <div
         style={{
           display: "flex",
           justifyContent: "space-evenly",
-          marginTop: "24px"
+          marginTop: "24px",
         }}
       >
-        {driver_departed_at == null && (request_status == 'paid' || request_status == 'on going') && <MyButton onClick={PickUp} >Pick up</MyButton>}
-        {!(driver_departed_at == null && (request_status == 'paid' || request_status == 'on going')) && <MyGreyButton disabled={true} >Pick up</MyGreyButton>}
-        {request_status == 'on going' && driver_departed_at != null && <MyButton onClick={DropOff} >Drop off</MyButton>}
-        {(request_status != 'on going' || driver_departed_at == null) && <MyGreyButton disabled={true} >Drop off</MyGreyButton>}
+        {driver_departed_at == null &&
+          (request_status == "paid" || request_status == "on going") && (
+            <MyButton onClick={PickUp}>Pick up</MyButton>
+          )}
+        {!(
+          driver_departed_at == null &&
+          (request_status == "paid" || request_status == "on going")
+        ) && <MyGreyButton disabled={true}>Pick up</MyGreyButton>}
+        {request_status == "on going" && driver_departed_at != null && (
+          <MyButton onClick={DropOff}>Drop off</MyButton>
+        )}
+        {(request_status != "on going" || driver_departed_at == null) && (
+          <MyGreyButton disabled={true}>Drop off</MyGreyButton>
+        )}
       </div>
     </Paper>
   );

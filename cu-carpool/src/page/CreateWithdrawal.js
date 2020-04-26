@@ -5,20 +5,20 @@ import { MyHeaderWithArrow } from "../component/MyTitle";
 import { TextField } from "@material-ui/core";
 import { MyDisabledFullWidthButton } from "../component/MyButton";
 import ConfirmModal from "../component/ConfirmModal";
-
+import backend from "../ip";
 const CreateWithdrawal = ({ history, user }) => {
   const [form, setForm] = useState({
     account_number: "",
     account_name: "",
     bank_name: "",
-    amount: ""
+    amount: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState({
     account_number: false,
     account_name: false,
     bank_name: false,
-    amount: false
+    amount: false,
   });
   const clickable = () => {
     return (
@@ -30,9 +30,9 @@ const CreateWithdrawal = ({ history, user }) => {
   };
   const handleRequest = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/withdrawal", {
+      const response = await axios.post(backend + "/withdrawal", {
         member_id: user.id,
-        ...form
+        ...form,
       });
       const { success } = response.data;
       if (success) {
@@ -51,7 +51,7 @@ const CreateWithdrawal = ({ history, user }) => {
         display: "flex",
         flexDirection: "column",
         height: "80vh",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       <form autoComplete="off">
@@ -65,7 +65,7 @@ const CreateWithdrawal = ({ history, user }) => {
             label="Bank Account Number"
             value={form.account_number}
             error={error.account_number}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, account_number: e.target.value });
               setErrorMessage("");
             }}
@@ -77,7 +77,7 @@ const CreateWithdrawal = ({ history, user }) => {
             style={{ marginTop: 15 }}
             value={form.account_name}
             error={error.account_name}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, account_name: e.target.value });
               setErrorMessage("");
             }}
@@ -89,7 +89,7 @@ const CreateWithdrawal = ({ history, user }) => {
             style={{ marginTop: 15 }}
             value={form.bank_name}
             error={error.bank_name}
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, bank_name: e.target.value });
               setErrorMessage("");
             }}
@@ -102,7 +102,7 @@ const CreateWithdrawal = ({ history, user }) => {
             value={form.amount}
             error={error.amount}
             type="number"
-            onChange={e => {
+            onChange={(e) => {
               setForm({ ...form, amount: e.target.value });
               setErrorMessage("");
             }}
