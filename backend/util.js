@@ -2,7 +2,14 @@ var db = require("./dbconnection");
 var moment = require("moment");
 
 var timeformatter = d => {
-  var date = d.toISOString().split("T")[0];
+  var month = '' + (d.getMonth() + 1);
+  var day = '' + d.getDate();
+  var year = d.getFullYear();
+  if (month.length < 2)
+      month = '0' + month;
+  if (day.length < 2)
+      day = '0' + day;
+  var date = year + '-'+ month+ '-'+day;
   var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
   return date + " " + time;
 };

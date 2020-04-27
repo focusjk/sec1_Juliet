@@ -112,7 +112,7 @@ const dropOff = async (request_id, time, trip_id, callback) => {
 	owner = tripDetail[0].owner;
 	// });
 	console.log(price, owner);
-	transactionService.createTransaction(price, owner, time, type);
+	transactionService.createTransaction((90 / 100) * price, owner, time, type);
 	const ownerWallet = await memberService.getWallet2(owner);
 	amount = ownerWallet[0].amount;
 
