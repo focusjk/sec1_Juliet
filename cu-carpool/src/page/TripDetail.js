@@ -24,7 +24,7 @@ class TripDetail extends React.Component {
 
   async componentDidMount() {
     const { trip_id } = this.props.match.params;
-    const response = await axios.get("http://localhost:4000/trip/detail", {
+    const response = await axios.get(backend+ "/trip/detail", {
       params: {
         tripId: trip_id,
       },
@@ -65,6 +65,7 @@ class TripDetail extends React.Component {
             >
               Average rating:
               <Rating
+                readOnly
                 name="read-only"
                 value={parseFloat(owner.avg_rating)}
                 precision={0.01}

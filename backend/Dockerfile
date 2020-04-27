@@ -4,7 +4,7 @@ ADD . /app
 
 RUN cd /app; \
   yarn
-
+ENV TZ Asia/Bangkok
 EXPOSE 4000
 VOLUME /app
 

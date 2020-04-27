@@ -35,7 +35,7 @@ class MemberInfo extends React.Component {
   state = { list: [], filteredList: [], mode: 0, search: null };
   fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/admin/member");
+      const response = await axios.get(backend + "/admin/member");
       const { success, member } = response.data;
       if (success) {
         this.setState({ list: member });
